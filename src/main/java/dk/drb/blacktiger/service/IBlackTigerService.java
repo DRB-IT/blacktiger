@@ -18,7 +18,7 @@ public interface IBlackTigerService {
      * @param password The password
      * @return User or null of user not found.
      */
-    User getUser(String username, String password);
+    User getUser(String username);
     
     /**
      * Retrieves a list of participants in  a room.
@@ -55,4 +55,8 @@ public interface IBlackTigerService {
      * @param participantId  The participant id.
      */
     void unmuteParticipant(String roomNo, String participantId);
+    
+    void addEventListener(BlackTigerEventListener listener);
+    void removeEventListener(BlackTigerEventListener listener);
+    
 }

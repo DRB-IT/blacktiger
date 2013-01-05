@@ -10,10 +10,10 @@
            <!-- Admin, PrivateApiAccessor, PublicApiAccessor, Merchant -->
     
     <http>
-        <intercept-url pattern="/dashboard/**" access="ROLE_USER" />
+        <intercept-url pattern="/**" access="ROLE_USER" />
         
-        <form-login login-page="/login" />
-        <logout logout-url="/logout"/>
+        <!--form-login login-page="/login" />
+        <logout logout-url="/logout"/-->
     </http>
 
     
@@ -21,6 +21,6 @@
         <authentication-provider user-service-ref="userDetailsManager" />
     </authentication-manager>
 
-    <beans:bean id="userDetailsManager" class="dk.apaq.simplepay.security.SystemUserDetailsManager" />
+    <beans:bean id="userDetailsManager" class="dk.drb.blacktiger.security.SystemUserDetailsManager" />
 
 </beans:beans>

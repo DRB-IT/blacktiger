@@ -28,7 +28,7 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
         >
 
-    <!--context:property-placeholder ignore-resource-not-found="true" location="classpath:simplepay_default.properties,file:${user.home}/simplepay.properties" /-->
+    <context:property-placeholder location="file:${user.home}/blacktiger.properties" />
     
     <bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
         <constructor-arg value="127.0.0.1"/>

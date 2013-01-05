@@ -23,6 +23,6 @@
 
    
     <context:annotation-config />
-    <context:component-scan base-package="dk.drb.orangetiger.controller"/>
+    <context:component-scan base-package="dk.drb.blacktiger.controller"/>
     <mvc:annotation-driven />
 </beans>
