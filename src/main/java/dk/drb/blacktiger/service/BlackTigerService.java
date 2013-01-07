@@ -21,6 +21,9 @@ import org.asteriskjava.manager.event.MeetMeLeaveEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Javadoc
@@ -82,6 +85,7 @@ public class BlackTigerService implements IBlackTigerService {
 
     @Override
     public List<Participant> listParticipants(String roomNo) {
+        checkRoomAccess(roomNo);
         MeetMeRoom room = asteriskServer.getMeetMeRoom(roomNo);
         List<Participant> result = new ArrayList<Participant>();
 
@@ -93,12 +97,14 @@ public class BlackTigerService implements IBlackTigerService {
 
     @Override
     public Participant getParticipant(String roomNo, String participantId) {
+        checkRoomAccess(roomNo);
         MeetMeUser mmu = getMeetMeUser(roomNo, participantId);
         return mmu == null ? null : participantFromMeetMeUser(mmu);
     }
 
     @Override
     public void kickParticipant(String roomNo, String participantId) {
+        checkRoomAccess(roomNo);
         MeetMeUser mmu = getMeetMeUser(roomNo, participantId);
         if (mmu != null) {
             mmu.kick();
@@ -107,6 +113,7 @@ public class BlackTigerService implements IBlackTigerService {
 
     @Override
     public void muteParticipant(String roomNo, String participantId) {
+        checkRoomAccess(roomNo);
         MeetMeUser mmu = getMeetMeUser(roomNo, participantId);
         if (mmu != null) {
             mmu.mute();
@@ -115,6 +122,7 @@ public class BlackTigerService implements IBlackTigerService {
 
     @Override
     public void unmuteParticipant(String roomNo, String participantId) {
+        checkRoomAccess(roomNo);
         MeetMeUser mmu = getMeetMeUser(roomNo, participantId);
         if (mmu != null) {
             mmu.unmute();
@@ -150,5 +158,22 @@ public class BlackTigerService implements IBlackTigerService {
         if (listener != null) {
             eventListeners.remove(listener);
         }
+    }
+    
+    private void checkRoomAccess(String roomNo) {
+        if(!hasRole("ROOMACCESS_" + roomNo)) {
+            throw new SecurityException("Not authorized to access room " + roomNo);
+        }
+    }
+    private boolean hasRole(String role) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth!=null && auth.isAuthenticated()) {
+            for(GrantedAuthority ga : auth.getAuthorities()) {
+                if(ga.getAuthority().startsWith("ROLE_") && ga.getAuthority().substring(5).equals(role)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

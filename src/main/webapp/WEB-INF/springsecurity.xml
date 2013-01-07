@@ -12,8 +12,7 @@
     <http>
         <intercept-url pattern="/**" access="ROLE_USER" />
         
-        <!--form-login login-page="/login" />
-        <logout logout-url="/logout"/-->
+        <form-login/>
     </http>
 
     

@@ -50,7 +50,11 @@ public class RoomController {
                     it.remove();
                     AsyncContext ctx = entry.getAsyncContext();
                     respondChanged((HttpServletResponse) ctx.getResponse(), true);
-                    ctx.complete();
+                    try {
+                        ctx.complete();
+                    } catch(IllegalStateException ex) {
+                        
+                    }
                 }
             }
 
