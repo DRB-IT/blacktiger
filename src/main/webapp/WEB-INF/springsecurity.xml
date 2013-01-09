@@ -10,9 +10,10 @@
            <!-- Admin, PrivateApiAccessor, PublicApiAccessor, Merchant -->
     
     <http>
-        <intercept-url pattern="/**" access="ROLE_USER" />
+        <intercept-url pattern="/data/**" access="ROLE_USER" />
         
         <form-login/>
+        <http-basic/>
     </http>
 
     

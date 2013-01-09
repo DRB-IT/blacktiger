@@ -1,12 +1,8 @@
 var BlackTiger = new function() {
     
     var serviceUrl = "api";
-    var username = null;
-    var password = null;
     
-    this.init = function(user, pass, url) {
-        username = user;
-        password = pass;
+    this.init = function(url) {
         if(url != null) {
             serviceUrl = url;
         }
@@ -15,8 +11,6 @@ var BlackTiger = new function() {
     this.listParticipants = function(roomid, callback) {
         $.ajax({
             url: serviceUrl + "/rooms/" + roomid,
-            username: username,
-            password: password,
             headers: { 
                 Accept : "application/json"
             }
@@ -32,8 +26,6 @@ var BlackTiger = new function() {
     this.getParticipant = function(roomid, userid, callback) {
         $.ajax({
             url: serviceUrl + "/rooms/" + roomid + "/" + userid,
-            username: username,
-            password: password,
             headers: { 
                 Accept : "application/json"
             }
@@ -54,8 +46,6 @@ var BlackTiger = new function() {
         $.ajax({
             url: serviceUrl + "/rooms/" + roomid + "/" + userid + "/kick",
             type: "POST",
-            username: username,
-            password: password,
             headers: { 
                 Accept : "application/json"
             }
@@ -73,8 +63,6 @@ var BlackTiger = new function() {
             type: "POST",
             dataType: 'json',
             data: '{"muted": ' + muted + '}',
-            username: username,
-            password: password,
             headers: { 
                 Accept : "application/json"
             }
@@ -87,9 +75,7 @@ var BlackTiger = new function() {
     
     this.waitForChanges = function(roomid, callback) {
         $.ajax({
-            url: serviceUrl + "/rooms/" + roomid + "/changes",
-            username: username,
-            password: password,
+            url: serviceUrl + "/rooms/" + roomid + "/changes?" + new Date().getTime()   ,
             headers: { 
                 Accept : "application/json"
             }
@@ -97,4 +83,5 @@ var BlackTiger = new function() {
             callback(data);
         });
     }
+
 }

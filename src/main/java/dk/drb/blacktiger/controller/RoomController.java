@@ -34,34 +34,37 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class RoomController {
-    
-    @Autowired    
-    private IBlackTigerService service;
+
+    private final IBlackTigerService service;
     private final List<ChangeListenerEntry> changeListeners = new ArrayList<ChangeListenerEntry>();
     private final BlackTigerEventListener tigerEventListener = new BlackTigerEventListener() {
         @Override
         public void onParticipantEvent(ParticipantEvent event) {
             String roomNo = event.getRoomNo();
-            
-            Iterator<ChangeListenerEntry> it = changeListeners.iterator();
-            while(it.hasNext()) {
+
+            List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
+            Iterator<ChangeListenerEntry> it = clonedList.iterator();
+            while (it.hasNext()) {
                 ChangeListenerEntry entry = it.next();
-                if(entry.getRoomNo().equals(roomNo)) {
-                    it.remove();
-                    AsyncContext ctx = entry.getAsyncContext();
-                    respondChanged((HttpServletResponse) ctx.getResponse(), true);
+                if (entry.getRoomNo().equals(roomNo)) {
                     try {
+                        AsyncContext ctx = entry.getAsyncContext();
+                        respondChanged((HttpServletResponse) ctx.getResponse(), true);
                         ctx.complete();
-                    } catch(IllegalStateException ex) {
-                        
+                    } catch (IllegalStateException ex) {
                     }
+                } else {
+                    it.remove();
                 }
             }
+            
+            changeListeners.removeAll(clonedList);
 
         }
     };
-    
+
     private class ChangeListenerEntry {
+
         private AsyncContext asyncContext;
         private String roomNo;
 
@@ -77,60 +80,64 @@ public class RoomController {
         public String getRoomNo() {
             return roomNo;
         }
-        
     }
-    
+
+    @Autowired
+    public RoomController(IBlackTigerService service) {
+        this.service = service;
+    }
+
     @PostConstruct
     public void init() {
         service.addEventListener(tigerEventListener);
     }
-    
+
     @RequestMapping(value = "/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
         AsyncContext asyncContext = request.startAsync();
         asyncContext.setTimeout(60000);
         changeListeners.add(new ChangeListenerEntry(asyncContext, roomNo));
     }
-    
+
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
     public List<Participant> showRoomAsJson(@PathVariable final String roomNo) {
         return service.listParticipants(roomNo);
     }
-    
+
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
     @ResponseBody
     public Participant showParticipanteAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         return service.getParticipant(roomNo, participantId);
     }
-    
+
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int kickParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         service.kickParticipant(roomNo, participantId);
         return 1;
     }
-    
+
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int muteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         service.kickParticipant(roomNo, participantId);
         return 1;
     }
-    
+
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int unmuteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         service.kickParticipant(roomNo, participantId);
         return 1;
     }
-    
+
     @RequestMapping("/rooms/{roomNo}")
     public ModelAndView showRoom(@PathVariable final String roomNo) {
         final List<Participant> list = service.listParticipants(roomNo);
         return new ModelAndView("room", "participants", list);
     }
-    
+
     private void respondChanged(HttpServletResponse response, boolean value) {
         try {
             response.setContentType("application/json");

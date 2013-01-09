@@ -1,0 +1,29 @@
+body{background-color: #eceae7; font-size: 13px;}
+.intro{text-align: center; margin-top: 20%; font-family: sans-serif; color: #aaaaaa;}
+.intro h1{text-transform: uppercase; letter-spacing: 1px; margin: 0px; padding: 0px;}
+.intro h2{font-weight: normal; letter-spacing: 1px; margin-top: 0px;}
+.container{background-color: #ffffff; box-shadow: 0px 0px 30px 0px #666666;}
+#headerContent{letter-spacing: 1px; font-size: 20px;}
+#headerLogo{text-align: right; color: #ffffff; text-transform: uppercase; background-color: #ff8400; padding: 10px 0px 8px 0px; }
+#headerLogo span{margin-right: 10px;}
+#headerSlogan{color: #5b5654; padding: 10px 0px 8px 0px;}
+#menuContent{background-color: #65605e; height: 36px; padding-top: 19px;}
+.mainMenu{list-style: none; margin: 0px; padding: 0px;}
+.mainMenu li{float: left;}
+.mainMenu li a{padding: 8px; text-transform: uppercase; display: block; color: #ffffff; }
+.mainMenu li a:hover{background-color: #514c4a;}
+.mainMenu li a.selected, .mainMenu li a.selected:hover{background-color: #ff8400;}
+#mainContent{padding: 30px 0px;}
+#footerContent{background-color: #65605e; color: #ffffff; text-align: center; padding: 10px 0px;}
+#version{position: absolute; bottom: 0px; right: 0px; padding: 3px; background-color: #cccccc; color: #191919; font-size: 10px;}
+.tsMixer .span3, .tsCallers .span3{text-align: right;}
+.tableName{font-weight: bold;}
+.tableTime{text-align: right; color: #747474;}
+.tableBtns{text-align: right;}
+iframe{border: none;}
+
+@media (max-width: 767px) {
+  #headerLogo{text-align: center;}
+  #headerLogo span{margin: 0px;}
+  #menuContent{padding-top: 0px;}
+}
