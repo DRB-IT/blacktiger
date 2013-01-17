@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,6 +23,8 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class CredentialFilter implements Filter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(CredentialFilter.class);
+    
     private class RequestWrapper extends HttpServletRequestWrapper {
 
         private String username;
@@ -34,10 +38,13 @@ public class CredentialFilter implements Filter {
 
         @Override
         public String getHeader(String string) {
-            if (string.equals("Authorization")) {
-                return "Basic " + Base64.encodeBase64String((username + ":" + password).getBytes());
+            String value;
+            if ("Authorization".equals(string)) {
+                value = "Basic " + Base64.encodeBase64String((username + ":" + password).getBytes());
+            } else {
+                value = super.getHeader(string);
             }
-            return super.getHeader(string);
+            return value;
         }
     }
 
@@ -48,6 +55,7 @@ public class CredentialFilter implements Filter {
         String pass = req.getParameter("k");
 
         if (user != null && pass != null) {
+            LOG.debug("User has supplied the secret user/pass query parameters. Wrapping request so they can be used as Basic Auth.");
             req = new RequestWrapper(user, pass, req);
         }
         
@@ -55,15 +63,7 @@ public class CredentialFilter implements Filter {
 
     }
 
-    /**
-     * Destroy method for this filter
-     */
-    public void destroy() {
-    }
+    public void destroy() { /* EMPTY*/ }
 
-    /**
-     * Init method for this filter
-     */
-    public void init(FilterConfig filterConfig) {
-    }
+    public void init(FilterConfig filterConfig) { /* EMPTY*/ }
 }

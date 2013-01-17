@@ -18,6 +18,8 @@ import org.asteriskjava.manager.ManagerEventListener;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.MeetMeJoinEvent;
 import org.asteriskjava.manager.event.MeetMeLeaveEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -30,6 +32,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class BlackTigerService implements IBlackTigerService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(BlackTigerService.class);
     private AsteriskServer asteriskServer;
     private JdbcTemplate jdbcTemplate;
     private UserMapper userMapper = new UserMapper();
@@ -85,6 +88,7 @@ public class BlackTigerService implements IBlackTigerService {
 
     @Override
     public List<Participant> listParticipants(String roomNo) {
+        LOG.debug("Listing participants. [room={}]", roomNo);
         checkRoomAccess(roomNo);
         MeetMeRoom room = asteriskServer.getMeetMeRoom(roomNo);
         List<Participant> result = new ArrayList<Participant>();
@@ -97,6 +101,7 @@ public class BlackTigerService implements IBlackTigerService {
 
     @Override
     public Participant getParticipant(String roomNo, String participantId) {
+        LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, participantId);
         checkRoomAccess(roomNo);
         MeetMeUser mmu = getMeetMeUser(roomNo, participantId);
         return mmu == null ? null : participantFromMeetMeUser(mmu);
@@ -166,6 +171,8 @@ public class BlackTigerService implements IBlackTigerService {
         }
     }
     private boolean hasRole(String role) {
+        LOG.debug("Checking if current user has role '{}'", role);
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth!=null && auth.isAuthenticated()) {
             for(GrantedAuthority ga : auth.getAuthorities()) {
@@ -174,6 +181,7 @@ public class BlackTigerService implements IBlackTigerService {
                 }
             }
         }
+        LOG.debug("User does not have role. [auth={}]", auth);
         return false;
     }
 }

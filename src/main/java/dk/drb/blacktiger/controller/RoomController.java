@@ -5,12 +5,11 @@ package dk.drb.blacktiger.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.AsyncContext;
@@ -20,6 +19,8 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.service.BlackTigerEventListener;
 import dk.drb.blacktiger.service.IBlackTigerService;
 import dk.drb.blacktiger.service.ParticipantEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +36,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RoomController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
     private final IBlackTigerService service;
-    private final List<ChangeListenerEntry> changeListeners = new ArrayList<ChangeListenerEntry>();
+    private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
     private final BlackTigerEventListener tigerEventListener = new BlackTigerEventListener() {
         @Override
         public void onParticipantEvent(ParticipantEvent event) {
             String roomNo = event.getRoomNo();
+            LOG.debug("Recieved event for room '{}'.", roomNo);
 
             List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
             Iterator<ChangeListenerEntry> it = clonedList.iterator();
@@ -58,6 +61,7 @@ public class RoomController {
                 }
             }
             
+            LOG.debug("Removing {} listeners.", clonedList.size());
             changeListeners.removeAll(clonedList);
 
         }
@@ -94,6 +98,7 @@ public class RoomController {
 
     @RequestMapping(value = "/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
+        LOG.debug("Adding new listener [remoteIp={};roomNo={}]", request.getRemoteAddr(), roomNo);
         AsyncContext asyncContext = request.startAsync();
         asyncContext.setTimeout(60000);
         changeListeners.add(new ChangeListenerEntry(asyncContext, roomNo));
@@ -102,18 +107,21 @@ public class RoomController {
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
     public List<Participant> showRoomAsJson(@PathVariable final String roomNo) {
+        LOG.debug("Got JSON request for room '{}'.", roomNo);
         return service.listParticipants(roomNo);
     }
 
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
     @ResponseBody
     public Participant showParticipanteAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
+        LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
         return service.getParticipant(roomNo, participantId);
     }
 
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int kickParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
+        LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
         service.kickParticipant(roomNo, participantId);
         return 1;
     }
@@ -121,6 +129,7 @@ public class RoomController {
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int muteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
+        LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
         service.kickParticipant(roomNo, participantId);
         return 1;
     }
@@ -128,6 +137,7 @@ public class RoomController {
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int unmuteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
+        LOG.debug("Unmuting participant in room [room={};participant={}].", roomNo, participantId);
         service.kickParticipant(roomNo, participantId);
         return 1;
     }
@@ -145,7 +155,7 @@ public class RoomController {
             response.getOutputStream().close();
             response.flushBuffer();
         } catch (IOException ex) {
-            Logger.getLogger(RoomController.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.info("Unable to respond.", ex);
         }
     }
 }
