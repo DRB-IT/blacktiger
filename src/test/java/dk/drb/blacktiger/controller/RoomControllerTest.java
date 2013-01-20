@@ -3,87 +3,31 @@
  */
 package dk.drb.blacktiger.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.User;
-import dk.drb.blacktiger.service.BlackTigerEventListener;
-import dk.drb.blacktiger.service.IBlackTigerService;
-import dk.drb.blacktiger.service.ParticipantEvent;
-import dk.drb.blacktiger.service.ParticipantJoinEvent;
-import org.junit.*;
+import static org.junit.Assert.*;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.web.servlet.ModelAndView;
-import static org.junit.Assert.*;
 
 /**
  *
  */
 public class RoomControllerTest {
     
-    private class MockService implements IBlackTigerService {
-
-        private List<BlackTigerEventListener> eventListeners = new ArrayList<BlackTigerEventListener>();
+    @Test
+    public void testKick() {
+        MockService service = new MockService();
+        String roomNo = "123";
+        RoomController instance = new RoomController(service);
+        instance.init();
         
-        @Override
-        public User getUser(String username) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public List<Participant> listParticipants(String roomNo) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public Participant getParticipant(String roomNo, String participantId) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void kickParticipant(String roomNo, String participantId) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void muteParticipant(String roomNo, String participantId) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void unmuteParticipant(String roomNo, String participantId) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void addEventListener(BlackTigerEventListener listener) {
-            eventListeners.add(listener);
-        }
-
-        @Override
-        public void removeEventListener(BlackTigerEventListener listener) {
-            eventListeners.remove(listener);
-        }
-        
-        public void fireJoinEvent(String room, String participantId) {
-            ParticipantEvent event = new ParticipantJoinEvent(room, participantId);
-            for(BlackTigerEventListener el : eventListeners) {
-                el.onParticipantEvent(event);
-            }
-        }
-        
+        assertEquals(0, instance.showRoomAsJson("09991").size());
+        service.addParticipant(new Participant("123", "12341234", true));
+        assertEquals(1, instance.showRoomAsJson("09991").size());
+        service.kickParticipant("09991", "123");
     }
-
     
-
-    /**
-     * Test of listenForChange method, of class RoomController.
-     */
     @Test
     @Ignore
     public void testListenForChange() {

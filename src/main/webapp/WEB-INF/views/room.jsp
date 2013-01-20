@@ -101,7 +101,13 @@
                                         <td>${p.userId}</td>
                                         <td>${p.phoneNumber}</td>
                                         <td>${p.muted}</td>
-                                        <td><button class='btn button-kick-user' data-userid='${p.userId}'>Læg p&aring;</button></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn button-mute-user" data-userid='${p.userId}'>Mute</button>
+                                                <button class='btn button-kick-user' data-userid='${p.userId}'>Læg p&aring;</button>
+
+                                            </div>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
