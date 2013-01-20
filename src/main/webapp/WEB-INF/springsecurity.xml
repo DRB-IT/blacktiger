@@ -9,7 +9,7 @@
 
            <!-- Admin, PrivateApiAccessor, PublicApiAccessor, Merchant -->
     
-    <http>
+    <http disable-url-rewriting="true">
         <intercept-url pattern="/data/**" access="ROLE_USER" />
         
         <form-login/>
