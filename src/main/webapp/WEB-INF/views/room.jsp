@@ -17,12 +17,30 @@
         <script>
             var roomid = "09991";
             
+            function buildMuteButton(participant) {
+                if(participant.muted) {
+                    return "<button class='btn button-unmute-user' data-userid='" + participant.userId + "'><i class='icon-comment'></i></button>";
+                } else {
+                    return "<button class='btn button-mute-user' data-userid='" + participant.userId + "'><i class='icon-volume-off'></i></button>";
+                }
+            }
+            
             function listUsers() {
                 BlackTiger.listParticipants(roomid, function(data) {
                     var html = ""
                     for(var i = 0; i<data.length; i++) {
                         var p = data[i];
-                        html += "<tr><td>" + p.userId + "</td><td>" + p.phoneNumber + "</td><td>" + p.muted + "</td><td><button class='btn button-kick-user' data-userid='" + p.userId + "'>Læg p&aring;</button></td></tr>";
+                        html += "<tr>"
+                                + "<td>" + p.userId + "</td>"
+                                + "<td>" + p.phoneNumber + "</td>"
+                                + "<td>"
+                                + "<div class='btn-group'>"
+                                + "<button class='btn button-edit-user' data-userid='" + p.userId + "'><i class='icon-pencil'></i></button>"
+                                + buildMuteButton(p)
+                                + "<button class='btn button-kick-user' data-userid='" + p.userId + "'><i class='icon-remove'></i></button>"
+                                + "</div>"
+                                + "</td>"
+                                + "</tr>";
                     }
                     $("#participant-table tbody").html(html);
                 });
@@ -32,11 +50,11 @@
                 BlackTiger.kickParticipant(roomid, userid, listUsers);
             }
             
-            function mute() {
+            function mute(userid) {
                 BlackTiger.setParticipantMuteness(roomid, userid, true);
             }
             
-            function unMute() {
+            function unMute(userid) {
                 BlackTiger.setParticipantMuteness(roomid, userid, false);
             }
             
@@ -53,9 +71,19 @@
                 $('#participant-table').on('click',' .button-kick-user', function() {
                     kick($(this).attr('data-userid'));
                 });
+                
+                $('#participant-table').on('click',' .button-mute-user', function() {
+                    mute($(this).attr('data-userid'));
+                    setTimeout(listUsers, 100);
+                });
+                
+                $('#participant-table').on('click',' .button-unmute-user', function() {
+                    unMute($(this).attr('data-userid'));
+                    setTimeout(listUsers, 100);
+                });
 
                 BlackTiger.init("<c:url value="/data"/>");
-                
+                listUsers();
                 handleChanges();
                 
 
@@ -65,7 +93,7 @@
     </head>
     <body>
         <div class="container">
-            <!--[if lt IE 8]> <div class='alert'><b>SERVICEMEDDELELSE:</b> Du bruger en forældet version af Internet Explorer. <a href="http://windows.microsoft.com/da-DK/internet-explorer/products/ie/home" traget="_blank">Opgradér til den nyeste version</a>.</div> <![endif]-->
+            <!--[if lt IE 8]> <div class='alert'><b>SERVICEMEDDELELSE:</b> Du bruger en forældet version af Internet Explorer. <a href="http://windows.microsoft.com/da-DK/internet-explorer/products/ie/home" target="_blank">Opgradér til den nyeste version</a>.</div> <![endif]-->
             <header>
                 <div class="row" id="headerContent">
                     <div class="span3" id="headerLogo"><span>TeleSal</span></div>
@@ -78,7 +106,7 @@
                         <ul class="mainMenu">
                             <li><a href="../lyttere-nu" class="selected">Lyttere nu</a></li>
                             <li><a href="../rapport">Lytterrapport</a></li>
-                            <li><a href="/wiki">Hjælp</a></li>
+                            <li><a href="/wiki">Hj&aelig;lp</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -91,17 +119,13 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nummer</th>
-                                    <th>Muted</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="p" items="${participants}">
                                     <tr>
-                                        <td>${p.userId}</td>
-                                        <td>${p.phoneNumber}</td>
-                                        <td>${p.muted}</td>
-                                        <td><button class='btn button-kick-user' data-userid='${p.userId}'>Læg p&aring;</button></td>
+                                        <td colspan="3">Indl&aelige;ser brugere</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

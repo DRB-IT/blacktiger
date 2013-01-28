@@ -43,8 +43,17 @@ var BlackTiger = new function() {
     }
     
     this.kickParticipant = function(roomid, userid, callback) {
+        this.callParticipantMethod(roomid, userid, "kick", callback)
+    }
+    
+    this.setParticipantMuteness = function(roomid, userid, muted, callback) {
+        var method = muted == true ? "mute" : "unmute";
+        this.callParticipantMethod(roomid, userid, method, callback)
+    }
+    
+    this.callParticipantMethod = function(roomid, userid, method, callback) {
         $.ajax({
-            url: serviceUrl + "/rooms/" + roomid + "/" + userid + "/kick",
+            url: serviceUrl + "/rooms/" + roomid + "/" + userid + "/" + method,
             type: "POST",
             headers: { 
                 Accept : "application/json"
@@ -52,23 +61,6 @@ var BlackTiger = new function() {
         }).done(function (data) {
             if (!(typeof callback === 'undefined')) {
                 callback();
-            }
-        });
-    }
-    
-    this.setParticipantMuteness = function(roomid, userid, muted, callback) {
-        muted = muted == true;
-        $.ajax({
-            url: serviceUrl + "/rooms/" + roomid + "/" + userid,
-            type: "POST",
-            dataType: 'json',
-            data: '{"muted": ' + muted + '}',
-            headers: { 
-                Accept : "application/json"
-            }
-        }).done(function (data) {
-            if (!(typeof callback === 'undefined')) {
-                callback(data);
             }
         });
     }

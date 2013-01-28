@@ -130,7 +130,7 @@ public class RoomController {
     @ResponseBody
     public int muteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
-        service.kickParticipant(roomNo, participantId);
+        service.muteParticipant(roomNo, participantId);
         return 1;
     }
 
@@ -138,7 +138,7 @@ public class RoomController {
     @ResponseBody
     public int unmuteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Unmuting participant in room [room={};participant={}].", roomNo, participantId);
-        service.kickParticipant(roomNo, participantId);
+        service.unmuteParticipant(roomNo, participantId);
         return 1;
     }
 

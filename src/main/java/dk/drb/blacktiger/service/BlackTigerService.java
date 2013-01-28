@@ -138,7 +138,7 @@ public class BlackTigerService implements IBlackTigerService {
         MeetMeRoom room = asteriskServer.getMeetMeRoom(roomNo);
         Integer id = Integer.parseInt(participantId);
         for (MeetMeUser mmu : room.getUsers()) {
-            if (mmu.getUserNumber() == id) {
+            if (mmu.getUserNumber().equals(id)) {
                 return mmu;
             }
         }
@@ -148,7 +148,8 @@ public class BlackTigerService implements IBlackTigerService {
     private Participant participantFromMeetMeUser(MeetMeUser user) {
         return new Participant(user.getUserNumber().toString(),
                 user.getChannel().getCallerId().getNumber(),
-                user.isMuted());
+                user.isMuted(),
+                user.getDateJoined());
     }
 
     @Override

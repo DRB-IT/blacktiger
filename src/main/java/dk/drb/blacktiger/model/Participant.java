@@ -4,6 +4,8 @@
 
 package dk.drb.blacktiger.model;
 
+import java.util.Date;
+
 /**
  * Javadoc
  */
@@ -11,12 +13,17 @@ public class Participant {
     private String userId;
     private boolean muted;
     private String phoneNumber;
+    private Date dateJoined;
     
-    public Participant(String userId, String phoneNumber, boolean muted) {
+    public Participant(String userId, String phoneNumber, boolean muted, Date dateJoined) {
         this.userId = userId;
         this.phoneNumber = phoneNumber;
         this.muted = muted;
         
+    }
+
+    public Date getDateJoined() {
+        return dateJoined;
     }
     
     public String getUserId() {
