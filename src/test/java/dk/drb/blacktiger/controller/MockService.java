@@ -64,7 +64,7 @@ public class MockService implements IBlackTigerService {
         while(it.hasNext()) {
             Participant p = it.next();
             if(p.getUserId() == participantId) {
-                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), true);
+                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), true, p.getDateJoined());
                 participants.set(participants.indexOf(p), newP);
                 break;
             }
@@ -77,7 +77,7 @@ public class MockService implements IBlackTigerService {
         while(it.hasNext()) {
             Participant p = it.next();
             if(p.getUserId() == participantId) {
-                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), false);
+                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), false, p.getDateJoined());
                 participants.set(participants.indexOf(p), newP);
                 break;
             }

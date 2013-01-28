@@ -3,6 +3,7 @@
  */
 package dk.drb.blacktiger.controller;
 
+import java.util.Date;
 import dk.drb.blacktiger.model.Participant;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
@@ -23,7 +24,7 @@ public class RoomControllerTest {
         instance.init();
         
         assertEquals(0, instance.showRoomAsJson("09991").size());
-        service.addParticipant(new Participant("123", "12341234", true));
+        service.addParticipant(new Participant("123", "12341234", true, new Date()));
         assertEquals(1, instance.showRoomAsJson("09991").size());
         service.kickParticipant("09991", "123");
     }
