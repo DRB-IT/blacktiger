@@ -126,6 +126,7 @@
                                 <c:forEach var="p" items="${participants}">
                                     <tr>
                                         <td colspan="3">Indl&aelige;ser brugere</td>
+
                                     </tr>
                                 </c:forEach>
                             </tbody>
