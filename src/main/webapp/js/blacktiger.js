@@ -89,7 +89,7 @@ var BlackTiger = new function() {
             headers: { 
                 Accept : "application/json"
             }
-        }).done(function (data) {
+        }).always(function (data) {
             callback(data);
         });
     }

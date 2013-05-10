@@ -6,7 +6,7 @@ package dk.drb.blacktiger.service;
 import java.util.Date;
 import java.util.List;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.Call;
+import dk.drb.blacktiger.model.CallInformation;
 import dk.drb.blacktiger.model.User;
 
 /**
@@ -65,7 +65,7 @@ public interface IBlackTigerService {
      * @param minimumDuration The minimum duration in seconds for each call to include.
      * @return The list of archived calls.
      */
-    List<Call> getReport(Date start, Date end, int minimumDuration);
+    List<CallInformation> getReport(Date start, Date end, int minimumDuration);
     
     /**
      * Mutes a participant in a room.

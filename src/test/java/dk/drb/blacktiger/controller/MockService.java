@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import dk.drb.blacktiger.model.Call;
+import dk.drb.blacktiger.model.CallInformation;
 
 /**
  *
@@ -88,7 +88,7 @@ public class MockService implements IBlackTigerService {
     }
 
     @Override
-    public List<Call> getReport(Date start, Date end, int minimumDuration) {
+    public List<CallInformation> getReport(Date start, Date end, int minimumDuration) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

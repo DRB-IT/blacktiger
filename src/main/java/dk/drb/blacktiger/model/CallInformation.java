@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Javadoc
  */
-public class Call {
+public class CallInformation {
 
     private String phoneNumber;
     private String name;
@@ -17,7 +17,7 @@ public class Call {
     private int totalDuration;
     private Date firstCallTimestamp;
 
-    public Call(String phoneNumber, String name, int numberOfCalls, int totalDuration, Date firstCallTimestamp) {
+    public CallInformation(String phoneNumber, String name, int numberOfCalls, int totalDuration, Date firstCallTimestamp) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.numberOfCalls = numberOfCalls;

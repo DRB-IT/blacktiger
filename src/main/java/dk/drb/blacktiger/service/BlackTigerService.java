@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
-import dk.drb.blacktiger.model.Call;
+import dk.drb.blacktiger.model.CallInformation;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.User;
 import org.asteriskjava.live.AsteriskServer;
@@ -45,6 +45,7 @@ public class BlackTigerService implements IBlackTigerService {
     private JdbcTemplate callInfoJdbcTemplate;
     private UserMapper userMapper = new UserMapper();
     private PhoneBookEntryMapper phoneBookEntryMapper = new PhoneBookEntryMapper();
+    private CallInformationMapper callInformationMapper = new CallInformationMapper();
     
     private List<BlackTigerEventListener> eventListeners = new ArrayList<BlackTigerEventListener>();
     private ManagerEventListener managerEventListener = new ManagerEventListener() {
@@ -77,6 +78,19 @@ public class BlackTigerService implements IBlackTigerService {
         @Override
         public String mapRow(ResultSet rs, int rowNum) throws SQLException {
             return rs.getString("name");
+        }
+        
+    }
+    
+    private class CallInformationMapper implements RowMapper<CallInformation> {
+
+        @Override
+        public CallInformation mapRow(ResultSet rs, int rowNum) throws SQLException {
+            String phoneNumber = rs.getString("phoneNumber");
+            String name = getPhonebookEntry(phoneNumber);
+            phoneNumber = fromDbPhoneNumber(phoneNumber);
+            
+            return new CallInformation(phoneNumber, name, rs.getInt("numberOfCalls"), rs.getInt("totalDuration"), rs.getTimestamp("firstCallTimestamp"));
         }
         
     }
@@ -200,14 +214,16 @@ public class BlackTigerService implements IBlackTigerService {
     }
 
     @Override
-    public List<Call> getReport(Date start, Date end, int minimumDuration) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<CallInformation> getReport(Date start, Date end, int minimumDuration) {
+        String sql = "SELECT count(*) as numberOfCalls,src as phoneNumber, min(calldate) as firstCallTimeStamp,dcontext,sum(duration) as totalDuration "
+                    + "FROM cdr where calldate > ? and calldate < ?  group by src having totalDuration > ? and length(src) >=9";
+        return this.callInfoJdbcTemplate.query(sql, new Object[]{start, end, minimumDuration}, callInformationMapper);
     }
 
     @Override
     public String getPhonebookEntry(String phoneNumber) {
         try {
-            phoneNumber = convertPhoneNumberToDbPhoneNumber(phoneNumber);
+            phoneNumber = toDbPhoneNumber(phoneNumber);
             return this.callInfoJdbcTemplate.queryForObject("select * from ConfNames where phonenumber=?",
                 new Object[]{phoneNumber}, phoneBookEntryMapper);
         
@@ -219,7 +235,7 @@ public class BlackTigerService implements IBlackTigerService {
     @Override
     @Transactional
     public void updatePhonebookEntry(String phoneNumber, String name) {
-        phoneNumber = convertPhoneNumberToDbPhoneNumber(phoneNumber);
+        phoneNumber = toDbPhoneNumber(phoneNumber);
         
         boolean newEntry = getPhonebookEntry(phoneNumber) == null;
         
@@ -273,10 +289,18 @@ public class BlackTigerService implements IBlackTigerService {
         return PHONE_NUMBER_PATTERN.matcher(text).matches();
     }
     
-    private String convertPhoneNumberToDbPhoneNumber(String number) {
+    private String toDbPhoneNumber(String number) {
         if(number.startsWith("+")) {
             number = number.substring(1);
         }
         return number;
+    }
+    
+    private String fromDbPhoneNumber(String number) {
+        if(!number.startsWith("+")) {
+             number = "+" + number;   
+        }
+        return number;
+            
     }
 }

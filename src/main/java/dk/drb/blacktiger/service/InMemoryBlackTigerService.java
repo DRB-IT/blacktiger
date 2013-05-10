@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.Call;
+import dk.drb.blacktiger.model.CallInformation;
 import dk.drb.blacktiger.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,8 +177,8 @@ public class InMemoryBlackTigerService implements IBlackTigerService {
     }
 
     @Override
-    public List<Call> getReport(Date start, Date end, int minimumDuration) {
-        List<Call> calls = new ArrayList<Call>();
+    public List<CallInformation> getReport(Date start, Date end, int minimumDuration) {
+        List<CallInformation> calls = new ArrayList<CallInformation>();
         
         String phoneNumber1 = "22736623";
         String phoneNumber2 = "51923192";
@@ -186,8 +186,8 @@ public class InMemoryBlackTigerService implements IBlackTigerService {
         String name1 = getPhonebookEntry(phoneNumber1);
         String name2 = getPhonebookEntry(phoneNumber2);
         
-        Call call1 = new Call(phoneNumber1, name1, 1, 12321, new Date());
-        Call call2 = new Call(phoneNumber2, name2, 4, 234324, new Date());
+        CallInformation call1 = new CallInformation(phoneNumber1, name1, 1, 12321, new Date());
+        CallInformation call2 = new CallInformation(phoneNumber2, name2, 4, 234324, new Date());
         
         calls.add(call1);
         calls.add(call2);

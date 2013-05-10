@@ -4,6 +4,14 @@
 
 package dk.drb.blacktiger.controller;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import dk.drb.blacktiger.model.CallInformation;
+import dk.drb.blacktiger.service.IBlackTigerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +27,34 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ReportController {
 
+    @Autowired
+    private IBlackTigerService service;
+    
     @RequestMapping("/reports/{roomNo}")
-    public ModelAndView showReport(@PathVariable String roomNo) {
-        return new ModelAndView("report");
+    public ModelAndView showReport(@PathVariable String roomNo, @RequestParam(defaultValue = "0") int hourStart, 
+        @RequestParam(defaultValue = "24") int hourEnd, @RequestParam(defaultValue = "0") int duration) {
+        Date dateStart = new Date();
+        Date dateEnd = new Date();
+        duration*=60;
+        
+        //Adjust dates
+        dateStart.setHours(hourStart);
+        dateStart.setMinutes(0);
+        dateStart.setSeconds(0);
+        
+        dateEnd.setHours(hourEnd);
+        dateEnd.setMinutes(0);
+        dateEnd.setSeconds(0);
+        
+        List<CallInformation> callInfos = service.getReport(dateStart, dateEnd, duration);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("callInfos", callInfos);
+        model.put("roomNo", roomNo);
+        return new ModelAndView("report", model);
     }
     
     @RequestMapping("/reports")
-    public String redirectToReport(@PathVariable String roomNo) {
+    public String redirectToReport() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth != null && !(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/reports/" + auth.getName() + "1";

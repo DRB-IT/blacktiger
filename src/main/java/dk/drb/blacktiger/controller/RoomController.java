@@ -37,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class RoomController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
+    
     private final IBlackTigerService service;
     private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
     private final BlackTigerEventListener tigerEventListener = new BlackTigerEventListener() {
