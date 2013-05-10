@@ -7,8 +7,11 @@ import dk.drb.blacktiger.service.IBlackTigerService;
 import dk.drb.blacktiger.service.ParticipantEvent;
 import dk.drb.blacktiger.service.ParticipantJoinEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import dk.drb.blacktiger.model.Call;
 
 /**
  *
@@ -64,7 +67,7 @@ public class MockService implements IBlackTigerService {
         while(it.hasNext()) {
             Participant p = it.next();
             if(p.getUserId() == participantId) {
-                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), true, p.getDateJoined());
+                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), p.getPhoneNumber(), true, false, p.getDateJoined());
                 participants.set(participants.indexOf(p), newP);
                 break;
             }
@@ -77,13 +80,28 @@ public class MockService implements IBlackTigerService {
         while(it.hasNext()) {
             Participant p = it.next();
             if(p.getUserId() == participantId) {
-                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), false, p.getDateJoined());
+                Participant newP = new Participant(p.getUserId(), p.getPhoneNumber(), p.getPhoneNumber(), false, false, p.getDateJoined());
                 participants.set(participants.indexOf(p), newP);
                 break;
             }
         }
     }
 
+    @Override
+    public List<Call> getReport(Date start, Date end, int minimumDuration) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getPhonebookEntry(String phoneNumber) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updatePhonebookEntry(String phoneNumber, String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     @Override
     public void addEventListener(BlackTigerEventListener listener) {
         eventListeners.add(listener);

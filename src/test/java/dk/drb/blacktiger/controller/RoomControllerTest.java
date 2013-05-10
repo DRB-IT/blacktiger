@@ -24,7 +24,7 @@ public class RoomControllerTest {
         instance.init();
         
         assertEquals(0, instance.showRoomAsJson("09991").size());
-        service.addParticipant(new Participant("123", "12341234", true, new Date()));
+        service.addParticipant(new Participant("123", "12341234", "John Doe", true, false, new Date()));
         assertEquals(1, instance.showRoomAsJson("09991").size());
         service.kickParticipant("09991", "123");
     }

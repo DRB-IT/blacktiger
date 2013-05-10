@@ -6,9 +6,13 @@ package dk.drb.blacktiger.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
+
+import dk.drb.blacktiger.model.Call;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.User;
 import org.asteriskjava.live.AsteriskServer;
@@ -21,11 +25,13 @@ import org.asteriskjava.manager.event.MeetMeLeaveEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Javadoc
@@ -33,9 +39,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class BlackTigerService implements IBlackTigerService {
 
     private static final Logger LOG = LoggerFactory.getLogger(BlackTigerService.class);
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("\\d{9,12}");
     private AsteriskServer asteriskServer;
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate asteriskJdbcTemplate;
+    private JdbcTemplate callInfoJdbcTemplate;
     private UserMapper userMapper = new UserMapper();
+    private PhoneBookEntryMapper phoneBookEntryMapper = new PhoneBookEntryMapper();
+    
     private List<BlackTigerEventListener> eventListeners = new ArrayList<BlackTigerEventListener>();
     private ManagerEventListener managerEventListener = new ManagerEventListener() {
         @Override
@@ -61,6 +71,15 @@ public class BlackTigerService implements IBlackTigerService {
             return new User(rs.getString("id"), rs.getString("data"));
         }
     }
+    
+    private class PhoneBookEntryMapper implements RowMapper<String> {
+
+        @Override
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return rs.getString("name");
+        }
+        
+    }
 
     private void fireEvent(ParticipantEvent event) {
         for (BlackTigerEventListener listener : eventListeners) {
@@ -76,13 +95,17 @@ public class BlackTigerService implements IBlackTigerService {
         this.asteriskServer.getManagerConnection().addEventListener(managerEventListener);
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public void setAsteriskDataSource(DataSource dataSource) {
+        this.asteriskJdbcTemplate = new JdbcTemplate(dataSource);
+    }
+    
+    public void setCallInfoDataSource(DataSource dataSource) {
+        this.callInfoJdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public User getUser(String username) {
-        return (User) this.jdbcTemplate.queryForObject("select * from sip where id=? and keyword like 'secret'",
+        return (User) this.asteriskJdbcTemplate.queryForObject("select * from sip where id=? and keyword like 'secret'",
                 new Object[]{username}, userMapper);
     }
 
@@ -146,11 +169,71 @@ public class BlackTigerService implements IBlackTigerService {
     }
 
     private Participant participantFromMeetMeUser(MeetMeUser user) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String number = user.getChannel().getCallerId().getNumber();
+        boolean host = false; 
+        
+        //'number' is of syntax 'IP-<username>'. We have to take it into consideration when matching the number.
+        if(auth!=null && number.equalsIgnoreCase(auth.getName())) {
+            host = true;
+        }
+        
+        String phoneNumber = user.getChannel().getCallerId().getNumber();
+        String name = user.getChannel().getCallerId().getName();
+        
+        if(isNumber(name)) {
+            phoneNumber = name;
+            
+            //Ensure that phonenumber is international, eg. +4512341234
+            if(!phoneNumber.startsWith("+")) {
+                phoneNumber = "+" + phoneNumber;
+            }
+            name = getPhonebookEntry(phoneNumber);
+        }
+        
         return new Participant(user.getUserNumber().toString(),
-                user.getChannel().getCallerId().getNumber(),
+                name,
+                phoneNumber,
                 user.isMuted(),
+                host,
                 user.getDateJoined());
     }
+
+    @Override
+    public List<Call> getReport(Date start, Date end, int minimumDuration) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getPhonebookEntry(String phoneNumber) {
+        try {
+            phoneNumber = convertPhoneNumberToDbPhoneNumber(phoneNumber);
+            return this.callInfoJdbcTemplate.queryForObject("select * from ConfNames where phonenumber=?",
+                new Object[]{phoneNumber}, phoneBookEntryMapper);
+        
+        } catch(EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updatePhonebookEntry(String phoneNumber, String name) {
+        phoneNumber = convertPhoneNumberToDbPhoneNumber(phoneNumber);
+        
+        boolean newEntry = getPhonebookEntry(phoneNumber) == null;
+        
+        String sql;
+        if(newEntry) {
+            sql = "insert into ConfNames (name, phonenumber) values (?,?)";
+        } else {
+            sql = "update ConfNames set name=? where phonenumber = ?";
+        }
+        
+        this.callInfoJdbcTemplate.update(sql, new Object[]{name, phoneNumber});
+    }
+    
+    
 
     @Override
     public void addEventListener(BlackTigerEventListener listener) {
@@ -184,5 +267,16 @@ public class BlackTigerService implements IBlackTigerService {
         }
         LOG.debug("User does not have role. [auth={}]", auth);
         return false;
+    }
+    
+    private boolean isNumber(String text) {
+        return PHONE_NUMBER_PATTERN.matcher(text).matches();
+    }
+    
+    private String convertPhoneNumberToDbPhoneNumber(String number) {
+        if(number.startsWith("+")) {
+            number = number.substring(1);
+        }
+        return number;
     }
 }

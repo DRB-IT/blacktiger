@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,6 +55,7 @@ public class RoomController {
                         respondChanged((HttpServletResponse) ctx.getResponse(), true);
                         ctx.complete();
                     } catch (IllegalStateException ex) {
+                        LOG.debug("Unable to respond in async context.", ex);
                     }
                 } else {
                     it.remove();
@@ -117,6 +118,8 @@ public class RoomController {
         LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
         return service.getParticipant(roomNo, participantId);
     }
+    
+    
 
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
@@ -143,9 +146,17 @@ public class RoomController {
     }
 
     @RequestMapping("/rooms/{roomNo}")
-    public ModelAndView showRoom(@PathVariable final String roomNo) {
+    public ModelAndView showRoom(@PathVariable final String roomNo, @RequestParam(required = false) String mode) {
         final List<Participant> list = service.listParticipants(roomNo);
-        return new ModelAndView("room", "participants", list);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("participants", list);
+        model.put("roomNo", roomNo);
+        
+        if("sliced".equals(mode)) {
+            return new ModelAndView("inc/participantscontent", model);
+        } else {
+            return new ModelAndView("participants", model);
+        }
     }
 
     private void respondChanged(HttpServletResponse response, boolean value) {
@@ -155,7 +166,7 @@ public class RoomController {
             response.getOutputStream().close();
             response.flushBuffer();
         } catch (IOException ex) {
-            LOG.info("Unable to respond.", ex);
+            LOG.debug("Unable to respond.", ex);
         }
     }
 }

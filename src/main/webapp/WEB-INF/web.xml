@@ -33,11 +33,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>site</servlet-name>
-        <url-pattern>/data/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>site</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <listener>

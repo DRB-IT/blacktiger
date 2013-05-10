@@ -12,16 +12,20 @@ import java.util.Date;
 public class Participant {
     private String userId;
     private boolean muted;
+    private boolean host;
     private String phoneNumber;
     private Date dateJoined;
-    
-    public Participant(String userId, String phoneNumber, boolean muted, Date dateJoined) {
-        this.userId = userId;
-        this.phoneNumber = phoneNumber;
-        this.muted = muted;
-        
-    }
+    private String name;
 
+    public Participant(String userId, String name, String phoneNumber, boolean muted, boolean host, Date dateJoined) {
+        this.userId = userId;
+        this.muted = muted;
+        this.host = host;
+        this.phoneNumber = phoneNumber;
+        this.dateJoined = dateJoined;
+        this.name = name;
+    }
+    
     public Date getDateJoined() {
         return dateJoined;
     }
@@ -33,10 +37,17 @@ public class Participant {
     public boolean isMuted() {
         return this.muted;
     }
+
+    public boolean isHost() {
+        return host;
+    }
     
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-
+    public String getName() {
+        return name;
+    }
+    
 }

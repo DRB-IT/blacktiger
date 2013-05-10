@@ -8,6 +8,24 @@ var BlackTiger = new function() {
         }
     }
     
+    this.updatePhonebookEntry = function(phoneNumber, name, callback) {
+        $.ajax({
+            url: serviceUrl + "/phonebook/" + phoneNumber,
+            headers: { 
+                Accept : "application/json"
+            },
+            data: name,
+            type:"POST",
+            contentType:"plain/text"
+        }).fail(function(xhr, textStatus) {
+            if(xhr.status == 404) {
+                callback(0);
+            }
+        }).done(function (data) {
+            callback(data);
+        });
+    }
+    
     this.listParticipants = function(roomid, callback) {
         $.ajax({
             url: serviceUrl + "/rooms/" + roomid,
