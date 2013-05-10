@@ -71,11 +71,17 @@
             }
 
             function handleChanges() {
-                BlackTiger.waitForChanges(roomid, function() {
-                    setTimeout(function() {
-                        listUsers();
-                        handleChanges();
-                    }, 500);
+                BlackTiger.waitForChanges(roomid, function(data) {
+                    if (data == true || "true" == data) {
+                        setTimeout(function() {
+                            listUsers();
+                            handleChanges();
+                        }, 500);
+                    } else {
+                        setTimeout(function() {
+                            handleChanges();
+                        }, 500);
+                    }
                 });
             }
 
@@ -89,7 +95,7 @@
                 $('#testtest').on('click', function() {
                     alert();
                 });
-                
+
                 $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="edit-participant"]', function() {
                     var id = $(this).attr('data-id');
                     setNameEditable(id, true);
@@ -123,7 +129,7 @@
                 $('#ContentContainer').on('click', '#host-table-wrapper button[data-type="kick-participant"]', function() {
                     kick($(this).attr('data-id'));
                 });
-                
+
                 $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="kick-participant"]', function() {
                     kick($(this).attr('data-id'));
                 });
@@ -140,9 +146,9 @@
 
                 BlackTiger.init("<c:url value="/"/>");
                 handleChanges();
-                
+
                 log("Initalized");
-                
+
             }
 
             function setNameEditable(userId, editable) {
@@ -162,7 +168,7 @@
                     listUsers();
                 });
             }
-            
+
             function log(message) {
                 //console.log(message);
             }
