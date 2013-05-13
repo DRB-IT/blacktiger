@@ -7,7 +7,7 @@ package dk.drb.blacktiger.model;
 import java.util.Date;
 
 /**
- * Javadoc
+ * Defines a Participant in a conference room.
  */
 public class Participant {
     private String userId;
