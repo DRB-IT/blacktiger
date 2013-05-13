@@ -7,7 +7,7 @@ package dk.drb.blacktiger.model;
 import java.util.Date;
 
 /**
- * Javadoc
+ * Defines information about calls for a specific number for use in reports.
  */
 public class CallInformation {
 
