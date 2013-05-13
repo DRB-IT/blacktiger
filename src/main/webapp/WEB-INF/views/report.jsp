@@ -122,6 +122,14 @@
                 updatePhonebookEntryFromElement(number);
 
             });
+            
+            $('#ContentContainer').on('click', 'button[data-type="callinfo-name-cancel"]', function() {
+                var number = $(this).attr('data-number');
+                setNameEditable(number, false);
+
+                window.location.reload();
+
+            });
 
             function setNameEditable(number, editable) {
                 $('span[data-type="callinfo-name"][data-number="' + number + '"]').attr('contenteditable', editable);
