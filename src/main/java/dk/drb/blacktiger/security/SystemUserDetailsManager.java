@@ -18,7 +18,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 
 /**
- * Javadoc
+ * A UserDetailsService implementation for the users available via the IBlackTigerService.<br>
+ * <br>
+ * The UserDetails retrieved with be given 2 roles:<br>
+ * - ROLE_USER<br>
+ * - ROLE_ROOMACCESS_<username>1<br>
+ * <br>
+ * In other words for the user '1234' the roles will be: ROLE_USER & ROLE_ROOMACCESS_12341
  */
 public class SystemUserDetailsManager implements UserDetailsService {
 
