@@ -5,7 +5,7 @@
 package dk.drb.blacktiger.model;
 
 /**
- * Javadoc
+ * Defines a user in the system.
  */
 public class User {
     private String username;
