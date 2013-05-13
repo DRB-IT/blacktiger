@@ -1,6 +1,3 @@
-/*
- * Copyright by Apaq 2011-2013
- */
 package dk.drb.blacktiger.controller;
 
 import java.io.IOException;
@@ -31,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Javadoc
+ * Controller for conference rooms.
  */
 @Controller
 public class RoomController {

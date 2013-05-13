@@ -1,7 +1,3 @@
-/*
- * Copyright by Apaq 2011-2013
- */
-
 package dk.drb.blacktiger.security;
 
 import java.util.ArrayList;
@@ -15,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.provisioning.UserDetailsManager;
 
 /**
  * A UserDetailsService implementation for the users available via the IBlackTigerService.<br>

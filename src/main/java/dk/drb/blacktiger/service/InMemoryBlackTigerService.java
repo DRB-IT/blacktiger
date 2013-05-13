@@ -1,19 +1,7 @@
-/*
- * Copyright by Apaq 2011-2013
- */
-
 package dk.drb.blacktiger.service;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
+import java.util.*;
 
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.CallInformation;
@@ -23,7 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
- * Javadoc
+ * An implementation of <code>IBlackTigerService</code> for test use.<br>
+ * This implementation keeps all its data in memory and is great for testing the system without connecting to the backend systems.
  */
 public class InMemoryBlackTigerService implements IBlackTigerService {
 

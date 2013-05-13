@@ -1,7 +1,3 @@
-/*
- * Copyright by Apaq 2011-2013
- */
-
 package dk.drb.blacktiger.controller;
 
 import dk.drb.blacktiger.service.IBlackTigerService;
@@ -13,11 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Javadoc
+ * Controller for administering Phonebook entries.
  */
 @Controller
 public class PhonebookController {

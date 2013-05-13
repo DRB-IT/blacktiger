@@ -1,6 +1,3 @@
-/*
- * Copyright by Apaq 2011-2013
- */
 package dk.drb.blacktiger.controller;
 
 
@@ -11,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Javadoc
+ * Controller for landing page.
  */
 @Controller
 public class WelcomePageController {

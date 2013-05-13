@@ -1,13 +1,7 @@
-/*
- * Copyright by Apaq 2011-2013
- */
-
 package dk.drb.blacktiger.service;
 
-import dk.drb.blacktiger.model.Participant;
-
 /**
- * Javadoc
+ * Base abastract class for partipant events used by the <code>IBlackTigerService</code>.
  */
 public abstract class ParticipantEvent {
 

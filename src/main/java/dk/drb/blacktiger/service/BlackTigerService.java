@@ -1,13 +1,8 @@
-/*
- * Copyright by Apaq 2011-2013
- */
 package dk.drb.blacktiger.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
@@ -24,7 +19,6 @@ import org.asteriskjava.manager.event.MeetMeJoinEvent;
 import org.asteriskjava.manager.event.MeetMeLeaveEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,7 +28,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Javadoc
+ * An implementation of the <code>IBlackTigerService</code> which communicates with an asterisk server and mysql databases.<br>
+ * This implementation is customized the setup already setup before this system was developed.<br>
+ * It expects 2 mysql databases - The first one being an original asterisk database and the second one being a database with phonebook entries
+ * and statistical information. The latter has traditionally been called astersiskcdrdb but that name is optional to this implementation.
  */
 public class BlackTigerService implements IBlackTigerService {
 

@@ -1,13 +1,7 @@
-/*
- * Copyright by Apaq 2011-2013
- */
-
 package dk.drb.blacktiger.service;
 
-import dk.drb.blacktiger.model.Participant;
-
 /**
- * Javadoc
+ * A <code>ParticipantEvent</code> for when a <code>Participant</code> leaves a conference room.
  */
 public class ParticipantLeaveEvent extends ParticipantEvent {
 

@@ -1,7 +1,3 @@
-/*
- * Copyright by Apaq 2011-2013
- */
-
 package dk.drb.blacktiger.controller;
 
 import java.util.Date;
