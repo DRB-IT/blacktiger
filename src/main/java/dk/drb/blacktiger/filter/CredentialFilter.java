@@ -18,8 +18,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author michael
+ * A filter for supporting authenticating by supplying username/password via query parameters. <br>
+ * <br>
+ * This filter will listen for 2 query parameters - 'p' & 'k'.<br>
+ * p = username<br>
+ * k = password<br>
+ * <br>
+ * If both 'p' & 'k' is found in a request the wrapped in a way so that the username and password is available
+ * as if they were given as basic authentication, that is, as the Authorization header.
+ * 
+ * 
  */
 public class CredentialFilter implements Filter {
 
