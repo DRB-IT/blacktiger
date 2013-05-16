@@ -7,7 +7,7 @@
             <c:if test="${not participant.host}">
                 <c:set var="participantsDetected" value="true"/>
                 <c:set var="name" value="${participant.name}"/>
-                <c:if test="${empty name}"><c:set var="name" value="Ukendt"/></c:if>
+                <c:if test="${empty name}"><spring:message var="name" code="participantstable.unknown"/></c:if>
                 <tr <c:if test="${not participant.muted}">class="warning"</c:if>>
                     <td class="span2 participantNumber" data-type="participant-number" data-id="${participant.userId}" data-number="${participant.phoneNumber}">${participant.phoneNumber}</td>
                     <td class="participantName">

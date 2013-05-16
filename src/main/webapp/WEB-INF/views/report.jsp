@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
+<c:set var="area" value="report"/>
 <html lang="<c:out value="${pageContext.request.locale.language}"/>">
     <head>
         <title><spring:message code="system.name"/></title>
