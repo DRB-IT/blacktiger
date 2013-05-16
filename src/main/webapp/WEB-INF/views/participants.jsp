@@ -1,42 +1,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
-<html lang="da">
+<html lang="<c:out value="${pageContext.request.locale.language}"/>">
     <head>
-        <title>TeleSal</title>
-        <meta name="robots" content="none" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet" />
-        <link href="<c:url value="/css/bootstrap-responsive.min.css"/>" rel="stylesheet" />
-        <link href="<c:url value="/css/Basic.css"/>" rel="stylesheet" />
+        <title><spring:message code="system.name"/></title>
+        <%@include file="inc/headtags.jsp" %>
     </head>
     <body>
         <div class="container">
-            <div class="row" id="menuMain">
-                <div class="span12">
-                    <div class="navbar navbar-static-top navbar-inverse">
-                        <div class="navbar-inner">
-                            <span class="brand">TELESAL</span>
-                            <ul class="nav">
-                                <li class="active"><a href="<c:url value="/"/>">Lyttere nu</a></li>
-                                <!--li><a href="/play">Musik</a></li-->
-                                <li><a href="<c:url value="/reports"/>">Lytterrapport</a></li>
-                                <li><a href="/wiki">Hjælp</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <%@include file="inc/navigation.jsp" %>
             <div class="row" id="ContentContainer">
                 <%@include file="inc/participantscontent.jsp" %>
             </div>
-            <div class="row">
-                <div class="span12" id="FooterContainer">&copy; DRB</div>
-            </div>
+            <%@include file="inc/foot.jsp" %>
         </div>
-        <script src="<c:url value="/js/jquery-1.8.3.min.js"/>"></script>
-        <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/js/blacktiger.js"/>"></script>
+        <%@include file="inc/scripts.jsp" %>
         <script>
             var roomid = "${roomNo}";
 

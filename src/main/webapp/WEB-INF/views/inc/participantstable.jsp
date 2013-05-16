@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <table class="table table-striped table-hover participantsTable">
     <tbody>
         <c:forEach var="participant" items="${participants}">
@@ -12,22 +13,22 @@
                     <td class="participantName">
                         <span data-type="participant-name" data-id="${participant.userId}" contenteditable="false">${name}</span> 
                         <span data-type="participant-name-controls" data-id="${participant.userId}" class="hide">
-                            <button data-type="participant-name-save" data-id="${participant.userId}" class="btn btn-small" title="Gem"><i class="icon-ok"></i></button> 
-                            <button data-type="participant-name-cancel" data-id="${participant.userId}" class="btn btn-small" title="Annuller"><i class="icon-remove"></i></button>
+                            <button data-type="participant-name-save" data-id="${participant.userId}" class="btn btn-small" title="<spring:message code="general.save"/>"><i class="icon-ok"></i></button> 
+                            <button data-type="participant-name-cancel" data-id="${participant.userId}" class="btn btn-small" title="<spring:message code="general.cancel"/>"><i class="icon-remove"></i></button>
                         </span>
-                        <c:if test="${not participant.muted}"><span class="label label-warning">Svarmikrofonen er åben</span></c:if></td>
+                        <c:if test="${not participant.muted}"><span class="label label-warning"><spring:message code="participantstable.info.unmuted"/></span></c:if></td>
                         <td class="span3 participantOptions">
                             <div class="btn-group">
-                                <button class="btn btn-small" title="Rediger" data-type="edit-participant" data-id="${participant.userId}"><i class="icon-pencil"></i></button>
+                                <button class="btn btn-small" title="<spring:message code="participantstable.edit"/>" data-type="edit-participant" data-id="${participant.userId}"><i class="icon-pencil"></i></button>
                                 <c:choose>
                                     <c:when test="${participant.muted}">
-                                    <button class="btn btn-small" title="Åben svarmikrofon" data-type="unmute-participant" data-id="${participant.userId}"><i class="icon-comment"></i></button>
+                                    <button class="btn btn-small" title="<spring:message code="participantstable.unmute"/>" data-type="unmute-participant" data-id="${participant.userId}"><i class="icon-comment"></i></button>
                                     </c:when>
                                     <c:otherwise>
-                                    <button class="btn btn-small btn-warning" title="Luk svarmikrofon" data-type="mute-participant" data-id="${participant.userId}"><i class="icon-volume-off"></i></button>
+                                    <button class="btn btn-small btn-warning" title="<spring:message code="participantstable.mute"/>" data-type="mute-participant" data-id="${participant.userId}"><i class="icon-volume-off"></i></button>
                                     </c:otherwise>
                                 </c:choose>
-                            <button class="btn btn-small" title="Afbryd lytter" data-type="kick-participant" data-id="${participant.userId}"><i class="icon-remove"></i></button>
+                            <button class="btn btn-small" title="<spring:message code="participantstable.kick"/>" data-type="kick-participant" data-id="${participant.userId}"><i class="icon-remove"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -37,7 +38,7 @@
         <c:if test="${not participantsDetected}">
             <tr>
                 <td>
-                    Der er pt. ingen lyttere.
+                    <spring:message code="participantstable.info.no_participants"/>
                 </td>
             </tr>
         </c:if>
