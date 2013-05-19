@@ -12,7 +12,7 @@
         <intercept-url pattern="/rooms/**" access="ROLE_USER" />
         <intercept-url pattern="/reports/**" access="ROLE_USER" />
         
-        <form-login/>
+        <form-login login-page="/login"/>
         <http-basic/>
     </http>
 
