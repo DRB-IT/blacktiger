@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <c:set var="area" value="report"/>
@@ -24,49 +25,22 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><input type="text" value="2013-05-10" disabled class="input-small"></b></td>
+                                <td><input type="text" value="<fmt:formatDate value="${reportDate}" type="date" dateStyle="short"/>" disabled class="input-small"></b></td>
                                 <td>
                                     <select name="hourStart" class="input-small">
-                                        <option selected value="0">00:00</option>
-                                        <option value="6">06:00</option>
-                                        <option value="7">07:00</option>
-                                        <option value="8">08:00</option>
-                                        <option value="9">09:00</option>
-                                        <option value="10">10:00</option>
-                                        <option value="11">11:00</option>
-                                        <option value="12">12:00</option>
-                                        <option value="13">13:00</option>
-                                        <option value="14">14:00</option>
-                                        <option value="15">15:00</option>
-                                        <option value="16">16:00</option>
-                                        <option value="17">17:00</option>
-                                        <option value="18">18:00</option>
-                                        <option value="19">19:00</option>
-                                        <option value="20">20:00</option>
+                                        <c:forEach var="entry" items="0,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20">
+                                            <option <c:if test="${entry==reportHourStart}">selected</c:if> value="${entry}">${entry}:00</option>
+                                        </c:forEach>
                                     </select>
                                 </td>
                                 <td>
                                     <select name="hourEnd" class="input-small">
-                                        <option value="8">07:59</option>
-                                        <option value="9">08:59</option>
-                                        <option value="10">09:59</option>
-                                        <option value="11">10:59</option>
-                                        <option value="12">11:59</option>
-                                        <option value="13">12:59</option>
-                                        <option value="14">13:59</option>
-                                        <option value="15">14:59</option>
-                                        <option value="16">15:59</option>
-                                        <option value="17">16:59</option>
-                                        <option value="18">17:59</option>
-                                        <option value="19">18:59</option>
-                                        <option value="20">19:59</option>
-                                        <option value="21">20:59</option>
-                                        <option value="22">21:59</option>
-                                        <option value="23">22:59</option>
-                                        <option value="24" selected>23:59</option>
+                                        <c:forEach var="entry" items="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24">
+                                            <option <c:if test="${entry==reportHourEnd}">selected</c:if> value="${entry}">${entry}:00</option>
+                                        </c:forEach>
                                     </select>
                                 </td>
-                                <td><input type="number" name="duration" class="input-small" value="0" ></td>
+                                <td><input type="number" name="duration" class="input-small" value="${reportMinimumDuration}" ></td>
                                 <td><button class="btn"><spring:message code="general.ok"/></button></td>
                             </tr>
                         </table>

@@ -31,7 +31,7 @@ public class ReportController {
         @RequestParam(defaultValue = "24") int hourEnd, @RequestParam(defaultValue = "0") int duration) {
         Date dateStart = new Date();
         Date dateEnd = new Date();
-        duration*=60;
+        int durationInSeconds = duration*60;
         
         //Adjust dates
         dateStart.setHours(hourStart);
@@ -42,10 +42,14 @@ public class ReportController {
         dateEnd.setMinutes(0);
         dateEnd.setSeconds(0);
         
-        List<CallInformation> callInfos = service.getReport(dateStart, dateEnd, duration);
+        List<CallInformation> callInfos = service.getReport(dateStart, dateEnd, durationInSeconds);
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("callInfos", callInfos);
         model.put("roomNo", roomNo);
+        model.put("reportDate", dateStart);
+        model.put("reportHourStart",hourStart);
+        model.put("reportHourEnd",hourEnd);
+        model.put("reportMinimumDuration",duration);
         return new ModelAndView("report", model);
     }
     
