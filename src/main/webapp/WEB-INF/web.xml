@@ -15,12 +15,21 @@
         <filter-class>dk.drb.blacktiger.filter.CredentialFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
+    <filter>
+        <filter-name>HttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
     <filter-mapping>
         <filter-name>CredentialFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>HttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     

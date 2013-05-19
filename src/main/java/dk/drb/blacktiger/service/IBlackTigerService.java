@@ -53,7 +53,13 @@ public interface IBlackTigerService {
      * @param phoneNumber The number to change the name for.
      * @param name The new name for the entry.
      */
-    void updatePhonebookEntry(String phoneNumber, String name) ;
+    void updatePhonebookEntry(String phoneNumber, String name);
+    
+    /**
+     * Removes a phonenumber from the phonebook.
+     * @param phoneNumber The number to remove the entry for.
+     */
+    void removePhonebookEntry(String phoneNumber);
     
     /**
      * Retrieves a list of archived calls.

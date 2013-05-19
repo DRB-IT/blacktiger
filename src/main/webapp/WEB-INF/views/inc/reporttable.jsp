@@ -20,10 +20,12 @@
         <c:forEach var="callinfo" items="${callInfos}">
             <c:set var="durationSum" value="${durationSum + callinfo.totalDuration}"/>
             <c:set var="callSum" value="${callSum + callinfo.numberOfCalls}"/>
+            <c:set var="name" value="${callinfo.name}"/>
+            <c:if test="${empty name}"><spring:message var="name" code="participantstable.unknown"/></c:if>
             <tr>
                 <td class="participantNumber">${callinfo.phoneNumber}</td>
                 <td class="participantName">
-                    <span contenteditable="false" data-type="callinfo-name" data-number="${callinfo.phoneNumber}">${callinfo.name}</span>
+                    <span contenteditable="false" data-type="callinfo-name" data-number="${callinfo.phoneNumber}">${name}</span>
                     <span data-type="callinfo-name-controls" data-number="${callinfo.phoneNumber}" class="hide">
                         <button data-type="callinfo-name-save" data-number="${callinfo.phoneNumber}" class="btn btn-small" title="<spring:message code="general.save"/>"><i class="icon-ok"></i></button> 
                         <button data-type="callinfo-name-cancel" data-number="${callinfo.phoneNumber}" class="btn btn-small" title="<spring:message code="general.cancel"/>"><i class="icon-remove"></i></button>

@@ -144,9 +144,12 @@
             function updatePhonebookEntryFromElement(id) {
                 var phone = $('*[data-type="participant-number"][data-id="' + id + '"]').attr('data-number');
                 var name = $('span[data-type="participant-name"][data-id="' + id + '"]').text();
-                BlackTiger.updatePhonebookEntry(phone, name, function() {
-                    listUsers();
-                });
+                
+                if("" === name) {
+                    BlackTiger.removePhonebookEntry(phone, listUsers);
+                } else {
+                    BlackTiger.updatePhonebookEntry(phone, name, listUsers);
+                }
             }
 
             function log(message) {

@@ -245,9 +245,13 @@ public class BlackTigerService implements IBlackTigerService {
         
         this.callInfoJdbcTemplate.update(sql, new Object[]{name, phoneNumber});
     }
-    
-    
 
+    @Override
+    public void removePhonebookEntry(String phoneNumber) {
+        String sql = "delete from ConfNames where phonenumber = ?";
+        this.callInfoJdbcTemplate.update(sql, new Object[]{phoneNumber});
+    }
+    
     @Override
     public void addEventListener(BlackTigerEventListener listener) {
         if (listener != null) {

@@ -193,6 +193,13 @@ public class InMemoryBlackTigerService implements IBlackTigerService {
     public void updatePhonebookEntry(String phoneNumber, String name) {
         phonebook.put(phoneNumber, name);
     }
+
+    @Override
+    public void removePhonebookEntry(String phoneNumber) {
+        phonebook.remove(phoneNumber);
+    }
+    
+    
     
     private void fireJoinEvent(String userId) {
         for(BlackTigerEventListener l : eventListeners) {

@@ -25,8 +25,16 @@ public class PhonebookController {
     @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int updatePhonebookEntryAsJson(@PathVariable final String number, @RequestBody String name) {
-        LOG.debug("Updating phonebook entry. [number={}; name={}]", number, name);
+        LOG.info("Updating phonebook entry. [number={}; name={}]", number, name);
         service.updatePhonebookEntry(number, name);
+        return 1;
+    }
+    
+    @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @ResponseBody
+    public int removePhonebookEntryAsJson(@PathVariable final String number) {
+        LOG.info("Removing phonebook entry. [number={}]", number);
+        service.removePhonebookEntry(number);
         return 1;
     }
     

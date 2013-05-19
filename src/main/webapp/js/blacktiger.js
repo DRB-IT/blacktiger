@@ -26,6 +26,22 @@ var BlackTiger = new function() {
         });
     }
     
+    this.removePhonebookEntry = function(phoneNumber, callback) {
+        $.ajax({
+            url: serviceUrl + "/phonebook/" + phoneNumber + "?_method=DELETE",
+            headers: { 
+                Accept : "application/json"
+            },
+            type:"POST"
+        }).fail(function(xhr, textStatus) {
+            if(xhr.status == 404) {
+                callback(0);
+            }
+        }).done(function (data) {
+            callback(data);
+        });
+    }
+    
     this.listParticipants = function(roomid, callback) {
         $.ajax({
             url: serviceUrl + "/rooms/" + roomid,

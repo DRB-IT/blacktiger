@@ -123,9 +123,17 @@
 
             function updatePhonebookEntryFromElement(number) {
                 var name = $('span[data-type="callinfo-name"][data-number="' + number + '"]').text();
-                BlackTiger.updatePhonebookEntry(number, name, function() {
-
-                });
+                
+                var callback = function() {
+                    window.location.reload();
+                }
+                
+                if("" === name) {
+                    BlackTiger.removePhonebookEntry(number, callback);
+                } else {
+                    BlackTiger.updatePhonebookEntry(number, name, callback);
+                }
+                
             }
             
             BlackTiger.init("<c:url value="/"/>");
