@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
-<html lang="da">
+<html lang="<c:out value="${pageContext.request.locale.language}"/>">
   <head>
     <meta charset="utf-8" />
     <title>TeleSal</title>
