@@ -19,6 +19,7 @@ import dk.drb.blacktiger.service.ParticipantEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,22 +35,34 @@ import org.springframework.web.servlet.ModelAndView;
 public class RoomController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
+    private static final long ASYNC_TIMEOUT = 30000;
     
     private final IBlackTigerService service;
     private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
-    private final BlackTigerEventListener tigerEventListener = new BlackTigerEventListener() {
+    private final ChangeReporter changeReporter = new ChangeReporter();
+    
+    /**
+     * Class for reporting changes to awaiting Http Requests.
+     */
+    private class ChangeReporter implements BlackTigerEventListener {
+        
         @Override
         public void onParticipantEvent(ParticipantEvent event) {
             String roomNo = event.getRoomNo();
             LOG.debug("Recieved event for room '{}'.", roomNo);
 
+            // We built a clone of changelisteners. We then remove those we dont havent handled yet.
+            // In the end we remove those left in the closed list as those are the ones we have handled.
             List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
             Iterator<ChangeListenerEntry> it = clonedList.iterator();
+            long now = System.currentTimeMillis();
+            
             while (it.hasNext()) {
                 ChangeListenerEntry entry = it.next();
+                AsyncContext ctx = entry.getAsyncContext();
                 if (entry.getRoomNo().equals(roomNo)) {
                     try {
-                        AsyncContext ctx = entry.getAsyncContext();
+                        LOG.debug("Responded with a change. [room={}, remoteIp={}]", roomNo, ctx.getRequest().getRemoteAddr());
                         respondChanged((HttpServletResponse) ctx.getResponse(), true);
                         ctx.complete();
                     } catch (IllegalStateException ex) {
@@ -64,16 +77,21 @@ public class RoomController {
             changeListeners.removeAll(clonedList);
 
         }
-    };
+    }
 
+    /**
+     * Entry for awaiting HttpRequest.
+     */
     private class ChangeListenerEntry {
 
         private AsyncContext asyncContext;
         private String roomNo;
+        private final long timestamp;
 
         public ChangeListenerEntry(AsyncContext asyncContext, String roomNo) {
             this.asyncContext = asyncContext;
             this.roomNo = roomNo;
+            this.timestamp = System.currentTimeMillis();
         }
 
         public AsyncContext getAsyncContext() {
@@ -83,6 +101,11 @@ public class RoomController {
         public String getRoomNo() {
             return roomNo;
         }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+        
     }
 
     @Autowired
@@ -92,9 +115,14 @@ public class RoomController {
 
     @PostConstruct
     public void init() {
-        service.addEventListener(tigerEventListener);
+        service.addEventListener(changeReporter);
     }
 
+    /**
+     * Accepts requests for changes. 
+     * This method add the Http Request to a queue and frees the thread handling the request.
+     * Another thread will handle the request later on.
+     */
     @RequestMapping(value = "/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
         LOG.debug("Adding new listener [remoteIp={};roomNo={}]", request.getRemoteAddr(), roomNo);
@@ -155,6 +183,28 @@ public class RoomController {
         } else {
             return new ModelAndView("participants", model);
         }
+    }
+    
+    @Scheduled(fixedDelay = 5000)
+    public void updateRequests() {
+        List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
+        Iterator<ChangeListenerEntry> it = clonedList.iterator();
+        long now = System.currentTimeMillis();
+        
+        while(it.hasNext()) {
+            ChangeListenerEntry entry = it.next();
+            AsyncContext ctx = entry.getAsyncContext();
+                
+            if(now-entry.getTimestamp() > ASYNC_TIMEOUT) {
+                LOG.debug("Responded with not change. The request timed out. [remoteIp={}]", ctx.getRequest().getRemoteAddr());
+                respondChanged((HttpServletResponse) ctx.getResponse(), false);
+            } else {
+                it.remove();
+            }
+        }
+        
+        changeListeners.removeAll(clonedList);
+         
     }
 
     private void respondChanged(HttpServletResponse response, boolean value) {

@@ -22,6 +22,10 @@ public class PhonebookController {
     @Autowired
     private IBlackTigerService service;
     
+    /**
+     * Updates a phonebook entry taking the requestbody as new name.
+     * @return JSON Object with the value '1'.
+     */
     @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int updatePhonebookEntryAsJson(@PathVariable final String number, @RequestBody String name) {
@@ -30,6 +34,10 @@ public class PhonebookController {
         return 1;
     }
     
+    /**
+     * Removes a phone book entry.
+     * @return JSON Object with the value '1'.
+     */
     @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     @ResponseBody
     public int removePhonebookEntryAsJson(@PathVariable final String number) {
@@ -38,6 +46,11 @@ public class PhonebookController {
         return 1;
     }
     
+    /**
+     * 
+     * @param number Retrieves a number from the phone book.
+     * @return JSON Object with the number.
+     */
     @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public String getPhonebookEntryAsJson(@PathVariable final String number) {

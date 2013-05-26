@@ -23,4 +23,6 @@
 
     <beans:bean id="userDetailsManager" class="dk.drb.blacktiger.security.SystemUserDetailsManager" />
 
+    
+
 </beans:beans>

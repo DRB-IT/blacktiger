@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import dk.drb.blacktiger.model.CallInformation;
 import dk.drb.blacktiger.service.IBlackTigerService;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for editing reports.
+ * Controller for viewing reports.
  */
 @Controller
 public class ReportController {
@@ -29,18 +31,14 @@ public class ReportController {
     @RequestMapping("/reports/{roomNo}")
     public ModelAndView showReport(@PathVariable String roomNo, @RequestParam(defaultValue = "0") int hourStart, 
         @RequestParam(defaultValue = "24") int hourEnd, @RequestParam(defaultValue = "0") int duration) {
-        Date dateStart = new Date();
-        Date dateEnd = new Date();
+        Date dateStart = DateUtils.truncate(new Date(), Calendar.HOUR_OF_DAY);
+        Date dateEnd = DateUtils.truncate(new Date(), Calendar.HOUR_OF_DAY);
         int durationInSeconds = duration*60;
         
-        //Adjust dates
-        dateStart.setHours(hourStart);
-        dateStart.setMinutes(0);
-        dateStart.setSeconds(0);
         
-        dateEnd.setHours(hourEnd);
-        dateEnd.setMinutes(0);
-        dateEnd.setSeconds(0);
+        //Adjust dates
+        dateStart = DateUtils.setHours(dateStart, hourStart);
+        dateEnd = DateUtils.setHours(dateEnd, hourEnd);
         
         List<CallInformation> callInfos = service.getReport(dateStart, dateEnd, durationInSeconds);
         Map<String, Object> model = new HashMap<String, Object>();
