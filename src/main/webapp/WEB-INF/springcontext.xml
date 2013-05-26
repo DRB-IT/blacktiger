@@ -31,10 +31,10 @@
 
     <context:property-placeholder location="file:${user.home}/blacktiger.properties" ignore-resource-not-found="true"/>
     
-    <!--bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
-        <constructor-arg value="127.0.0.1"/>
-        <constructor-arg value="admin"/>
-        <constructor-arg value="amp111"/>
+    <bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
+        <constructor-arg value="${asterisk.host}"/>
+        <constructor-arg value="${asterisk.username}"/>
+        <constructor-arg value="${asterisk.password}"/>
     </bean>
        
     <bean id="callInfoDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
@@ -71,9 +71,9 @@
         <property name="asteriskServer" ref="asteriskServer"/>
         <property name="asteriskDataSource" ref="asteriskDataSource"/>
         <property name="callInfoDataSource" ref="callInfoDataSource"/>
-    </bean-->
+    </bean>
     
-    <bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/>
+    <!--bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/-->
     
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
