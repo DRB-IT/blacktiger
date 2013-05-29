@@ -2,7 +2,7 @@ var BlackTiger = new function() {
     
     var serviceUrl = "api";
     
-    this.init = function(url) {
+    this.init = function(serviceurl) {
         if(url != null) {
             serviceUrl = url;
         }
@@ -109,5 +109,6 @@ var BlackTiger = new function() {
             callback(data);
         });
     }
+
 
 }
