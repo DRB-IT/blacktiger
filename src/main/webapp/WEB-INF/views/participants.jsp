@@ -9,9 +9,26 @@
         <%@include file="inc/headtags.jsp" %>
     </head>
     <body>
+        <div id="songplayer" class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner" style="padding-left:20px;vertical-align: middle">
+                <a class="brand" href="#">Musik</a>
+                <div class="pull-left input-append" style="margin:0px;margin-top:5px">
+                    <input id="songplayer-number" type="number" value="1" min="1" max="135" class="input-mini" style="text-align: right">
+                    <button id="songplayer-play" class="btn"><i class="icon-play"></i></button>
+                    <button id="songplayer-stop" class="btn"><i class="icon-stop"></i></button>
+                    <button id="songplayer-random" class="btn"><i class="icon-random"></i></button>
+                </div>
+                <div id="songplayer-progress" class="pull-left progress progress-warning" style="margin:10px 20px;border:1px solid #bfbfbf;width:50px">
+                    <div class="bar" style="width: 0%;"></div>
+                </div>
+                <div id="songplayer-title" class="lead muted pull-left" style="margin:0px;margin-top:5px"></div> 
+            </div>
+        </div>
         <div class="container">
             <%@include file="inc/navigation.jsp" %>
+
             <div class="row" id="ContentContainer">
+
                 <%@include file="inc/participantscontent.jsp" %>
             </div>
             <%@include file="inc/foot.jsp" %>
@@ -63,6 +80,35 @@
                         }, 500);
                     }
                 });
+            }
+
+            function updateHud() {
+                var index = SongManager.getCurrentSong();
+                var state = SongManager.getState();
+                var progress = SongManager.getProgressPercent();
+
+                $('#songplayer-title').text(SongManager.getTitle(index));
+                $('#songplayer-number').val(index + 1);
+                $('#songplayer-play').prop('disabled', state == 'playing');
+                $('#songplayer-stop').prop('disabled', state == 'stopped');
+                $('#songplayer-progress .bar').css("width", progress + '%');
+                
+                if(SongManager.isRandom()) {
+                    $('#songplayer-random').addClass('disabled');
+                } else {
+                    $('#songplayer-random').removeClass('disabled');
+                }
+                
+                if(state == 'playing') {
+                    setTimeout(updateHud, 200);}
+                
+            }
+
+
+            function startPlayer() {
+                var index = $('#songplayer-number').val() - 1;
+                SongManager.setCurrentSong(index);
+                SongManager.play();
             }
 
             function showError(message) {
@@ -127,6 +173,32 @@
                 BlackTiger.init("<c:url value="/"/>");
                 handleChanges();
 
+                /** SONGMANAGER INIT **/
+                if (SongManager.isSupported()) {
+                    $('#songplayer-number').attr('max', SongManager.getNoOfSongs());
+                    $('#songplayer-number').change(function() {
+                        SongManager.setCurrentSong($(this).val() - 1);
+                    });
+                    $('#songplayer-play').click(startPlayer);
+                    $('#songplayer-stop').click(SongManager.stop);
+                    $('#songplayer-random').click(function() {
+                        SongManager.setRandom(!SongManager.isRandom());
+                    });
+
+                    SongManager.setChangeHandler(function() {
+                        log(SongManager.getState());
+                        updateHud();
+                    });
+                    SongManager.setCurrentSong(0);
+
+                }
+                
+                if(!window.chrome) {
+                    
+                    $("#songplayer").hide();
+                }
+            
+
                 log("Initalized");
 
             }
@@ -144,8 +216,8 @@
             function updatePhonebookEntryFromElement(id) {
                 var phone = $('*[data-type="participant-number"][data-id="' + id + '"]').attr('data-number');
                 var name = $('span[data-type="participant-name"][data-id="' + id + '"]').text();
-                
-                if("" === name) {
+
+                if ("" === name) {
                     BlackTiger.removePhonebookEntry(phone, listUsers);
                 } else {
                     BlackTiger.updatePhonebookEntry(phone, name, listUsers);
@@ -153,9 +225,18 @@
             }
 
             function log(message) {
-                //console.log(message);
+                console.log(message);
             }
 
+            $(document).ajaxError(function(error) {
+                showError("Error: " + error)
+                //$( "div.log" ).text( "Triggered ajaxError handler." );
+            });
+
+            $("#songplayer").click(function() {
+
+            });
+            
             $(document).ready(init);
         </script>
     </body>

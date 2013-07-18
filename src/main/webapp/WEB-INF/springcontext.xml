@@ -29,13 +29,13 @@
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd"
         >
 
-    <context:property-placeholder location="file:${user.home}/blacktiger.properties" ignore-resource-not-found="true"/>
+    <context:property-placeholder location="classpath*:blacktiger.properties,file:${user.home}/blacktiger.properties" ignore-resource-not-found="true"/>
     
-    <bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
+    <!--bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
         <constructor-arg value="${asterisk.host}"/>
         <constructor-arg value="${asterisk.username}"/>
         <constructor-arg value="${asterisk.password}"/>
-    </bean>
+    </bean-->
        
     <bean id="callInfoDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
         <property name="driverClass" value="${phoneinfojdbc.driverClassName}" />
@@ -67,13 +67,13 @@
         <property name="releaseHelperThreads" value="3"/>
     </bean>
     
-    <bean id="service" class="dk.drb.blacktiger.service.BlackTigerService">
+    <!--bean id="service" class="dk.drb.blacktiger.service.BlackTigerService">
         <property name="asteriskServer" ref="asteriskServer"/>
         <property name="asteriskDataSource" ref="asteriskDataSource"/>
         <property name="callInfoDataSource" ref="callInfoDataSource"/>
-    </bean>
+    </bean-->
     
-    <!--bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/-->
+    <bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/>
     
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />

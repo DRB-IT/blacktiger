@@ -2,7 +2,7 @@ var BlackTiger = new function() {
     
     var serviceUrl = "api";
     
-    this.init = function(serviceurl) {
+    this.init = function(url) {
         if(url != null) {
             serviceUrl = url;
         }

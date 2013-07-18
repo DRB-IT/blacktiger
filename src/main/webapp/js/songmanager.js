@@ -1,16 +1,23 @@
 var SongManager = new function() {
     var audio = null;
     var currentSongIndex = -1;
+    var state = "stopped";
     
     var urls = [];
     var titles = [];
     var changerHandler = null;
     
-    this.loop = false;
-    this.random = false;
+    var loop = false;
+    var random = false;
     
-    
-            
+    urls = ["http://download.jw.org/files/media_music/bd/iasn_D_001.mp3",
+            "http://download.jw.org/files/media_music/c6/iasn_D_002.mp3",
+            "http://download.jw.org/files/media_music/f0/iasn_D_003.mp3",
+            "http://download.jw.org/files/media_music/7c/iasn_D_004.mp3",
+            "http://download.jw.org/files/media_music/00/iasn_D_005.mp3"];
+    titles = ["Jehovas egenskaber", "Vi takker dig, Jehova", "„Gud er kærlighed“", "Et godt navn hos Gud", "Kristus, vort forbillede"];
+
+/*            
 urls[001-1] = "http://download.jw.org/files/media_music/bd/iasn_D_001.mp3";
 titles[001-1] = "Jehovas egenskaber";
 urls[002-1] = "http://download.jw.org/files/media_music/c6/iasn_D_002.mp3";
@@ -132,7 +139,7 @@ titles[059-1] = "Til Gud har vi viet alt";
 urls[060-1] = "http://download.jw.org/files/media_music/99/iasn_D_060.mp3";
 titles[060-1] = "Han vil gøre dig stærk";
 urls[061-1] = "http://download.jw.org/files/media_music/ba/iasn_D_061.mp3";
-titles[061-1] = "’Hvilken slags menneske jeg bør være’";
+titles[061-1] = "Hvilken slags menneske jeg bør være";
 urls[062-1] = "http://download.jw.org/files/media_music/4b/iasn_D_062.mp3";
 titles[062-1] = "Hvis ejendom er du?";
 urls[063-1] = "http://download.jw.org/files/media_music/4e/iasn_D_063.mp3";
@@ -150,13 +157,13 @@ titles[068-1] = "Den nedtryktes bøn";
 urls[069-1] = "http://download.jw.org/files/media_music/2a/iasn_D_069.mp3";
 titles[069-1] = "Lad mig kende dine veje";
 urls[070-1] = "http://download.jw.org/files/media_music/18/iasn_D_070.mp3";
-titles[070-1] = "’Forvis jer om de mere vigtige ting’";
+titles[070-1] = "Forvis jer om de mere vigtige ting";
 urls[071-1] = "http://download.jw.org/files/media_music/30/iasn_D_071.mp3";
 titles[071-1] = "En bøn om hellig ånd fra Gud";
 urls[072-1] = "http://download.jw.org/files/media_music/c0/iasn_D_072.mp3";
 titles[072-1] = "Lad os vokse i kærlighed";
 urls[073-1] = "http://download.jw.org/files/media_music/49/iasn_D_073.mp3";
-titles[073-1] = "„Elsk hinanden inderligt af hjertet“";
+titles[073-1] = "Elsk hinanden inderligt af hjertet";
 urls[074-1] = "http://download.jw.org/files/media_music/23/iasn_D_074.mp3";
 titles[074-1] = "Jehovas glæde er vores fæstning";
 urls[075-1] = "http://download.jw.org/files/media_music/49/iasn_D_075.mp3";
@@ -172,13 +179,13 @@ titles[079-1] = "Den kærlige godheds magt";
 urls[080-1] = "http://download.jw.org/files/media_music/56/iasn_D_080.mp3";
 titles[080-1] = "Efterlign Jehovas godhed";
 urls[081-1] = "http://download.jw.org/files/media_music/04/iasn_D_081.mp3";
-titles[081-1] = "„Giv os mere tro“";
+titles[081-1] = "Giv os mere tro";
 urls[082-1] = "http://download.jw.org/files/media_music/d1/iasn_D_082.mp3";
 titles[082-1] = "Efterlign Kristi milde sind";
 urls[083-1] = "http://download.jw.org/files/media_music/cf/iasn_D_083.mp3";
 titles[083-1] = "Vi må beherske os";
 urls[084-1] = "http://download.jw.org/files/media_music/a3/iasn_D_084.mp3";
-titles[084-1] = "’Det vil jeg’";
+titles[084-1] = "Det vil jeg";
 urls[085-1] = "http://download.jw.org/files/media_music/23/iasn_D_085.mp3";
 titles[085-1] = "Jehova giver sin løn";
 urls[086-1] = "http://download.jw.org/files/media_music/62/iasn_D_086.mp3";
@@ -187,8 +194,8 @@ urls[087-1] = "http://download.jw.org/files/media_music/a2/iasn_D_087.mp3";
 titles[087-1] = "Nu er vi ét";
 urls[088-1] = "http://download.jw.org/files/media_music/f2/iasn_D_088.mp3";
 titles[088-1] = "En gave Gud betror forældre";
-urls[89-1] = "http://download.jw.org/files/media_music/3d/iasn_D_089.mp3";
-titles[89-1] = "Jehovas kærlige opfordring: „Vær vís, min søn“!";
+urls[089-1] = "http://download.jw.org/files/media_music/3d/iasn_D_089.mp3";
+titles[089-1] = "Jehovas kærlige opfordring: „Vær vís, min søn“!";
 urls[090-1] = "http://download.jw.org/files/media_music/f7/iasn_D_090.mp3";
 titles[090-1] = "Skønheden i de grå hår";
 urls[091-1] = "http://download.jw.org/files/media_music/e6/iasn_D_091.mp3";
@@ -200,7 +207,7 @@ titles[093-1] = "’Lad jeres lys skinne’";
 urls[094-1] = "http://download.jw.org/files/media_music/2a/iasn_D_094.mp3";
 titles[094-1] = "Tilfredshed med Guds gode gaver";
 urls[095-1] = "http://download.jw.org/files/media_music/8f/iasn_D_095.mp3";
-titles[095-1] = "„Smag og se at Jehova er god“";
+titles[095-1] = "Smag og se at Jehova er god";
 urls[096-1] = "http://download.jw.org/files/media_music/00/iasn_D_096.mp3";
 titles[096-1] = "Find frem til dem der fortjener det";
 urls[097-1] = "http://download.jw.org/files/media_music/52/iasn_D_097.mp3";
@@ -216,7 +223,7 @@ titles[101-1] = "Gør sandheden om Riget kendt";
 urls[102-1] = "http://download.jw.org/files/media_music/1f/iasn_D_102.mp3";
 titles[102-1] = "Syng med på sangen om Riget!";
 urls[103-1] = "http://download.jw.org/files/media_music/a9/iasn_D_103.mp3";
-titles[103-1] = "„Fra hus til hus“";
+titles[103-1] = "Fra hus til hus";
 urls[104-1] = "http://download.jw.org/files/media_music/56/iasn_D_104.mp3";
 titles[104-1] = "Pris Jah med mig!";
 urls[105-1] = "http://download.jw.org/files/media_music/91/iasn_D_105.mp3";
@@ -281,7 +288,18 @@ urls[134-1] = "http://download.jw.org/files/media_music/48/iasn_D_134.mp3";
 titles[134-1] = "Se det for dig — alt er nyt";
 urls[135-1] = "http://download.jw.org/files/media_music/b2/iasn_D_135.mp3";
 titles[135-1] = "Hold ud til enden!";
-            
+            */
+           
+    this.isRandom = function() {
+        return random;
+    }   
+    
+    this.setRandom = function(value) {
+        random = value;
+        loop = value;
+        fireChange();
+    }   
+    
     this.setChangeHandler = function(handler) {
         changeHandler = handler;
     }   
@@ -300,28 +318,57 @@ titles[135-1] = "Hold ud til enden!";
     
     this.setCurrentSong = function(index) {
         SongManager.stop();
-        audio = new Audio(urls[index]);
-        audio.addEventListener('ended', handleSongEnded, false);
         currentSongIndex = index;
-        if(changeHandler) changeHandler();
+        fireChange();
+    }
+    
+    this.getProgressPercent = function() {
+        if(state == 'stopped' || !audio) {
+            return 0;
+        } else {
+            return audio.currentTime / audio.duration * 100;
+        }
+        
+    }
+    
+    this.getState = function() {
+        return state;
     }
     
     this.play = function() {
+        if(state == 'playing') return;
+        
+        if(random) {
+            SongManager.setCurrentSong(randomSongNumber());
+        }
+        
+        audio = new Audio(urls[currentSongIndex]);
+        audio.addEventListener('ended', handleSongEnded, false);
+        
         if(audio) {
             audio.play();
+            state = "playing";
+            fireChange();
         }
     }
     
     this.pause = function() {
+        if(state == 'paused') return;
         if(audio) {
             audio.pause();
+            state = "paused";
+            fireChange();
         }
     }
     
     this.stop = function() {
+        if(state == 'stopped') return;
         if(audio) {
             audio.pause();
             audio.currentTime = 0;
+            audio = null;
+            state = "stopped";
+            fireChange();
         }
     }
     
@@ -330,10 +377,12 @@ titles[135-1] = "Hold ud til enden!";
     }
     
     var handleSongEnded = function() {
-        if(SongManager.loop) {
+        SongManager.stop();
+        fireChange();
+        if(loop) {
             var nextNumber;
-            if(SongManager.random) {
-                nextNumber = Math.floor(Math.random()*urls.length);
+            if(random) {
+                nextNumber = randomSongNumber();
             } else {    
                 nextNumber = currentSongIndex + 1;
                 if(nextNumber >= urls.length) {
@@ -343,6 +392,14 @@ titles[135-1] = "Hold ud til enden!";
             SongManager.setCurrentSong(nextNumber);
             SongManager.play();
         }
+    }
+    
+    var randomSongNumber = function() {
+        return Math.floor(Math.random()*urls.length);
+    }
+    
+    var fireChange = function() {
+        if(changeHandler) changeHandler();
     }
     
 }
