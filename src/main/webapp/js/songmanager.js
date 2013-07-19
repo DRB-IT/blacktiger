@@ -116,7 +116,7 @@ var SongManager = new function() {
     }
     
     var randomSongNumber = function() {
-        return Math.floor(Math.random()*urls.length) + 1;
+        return Math.floor(Math.random()*maxSongNumber) + 1;
     }
     
     var fireChange = function() {
