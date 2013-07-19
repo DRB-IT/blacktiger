@@ -83,12 +83,12 @@
             }
 
             function updateHud() {
-                var index = SongManager.getCurrentSong();
+                var number = SongManager.getCurrentSong();
                 var state = SongManager.getState();
                 var progress = SongManager.getProgressPercent();
 
-                $('#songplayer-title').text(SongManager.getTitle(index));
-                $('#songplayer-number').val(index + 1);
+                //$('#songplayer-title').text(SongManager.getTitle(number));
+                $('#songplayer-number').val(number);
                 $('#songplayer-play').prop('disabled', state == 'playing');
                 $('#songplayer-stop').prop('disabled', state == 'stopped');
                 $('#songplayer-progress .bar').css("width", progress + '%');
@@ -106,8 +106,8 @@
 
 
             function startPlayer() {
-                var index = $('#songplayer-number').val() - 1;
-                SongManager.setCurrentSong(index);
+                var number = $('#songplayer-number').val();
+                SongManager.setCurrentSong(number);
                 SongManager.play();
             }
 
@@ -177,7 +177,7 @@
                 if (SongManager.isSupported()) {
                     $('#songplayer-number').attr('max', SongManager.getNoOfSongs());
                     $('#songplayer-number').change(function() {
-                        SongManager.setCurrentSong($(this).val() - 1);
+                        SongManager.setCurrentSong($(this).val());
                     });
                     $('#songplayer-play').click(startPlayer);
                     $('#songplayer-stop').click(SongManager.stop);
@@ -189,7 +189,7 @@
                         log(SongManager.getState());
                         updateHud();
                     });
-                    SongManager.setCurrentSong(0);
+                    SongManager.setCurrentSong(1);
 
                 }
                 
