@@ -30,7 +30,7 @@ public class ReportController {
     
     @RequestMapping("/reports/{roomNo}")
     public ModelAndView showReport(@PathVariable String roomNo, @RequestParam(defaultValue = "0") int hourStart, 
-        @RequestParam(defaultValue = "24") int hourEnd, @RequestParam(defaultValue = "0") int duration) {
+        @RequestParam(defaultValue = "23") int hourEnd, @RequestParam(defaultValue = "0") int duration) {
         Date dateStart = DateUtils.truncate(new Date(), Calendar.HOUR_OF_DAY);
         Date dateEnd = DateUtils.truncate(new Date(), Calendar.HOUR_OF_DAY);
         int durationInSeconds = duration*60;
