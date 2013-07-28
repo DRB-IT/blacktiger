@@ -62,7 +62,7 @@
         <property name="releaseHelperThreads" value="3"/>
     </bean>
     
-    <!--bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
+    <bean id="asteriskServer" class="org.asteriskjava.live.DefaultAsteriskServer" destroy-method="shutdown">
         <constructor-arg value="${asterisk.host}"/>
         <constructor-arg value="${asterisk.username}"/>
         <constructor-arg value="${asterisk.password}"/>
@@ -72,14 +72,14 @@
         <property name="asteriskServer" ref="asteriskServer"/>
         <property name="asteriskDataSource" ref="asteriskDataSource"/>
         <property name="callInfoDataSource" ref="callInfoDataSource"/>
-    </bean-->
+    </bean>
     
-    <bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/>
+    <!--bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/-->
     
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
     
     <context:annotation-config />
     <task:annotation-driven/>
-    
+        
 </beans>

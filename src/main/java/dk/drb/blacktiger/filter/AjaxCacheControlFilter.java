@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author michael
+ * Filter for forcing Ajax requests to be non-cached. 
+ * This filter is needed to prevent Internet Explorer from caching Ajax requests.  
  */
 public class AjaxCacheControlFilter implements Filter {
 

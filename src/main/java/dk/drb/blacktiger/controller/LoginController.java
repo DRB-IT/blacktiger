@@ -1,4 +1,3 @@
-
 package dk.drb.blacktiger.controller;
 
 import org.springframework.stereotype.Controller;

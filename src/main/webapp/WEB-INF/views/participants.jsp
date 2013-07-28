@@ -199,7 +199,7 @@
                 }
             
 
-                log("Initalized");
+                log("Initialized");
 
             }
 
@@ -225,16 +225,11 @@
             }
 
             function log(message) {
-                console.log(message);
+                //console.log(message);
             }
 
-            $(document).ajaxError(function(error) {
-                showError("Error: " + error)
-                //$( "div.log" ).text( "Triggered ajaxError handler." );
-            });
-
-            $("#songplayer").click(function() {
-
+            $(document).ajaxError(function(event, request, settings) {
+                showError("Error requesting page " + settings.url);
             });
             
             $(document).ready(init);

@@ -10,7 +10,7 @@ var BlackTiger = new function() {
     
     this.updatePhonebookEntry = function(phoneNumber, name, callback) {
         $.ajax({
-            url: serviceUrl + "/phonebook/" + phoneNumber,
+            url: serviceUrl + "phonebook/" + phoneNumber,
             headers: { 
                 Accept : "application/json"
             },
@@ -28,7 +28,7 @@ var BlackTiger = new function() {
     
     this.removePhonebookEntry = function(phoneNumber, callback) {
         $.ajax({
-            url: serviceUrl + "/phonebook/" + phoneNumber + "?_method=DELETE",
+            url: serviceUrl + "phonebook/" + phoneNumber + "?_method=DELETE",
             headers: { 
                 Accept : "application/json"
             },
@@ -44,7 +44,7 @@ var BlackTiger = new function() {
     
     this.listParticipants = function(roomid, callback) {
         $.ajax({
-            url: serviceUrl + "/rooms/" + roomid,
+            url: serviceUrl + "rooms/" + roomid,
             headers: { 
                 Accept : "application/json"
             }
@@ -59,7 +59,7 @@ var BlackTiger = new function() {
     
     this.getParticipant = function(roomid, userid, callback) {
         $.ajax({
-            url: serviceUrl + "/rooms/" + roomid + "/" + userid,
+            url: serviceUrl + "rooms/" + roomid + "/" + userid,
             headers: { 
                 Accept : "application/json"
             }
@@ -87,7 +87,7 @@ var BlackTiger = new function() {
     
     this.callParticipantMethod = function(roomid, userid, method, callback) {
         $.ajax({
-            url: serviceUrl + "/rooms/" + roomid + "/" + userid + "/" + method,
+            url: serviceUrl + "rooms/" + roomid + "/" + userid + "/" + method,
             type: "POST",
             headers: { 
                 Accept : "application/json"
@@ -101,7 +101,7 @@ var BlackTiger = new function() {
     
     this.waitForChanges = function(roomid, callback) {
         $.ajax({
-            url: serviceUrl + "/rooms/" + roomid + "/changes?" + new Date().getTime()   ,
+            url: serviceUrl + "rooms/" + roomid + "/changes?" + new Date().getTime()   ,
             headers: { 
                 Accept : "application/json"
             }

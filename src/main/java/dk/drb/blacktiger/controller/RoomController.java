@@ -51,7 +51,7 @@ public class RoomController {
             String roomNo = event.getRoomNo();
             LOG.debug("Recieved event for room '{}'.", roomNo);
 
-            // We built a clone of changelisteners. We then remove those we dont havent handled yet.
+            // We built a clone of changelisteners. We then remove those we haven't handled yet.
             // In the end we remove those left in the closed list as those are the ones we have handled.
             List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
             Iterator<ChangeListenerEntry> it = clonedList.iterator();
@@ -108,11 +108,18 @@ public class RoomController {
         
     }
 
+    /**
+     * Constructor for new instance of RoomController.
+     * @param service The service which is to be used by the RoomController.
+     */
     @Autowired
     public RoomController(IBlackTigerService service) {
         this.service = service;
     }
 
+    /**
+     * Init method which needs to be called beforing calling other methods in this controller.
+     */
     @PostConstruct
     public void init() {
         service.addEventListener(changeReporter);

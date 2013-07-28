@@ -22,8 +22,10 @@ import org.slf4j.LoggerFactory;
  * k = password<br>
  * <br>
  * If both 'p' & 'k' is found in a request the wrapped in a way so that the username and password is available
- * as if they were given as basic authentication, that is, as the Authorization header.
- * 
+ * as if they were given as basic authentication, that is, as the Authorization header.<br><br>
+ * REMARK:<br>
+ * This way of authenticating is very insecure as username and password will be logged in accesslogs etc.
+ * This has only been included to support the same authentication interface as the original system has.
  * 
  */
 public class CredentialFilter implements Filter {

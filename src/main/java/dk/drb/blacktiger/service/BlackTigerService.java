@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An implementation of the <code>IBlackTigerService</code> which communicates with an asterisk server and mysql databases.<br>
- * This implementation is customized the setup already setup before this system was developed.<br>
+ * This implementation is customized to the setup already setup before this system was developed.<br>
  * It expects 2 mysql databases - The first one being an original asterisk database and the second one being a database with phonebook entries
  * and statistical information. The latter has traditionally been called astersiskcdrdb but that name is optional to this implementation.
  */
@@ -266,11 +266,18 @@ public class BlackTigerService implements IBlackTigerService {
         }
     }
     
+    /**
+     * Checks whether current user has access to a given room number.
+     */
     private void checkRoomAccess(String roomNo) {
         if(!hasRole("ROOMACCESS_" + roomNo)) {
             throw new SecurityException("Not authorized to access room " + roomNo);
         }
     }
+    
+    /**
+     * Checks whether current user hols a specific role.
+     */
     private boolean hasRole(String role) {
         LOG.debug("Checking if current user has role '{}'", role);
         
@@ -286,10 +293,19 @@ public class BlackTigerService implements IBlackTigerService {
         return false;
     }
     
+    /**
+     * Checks whether the string is a valid phone number.
+     * @param text
+     * @return 
+     */
     private boolean isNumber(String text) {
         return PHONE_NUMBER_PATTERN.matcher(text).matches();
     }
     
+    /**
+     * Converts a string to a phone number in the format expected in database.<br>
+     * The format expected in database is international number without the plus sign fx. 4512345678 instead of +4512345678.
+     */
     private String toDbPhoneNumber(String number) {
         if(number.startsWith("+")) {
             number = number.substring(1);
@@ -297,6 +313,11 @@ public class BlackTigerService implements IBlackTigerService {
         return number;
     }
     
+    /**
+     * Converts the phonenumber from database to a proper international format.
+     * In the database the format is international number without the plus sign fx. 4512345678 instead of +4512345678.<br>
+     * This method ensures that the phonenumber becomes normal international format.
+     */
     private String fromDbPhoneNumber(String number) {
         if(!number.startsWith("+")) {
              number = "+" + number;   
