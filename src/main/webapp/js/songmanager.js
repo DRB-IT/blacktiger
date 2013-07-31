@@ -5,8 +5,9 @@ var SongManager = new function() {
     var state = "stopped";
     var baseUrl = "http://telesal.s3.amazonaws.com/music/";
     var changerHandler = null;
-    var baseSongName = "iasn_E_000.mp3";
-    var replacePattern = /(iasn_E_)([0]{3})(\.mp3)/;
+    var baseSongName = "iasn_E_000";
+    var fileFormat = "mp3";
+    var replacePattern = /(iasn_E_)([0]{3})/;
     var loop = false;
     var random = false;
     
@@ -55,16 +56,27 @@ var SongManager = new function() {
         return state;
     }
     
+    this.getFileFormat = function() {
+        return fileFormat;
+    }
+    
+    this.setFileFormat = function(format) {
+        fileFormat = format;
+    }
+    
     this.play = function() {
         if(state == 'playing') return;
         
         if(random) {
             SongManager.setCurrentSong(randomSongNumber());
+        } else if(isNaN(currentSongNumber)) {
+            return;
         }
         
         var url = buildUrlForSong(currentSongNumber);
         audio = new Audio(url);
         audio.addEventListener('ended', handleSongEnded, false);
+        audio.addEventListener('error', handleError, false);
         
         if(audio) {
             audio.play();
@@ -86,7 +98,7 @@ var SongManager = new function() {
         if(state == 'stopped') return;
         if(audio) {
             audio.pause();
-            audio.currentTime = 0;
+            //audio.currentTime = 0;
             audio = null;
             state = "stopped";
             fireChange();
@@ -115,6 +127,11 @@ var SongManager = new function() {
         }
     }
     
+    var handleError = function() {
+        SongManager.stop();
+        fireChange();
+    }
+    
     var randomSongNumber = function() {
         return Math.floor(Math.random()*maxSongNumber) + 1;
     }
@@ -125,7 +142,7 @@ var SongManager = new function() {
     
     var buildUrlForSong = function(number) {
         number = lpad(number, 3, '0');
-        var songName = baseSongName.replace(replacePattern, "\$1" + number + "\$3");
+        var songName = baseSongName.replace(replacePattern, "\$1" + number + "." + fileFormat);
         return baseUrl + songName;
     }
     
