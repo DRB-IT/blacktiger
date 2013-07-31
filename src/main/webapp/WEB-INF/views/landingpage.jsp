@@ -16,7 +16,7 @@
       <h1><spring:message code="system.name"/></h1>
       <h2><spring:message code="landingpage.title"/></h2>
       <p>
-      <center><a href="<c:url value="/login"/>" class="icon-login"></a> </center>
+      <center><a href="<c:url value="/login"/>">Log ind</a> </center>
       </p>
       <p>&copy; <spring:message code="system.copyrightholder"/></p>
     </div>
