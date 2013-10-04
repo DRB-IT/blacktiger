@@ -100,14 +100,16 @@ var BlackTiger = new function() {
         });
     }
     
-    this.waitForChanges = function(roomid, callback) {
+    this.waitForChanges = function(roomid, callbackSuccess, callbackFailed) {
         currentRequest = $.ajax({
             url: serviceUrl + "rooms/" + roomid + "/changes?" + new Date().getTime()   ,
             headers: { 
                 Accept : "application/json"
             }
-        }).always(function (data) {
-            callback(data);
+        }).done(function (data) {
+            callbackSuccess(data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            callbackFailed(jqXHR, textStatus, errorThrown);
         });
     }
 

@@ -80,6 +80,8 @@
                             handleChanges();
                         }, 500);
                     }
+                }, function() {
+                    setTimeout(handleChanges, 10000);
                 });
             }
 
