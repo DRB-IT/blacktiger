@@ -36,6 +36,7 @@
         <%@include file="inc/scripts.jsp" %>
         <script>
             var roomid = "${roomNo}";
+            var leavingPage = false;
 
             function buildMuteButton(participant) {
                 if (participant.muted) {
@@ -92,16 +93,17 @@
                 $('#songplayer-play').prop('disabled', state == 'playing');
                 $('#songplayer-stop').prop('disabled', state == 'stopped');
                 $('#songplayer-progress .bar').css("width", progress + '%');
-                
-                if(SongManager.isRandom()) {
+
+                if (SongManager.isRandom()) {
                     $('#songplayer-random').addClass('disabled');
                 } else {
                     $('#songplayer-random').removeClass('disabled');
                 }
-                
-                if(state == 'playing') {
-                    setTimeout(updateHud, 200);}
-                
+
+                if (state == 'playing') {
+                    setTimeout(updateHud, 200);
+                }
+
             }
 
 
@@ -175,14 +177,14 @@
 
                 /** SONGMANAGER INIT **/
                 if (SongManager.isSupported()) {
-                    if(Modernizr.audio.mp3) {
+                    if (Modernizr.audio.mp3) {
                         SongManager.setFileFormat("mp3");
-                    } else if(Modernizr.audio.ogg) {
+                    } else if (Modernizr.audio.ogg) {
                         SongManager.setFileFormat("ogg");
                     } else {
                         $("#songplayer").hide();
                     }
-                    
+
                     $('#songplayer-number').attr('max', SongManager.getNoOfSongs());
                     $('#songplayer-number').change(function() {
                         SongManager.setCurrentSong($(this).val());
@@ -231,7 +233,23 @@
             }
 
             $(document).ajaxError(function(event, request, settings) {
-                showError("Error requesting page " + settings.url);
+                window.setTimeout(function() {
+                    if(!leavingPage) {
+                        showError("Error requesting page " + settings.url);
+                    }
+                }, 500);
+                
+            });
+
+            $(window).on('beforeunload', function() {
+                if(SongManager.getState() == 'playing') {
+                    return 'Leaving the page will stop the music.';
+                }
+            });
+            
+            $(window).on('unload', function() {
+                leavingPage = true;
+                BlackTiger.destroy();
             });
             
             $(document).ready(init);

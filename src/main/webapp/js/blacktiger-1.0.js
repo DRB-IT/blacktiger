@@ -1,6 +1,7 @@
 var BlackTiger = new function() {
     
     var serviceUrl = "api";
+    var currentRequest = null;
     
     this.init = function(url) {
         if(url != null) {
@@ -100,7 +101,7 @@ var BlackTiger = new function() {
     }
     
     this.waitForChanges = function(roomid, callback) {
-        $.ajax({
+        currentRequest = $.ajax({
             url: serviceUrl + "rooms/" + roomid + "/changes?" + new Date().getTime()   ,
             headers: { 
                 Accept : "application/json"
@@ -110,5 +111,10 @@ var BlackTiger = new function() {
         });
     }
 
+    this.destroy = function() {
+        if(currentRequest != null) {
+            currentRequest.abort();
+        }
+    }
 
 }

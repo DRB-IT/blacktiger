@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  * An implementation of the <code>IBlackTigerService</code> which communicates with an asterisk server and mysql databases.<br>
  * This implementation is customized to the setup already setup before this system was developed.<br>
  * It expects 2 mysql databases - The first one being an original asterisk database and the second one being a database with phonebook entries
- * and statistical information. The latter has traditionally been called astersiskcdrdb but that name is optional to this implementation.
+ * and statistical information. The latter has traditionally been called asteriskcdrdb but that name is optional to this implementation.
  */
 public class BlackTigerService implements IBlackTigerService {
 
