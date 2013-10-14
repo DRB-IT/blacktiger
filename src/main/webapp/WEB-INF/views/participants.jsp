@@ -114,6 +114,11 @@
                 SongManager.setCurrentSong(number);
                 SongManager.play();
             }
+            
+            function stopPlayer() {
+                SongManager.setRandom(false);
+                SongManager.stop();
+            }
 
             function showError(message) {
                 $('#error-dialog').text(message);
@@ -190,9 +195,10 @@
                     $('#songplayer-number').attr('max', SongManager.getNoOfSongs());
                     $('#songplayer-number').change(function() {
                         SongManager.setCurrentSong($(this).val());
+                        SongManager.setRandom(false);
                     });
                     $('#songplayer-play').click(startPlayer);
-                    $('#songplayer-stop').click(SongManager.stop);
+                    $('#songplayer-stop').click(stopPlayer);
                     $('#songplayer-random').click(function() {
                         SongManager.setRandom(!SongManager.isRandom());
                     });
