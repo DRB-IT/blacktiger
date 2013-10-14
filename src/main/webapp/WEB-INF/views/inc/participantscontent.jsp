@@ -21,7 +21,7 @@
             <div class="alert alert-error">
                 <b><spring:message code="participants.warning.participants_but_no_transmitter.title"/></b>
                 <ol>
-                    <li><spring:message code="participants.warning.participants_but_no_transmitter.text1" arguments="09991"/></li>
+                    <li><spring:message code="participants.warning.participants_but_no_transmitter.text1" arguments="${roomNo}"/></li>
                     <li><spring:message code="participants.warning.participants_but_no_transmitter.text2"/></li>
                     <li><spring:message code="participants.warning.participants_but_no_transmitter.text3"/></li>
                 </ol>
