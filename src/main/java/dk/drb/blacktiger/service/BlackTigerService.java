@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BlackTigerService implements IBlackTigerService {
 
     private static final Logger LOG = LoggerFactory.getLogger(BlackTigerService.class);
-    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("\\+?\\d{9,12}");
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^\\+?\\d{2,15}$");
     private AsteriskServer asteriskServer;
     private JdbcTemplate asteriskJdbcTemplate;
     private JdbcTemplate callInfoJdbcTemplate;
