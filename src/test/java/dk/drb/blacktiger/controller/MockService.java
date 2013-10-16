@@ -88,7 +88,7 @@ public class MockService implements IBlackTigerService {
     }
 
     @Override
-    public List<CallInformation> getReport(Date start, Date end, int minimumDuration) {
+    public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

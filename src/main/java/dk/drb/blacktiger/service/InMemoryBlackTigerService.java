@@ -166,7 +166,7 @@ public class InMemoryBlackTigerService implements IBlackTigerService {
     }
 
     @Override
-    public List<CallInformation> getReport(Date start, Date end, int minimumDuration) {
+    public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration) {
         List<CallInformation> calls = new ArrayList<CallInformation>();
         
         String phoneNumber1 = "22736623";

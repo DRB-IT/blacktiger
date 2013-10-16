@@ -211,10 +211,11 @@ public class BlackTigerService implements IBlackTigerService {
     }
 
     @Override
-    public List<CallInformation> getReport(Date start, Date end, int minimumDuration) {
-        String sql = "SELECT count(*) as numberOfCalls,src as phoneNumber, min(calldate) as firstCallTimeStamp,dcontext,sum(duration) as totalDuration "
-                    + "FROM cdr where calldate > ? and calldate < ?  group by src having totalDuration > ? and length(src) >=9";
-        return this.callInfoJdbcTemplate.query(sql, new Object[]{start, end, minimumDuration}, callInformationMapper);
+    public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration) {
+        String roomSearch = "%" + roomNo;
+        String sql = "SELECT count(*) as numberOfCalls,sum(billsec) as totalDuration, min(calldate) as firstCallTimeStamp,src as phoneNumber "
+            + "FROM cdr where calldate > ? and calldate < ? and dcontext LIKE ? group by src having totalDuration > ? ORDER BY firstCallTimeStamp";
+        return this.callInfoJdbcTemplate.query(sql, new Object[]{start, end, roomSearch, minimumDuration}, callInformationMapper);
     }
 
     @Override

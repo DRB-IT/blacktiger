@@ -68,7 +68,7 @@ public interface IBlackTigerService {
      * @param minimumDuration The minimum duration in seconds for each call to include.
      * @return The list of archived calls.
      */
-    List<CallInformation> getReport(Date start, Date end, int minimumDuration);
+    List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration);
     
     /**
      * Mutes a participant in a room.

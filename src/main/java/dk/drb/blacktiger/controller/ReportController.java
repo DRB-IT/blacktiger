@@ -40,7 +40,7 @@ public class ReportController {
         dateStart = DateUtils.setHours(dateStart, hourStart);
         dateEnd = DateUtils.setHours(dateEnd, hourEnd);
         
-        List<CallInformation> callInfos = service.getReport(dateStart, dateEnd, durationInSeconds);
+        List<CallInformation> callInfos = service.getReport(roomNo, dateStart, dateEnd, durationInSeconds);
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("callInfos", callInfos);
         model.put("roomNo", roomNo);
