@@ -35,7 +35,6 @@ public class ReportController {
         Date dateEnd = DateUtils.truncate(new Date(), Calendar.HOUR_OF_DAY);
         int durationInSeconds = duration*60;
         
-        
         //Adjust dates
         dateStart = DateUtils.setHours(dateStart, hourStart);
         dateEnd = DateUtils.setHours(dateEnd, hourEnd);

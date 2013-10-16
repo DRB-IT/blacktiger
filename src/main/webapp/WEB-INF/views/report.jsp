@@ -35,7 +35,7 @@
                                 </td>
                                 <td>
                                     <select name="hourEnd" class="input-small">
-                                        <c:forEach var="entry" items="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24">
+                                        <c:forEach var="entry" items="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23">
                                             <option <c:if test="${entry==reportHourEnd}">selected</c:if> value="${entry}">${entry}:00</option>
                                         </c:forEach>
                                     </select>
