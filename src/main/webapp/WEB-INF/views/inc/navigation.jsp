@@ -12,6 +12,7 @@
                     <li <c:if test="${area=='report'}">class="active"</c:if>><a href="<c:url value="/reports"/>"><spring:message code="navigation.report"/></a></li>
                     <li><a href="/wiki"><spring:message code="navigation.help"/></a></li>
                 </ul>
+                <a class="btn btn-mini pull-right" href="<c:url value="/j_spring_security_logout"/>"><spring:message code="general.log_out"/></a>
             </div>
         </div>
     </div>

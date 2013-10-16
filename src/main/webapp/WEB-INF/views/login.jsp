@@ -36,6 +36,9 @@
                         </div>
                         <div class="control-group">
                             <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="_spring_security_remember_me"> Remember me
+                                </label>
                                 <button type="submit" name="submit" class="btn"><spring:message code="general.log_in"/></button>
                             </div>
                         </div>
