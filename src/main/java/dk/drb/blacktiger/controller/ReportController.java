@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import dk.drb.blacktiger.model.CallInformation;
-import dk.drb.blacktiger.service.IBlackTigerService;
+import dk.drb.blacktiger.service.CallInformationService;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReportController {
 
     @Autowired
-    private IBlackTigerService service;
+    private CallInformationService service;
     
     @RequestMapping("/reports/{roomNo}")
     public ModelAndView showReport(@PathVariable String roomNo, @RequestParam(defaultValue = "0") int hourStart, 

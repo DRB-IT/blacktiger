@@ -1,4 +1,6 @@
-package dk.drb.blacktiger.service;
+package dk.drb.blacktiger.model;
+
+import dk.drb.blacktiger.service.*;
 
 /**
  * Base abastract class for partipant events used by the <code>IBlackTigerService</code>.

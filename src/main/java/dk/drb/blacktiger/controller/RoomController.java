@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller;
 
+import dk.drb.blacktiger.model.ConferenceEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,9 +14,8 @@ import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.service.BlackTigerEventListener;
-import dk.drb.blacktiger.service.IBlackTigerService;
-import dk.drb.blacktiger.service.ParticipantEvent;
+import dk.drb.blacktiger.model.ParticipantEvent;
+import dk.drb.blacktiger.service.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +37,14 @@ public class RoomController {
     private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
     private static final long ASYNC_TIMEOUT = 30000;
     
-    private final IBlackTigerService service;
+    private final ConferenceService service;
     private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
     private final ChangeReporter changeReporter = new ChangeReporter();
     
     /**
      * Class for reporting changes to awaiting Http Requests.
      */
-    private class ChangeReporter implements BlackTigerEventListener {
+    private class ChangeReporter implements ConferenceEventListener {
         
         @Override
         public void onParticipantEvent(ParticipantEvent event) {
@@ -113,7 +113,7 @@ public class RoomController {
      * @param service The service which is to be used by the RoomController.
      */
     @Autowired
-    public RoomController(IBlackTigerService service) {
+    public RoomController(ConferenceService service) {
         this.service = service;
     }
 

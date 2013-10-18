@@ -1,6 +1,6 @@
 package dk.drb.blacktiger.controller;
 
-import dk.drb.blacktiger.service.IBlackTigerService;
+import dk.drb.blacktiger.service.PhonebookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class PhonebookController {
     private static final Logger LOG = LoggerFactory.getLogger(PhonebookController.class);
     
     @Autowired
-    private IBlackTigerService service;
+    private PhonebookService service;
     
     /**
      * Updates a phonebook entry taking the requestbody as new name.

@@ -1,9 +1,11 @@
-package dk.drb.blacktiger.service;
+package dk.drb.blacktiger.model;
+
+import dk.drb.blacktiger.service.*;
 
 /**
  * Interface for event listeners BlackTigerService events.
  */
-public interface BlackTigerEventListener {
+public interface ConferenceEventListener {
     
     /**
      * Fired when a ParticipantEvent is triggered.

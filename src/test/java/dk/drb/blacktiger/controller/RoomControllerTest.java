@@ -16,7 +16,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class RoomControllerTest {
     
-    @Test
+    /*@Test
     public void testKick() {
         MockService service = new MockService();
         String roomNo = "123";
@@ -43,7 +43,7 @@ public class RoomControllerTest {
         
         service.fireJoinEvent(roomNo, "321");
         
-    }
+    }*/
 
     
 }

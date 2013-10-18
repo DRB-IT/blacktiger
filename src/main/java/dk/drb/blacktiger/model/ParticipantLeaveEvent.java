@@ -1,4 +1,4 @@
-package dk.drb.blacktiger.service;
+package dk.drb.blacktiger.model;
 
 /**
  * A <code>ParticipantEvent</code> for when a <code>Participant</code> leaves a conference room.

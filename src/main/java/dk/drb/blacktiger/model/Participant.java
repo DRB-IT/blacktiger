@@ -13,6 +13,10 @@ public class Participant {
     private Date dateJoined;
     private String name;
 
+    public Participant() {
+    }
+
+    
     public Participant(String userId, String name, String phoneNumber, boolean muted, boolean host, Date dateJoined) {
         this.userId = userId;
         this.muted = muted;
@@ -45,5 +49,30 @@ public class Participant {
     public String getName() {
         return name;
     }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setDateJoined(Date dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     
 }

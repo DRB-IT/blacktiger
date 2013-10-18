@@ -41,4 +41,26 @@ public class CallInformation {
         return firstCallTimestamp;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumberOfCalls(int numberOfCalls) {
+        this.numberOfCalls = numberOfCalls;
+    }
+
+    public void setTotalDuration(int totalDuration) {
+        this.totalDuration = totalDuration;
+    }
+
+    public void setFirstCallTimestamp(Date firstCallTimestamp) {
+        this.firstCallTimestamp = firstCallTimestamp;
+    }
+    
+    
+
 }

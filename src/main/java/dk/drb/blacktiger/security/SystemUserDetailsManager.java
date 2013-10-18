@@ -3,7 +3,7 @@ package dk.drb.blacktiger.security;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.drb.blacktiger.service.IBlackTigerService;
+import dk.drb.blacktiger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,11 +24,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class SystemUserDetailsManager implements UserDetailsService {
 
     @Autowired
-    private IBlackTigerService service;
+    private UserService service;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        dk.drb.blacktiger.model.User user = service.getUser(username);
+        dk.drb.blacktiger.model.User user = service.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found. [username=" + username + "]");
         }
