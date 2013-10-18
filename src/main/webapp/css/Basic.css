@@ -2,7 +2,7 @@
 .intro{text-align: center; margin-top: 18%; font-family: sans-serif; color: #aaaaaa;}
 .intro h1{text-transform: uppercase; letter-spacing: 1px; margin: 0px; padding: 0px;}
 .intro h2{font-weight: normal; letter-spacing: 1px; margin-top: 0px;}
-.container { box-shadow: 0px 0px 30px 0px #999999; background-color: #ffffff; }
+.container { box-shadow: 0px 0px 30px 0px #999999; background-color: #ffffff; border-collapse: separate; }
 .navbar .brand, .navbar .brand:hover{color: #f89406;}
 #menuMain{margin-bottom: 20px;}
 #ContentContainer { }

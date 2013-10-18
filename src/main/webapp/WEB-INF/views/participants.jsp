@@ -9,6 +9,15 @@
         <%@include file="inc/headtags.jsp" %>
     </head>
     <body>
+        <div class="container">
+            <%@include file="inc/navigation.jsp" %>
+
+            <div class="row" id="ContentContainer">
+
+                <%@include file="inc/participantscontent.jsp" %>
+            </div>
+            <%@include file="inc/foot.jsp" %>
+        </div>
         <div id="songplayer" class="navbar navbar-fixed-bottom">
             <div class="navbar-inner" style="padding-left:20px;vertical-align: middle">
                 <a class="brand" href="#">Musik</a>
@@ -23,15 +32,6 @@
                 </div>
                 <div id="songplayer-title" class="lead muted pull-left" style="margin:0px;margin-top:5px"></div> 
             </div>
-        </div>
-        <div class="container">
-            <%@include file="inc/navigation.jsp" %>
-
-            <div class="row" id="ContentContainer">
-
-                <%@include file="inc/participantscontent.jsp" %>
-            </div>
-            <%@include file="inc/foot.jsp" %>
         </div>
         <%@include file="inc/scripts.jsp" %>
         <script>
