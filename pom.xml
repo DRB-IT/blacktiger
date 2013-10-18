@@ -119,6 +119,11 @@
             <artifactId>spring-data-commons-core</artifactId>
             <version>1.4.1.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>4.3</version>
+        </dependency>
     </dependencies>
 
     <build>

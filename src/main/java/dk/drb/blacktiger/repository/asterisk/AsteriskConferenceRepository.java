@@ -6,6 +6,7 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AsteriskConferenceRepository implements ConferenceRepository {
  
     private static final Logger LOG = LoggerFactory.getLogger(AsteriskConferenceRepository.class);
-    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^\\+?\\d{2,15}$");
     private AsteriskServer asteriskServer;
     
     private List<ConferenceEventListener> eventListeners = new ArrayList<ConferenceEventListener>();
@@ -136,7 +136,6 @@ public class AsteriskConferenceRepository implements ConferenceRepository {
         String number = user.getChannel().getCallerId().getNumber();
         boolean host = false; 
         
-        //'number' is of syntax 'IP-<username>'. We have to take it into consideration when matching the number.
         if(auth!=null && number.equalsIgnoreCase(auth.getName())) {
             host = true;
         }
@@ -144,21 +143,13 @@ public class AsteriskConferenceRepository implements ConferenceRepository {
         String phoneNumber = user.getChannel().getCallerId().getNumber();
         String name = user.getChannel().getCallerId().getName();
         
-        if(isNumber(name)) {
-            phoneNumber = name;
-            phoneNumber = PhoneNumber.normalize(phoneNumber);
+        if(IpPhoneNumber.isIpPhoneNumber(phoneNumber)) {
+            phoneNumber = IpPhoneNumber.normalize(phoneNumber);
+        } else if(PhoneNumber.isPhoneNumber(name, "DK")) {
+            phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
         }
         
-        return new Participant(user.getUserNumber().toString(), null, phoneNumber, user.isMuted(), host, user.getDateJoined());
+        return new Participant(user.getUserNumber().toString(), name, phoneNumber, user.isMuted(), host, user.getDateJoined());
     }
 
-    /**
-     * Checks whether the string is a valid phone number.
-     * @param text
-     * @return 
-     */
-    private boolean isNumber(String text) {
-        return PHONE_NUMBER_PATTERN.matcher(text).matches();
-    }
-    
 }

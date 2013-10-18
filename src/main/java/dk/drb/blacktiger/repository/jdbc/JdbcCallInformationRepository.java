@@ -2,6 +2,7 @@ package dk.drb.blacktiger.repository.jdbc;
 
 import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.model.CallInformation;
+import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,12 @@ public class JdbcCallInformationRepository implements CallInformationRepository 
 
         @Override
         public CallInformation mapRow(ResultSet rs, int rowNum) throws SQLException {
-            String phoneNumber = PhoneNumber.normalize(rs.getString("phoneNumber"));
+            String phoneNumber = rs.getString("phoneNumber");
+            if(IpPhoneNumber.isIpPhoneNumber(phoneNumber)) {
+                phoneNumber = IpPhoneNumber.normalize(phoneNumber);
+            } else if(PhoneNumber.isPhoneNumber(phoneNumber, "DK")) {
+                phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
+            }
             return new CallInformation(phoneNumber, null, rs.getInt("numberOfCalls"),
                     rs.getInt("totalDuration"), rs.getTimestamp("firstCallTimestamp"));
         }
