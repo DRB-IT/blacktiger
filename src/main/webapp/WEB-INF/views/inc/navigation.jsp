@@ -10,7 +10,7 @@
                 <ul class="nav">
                     <li <c:if test="${area=='participants'}">class="active"</c:if>><a href="<c:url value="/"/>"><spring:message code="navigation.participants"/></a></li>
                     <li <c:if test="${area=='report'}">class="active"</c:if>><a href="<c:url value="/reports"/>"><spring:message code="navigation.report"/></a></li>
-                    <li><a href="/wiki"><spring:message code="navigation.help"/></a></li>
+                    <li><a href="/wiki" target="_blank"><spring:message code="navigation.help"/></a></li>
                 </ul>
                 <ul class="nav pull-right">
                     <li><a href="<c:url value="/j_spring_security_logout"/>"><spring:message code="general.log_out"/></a></li>
