@@ -30,7 +30,6 @@
         >
 
     <context:property-placeholder location="classpath*:blacktiger.properties,file:${user.home}/blacktiger.properties" ignore-resource-not-found="true"/>
-    
        
     <bean id="callInfoDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
         <property name="driverClass" value="${phoneinfojdbc.driverClassName}" />
@@ -68,12 +67,30 @@
         <constructor-arg value="${asterisk.password}"/>
     </bean>
     
-    <bean id="service" class="dk.drb.blacktiger.service.BlackTigerService">
+    <bean class="dk.drb.blacktiger.service.CallInformationService"/>
+    <bean class="dk.drb.blacktiger.service.ConferenceService"/>
+    <bean class="dk.drb.blacktiger.service.PhonebookService"/>
+    <bean class="dk.drb.blacktiger.service.UserService"/>
+    
+    <bean class="dk.drb.blacktiger.repository.asterisk.AsteriskConferenceRepository">
         <property name="asteriskServer" ref="asteriskServer"/>
-        <property name="asteriskDataSource" ref="asteriskDataSource"/>
-        <property name="callInfoDataSource" ref="callInfoDataSource"/>
+    </bean>
+    <bean class="dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository">
+        <property name="dataSource" ref="callInfoDataSource"/>
+    </bean>
+    <bean class="dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository">
+        <property name="dataSource" ref="callInfoDataSource"/>
+    </bean>
+    <bean class="dk.drb.blacktiger.repository.jdbc.JdbcUserRepository">
+        <property name="dataSource" ref="asteriskDataSource"/>
     </bean>
     
+    <!--bean class="dk.drb.blacktiger.repository.memory.InMemCallInformationRepository"/>
+    <bean class="dk.drb.blacktiger.repository.memory.InMemConferenceRepository"/>
+    <bean class="dk.drb.blacktiger.repository.memory.InMemPhonebookRepository"/>
+    <bean class="dk.drb.blacktiger.repository.memory.InMemUserRepository"/-->
+    
+
     <!--bean id="service" class="dk.drb.blacktiger.service.InMemoryBlackTigerService"/-->
     
     <!-- Enables the Spring MVC @Controller programming model -->
