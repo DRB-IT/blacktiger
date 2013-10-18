@@ -6,10 +6,10 @@ import org.springframework.util.Assert;
  *
  * @author michael
  */
-public class PhoneNumber_ {
+public class PhoneNumber {
 
     
-    private PhoneNumber_() {
+    private PhoneNumber() {
     }
     
     public static String normalize(String number) {
