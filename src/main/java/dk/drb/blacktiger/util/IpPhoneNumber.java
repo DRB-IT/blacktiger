@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public class IpPhoneNumber_ {
+public class IpPhoneNumber {
 
     private static final Pattern IP_PHONE_NUMBER_PATTERN = Pattern.compile("^\\d{4}$");  // 4 digits IP phone numbers
     private static final String IP_PHONE_PREFIX = "IP-";
-    private IpPhoneNumber_() {
+    private IpPhoneNumber() {
     }
 
     public static boolean isIpPhoneNumber(String text) {

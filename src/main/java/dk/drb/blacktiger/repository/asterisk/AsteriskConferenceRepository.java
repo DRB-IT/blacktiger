@@ -6,7 +6,7 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
-import dk.drb.blacktiger.util.IpPhoneNumber_;
+import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,8 +143,8 @@ public class AsteriskConferenceRepository implements ConferenceRepository {
         String phoneNumber = user.getChannel().getCallerId().getNumber();
         String name = user.getChannel().getCallerId().getName();
         
-        if(IpPhoneNumber_.isIpPhoneNumber(phoneNumber)) {
-            phoneNumber = IpPhoneNumber_.normalize(phoneNumber);
+        if(IpPhoneNumber.isIpPhoneNumber(phoneNumber)) {
+            phoneNumber = IpPhoneNumber.normalize(phoneNumber);
         } else if(PhoneNumber.isPhoneNumber(name, "DK")) {
             phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
         }
