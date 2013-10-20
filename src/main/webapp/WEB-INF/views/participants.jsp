@@ -253,6 +253,9 @@
                 if(SongManager.getState() == 'playing') {
                     return 'Leaving the page will stop the music.';
                 }
+                
+                // Makes sure that leaving page won't cause ajax error messages
+                $(document).unbind('ajaxError');
             });
             
             $(window).on('unload', function() {
