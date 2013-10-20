@@ -21,8 +21,13 @@
         <div id="songplayer" class="navbar navbar-fixed-bottom">
             <div class="navbar-inner" style="padding-left:20px;vertical-align: middle">
                 <a class="brand" href="#">Musik</a>
-                <div class="pull-left input-append" style="margin:0px;margin-top:5px">
-                    <input id="songplayer-number" type="number" pattern="[0-9]{1,3}" value="1" min="1" max="135" class="input-mini" style="text-align: right">
+                <select id="songplayer-number" class="pull-left input-mini" style="margin-top:5px;margin-right:5px;direction: rtl;">
+                    <c:forEach begin="1" end="135" varStatus="loop">
+                        <option>${loop.index}</option>>
+                    </c:forEach>
+                </select>
+                <div class="pull-left btn-group" style="margin:0px;margin-top:5px">
+                    <!--input id="songplayer-number" type="number" pattern="[0-9]{1,3}" value="1" min="1" max="135" class="input-mini" style="text-align: right"-->
                     <button id="songplayer-play" class="btn"><i class="icon-play"></i></button>
                     <button id="songplayer-stop" class="btn"><i class="icon-stop"></i></button>
                     <button id="songplayer-random" class="btn"><i class="icon-random"></i></button>
