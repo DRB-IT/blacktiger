@@ -27,7 +27,6 @@
                     </c:forEach>
                 </select>
                 <div class="pull-left btn-group" style="margin:0px;margin-top:5px">
-                    <!--input id="songplayer-number" type="number" pattern="[0-9]{1,3}" value="1" min="1" max="135" class="input-mini" style="text-align: right"-->
                     <button id="songplayer-play" class="btn"><i class="icon-play"></i></button>
                     <button id="songplayer-stop" class="btn"><i class="icon-stop"></i></button>
                     <button id="songplayer-random" class="btn"><i class="icon-random"></i></button>
