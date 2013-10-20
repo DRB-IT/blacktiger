@@ -131,10 +131,6 @@
             }
 
             function init() {
-                $('#testtest').on('click', function() {
-                    alert();
-                });
-
                 $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="edit-participant"]', function() {
                     var id = $(this).attr('data-id');
                     setNameEditable(id, true);
