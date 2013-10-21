@@ -1,0 +1,46 @@
+<div class="span10 offset1">
+    <div ng-show="false" id="error-dialog" class="alert alert-error">Error requesting page /v2/rooms/90011/changes?1382362608940</div>
+
+    <div class="alert alert-info" ng-show="participants.length==0">
+        Der er i øjeblikket hverken transmission til, eller deltagere i, telefonmødet.
+    </div>
+
+    <h3>Rigssal</h3>
+    <div id="host-table-wrapper">
+
+        <table class="table table-striped table-hover participantsTable">
+            <tbody>
+                
+                <tr ng-repeat="participant in participants | filter:{host:true}">
+                    <td class="span2 participantNumber">{{participant.phoneNumber}}</td>
+                    <td class="participantName">{{participant.name}}</td>
+                    <td class="span3 participantOptions">
+                        <button class="btn btn-danger btn-small" data-type="kick-participant" data-id="{{participant.userId}}" title="Afslut transmission"><i class="icon-off icon-white"></i></button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <h3>Lyttere</h3>
+    <div id="participant-table-wrapper">
+        <table class="table table-striped table-hover participantsTable">
+            <tbody>
+                <tr ng-repeat="participant in participants | filter:{host:false}">
+                    <td class="span2 participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}">{{participant.phoneNumber}}</td>
+                    <td class="participantName">{{participant.name}}<span ng-hide="participant.muted" class="label label-warning">Mikrofon tændt</span></td>
+                    <td class="span3 participantOptions">
+                        <div class="btn-group">
+                            <button class="btn btn-small" title="Editér navn" data-type="edit-participant" data-id="{{participant.userId}}"><i class="icon-pencil"></i></button>
+                            
+                            <button ng-show="participant.muted" class="btn btn-small" title="Tænd mikrofon" data-type="unmute-participant" data-id="{{participant.userId}}"><i class="icon-comment"></i></button>
+                            <button ng-hide="participant.muted" class="btn btn-small btn-warning" title="Sluk mikrofon" data-type="mute-participant" data-id="{{participant.userId}}"><i class="icon-volume-off"></i></button>
+                            <button class="btn btn-small" title="Kick lytter" data-type="kick-participant" data-id="{{participant.userId}}"><i class="icon-remove"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

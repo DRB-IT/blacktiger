@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html ng-app="blacktiger" lang="da" class=" js history websockets audio">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Telesal</title>
+        <meta name="robots" content="none">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="assets/css/Basic.css" rel="stylesheet">
+        <!--script async="" src="assets/js/analytics.js"></script-->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-resource.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="assets/js/blacktiger-1.0.js"></script>
+        <script type="text/javascript" src="assets/js/songmanager-1.0.js"></script>
+        <script type="text/javascript" src="assets/js/modernizr.custom.70166.js"></script>
+    </head>
+    <body>
+        <div id="songplayer" class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner" style="padding-left:20px;vertical-align: middle">
+                <a class="brand" href="http://telesal.dk/v2/rooms/90011#">Musik</a>
+                <div class="pull-left input-append" style="margin:0px;margin-top:5px">
+                    <input id="songplayer-number" type="number" pattern="[0-9]{1,3}" value="1" min="1" max="135" class="input-mini" style="text-align: right">
+                    <button id="songplayer-play" class="btn"><i class="icon-play"></i></button>
+                    <button id="songplayer-stop" class="btn" disabled=""><i class="icon-stop"></i></button>
+                    <button id="songplayer-random" class="btn"><i class="icon-random"></i></button>
+                </div>
+                <div id="songplayer-progress" class="pull-left progress progress-warning" style="margin:10px 20px;border:1px solid #bfbfbf;width:50px">
+                    <div class="bar" style="width: 0%;"></div>
+                </div>
+                <div id="songplayer-title" class="lead muted pull-left" style="margin:0px;margin-top:5px"></div> 
+            </div>
+        </div>
+        <div class="container">
+            
+
+
+
+            <div class="row" id="menuMain">
+                <div class="span12">
+                    <div class="navbar navbar-static-top navbar-inverse">
+                        <div class="navbar-inner">
+                            <span class="brand">TELESAL</span>
+                            <ul class="nav" data-ng-controller="MenuCtrl">
+                                <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
+                                    <a href="{{ link.url }}">{{ link.name }}</a>
+                                </li>
+                                <!--li class="active"><a href="#/">Lyttere nu</a></li>
+                                <li><a href="#/reports">Lytterrapport</a></li>
+                                <li><a href="http://telesal.dk/wiki">Hjælp</a></li-->
+                            </ul>
+                            
+
+                            <a class="btn btn-mini pull-right" href="http://telesal.dk/v2/j_spring_security_logout">Log ud</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row" id="ContentContainer" ng-view></div>
+                
+            <div class="row">
+                <div class="span12" id="FooterContainer">© Det Regionale Byggeudvalg</div>
+            </div>
+
+        </div>
+        
+
+
+<!--script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41046406-1', 'telesal.dk');
+  ga('send', 'pageview');
+
+</script-->        
+
+        <script>
+            var roomid = "90011";
+            var leavingPage = false;
+
+            function buildMuteButton(participant) {
+                if (participant.muted) {
+                    return "<button class='btn button-unmute-user' data-userid='" + participant.userId + "'><i class='icon-comment'></i></button>";
+                } else {
+                    return "<button class='btn button-mute-user' data-userid='" + participant.userId + "'><i class='icon-volume-off'></i></button>";
+                }
+            }
+
+            function listUsers() {
+                $.ajax({
+                    url: "/v2/rooms/" + roomid + "?mode=sliced"
+                }).fail(function(xhr, textStatus) {
+                    showError("Request for list of users returned " + xhr.status + " " + xhr.statusText);
+                }).done(function(data) {
+                    $("#ContentContainer").html(data);
+                });
+            }
+
+            function kick(userid) {
+                BlackTiger.kickParticipant(roomid, userid, listUsers);
+            }
+
+            function mute(userid) {
+                BlackTiger.setParticipantMuteness(roomid, userid, true);
+            }
+
+            function unMute(userid) {
+                BlackTiger.setParticipantMuteness(roomid, userid, false);
+            }
+
+            function handleChanges() {
+                BlackTiger.waitForChanges(roomid, function(data) {
+                    if (data == true || "true" == data) {
+                        setTimeout(function() {
+                            listUsers();
+                            handleChanges();
+                        }, 500);
+                    } else {
+                        setTimeout(function() {
+                            handleChanges();
+                        }, 500);
+                    }
+                }, function() {
+                    setTimeout(handleChanges, 10000);
+                });
+            }
+
+            function updateHud() {
+                var number = SongManager.getCurrentSong();
+                var state = SongManager.getState();
+                var progress = SongManager.getProgressPercent();
+
+                //$('#songplayer-title').text(SongManager.getTitle(number));
+                $('#songplayer-number').val(number);
+                $('#songplayer-play').prop('disabled', state == 'playing');
+                $('#songplayer-stop').prop('disabled', state == 'stopped');
+                $('#songplayer-progress .bar').css("width", progress + '%');
+
+                if (SongManager.isRandom()) {
+                    $('#songplayer-random').addClass('disabled');
+                } else {
+                    $('#songplayer-random').removeClass('disabled');
+                }
+
+                if (state == 'playing') {
+                    setTimeout(updateHud, 200);
+                }
+
+            }
+
+
+            function startPlayer() {
+                var number = $('#songplayer-number').val();
+                SongManager.setCurrentSong(number);
+                SongManager.play();
+            }
+            
+            function stopPlayer() {
+                SongManager.setRandom(false);
+                SongManager.stop();
+            }
+
+            function showError(message) {
+                $('#error-dialog').text(message);
+                $('#error-dialog').removeClass('hide');
+
+            }
+
+            function init() {
+                $('#testtest').on('click', function() {
+                    alert();
+                });
+
+                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="edit-participant"]', function() {
+                    var id = $(this).attr('data-id');
+                    setNameEditable(id, true);
+                });
+
+                $('#ContentContainer').on('keypress', '#participant-table-wrapper span[data-type="participant-name"]', function(event) {
+                    var keycode = event.keyCode ? event.keyCode : event.which;
+                    if (keycode == 13) {
+                        var id = $(this).attr('data-id');
+                        setNameEditable(id, false);
+                        updatePhonebookEntryFromElement(id);
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+
+                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="participant-name-save"]', function() {
+                    var id = $(this).attr('data-id');
+                    setNameEditable(id, false);
+
+                    updatePhonebookEntryFromElement(id);
+
+                });
+
+                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="participant-name-cancel"]', function() {
+                    var id = $(this).attr('data-id');
+                    setNameEditable(id, false);
+                    listUsers();
+                });
+
+                $('#ContentContainer').on('click', '#host-table-wrapper button[data-type="kick-participant"]', function() {
+                    kick($(this).attr('data-id'));
+                });
+
+                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="kick-participant"]', function() {
+                    kick($(this).attr('data-id'));
+                });
+
+                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="mute-participant"]', function() {
+                    mute($(this).attr('data-id'));
+                    setTimeout(listUsers, 100);
+                });
+
+                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="unmute-participant"]', function() {
+                    unMute($(this).attr('data-id'));
+                    setTimeout(listUsers, 100);
+                });
+
+                BlackTiger.init("/v2/");
+                //handleChanges();
+
+                /** SONGMANAGER INIT **/
+                if (SongManager.isSupported()) {
+                    if (Modernizr.audio.mp3) {
+                        SongManager.setFileFormat("mp3");
+                    } else if (Modernizr.audio.ogg) {
+                        SongManager.setFileFormat("ogg");
+                    } else {
+                        $("#songplayer").hide();
+                    }
+
+                    $('#songplayer-number').attr('max', SongManager.getNoOfSongs());
+                    $('#songplayer-number').change(function() {
+                        SongManager.setCurrentSong($(this).val());
+                        SongManager.setRandom(false);
+                    });
+                    $('#songplayer-play').click(startPlayer);
+                    $('#songplayer-stop').click(stopPlayer);
+                    $('#songplayer-random').click(function() {
+                        SongManager.setRandom(!SongManager.isRandom());
+                    });
+
+                    SongManager.setChangeHandler(function() {
+                        log(SongManager.getState());
+                        updateHud();
+                    });
+                    SongManager.setCurrentSong(1);
+
+                } else {
+                    $("#songplayer").hide();
+                }
+
+                log("Initialized");
+
+            }
+
+            function setNameEditable(userId, editable) {
+                $('span[data-type="participant-name"][data-id="' + userId + '"]').attr('contenteditable', editable);
+
+                if (editable) {
+                    $('span[data-type="participant-name-controls"][data-id="' + userId + '"]').removeClass('hide');
+                } else {
+                    $('span[data-type="participant-name-controls"][data-id="' + userId + '"]').addClass('hide');
+                }
+            }
+
+            function updatePhonebookEntryFromElement(id) {
+                var phone = $('*[data-type="participant-number"][data-id="' + id + '"]').attr('data-number');
+                var name = $('span[data-type="participant-name"][data-id="' + id + '"]').text();
+
+                if ("" === name) {
+                    BlackTiger.removePhonebookEntry(phone, listUsers);
+                } else {
+                    BlackTiger.updatePhonebookEntry(phone, name, listUsers);
+                }
+            }
+
+            function log(message) {
+                //console.log(message);
+            }
+
+            $(document).ajaxError(function(event, request, settings) {
+                window.setTimeout(function() {
+                    if(!leavingPage) {
+                        showError("Error requesting page " + settings.url);
+                    }
+                }, 500);
+                
+            });
+
+            $(window).on('beforeunload', function() {
+                if(SongManager.getState() == 'playing') {
+                    return 'Leaving the page will stop the music.';
+                }
+            });
+            
+            $(window).on('unload', function() {
+                leavingPage = true;
+                BlackTiger.destroy();
+            });
+            
+            $(document).ready(init);
+        </script>
+    
+
+
+    </body>
+</html>
