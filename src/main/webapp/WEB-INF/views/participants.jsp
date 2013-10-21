@@ -209,6 +209,8 @@
                     });
                     SongManager.setCurrentSong(1);
 
+                } else {
+                    $("#songplayer").hide();
                 }
 
                 log("Initialized");
