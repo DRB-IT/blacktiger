@@ -228,15 +228,29 @@ function ListCtrl($scope, $service, $phonebookService) {
 }
 
 function ReportCtrl($scope) {
-  $scope.reports = [
-    {meetingStart:new Date(), meetingEnd:new Date(),
+  $scope.meetings = [
+        {startTime:new Date(113, 0, 0, 10, 00), endTime:new Date(113, 0, 0, 11, 45),
+            participants:[
+                {number:'+4551923192',name:'Michael Krog',calls:3,totalDuration:114},
+                {number:'+4551923171',name:'Hannah Krog',calls:3,totalDuration:114},
+                {number:'+4512341234',name:'Kasper Dyrvig',calls:3,totalDuration:114}
+            ]
+        },
+      {startTime:new Date(113, 0, 0, 17, 00), endTime:new Date(113, 0, 0, 18, 45),
         participants:[
+            {number:'+4551923192',name:'Michael Krog',calls:3,totalDuration:114},
+            {number:'+4551923171',name:'Hannah Krog',calls:3,totalDuration:114},
+            {number:'+4512341234',name:'Kasper Dyrvig',calls:3,totalDuration:114},
             {number:'+4551923192',name:'Michael Krog',calls:3,totalDuration:114},
             {number:'+4551923171',name:'Hannah Krog',calls:3,totalDuration:114},
             {number:'+4512341234',name:'Kasper Dyrvig',calls:3,totalDuration:114}
         ]
     }
   ];
+    
+    $scope.getToday = function() {
+        return new Date();
+    }
 }
 
 ListCtrl.$inject = ['$scope','memParticipantService','memPhonebookService'];
