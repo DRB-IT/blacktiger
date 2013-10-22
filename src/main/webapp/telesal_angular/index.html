@@ -47,13 +47,11 @@
                                 <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
                                     <a href="{{ link.url }}">{{ link.name }}</a>
                                 </li>
-                                <!--li class="active"><a href="#/">Lyttere nu</a></li>
-                                <li><a href="#/reports">Lytterrapport</a></li>
-                                <li><a href="http://telesal.dk/wiki">Hjælp</a></li-->
                             </ul>
                             
-
-                            <a class="btn btn-mini pull-right" href="http://telesal.dk/v2/j_spring_security_logout">Log ud</a>
+                            <ul class="nav pull-right">
+                                <li><a href="">Log ud</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
