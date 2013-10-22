@@ -82,51 +82,8 @@
             var roomid = "90011";
             var leavingPage = false;
 
-            function buildMuteButton(participant) {
-                if (participant.muted) {
-                    return "<button class='btn button-unmute-user' data-userid='" + participant.userId + "'><i class='icon-comment'></i></button>";
-                } else {
-                    return "<button class='btn button-mute-user' data-userid='" + participant.userId + "'><i class='icon-volume-off'></i></button>";
-                }
-            }
-
-            function listUsers() {
-                $.ajax({
-                    url: "/v2/rooms/" + roomid + "?mode=sliced"
-                }).fail(function(xhr, textStatus) {
-                    showError("Request for list of users returned " + xhr.status + " " + xhr.statusText);
-                }).done(function(data) {
-                    $("#ContentContainer").html(data);
-                });
-            }
-
-            function kick(userid) {
-                BlackTiger.kickParticipant(roomid, userid, listUsers);
-            }
-
-            function mute(userid) {
-                BlackTiger.setParticipantMuteness(roomid, userid, true);
-            }
-
-            function unMute(userid) {
-                BlackTiger.setParticipantMuteness(roomid, userid, false);
-            }
-
             function handleChanges() {
-                BlackTiger.waitForChanges(roomid, function(data) {
-                    if (data == true || "true" == data) {
-                        setTimeout(function() {
-                            listUsers();
-                            handleChanges();
-                        }, 500);
-                    } else {
-                        setTimeout(function() {
-                            handleChanges();
-                        }, 500);
-                    }
-                }, function() {
-                    setTimeout(handleChanges, 10000);
-                });
+                
             }
 
             function updateHud() {
@@ -171,59 +128,6 @@
             }
 
             function init() {
-                $('#testtest').on('click', function() {
-                    alert();
-                });
-
-                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="edit-participant"]', function() {
-                    var id = $(this).attr('data-id');
-                    setNameEditable(id, true);
-                });
-
-                $('#ContentContainer').on('keypress', '#participant-table-wrapper span[data-type="participant-name"]', function(event) {
-                    var keycode = event.keyCode ? event.keyCode : event.which;
-                    if (keycode == 13) {
-                        var id = $(this).attr('data-id');
-                        setNameEditable(id, false);
-                        updatePhonebookEntryFromElement(id);
-                        event.preventDefault();
-                        return false;
-                    }
-                });
-
-                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="participant-name-save"]', function() {
-                    var id = $(this).attr('data-id');
-                    setNameEditable(id, false);
-
-                    updatePhonebookEntryFromElement(id);
-
-                });
-
-                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="participant-name-cancel"]', function() {
-                    var id = $(this).attr('data-id');
-                    setNameEditable(id, false);
-                    listUsers();
-                });
-
-                $('#ContentContainer').on('click', '#host-table-wrapper button[data-type="kick-participant"]', function() {
-                    kick($(this).attr('data-id'));
-                });
-
-                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="kick-participant"]', function() {
-                    kick($(this).attr('data-id'));
-                });
-
-                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="mute-participant"]', function() {
-                    mute($(this).attr('data-id'));
-                    setTimeout(listUsers, 100);
-                });
-
-                $('#ContentContainer').on('click', '#participant-table-wrapper button[data-type="unmute-participant"]', function() {
-                    unMute($(this).attr('data-id'));
-                    setTimeout(listUsers, 100);
-                });
-
-                BlackTiger.init("/v2/");
                 //handleChanges();
 
                 /** SONGMANAGER INIT **/
@@ -261,26 +165,7 @@
 
             }
 
-            function setNameEditable(userId, editable) {
-                $('span[data-type="participant-name"][data-id="' + userId + '"]').attr('contenteditable', editable);
 
-                if (editable) {
-                    $('span[data-type="participant-name-controls"][data-id="' + userId + '"]').removeClass('hide');
-                } else {
-                    $('span[data-type="participant-name-controls"][data-id="' + userId + '"]').addClass('hide');
-                }
-            }
-
-            function updatePhonebookEntryFromElement(id) {
-                var phone = $('*[data-type="participant-number"][data-id="' + id + '"]').attr('data-number');
-                var name = $('span[data-type="participant-name"][data-id="' + id + '"]').text();
-
-                if ("" === name) {
-                    BlackTiger.removePhonebookEntry(phone, listUsers);
-                } else {
-                    BlackTiger.updatePhonebookEntry(phone, name, listUsers);
-                }
-            }
 
             function log(message) {
                 //console.log(message);
@@ -303,7 +188,6 @@
             
             $(window).on('unload', function() {
                 leavingPage = true;
-                BlackTiger.destroy();
             });
             
             $(document).ready(init);

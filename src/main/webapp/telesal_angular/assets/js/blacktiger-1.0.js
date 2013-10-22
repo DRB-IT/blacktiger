@@ -1,15 +1,13 @@
 
 /*************************************** MODULE ********************************************/
 
-var blacktiger = angular.module('blacktiger',[]).
-  config(function($locationProvider,$routeProvider) {
-    //$locationProvider.html5Mode(true); 
-    //$locationProvider.hashPrefix('!');
-    $routeProvider.
-      when('/', {controller:ListCtrl, templateUrl:'listParticipants.html'}).
-      when('/reports', {controller:ReportCtrl, templateUrl:'reports.html'}).
-      otherwise({redirectTo:'/'});
-  });
+var blacktiger = angular.module('blacktiger', []).
+    config(function ($locationProvider, $routeProvider) {
+        $routeProvider.
+            when('/', {controller: ListCtrl, templateUrl: 'listParticipants.html'}).
+            when('/reports', {controller: ReportCtrl, templateUrl: 'reports.html'}).
+            otherwise({redirectTo:'/'});
+});
 
 /*************************************** SERVICES ********************************************/
 /*
