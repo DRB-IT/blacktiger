@@ -31,5 +31,7 @@
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
     <mvc:resources mapping="/img/**" location="/img/"/>
+    
+    <mvc:resources mapping="/telesal_angular/**" location="/telesal_angular/"/>
     <task:annotation-driven/>
 </beans>

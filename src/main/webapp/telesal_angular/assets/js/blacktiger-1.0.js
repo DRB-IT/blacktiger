@@ -42,7 +42,7 @@ blacktiger.factory('restParticipantService', function() {
   }
 });*/
 
-blacktiger.factory('memPhonebookService', ['$q','memParticipantService', function($q, $participantService) {
+blacktiger.factory('memPhonebookService', ['$q','memParticipantService','memReportService', function($q, $participantService, $reportService) {
     return {
         updateEntry:function(phoneNumber, name) {
             var deferred = $q.defer();
@@ -50,6 +50,13 @@ blacktiger.factory('memPhonebookService', ['$q','memParticipantService', functio
             for(var i=0;i<participants.length;i++) {
                 if(participants[i].phoneNumber == phoneNumber) {
                     participants[i].name = name;
+                }
+            }
+            
+            var report = $reportService.report;
+            for(var i=0;i<report.length;i++) {
+                if(report[i].phoneNumber == phoneNumber) {
+                    report[i].name = name;
                 }
             }
             setTimeout(function() {
@@ -158,6 +165,53 @@ blacktiger.factory('memParticipantService', function($q) {
   }
 });
 
+blacktiger.factory('memReportService', function($q) {
+    var now = new Date();
+    var date1 = new Date(now.getTime());
+    var date2 = new Date(now.getTime());
+    var date3 = new Date(now.getTime());
+    date1.setHours(10);
+    date2.setHours(11);
+    date3.setHours(17);
+    
+    return {
+        report : [
+            {
+                phoneNumber:"+4551923192",
+              name:"Michael Krog",
+              numberOfCalls:2,
+              totalDuration:123,
+              firstCallTimestamp:date1
+            },
+            {
+                phoneNumber:"+4551923171",
+              name:"Hannah Krog",
+              numberOfCalls:4,
+              totalDuration:2343,
+              firstCallTimestamp:date2
+            },
+            {
+                phoneNumber:"+4512341234",
+              name:"Kasper Dyrvig",
+              numberOfCalls:1,
+              totalDuration:2333,
+              firstCallTimestamp:date3
+            }
+        ],
+        findByPeriod:function(dateStart, dateEnd) {
+            var result = new Array();
+            for(var i=0;i<this.report.length;i++) {
+                var entry = this.report[i];
+                if(entry.firstCallTimestamp.getTime() > dateStart.getTime() && entry.firstCallTimestamp.getTime() < dateEnd.getTime()) {
+                    result.push(entry);
+                }
+            }
+            return result;
+        },
+        
+  }
+});
+
 /*************************************** CONTROLLERS ********************************************/
 
 function MenuCtrl($scope, $location){
@@ -227,32 +281,51 @@ function ListCtrl($scope, $service, $phonebookService) {
     
 }
 
-function ReportCtrl($scope) {
-  $scope.meetings = [
-        {startTime:new Date(113, 0, 0, 10, 00), endTime:new Date(113, 0, 0, 11, 45),
-            participants:[
-                {number:'+4551923192',name:'Michael Krog',calls:3,totalDuration:114},
-                {number:'+4551923171',name:'Hannah Krog',calls:3,totalDuration:114},
-                {number:'+4512341234',name:'Kasper Dyrvig',calls:3,totalDuration:114}
-            ]
-        },
-      {startTime:new Date(113, 0, 0, 17, 00), endTime:new Date(113, 0, 0, 18, 45),
-        participants:[
-            {number:'+4551923192',name:'Michael Krog',calls:3,totalDuration:114},
-            {number:'+4551923171',name:'Hannah Krog',calls:3,totalDuration:114},
-            {number:'+4512341234',name:'Kasper Dyrvig',calls:3,totalDuration:114},
-            {number:'+4551923192',name:'Michael Krog',calls:3,totalDuration:114},
-            {number:'+4551923171',name:'Hannah Krog',calls:3,totalDuration:114},
-            {number:'+4512341234',name:'Kasper Dyrvig',calls:3,totalDuration:114}
-        ]
-    }
-  ];
+function ReportCtrl($scope, $service, $phonebookService) {
+  $scope.hourStart=6;
+  $scope.hourEnd=23;
+  $scope.minDuration=0;
+  $scope.date=new Date();
+  $scope.report = [];
     
-    $scope.getToday = function() {
-        return new Date();
+    $scope.getTotalCalls = function() {
+        var sum = 0;
+        for(var i=0;i<$scope.report.length;i++) {
+            sum += $scope.report[i].numberOfCalls;
+        }
+        return sum;
     }
+    
+    $scope.getTotalDuration = function() {
+        var sum = 0;
+        for(var i=0;i<$scope.report.length;i++) {
+            sum += $scope.report[i].totalDuration;
+        }
+        return sum;
+    }
+    
+    $scope.refresh = function() {
+        var dateStart = new Date($scope.date.getTime());
+        var dateEnd = new Date($scope.date.getTime());
+        dateStart.setHours($scope.hourStart);
+        dateStart.setMinutes(0);
+        dateEnd.setHours($scope.hourEnd);
+        dateEnd.setMinutes(0);
+        $scope.report = $service.findByPeriod(dateStart, dateEnd);
+    }
+    
+    $scope.changeName = function(entry) {
+        var newName = window.prompt("Type in new name", entry.name);
+        if(newName != null) {
+            entry.name = newName; 
+            $phonebookService.updateEntry(entry.phoneNumber, newName).then($scope.refresh());
+        }
+    }
+    
+    $scope.refresh();
 }
 
 ListCtrl.$inject = ['$scope','memParticipantService','memPhonebookService'];
+ReportCtrl.$inject = ['$scope','memReportService','memPhonebookService']
 //ListCtrl.$inject = ['$scope','participantService'];
 
