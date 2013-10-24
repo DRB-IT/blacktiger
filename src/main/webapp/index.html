@@ -90,44 +90,7 @@
                 $('#songplayer-number').append( new Option(i,i) );
             }
 
-            function handleChanges() {
-                
-            }
-
-            function updateHud() {
-                var number = SongManager.getCurrentSong();
-                var state = SongManager.getState();
-                var progress = SongManager.getProgressPercent();
-
-                //$('#songplayer-title').text(SongManager.getTitle(number));
-                $('#songplayer-number').val(number);
-                $('#songplayer-play').prop('disabled', state == 'playing');
-                $('#songplayer-stop').prop('disabled', state == 'stopped');
-                $('#songplayer-progress .bar').css("width", progress + '%');
-
-                if (SongManager.isRandom()) {
-                    $('#songplayer-random').addClass('disabled');
-                } else {
-                    $('#songplayer-random').removeClass('disabled');
-                }
-
-                if (state == 'playing') {
-                    setTimeout(updateHud, 200);
-                }
-
-            }
-
-
-            function startPlayer() {
-                var number = $('#songplayer-number').val();
-                SongManager.setCurrentSong(number);
-                SongManager.play();
-            }
             
-            function stopPlayer() {
-                SongManager.setRandom(false);
-                SongManager.stop();
-            }
 
             function showError(message) {
                 $('#error-dialog').text(message);
@@ -136,8 +99,7 @@
             }
 
             function init() {
-                //handleChanges();
-
+                
                 /** SONGMANAGER INIT **/
                 if (SongManager.isSupported()) {
                     if (Modernizr.audio.mp3) {
@@ -147,25 +109,6 @@
                     } else {
                         $("#songplayer").hide();
                     }
-
-                    
-                    //$('#songplayer-number').attr('max', SongManager.getNoOfSongs());
-                    /*$('#songplayer-number').change(function() {
-                        SongManager.setCurrentSong($(this).val());
-                        SongManager.setRandom(false);
-                    });*/
-                    //$('#songplayer-play').click(startPlayer);
-                    //$('#songplayer-stop').click(stopPlayer);
-                    /*$('#songplayer-random').click(function() {
-                        SongManager.setRandom(!SongManager.isRandom());
-                    });*/
-
-                    /*SongManager.setChangeHandler(function() {
-                        log(SongManager.getState());
-                        updateHud();
-                    });*/
-                    //SongManager.setCurrentSong(1);
-
                 } else {
                     $("#songplayer").hide();
                 }
@@ -174,11 +117,6 @@
 
             }
 
-
-
-            function log(message) {
-                //console.log(message);
-            }
 
             $(document).ajaxError(function(event, request, settings) {
                 window.setTimeout(function() {
