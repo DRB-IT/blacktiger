@@ -10,6 +10,7 @@
         <link href="assets/css/Basic.css" rel="stylesheet">
         <!--script async="" src="assets/js/analytics.js"></script-->
         <script type="text/javascript" src="assets/js/angular.min.js"></script>
+        <script type="text/javascript" src="assets/js/angular-translate.js"></script>
         <script type="text/javascript" src="assets/js/angular-resource.min.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da-dk.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da.js"></script>
@@ -22,16 +23,16 @@
     </head>
     <body>
         <div id="songplayer" class="navbar navbar-fixed-bottom">
-            <div class="navbar-inner" style="padding-left:20px;vertical-align: middle">
+            <div class="navbar-inner" style="padding-left:20px;vertical-align: middle" data-ng-controller="MusicCtrl">
                 <a class="brand" href="http://telesal.dk/v2/rooms/90011#">Musik</a>
-                <div class="pull-left input-append" style="margin:0px;margin-top:5px">
-                    <input id="songplayer-number" type="number" pattern="[0-9]{1,3}" value="1" min="1" max="135" class="input-mini" style="text-align: right">
-                    <button id="songplayer-play" class="btn"><i class="icon-play"></i></button>
-                    <button id="songplayer-stop" class="btn" disabled=""><i class="icon-stop"></i></button>
-                    <button id="songplayer-random" class="btn"><i class="icon-random"></i></button>
+                <select ng-disabled="state=='playing'" class="pull-left input-mini" ng-model="currentSong" id="songplayer-number" style="direction: rtl; margin-right:5px;margin-top:5px"></select>
+                <div class="pull-left btn-group" style="margin:0px;margin-top:5px">
+                    <button ng-click="play()" class="btn" ng-disabled="state=='playing'"><i class="icon-play"></i></button>
+                    <button ng-click="stop()" class="btn" ng-disabled="state!='playing'"><i class="icon-stop"></i></button>
+                    <button ng-click="toggleRandom()" class="btn" ng-class="{disabled: isRandom()}"><i class="icon-random"></i></button>
                 </div>
                 <div id="songplayer-progress" class="pull-left progress progress-warning" style="margin:10px 20px;border:1px solid #bfbfbf;width:50px">
-                    <div class="bar" style="width: 0%;"></div>
+                    <div class="bar" style="width: {{progress}}%;"></div>
                 </div>
                 <div id="songplayer-title" class="lead muted pull-left" style="margin:0px;margin-top:5px"></div> 
             </div>
@@ -45,7 +46,7 @@
                 <div class="span12">
                     <div class="navbar navbar-static-top navbar-inverse">
                         <div class="navbar-inner">
-                            <span class="brand">TELESAL</span>
+                            <span class="brand">{{'SYSTEM.NAME' | translate }}</span>
                             <ul class="nav" data-ng-controller="MenuCtrl">
                                 <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
                                     <a href="{{ link.url }}">{{ link.name }}</a>
@@ -63,7 +64,7 @@
             <div class="row" id="ContentContainer" ng-view></div>
                 
             <div class="row">
-                <div class="span12" id="FooterContainer">© Det Regionale Byggeudvalg</div>
+                <div class="span12" id="FooterContainer">&copy; {{ 'SYSTEM.COPYRIGHTHOLDER' | translate }}</div>
             </div>
 
         </div>
@@ -84,6 +85,10 @@
         <script>
             var roomid = "90011";
             var leavingPage = false;
+            
+            for(var i=1;i<=SongManager.getNoOfSongs();i++) {
+                $('#songplayer-number').append( new Option(i,i) );
+            }
 
             function handleChanges() {
                 
@@ -143,22 +148,23 @@
                         $("#songplayer").hide();
                     }
 
-                    $('#songplayer-number').attr('max', SongManager.getNoOfSongs());
-                    $('#songplayer-number').change(function() {
+                    
+                    //$('#songplayer-number').attr('max', SongManager.getNoOfSongs());
+                    /*$('#songplayer-number').change(function() {
                         SongManager.setCurrentSong($(this).val());
                         SongManager.setRandom(false);
-                    });
-                    $('#songplayer-play').click(startPlayer);
-                    $('#songplayer-stop').click(stopPlayer);
-                    $('#songplayer-random').click(function() {
+                    });*/
+                    //$('#songplayer-play').click(startPlayer);
+                    //$('#songplayer-stop').click(stopPlayer);
+                    /*$('#songplayer-random').click(function() {
                         SongManager.setRandom(!SongManager.isRandom());
-                    });
+                    });*/
 
-                    SongManager.setChangeHandler(function() {
+                    /*SongManager.setChangeHandler(function() {
                         log(SongManager.getState());
                         updateHud();
-                    });
-                    SongManager.setCurrentSong(1);
+                    });*/
+                    //SongManager.setCurrentSong(1);
 
                 } else {
                     $("#songplayer").hide();

@@ -35,7 +35,9 @@
     <servlet-mapping>
         <servlet-name>site</servlet-name>
         <url-pattern>/</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
+    
     <filter-mapping>
         <filter-name>AjaxCacheControlFilter</filter-name>
         <url-pattern>/*</url-pattern>

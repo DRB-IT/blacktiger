@@ -4,10 +4,8 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.AsyncContext;
@@ -16,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantEvent;
 import dk.drb.blacktiger.service.ConferenceService;
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,7 +130,7 @@ public class RoomController {
      * This method add the Http Request to a queue and frees the thread handling the request.
      * Another thread will handle the request later on.
      */
-    @RequestMapping(value = "/rooms/{roomNo}/changes")
+    @RequestMapping(value = "/api/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
         LOG.debug("Adding new listener [remoteIp={};roomNo={}]", request.getRemoteAddr(), roomNo);
         AsyncContext asyncContext = request.startAsync();
@@ -138,14 +138,14 @@ public class RoomController {
         changeListeners.add(new ChangeListenerEntry(asyncContext, roomNo));
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
+    @RequestMapping(value = "/api/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
     public List<Participant> showRoomAsJson(@PathVariable final String roomNo) {
         LOG.debug("Got JSON request for room '{}'.", roomNo);
         return service.listParticipants(roomNo);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
+    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
     @ResponseBody
     public Participant showParticipanteAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
@@ -154,7 +154,7 @@ public class RoomController {
     
     
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int kickParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
@@ -162,7 +162,7 @@ public class RoomController {
         return 1;
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int muteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
@@ -170,7 +170,7 @@ public class RoomController {
         return 1;
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int unmuteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Unmuting participant in room [room={};participant={}].", roomNo, participantId);

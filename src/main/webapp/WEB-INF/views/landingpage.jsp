@@ -8,8 +8,8 @@
     <title>TeleSal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="none"/>
-    <link href="<c:url value="/css/Basic.css"/>" rel="stylesheet" type="text/css" />
-    <link href="<c:url value="/css/fontello-embedded.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/assets/css/Basic.css"/>" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/assets/css/fontello-embedded.css"/>" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="intro" style="-moz-user-select: none;-webkit-user-select: none;" onselectstart="return false;">

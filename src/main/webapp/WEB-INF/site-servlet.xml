@@ -18,6 +18,19 @@
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
     </bean>
+    
+    <!--bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="roomAppInterceptor"/>
+            </list>
+        </property>
+        <property name="mappings">
+            <value>/rooms/*</value>
+        </property>
+    </bean>
+
+    <bean id="roomAppInterceptor" class="dk.drb.blacktiger.util.RoomAppInterceptor"/-->
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="dk.drb.blacktiger.i18n.Messages" />
@@ -28,10 +41,9 @@
     <context:component-scan base-package="dk.drb.blacktiger.controller"/>
     
     <mvc:annotation-driven />
-    <mvc:resources mapping="/css/**" location="/css/"/>
-    <mvc:resources mapping="/js/**" location="/js/"/>
-    <mvc:resources mapping="/img/**" location="/img/"/>
+    <mvc:resources mapping="/assets/**" location="/assets/"/>
     
-    <mvc:resources mapping="/telesal_angular/**" location="/telesal_angular/"/>
+    <mvc:resources mapping="/index.html" location="/index.html"/>
+    <mvc:resources mapping="/rooms/assets/**" location="/assets/"/>
     <task:annotation-driven/>
 </beans>

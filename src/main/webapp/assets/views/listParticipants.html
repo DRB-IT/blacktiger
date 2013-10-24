@@ -1,0 +1,57 @@
+<div class="span10 offset1">
+    <div ng-show="false" id="error-dialog" class="alert alert-error">Error requesting page /v2/rooms/90011/changes?1382362608940</div>
+
+    <div class="alert alert-info" ng-show="participants.length==0">{{'PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS' | translate}}</div>
+    
+    <div class="alert alert-error" ng-show="(participants|filter:{host:true}).length==0 && (participants|filter:{host:false}).length>0">
+        <b>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE' | translate}}</b>
+        <ol>
+            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1' | translate:'{ phoneNumber: 09991 }' "></li>
+            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2' | translate"></li>
+            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3' | translate"></li>
+        </ol>
+    </div>
+
+    <h3>Rigssal</h3>
+    <div id="host-table-wrapper">
+
+        <table class="table table-striped table-hover participantsTable">
+            <tbody>
+                <tr ng-show="(participants|filter:{host:true}).length==0">
+                    <td>{{'PARTICIPANTS.INFO.NO_HOST' | translate}}</td>
+                </tr>
+                <tr ng-repeat="participant in participants | filter:{host:true}">
+                    <td class="span2 participantNumber">{{participant.phoneNumber}}</td>
+                    <td class="participantName">{{participant.name}}</td>
+                    <td class="span3 participantOptions">
+                        <button class="btn btn-danger btn-small" ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}"><i class="icon-off icon-white"></i></button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <h3>Lyttere</h3>
+    <div id="participant-table-wrapper">
+        <table class="table table-striped table-hover participantsTable">
+            <tbody>
+                <tr ng-show="(participants|filter:{host:false}).length==0">
+                    <td>{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
+                </tr>
+                <tr ng-repeat="participant in participants | filter:{host:false}">
+                    <td class="span2 participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}">{{participant.phoneNumber}}</td>
+                    <td class="participantName">{{participant.name}}<span ng-hide="participant.muted" class="label label-warning">{{'PARTICIPANTS.INFO.UNMUTED' | translate}}</span></td>
+                    <td class="span3 participantOptions">
+                        <div class="btn-group">
+                            <button ng-click="changeName(participant.userId)" class="btn btn-small" title="{{'PARTICIPANTS.EDIT' | translate}}"><i class="icon-pencil"></i></button>
+                            <button ng-click="muteParticipant(participant.userId, false)" ng-show="participant.muted" class="btn btn-small" title="{{'PARTICIPANTS.UNMUTE' | translate}}"><i class="icon-comment"></i></button>
+                            <button ng-click="muteParticipant(participant.userId, true)" ng-hide="participant.muted" class="btn btn-small btn-warning" title="{{'PARTICIPANTS.MUTE' | translate}}"><i class="icon-volume-off"></i></button>
+                            <button ng-click="kickParticipant(participant.userId)" class="btn btn-small" title="{{'PARTICIPANTS.KICK' | translate}}"><i class="icon-remove"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
