@@ -20,7 +20,7 @@
                 <tr ng-show="(participants|filter:{host:true}).length==0">
                     <td>{{'PARTICIPANTS.INFO.NO_HOST' | translate}}</td>
                 </tr>
-                <tr ng-repeat="participant in participants | filter:{host:true}">
+                <tr ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">
                     <td class="span2 participantNumber">{{participant.phoneNumber}}</td>
                     <td class="participantName">{{participant.name}}</td>
                     <td class="span3 participantOptions">

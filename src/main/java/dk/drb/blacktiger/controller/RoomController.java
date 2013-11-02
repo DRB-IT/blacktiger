@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantEvent;
 import dk.drb.blacktiger.service.ConferenceService;
-import java.util.HashMap;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller for conference rooms.
@@ -36,16 +33,15 @@ public class RoomController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
     private static final long ASYNC_TIMEOUT = 30000;
-    
     private final ConferenceService service;
     private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
     private final ChangeReporter changeReporter = new ChangeReporter();
-    
+
     /**
      * Class for reporting changes to awaiting Http Requests.
      */
     private class ChangeReporter implements ConferenceEventListener {
-        
+
         @Override
         public void onParticipantEvent(ParticipantEvent event) {
             String roomNo = event.getRoomNo();
@@ -55,7 +51,6 @@ public class RoomController {
             // In the end we remove those left in the closed list as those are the ones we have handled.
             List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
             Iterator<ChangeListenerEntry> it = clonedList.iterator();
-            long now = System.currentTimeMillis();
             
             while (it.hasNext()) {
                 ChangeListenerEntry entry = it.next();
@@ -72,7 +67,7 @@ public class RoomController {
                     it.remove();
                 }
             }
-            
+
             LOG.debug("Removing {} listeners.", clonedList.size());
             changeListeners.removeAll(clonedList);
 
@@ -105,11 +100,11 @@ public class RoomController {
         public long getTimestamp() {
             return timestamp;
         }
-        
     }
 
     /**
      * Constructor for new instance of RoomController.
+     *
      * @param service The service which is to be used by the RoomController.
      */
     @Autowired
@@ -126,11 +121,10 @@ public class RoomController {
     }
 
     /**
-     * Accepts requests for changes. 
-     * This method add the Http Request to a queue and frees the thread handling the request.
-     * Another thread will handle the request later on.
+     * Accepts requests for changes. This method add the Http Request to a queue and frees the thread handling the request. Another thread will handle
+     * the request later on.
      */
-    @RequestMapping(value = "/api/rooms/{roomNo}/changes")
+    @RequestMapping(value = "/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
         LOG.debug("Adding new listener [remoteIp={};roomNo={}]", request.getRemoteAddr(), roomNo);
         AsyncContext asyncContext = request.startAsync();
@@ -138,23 +132,21 @@ public class RoomController {
         changeListeners.add(new ChangeListenerEntry(asyncContext, roomNo));
     }
 
-    @RequestMapping(value = "/api/rooms/{roomNo}", headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
     public List<Participant> showRoomAsJson(@PathVariable final String roomNo) {
         LOG.debug("Got JSON request for room '{}'.", roomNo);
         return service.listParticipants(roomNo);
     }
 
-    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
     @ResponseBody
     public Participant showParticipanteAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
         return service.getParticipant(roomNo, participantId);
     }
-    
-    
 
-    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int kickParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
@@ -162,7 +154,7 @@ public class RoomController {
         return 1;
     }
 
-    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int muteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
@@ -170,7 +162,7 @@ public class RoomController {
         return 1;
     }
 
-    @RequestMapping(value = "/api/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int unmuteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Unmuting participant in room [room={};participant={}].", roomNo, participantId);
@@ -179,39 +171,35 @@ public class RoomController {
     }
 
     @RequestMapping("/rooms/{roomNo}")
-    public ModelAndView showRoom(@PathVariable final String roomNo, @RequestParam(required = false) String mode) {
-        final List<Participant> list = service.listParticipants(roomNo);
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("participants", list);
-        model.put("roomNo", roomNo);
-        
-        if("sliced".equals(mode)) {
-            return new ModelAndView("inc/participantscontent", model);
-        } else {
-            return new ModelAndView("participants", model);
-        }
+    public String serveAppFile(@PathVariable final String roomNo, @RequestParam(required = false) String mode) {
+        return "participants";
     }
-    
+
+    @RequestMapping("/rooms/assets/js/blacktiger-service-*")
+    public String serveServiceFile(HttpServletResponse response) {
+        return "blacktiger-service";
+    }
+
     @Scheduled(fixedDelay = 5000)
     public void updateRequests() {
         List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
         Iterator<ChangeListenerEntry> it = clonedList.iterator();
         long now = System.currentTimeMillis();
-        
-        while(it.hasNext()) {
+
+        while (it.hasNext()) {
             ChangeListenerEntry entry = it.next();
             AsyncContext ctx = entry.getAsyncContext();
-                
-            if(now-entry.getTimestamp() > ASYNC_TIMEOUT) {
+
+            if (now - entry.getTimestamp() > ASYNC_TIMEOUT) {
                 LOG.debug("Responded with not change. The request timed out. [remoteIp={}]", ctx.getRequest().getRemoteAddr());
                 respondChanged((HttpServletResponse) ctx.getResponse(), false);
             } else {
                 it.remove();
             }
         }
-        
+
         changeListeners.removeAll(clonedList);
-         
+
     }
 
     private void respondChanged(HttpServletResponse response, boolean value) {

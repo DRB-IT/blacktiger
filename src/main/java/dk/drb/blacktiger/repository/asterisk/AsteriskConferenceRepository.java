@@ -10,7 +10,8 @@ import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.MeetMeRoom;
 import org.asteriskjava.live.MeetMeUser;
@@ -29,7 +30,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AsteriskConferenceRepository implements ConferenceRepository {
  
     private static final Logger LOG = LoggerFactory.getLogger(AsteriskConferenceRepository.class);
+    private static final int DEFAULT_EVENT_IDLE_TIME = 500;
     private AsteriskServer asteriskServer;
+    private Timer eventTimer = new Timer();
     
     private List<ConferenceEventListener> eventListeners = new ArrayList<ConferenceEventListener>();
     private ManagerEventListener managerEventListener = new ManagerEventListener() {
@@ -49,10 +52,19 @@ public class AsteriskConferenceRepository implements ConferenceRepository {
         }
     };
     
-    private void fireEvent(ParticipantEvent event) {
-        for (ConferenceEventListener listener : eventListeners) {
-            listener.onParticipantEvent(event);
-        }
+    private void fireEvent(final ParticipantEvent event) {
+        // These events are actually fired some time before they may actually be fullfilled as the asterisk server. 
+        // Wait a little before sending them along
+        eventTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                for (ConferenceEventListener listener : eventListeners) {
+                    listener.onParticipantEvent(event);
+                }
+            }
+        }, DEFAULT_EVENT_IDLE_TIME);
+        
     }
 
     public void setAsteriskServer(AsteriskServer asteriskServer) {

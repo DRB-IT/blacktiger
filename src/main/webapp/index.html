@@ -9,21 +9,22 @@
         <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
         <link href="assets/css/Basic.css" rel="stylesheet">
         <!--script async="" src="assets/js/analytics.js"></script-->
-        <script type="text/javascript" src="assets/js/angular.min.js"></script>
+        <script type="text/javascript" src="assets/js/angular.js"></script>
         <script type="text/javascript" src="assets/js/angular-translate.js"></script>
-        <script type="text/javascript" src="assets/js/angular-resource.min.js"></script>
+        <script type="text/javascript" src="assets/js/angular-resource.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da-dk.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da.js"></script>
         
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/js/blacktiger-1.0.js"></script>
+        <script type="text/javascript" src="assets/js/blacktiger-1.1.js"></script>
+        <script type="text/javascript" src="assets/js/blacktiger-service-1.1.js"></script>
         <script type="text/javascript" src="assets/js/songmanager-1.0.js"></script>
         <script type="text/javascript" src="assets/js/modernizr.custom.70166.js"></script>
     </head>
     <body>
-        <div id="songplayer" class="navbar navbar-fixed-bottom">
-            <div class="navbar-inner" style="padding-left:20px;vertical-align: middle" data-ng-controller="MusicCtrl">
+        <div id="songplayer" class="navbar navbar-fixed-bottom" data-ng-controller="MusicCtrl" ng-show="isSupported()">
+            <div class="navbar-inner" style="padding-left:20px;vertical-align: middle">
                 <a class="brand" href="http://telesal.dk/v2/rooms/90011#">Musik</a>
                 <select ng-disabled="state=='playing'" class="pull-left input-mini" ng-model="currentSong" id="songplayer-number" style="direction: rtl; margin-right:5px;margin-top:5px"></select>
                 <div class="pull-left btn-group" style="margin:0px;margin-top:5px">
@@ -83,14 +84,10 @@
 </script-->        
 
         <script>
-            var roomid = "90011";
-            var leavingPage = false;
             
             for(var i=1;i<=SongManager.getNoOfSongs();i++) {
                 $('#songplayer-number').append( new Option(i,i) );
             }
-
-            
 
             function showError(message) {
                 $('#error-dialog').text(message);
@@ -98,46 +95,13 @@
 
             }
 
-            function init() {
-                
-                /** SONGMANAGER INIT **/
-                if (SongManager.isSupported()) {
-                    if (Modernizr.audio.mp3) {
-                        SongManager.setFileFormat("mp3");
-                    } else if (Modernizr.audio.ogg) {
-                        SongManager.setFileFormat("ogg");
-                    } else {
-                        $("#songplayer").hide();
-                    }
-                } else {
-                    $("#songplayer").hide();
-                }
-
-                log("Initialized");
-
-            }
-
-
-            $(document).ajaxError(function(event, request, settings) {
-                window.setTimeout(function() {
-                    if(!leavingPage) {
-                        showError("Error requesting page " + settings.url);
-                    }
-                }, 500);
-                
-            });
-
             $(window).on('beforeunload', function() {
                 if(SongManager.getState() == 'playing') {
                     return 'Leaving the page will stop the music.';
                 }
+                
             });
-            
-            $(window).on('unload', function() {
-                leavingPage = true;
-            });
-            
-            $(document).ready(init);
+
         </script>
     
 
