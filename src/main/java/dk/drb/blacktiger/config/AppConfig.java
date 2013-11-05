@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 
 @Configuration
@@ -39,6 +40,13 @@ public class AppConfig {
     @Bean
     public UserService userService() {
         return new UserService();
+    }
+    
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("dk.drb.blacktiger.i18n.Messages");
+        return messageSource;
     }
     
 }

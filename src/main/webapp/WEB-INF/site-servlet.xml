@@ -19,22 +19,9 @@
         <property name="suffix" value=".jsp" />
     </bean>
     
-    <!--bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="interceptors">
-            <list>
-                <ref bean="roomAppInterceptor"/>
-            </list>
-        </property>
-        <property name="mappings">
-            <value>/rooms/*</value>
-        </property>
-    </bean>
-
-    <bean id="roomAppInterceptor" class="dk.drb.blacktiger.util.RoomAppInterceptor"/-->
-
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <!--bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="dk.drb.blacktiger.i18n.Messages" />
-    </bean>
+    </bean-->
 
    
     <context:annotation-config />
