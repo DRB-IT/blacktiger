@@ -134,14 +134,14 @@ public class RoomController {
 
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
-    public List<Participant> showRoomAsJson(@PathVariable final String roomNo) {
+    public List<Participant> getAsJson(@PathVariable final String roomNo) {
         LOG.debug("Got JSON request for room '{}'.", roomNo);
         return service.listParticipants(roomNo);
     }
 
     @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
     @ResponseBody
-    public Participant showParticipanteAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
+    public Participant getParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
         return service.getParticipant(roomNo, participantId);
     }

@@ -25,7 +25,7 @@ public class ReportController {
     
     @RequestMapping("/reports/{roomNo}")
     @ResponseBody
-    public List<CallInformation> showReportAsJson(@PathVariable String roomNo, @RequestParam(defaultValue = "0") int hourStart, 
+    public List<CallInformation> get(@PathVariable String roomNo, @RequestParam(defaultValue = "0") int hourStart, 
         @RequestParam(defaultValue = "23") int hourEnd, @RequestParam(defaultValue = "0") int duration) {
         return resolveCallInformations(roomNo, hourStart, hourEnd, duration);
     }
