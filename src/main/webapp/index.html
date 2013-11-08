@@ -37,14 +37,13 @@
                 <div class="span12">
                     <div class="navbar navbar-static-top navbar-inverse">
                         <div class="navbar-inner">
-                            <span class="brand">{{'SYSTEM.NAME' | translate }}</span>
+                            <span class="brand"><img src="assets/img/tslogo40.png" alt="TeleSal logo"/><span class="hidden-phone"> {{'SYSTEM.NAME' | translate }}</span></span>
                             <ul class="nav" data-ng-controller="MenuCtrl">
                                 <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
                                     <a href="{{ link.url }}">{{ link.name }}</a>
                                 </li>
                             </ul>
-
-                            <ul class="nav pull-right">
+                            <ul class="nav pull-right" style="margin-right: -10px;">
                                 <li><a href="">Log ud</a></li>
                             </ul>
                         </div>

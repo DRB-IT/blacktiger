@@ -13,12 +13,19 @@
   </head>
   <body>
     <div class="intro" style="-moz-user-select: none;-webkit-user-select: none;" onselectstart="return false;">
-      <h1><spring:message code="system.name"/></h1>
-      <h2><spring:message code="landingpage.title"/></h2>
-      <p>
-      <center><a href="<c:url value="/login"/>"><spring:message code="general.log_in"/></a> </center>
-      </p>
-      <p>&copy; <spring:message code="system.copyrightholder"/></p>
+        <table>
+            <tr>
+                <td>
+                    <img src="../assets/img/tslogo57.png" alt="TeleSal logo"/>
+                </td>
+                <td>
+                    <h1><spring:message code="system.name"/></h1>
+                    <h2><spring:message code="landingpage.title"/></h2>
+                    <p><a href="<c:url value="/login"/>"><spring:message code="general.log_in"/></a></p>
+                    <small>&copy; <spring:message code="system.copyrightholder"/></small>
+                </td>
+            </tr>
+        </table>
     </div>
   </body>
 </html>

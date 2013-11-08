@@ -8,10 +8,18 @@
         <%@include file="inc/headtags.jsp" %>
     </head>
     <body onload='document.f.j_username.focus();'>
-        <div class="container">
-            <div class="row" id="ContentContainer">
-
-                <div class="span5 offset3" style="padding-top: 30px;">
+        <div class="container-fluid">
+            <div class="row-fluid" id="menuMain">
+                    <div class="span12">
+                        <div class="navbar navbar-static-top navbar-inverse">
+                            <div class="navbar-inner">
+                                <span class="brand"><img src="assets/img/tslogo40.png" alt="TeleSal logo"/><span class="hidden-phone"> {{'SYSTEM.NAME' | translate }}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row-fluid" id="ContentContainer">
+                <div class="span5 offset3">
                     <h3><spring:message code="log_in.title"/></h3>
                     <br />
                     <c:set var="error" value="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}"/>
@@ -45,7 +53,7 @@
                     </form>
                 </div>
             </div>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12" id="FooterContainer">&copy; <spring:message code="system.copyrightholder"/></div>
             </div>
         </div>
