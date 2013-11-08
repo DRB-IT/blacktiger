@@ -13,7 +13,7 @@
                     <div class="span12">
                         <div class="navbar navbar-static-top navbar-inverse">
                             <div class="navbar-inner">
-                                <span class="brand"><img src="assets/img/tslogo40.png" alt="TeleSal logo"/><span class="hidden-phone"> {{'SYSTEM.NAME' | translate }}</span></span>
+                                <span class="brand"><img src="assets/img/tslogo40.png" alt="TeleSal logo"/><span class="hidden-phone"> <spring:message code="system.name"/></span></span>
                             </div>
                         </div>
                     </div>
