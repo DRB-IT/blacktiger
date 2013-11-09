@@ -122,7 +122,7 @@ public class RoomController {
 
     /**
      * Accepts requests for changes. This method add the Http Request to a queue and frees the thread handling the request. Another thread will handle
-     * the request later on.
+     * the request later on. This should be changed to use Springs builtin Async methods instead when we reach Spring 3.2.
      */
     @RequestMapping(value = "/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
