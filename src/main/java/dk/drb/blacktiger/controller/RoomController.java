@@ -170,16 +170,6 @@ public class RoomController {
         return 1;
     }
 
-    @RequestMapping("/rooms/{roomNo}")
-    public String serveAppFile(@PathVariable final String roomNo, @RequestParam(required = false) String mode) {
-        return "participants";
-    }
-
-    @RequestMapping("/rooms/assets/js/blacktiger-service-*")
-    public String serveServiceFile(HttpServletResponse response) {
-        return "blacktiger-service";
-    }
-
     @Scheduled(fixedDelay = 5000)
     public void updateRequests() {
         List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);

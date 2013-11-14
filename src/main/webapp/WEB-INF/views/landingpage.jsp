@@ -16,7 +16,7 @@
         <table>
             <tr>
                 <td>
-                    <img src="../assets/img/tslogo57.png" alt="TeleSal logo"/>
+                    <img src="<c:url value="/assets/img/tslogo57.png"/>" alt="TeleSal logo"/>
                 </td>
                 <td>
                     <h1><spring:message code="system.name"/></h1>

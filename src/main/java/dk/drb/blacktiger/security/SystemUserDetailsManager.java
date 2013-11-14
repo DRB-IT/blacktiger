@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public class SystemUserDetailsManager implements UserDetailsService {
 
+    public static final String ROLE_ROOMACCESS_PREFIX = "ROLE_ROOMACCESS_";
     @Autowired
     private UserService service;
     
@@ -34,7 +35,10 @@ public class SystemUserDetailsManager implements UserDetailsService {
         }
 
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-        authList.add(new SimpleGrantedAuthority("ROLE_ROOMACCESS_" + username + "1"));
+        
+        //TODO Retrieve the actual rooms from Asterisk somehow
+        authList.add(new SimpleGrantedAuthority(ROLE_ROOMACCESS_PREFIX + username + "1"));
+        
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         return new User(user.getUsername(), user.getPassword(), true, true, true, true, authList);
     }

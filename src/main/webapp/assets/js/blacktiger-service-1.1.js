@@ -1,4 +1,24 @@
 /*************************************** SERVICES ********************************************/
+blacktiger.factory('roomIdService', function($q, $timeout, $http, $rootScope) {
+    var roomIds = ['09991'];
+    var current = null;
+    return {
+        getRoomIds:function() {
+            var deferred = $q.defer();
+            $timeout(function() {
+                deferred.resolve(roomIds);
+            }, 0);
+            return deferred.promise;
+        },
+        setCurrent:function(roomId) {
+            current=roomId;
+            $rootScope.$broadcast("roomChanged", {roomId:roomId});
+        },
+        getCurrent:function() {
+            return current;
+        }
+    }
+});
 
 blacktiger.factory('phonebookService', ['$q', 'participantService', 'reportService', function($q, $participantService, $reportService) {
         return {

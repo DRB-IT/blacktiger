@@ -80,8 +80,37 @@ function MenuCtrl($scope, $location, $translate) {
     ];
 }
 
-function ListCtrl($scope, $q, $service, $phonebookService) {
+function RoomCtrl($scope, roomIdService) {
+    $scope.rooms = null;
+    $scope.currentRoom = null;
+    
+    $scope.$watch('currentRoom', function() {
+        if (roomIdService.getCurrent() != $scope.currentRoom) {
+            roomIdService.setCurrent($scope.currentRoom);
+        }
+    });
+    
+    $scope.$watch('rooms', function() {
+        if($scope.rooms != null && $scope.rooms.length>0 && $scope.currentRoom == null) {
+            $scope.currentRoom = $scope.rooms[0];
+        }
+    });
+    
+    $scope.$on("roomChanged", function(event, args) {
+        $scope.currentRoom = roomIdService.getCurrent();
+    });
+    
+    roomIdService.getRoomIds().then(function(data) {
+       $scope.rooms = data; 
+    });
+}
+
+function ListCtrl($scope, $q, $service, $phonebookService, roomIdService) {
     $scope.participants = [];
+    $scope.currentRoom = roomIdService.getCurrent();
+    $scope.translationData = {
+        phoneNumber:$scope.currentRoom
+    };
 
     $scope.refresh = function() {
         var deferred = $q.defer();
@@ -161,9 +190,14 @@ function ListCtrl($scope, $q, $service, $phonebookService) {
         return index;
     }
 
+    $scope.$on("roomChanged", function(event, args) {
+        $scope.refresh();
+        $scope.waitForChanges();
+        $scope.currentRoom = roomIdService.getCurrent();
+    });
+
     $scope.refresh();
     $scope.waitForChanges();
-
 }
 
 function ReportCtrl($scope, $service, $phonebookService) {
@@ -203,7 +237,10 @@ function ReportCtrl($scope, $service, $phonebookService) {
         }
     }
 
-    $scope.refresh();
+    $scope.$on("roomChanged", function(event, args) {
+       $scope.refresh(); 
+    });
+    $scope.refresh(); 
 }
 
 function MusicCtrl($scope) {
@@ -248,17 +285,7 @@ function MusicCtrl($scope) {
     }
     
     $scope.isSupported = function() {
-        if (SongManager.isSupported()) {
-            if (Modernizr.audio.mp3) {
-                SongManager.setFileFormat("mp3");
-            } else if (Modernizr.audio.ogg) {
-                SongManager.setFileFormat("ogg");
-            } else {
-                return false;
-            }
-            return true;
-        }
-        return false;
+        return SongManager.isSupported();
     }
 
     SongManager.setChangeHandler(function() {
@@ -271,7 +298,7 @@ function MusicCtrl($scope) {
     $scope.currentSong = 1;
 }
 
-ListCtrl.$inject = ['$scope', '$q', 'participantService', 'phonebookService'];
-ReportCtrl.$inject = ['$scope', 'reportService', 'phonebookService']
-//ListCtrl.$inject = ['$scope','participantService'];
+ListCtrl.$inject = ['$scope', '$q', 'participantService', 'phonebookService', 'roomIdService'];
+ReportCtrl.$inject = ['$scope', 'reportService', 'phonebookService'];
+RoomCtrl.$inject = ['$scope', 'roomIdService'];
 

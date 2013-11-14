@@ -23,13 +23,11 @@
         <script type="text/javascript" src="assets/js/angular-resource.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da-dk.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da.js"></script>
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/blacktiger-1.1.js"></script>
         <script type="text/javascript" src="assets/js/blacktiger-service-1.1.js"></script>
         <script type="text/javascript" src="assets/js/songmanager-1.0.js"></script>
-        <script type="text/javascript" src="assets/js/modernizr.custom.70166.js"></script>
     </head>
     <body>
         <div class="container-fluid">
@@ -43,8 +41,11 @@
                                     <a href="{{ link.url }}">{{ link.name }}</a>
                                 </li>
                             </ul>
+                           
                             <ul class="nav pull-right" style="margin-right: -10px;">
-                                <li><a href="">Log ud</a></li>
+                                <li data-ng-controller="RoomCtrl" >{{currentRoom}}</li>
+                            
+                                <li><a href="j_spring_security_logout">Log ud</a></li>
                             </ul>
                         </div>
                     </div>

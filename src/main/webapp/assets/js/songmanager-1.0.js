@@ -11,6 +11,17 @@ var SongManager = new function() {
     var loop = false;
     var random = false;
     
+    // Detect format
+    var testAudio = document.createElement('audio'); 
+    if (testAudio.canPlayType) {
+      
+       var canPlayMp3 = !!testAudio.canPlayType && "" != testAudio.canPlayType('audio/mpeg');
+       var canPlayOgg = !!testAudio.canPlayType && "" != testAudio.canPlayType('audio/ogg; codecs="vorbis"');
+       if(!canPlayMp3 && canPlayOgg) {
+           fileFormat = "ogg";
+       }
+    }
+      
     this.isRandom = function() {
         return random;
     }   
@@ -59,11 +70,7 @@ var SongManager = new function() {
     this.getFileFormat = function() {
         return fileFormat;
     }
-    
-    this.setFileFormat = function(format) {
-        fileFormat = format;
-    }
-    
+        
     this.play = function() {
         if(state == 'playing') return;
         

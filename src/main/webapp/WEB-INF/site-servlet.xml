@@ -19,18 +19,11 @@
         <property name="suffix" value=".jsp" />
     </bean>
     
-    <!--bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="dk.drb.blacktiger.i18n.Messages" />
-    </bean-->
-
-   
     <context:annotation-config />
     <context:component-scan base-package="dk.drb.blacktiger.controller"/>
     
     <mvc:annotation-driven />
     <mvc:resources mapping="/assets/**" location="/assets/"/>
-    
-    <mvc:resources mapping="/index.html" location="/index.html"/>
-    <mvc:resources mapping="/rooms/assets/**" location="/assets/"/>
+    <mvc:default-servlet-handler/>
     <task:annotation-driven/>
 </beans>

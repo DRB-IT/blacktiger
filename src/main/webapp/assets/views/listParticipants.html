@@ -1,12 +1,12 @@
 <div class="span10 offset1">
-    <div ng-show="false" id="error-dialog" class="alert alert-error">Error requesting page /v2/rooms/90011/changes?1382362608940</div>
+    <div ng-show="false" id="error-dialog" class="alert alert-error"></div>
 
     <div class="alert alert-info" ng-show="participants.length==0">{{'PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS' | translate}}</div>
     
     <div class="alert alert-error" ng-show="(participants|filter:{host:true}).length==0 && (participants|filter:{host:false}).length>0">
         <b>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE' | translate}}</b>
         <ol>
-            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1' | translate:'{ phoneNumber: 09991 }' "></li>
+            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1' | translate:translationData "></li>
             <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2' | translate"></li>
             <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3' | translate"></li>
         </ol>
