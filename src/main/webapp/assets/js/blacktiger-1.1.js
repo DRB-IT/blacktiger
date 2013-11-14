@@ -248,6 +248,12 @@ function MusicCtrl($scope) {
     $scope.progress = 0;
     $scope.state = SongManager.getState();
 
+    $scope.getProgressStyle = function() {
+        return {
+            width:$scope.progress + '%'
+        }
+    }
+    
     $scope.play = function() {
         SongManager.play();
     }
