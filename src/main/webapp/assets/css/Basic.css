@@ -1,5 +1,5 @@
 ﻿body { background-color: #f3f3f3; padding: 0px; }
-.intro{text-align: center; margin-top: 18%; font-family: sans-serif; color: #aaaaaa;}
+.intro{margin-top: 18%; font-family: sans-serif; color: #aaaaaa;}
 .intro a{color: #f89406; font-weight: bold;}
 .intro h1{text-transform: uppercase; letter-spacing: 1px; margin: 0px; padding: 0px;}
 .intro h2{font-weight: normal; letter-spacing: 1px; margin-top: 0px;}
