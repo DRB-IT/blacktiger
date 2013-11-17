@@ -1,0 +1,50 @@
+{
+    "SYSTEM": {
+        "NAME": "Telesal",
+        "COPYRIGHTHOLDER": "Regionala Byggningskommittén"
+    },
+    "NAVIGATION": {
+        "PARTICIPANTS": "Lyssnare nu",
+        "REPORT": "Närvarorapport",
+        "HELP": "Hjälp"
+    },
+    "PARTICIPANTS": {
+        "WARNINGS": {
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Det är för närvarande ingen sändning till, eller deltagere i, telefonmötet.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Där utsänds inget ljud till lyssnarna!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "För at utsända ljud, ring upp til nummer <b>{phoneNumber}</b> med X-Lite OBS: ring inte till det 8-siffrade nummret, det är endast förbehållit lyssnarna!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "=När mötet är slut, tryck <i class=\"icon-remove\"></i> vid varje deltagare så ingen av dem behöver betala onödigt!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Om X-Lite ikke vill ringa upp, tryck Exit i X-Lite och starta den igen."
+        },
+        "INFO": {
+            "NO_PARTICIPANTS": "Der er för närvarande inga lyssnare.",
+            "UNMUTED": "Svarsmikrofonen är öppet",
+            "NO_HOST": "Ingen transmission från rikets sal."
+        },
+        "UNMUTE": "Öppnar svarsmikrofon",
+        "MUTE": "Avstäng svarsmikrofon",
+        "KICK": "Avbryt lyssnare",
+        "EDIT": "Redigera",
+        "UNKNOWN": "Okänd",
+        "KINGDOM_HALL": "Rikets sal",
+        "PARTICIPANTS": "Lyssnare",
+        "ABORT_TRANSMISSION": "Avbryt transmissionen"
+    },
+    "REPORT": {
+        "NUMBER": "Nummer",
+        "NAME": "Namn",
+        "FIRST_CALL": "Första oppkall",
+        "CALLS": "Uppkallningar",
+        "MINUTES": "Minuter",
+        "TOTAL": "Totalt",
+        "TITLE": "Närvarorapport",
+        "CALL_COMMENCED": "Uppringning startad",
+        "AFTER_TIME": "Efter kl.",
+        "BEFORE_TIME": "Före kl.",
+        "MINIMUM_DURATION": "Minsta varighet"
+    },
+    "GENERAL": {
+        "OK": "Ok"
+    }
+
+}

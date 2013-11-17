@@ -1,0 +1,50 @@
+{
+    "SYSTEM": {
+        "NAME": "Telesal",
+        "COPYRIGHTHOLDER": "Det Regionale Byggeutvalget"
+    },
+    "NAVIGATION": {
+        "PARTICIPANTS": "Lyttere nå",
+        "REPORT": "Lytterrapport",
+        "HELP": "Hjelp"
+    },
+    "PARTICIPANTS": {
+        "WARNINGS": {
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Det er for øyeblikket hverken transmisjon til, eller deltagere i, telefonmøtet.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Det blir ikke sendt lyd til lytterne!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "For å transmittere lyd, ring opp til nummer <b>{phoneNumber}</b> med X-Lite; ikke ring til det 8-sifrede nummeret, det er kun for lytterne!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Er møtet slutt, klikk <i class=\"icon-remove\"></i> for hver lytter, så de ikke betaler unødig!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Hvis X-Lite ikke vil ringe opp, så klikk Exit i X-Lite og start den igen."
+        },
+        "INFO": {
+            "NO_PARTICIPANTS": "Det er for øyeblikket ingen lyttere.",
+            "UNMUTED": "Svarmikrofonen er åpen",
+            "NO_HOST": "Det er for øyeblikket ingen transmisjon fra salen."
+        },
+        "UNMUTE": "Åpne svarmikrofon",
+        "MUTE": "Lukk svarmikrofon",
+        "KICK": "Avbryt lytter",
+        "EDIT": "Rediger",
+        "UNKNOWN": "Ukjent",
+        "KINGDOM_HALL": "Rikets sal",
+        "PARTICIPANTS": "Lyttere",
+        "ABORT_TRANSMISSION": "Avbryt transmisjonen"
+    },
+    "REPORT": {
+        "NUMBER": "Nummer",
+        "NAME": "Navn",
+        "FIRST_CALL": "Første oppkall",
+        "CALLS": "Oppkall",
+        "MINUTES": "Minutter",
+        "TOTAL": "I alt",
+        "TITLE": "Lytterrapport",
+        "CALL_COMMENCED": "Oppkall påbegynt",
+        "AFTER_TIME": "Etter kl.",
+        "BEFORE_TIME": "Før kl.",
+        "MINIMUM_DURATION": "Min. varighet"
+    },
+    "GENERAL": {
+        "OK": "Ok"
+    }
+
+}

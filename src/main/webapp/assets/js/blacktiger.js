@@ -13,70 +13,27 @@ var blacktiger = angular.module('blacktiger', ['pascalprecht.translate', 'ngReso
 /*************************************** TRANSLATION ********************************************/
 
 blacktiger.config(function($translateProvider) {
-    $translateProvider.translations('da', {
-        SYSTEM: {
-            NAME: 'Telesal',
-            COPYRIGHTHOLDER: 'Det Regionale Byggeudvalg',
-        },
-        NAVIGATION: {
-            PARTICIPANTS: 'Lyttere nu',
-            REPORT: 'Lytterrapport',
-            HELP: 'Hjælp'
-        },
-        PARTICIPANTS: {
-            WARNINGS: {
-                NO_PARTICIPANTS_AND_TRANSMITTERS: 'Der er i øjeblikket hverken transmission til, eller deltagere i, telefonmødet.',
-                PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE: 'Der sendes ikke lyd til lytterne!',
-                PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1: 'For at transmittere lyd, ring op til nummer <b>{{phoneNumber}}</b> med X-Lite; ring ikke til det 8-cifrede nummer, det er kun til brug for lytterne!',
-                PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2: 'Er mødet slut, tryk <i class="icon-remove"></i> ud for hver lytter, så de ikke betaler unødigt!',
-                PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3: 'Hvis X-Lite ikke vil ringe op, så tryk Exit i X-Lite og start den igen.',
-            },
-            INFO: {
-                NO_PARTICIPANTS: 'Der er pt. ingen lyttere',
-                UNMUTED: 'Svarmikrofonen er åben',
-                NO_HOST: 'Der er pt. ingen transmission fra rigssalen.'
-            },
-            UNMUTE: 'Åben svarmikrofon',
-            MUTE: 'Luk svarmikrofon',
-            KICK: 'Afbryd lytter',
-            EDIT: 'Rediger',
-            UNKNOWN: 'Ukendt',
-            KINGDOM_HALL: 'Rigssal',
-            PARTICIPANTS: 'Lyttere',
-            ABORT_TRANSMISSION: 'Afbryd transmissionen'
-        },
-        REPORT: {
-            NUMBER: 'Nummer',
-            NAME: 'Navn',
-            FIRST_CALL: 'Første opkald',
-            CALLS: 'Opkald',
-            MINUTES: 'Minutter',
-            TOTAL: 'I alt',
-            TITLE: 'Lytterrapport',
-            CALL_COMMENCED: 'Opkald påbegyndt',
-            AFTER_TIME: 'Efter kl.',
-            BEFORE_TIME: 'Før kl.',
-            MINIMUM_DURATION: 'Min. varighed'
-        },
-        GENERAL: {
-            OK: 'Ok'
-        }
-
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'assets/js/blacktiger-locale-',
+        suffix: '.json'
     });
-
-    $translateProvider.preferredLanguage('da');
+    var language = window.navigator.browserLanguage || window.navigator.language;
+    var langData = language.split("-");
+    $translateProvider.preferredLanguage(langData[0]);
+    $translateProvider.fallbackLanguage('en');
+    
 });
 
 
 
 /*************************************** CONTROLLERS ********************************************/
 
-function MenuCtrl($scope, $location, $translate) {
+function MenuCtrl($scope, $location) {
     $scope.location = $location;
     $scope.links = [
-        {url: "#/", name: $translate('NAVIGATION.PARTICIPANTS')},
-        {url: "#/reports", name: $translate('NAVIGATION.REPORT')},
-        {url: "http://telesal.dk/wiki", name: $translate('NAVIGATION.HELP')}
+        {url: "#/", name: 'NAVIGATION.PARTICIPANTS'},
+        {url: "#/reports", name: 'NAVIGATION.REPORT'},
+        {url: "http://telesal.dk/wiki", name: 'NAVIGATION.HELP'}
     ];
 }
 

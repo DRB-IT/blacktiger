@@ -20,13 +20,14 @@
         <!--script async="" src="assets/js/analytics.js"></script-->
         <script type="text/javascript" src="assets/js/angular.js"></script>
         <script type="text/javascript" src="assets/js/angular-translate.js"></script>
+        <script type="text/javascript" src="assets/js/angular-translate-loader-static-files.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-resource.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da-dk.js"></script>
         <script type="text/javascript" src="assets/js/i18n/angular-locale_da.js"></script>
         <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/js/blacktiger-1.1.js"></script>
-        <script type="text/javascript" src="assets/js/blacktiger-service-1.1.js"></script>
+        <script type="text/javascript" src="assets/js/blacktiger.js"></script>
+        <script type="text/javascript" src="assets/js/blacktiger-service.js"></script>
         <script type="text/javascript" src="assets/js/songmanager-1.0.js"></script>
     </head>
     <body>
@@ -38,7 +39,7 @@
                             <span class="brand"><img src="assets/img/tslogo40.png" alt="TeleSal logo"/><span class="hidden-phone"> {{'SYSTEM.NAME' | translate }}</span></span>
                             <ul class="nav" data-ng-controller="MenuCtrl">
                                 <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
-                                    <a href="{{ link.url }}">{{ link.name }}</a>
+                                    <a href="{{ link.url }}">{{ link.name | translate }}</a>
                                 </li>
                             </ul>
                            

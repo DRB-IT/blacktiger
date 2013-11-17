@@ -1,0 +1,50 @@
+{
+    "SYSTEM": {
+        "NAME": "Telesal",
+        "COPYRIGHTHOLDER": "Det Regionale Byggeudvalg"
+    },
+    "NAVIGATION": {
+        "PARTICIPANTS": "Maannakkut tusarnaartut",
+        "REPORT": "Tusarnaartunik nalunaarusiaq",
+        "HELP": "Ikiuut"
+    },
+    "PARTICIPANTS": {
+        "WARNINGS": {
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Oqarasuaatikkut ataatsimiinnermi maannakkut aallakaatitsisoqaranilu tusarnaartoqanngilaq.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Tusarnaartunut nipeqanngilaq!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Aallakaatitsiniarnermut uunga normumut sianerit <b>{phoneNumber}</b> med X-Lite; Normumut arfineq-pingasunik kisitsisitalimmut sianernat, tusarnaartunuinnaagami!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ataatsimiinneq naappat tusarnaartut tamarmik peerneqassapput <i class=\"icon-remove\"></i> pisariaqanngitsumik akiliinnginnerussammata!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "X-Lite sianerusunngippat, Exit X-lite-mi tooruk X-Lite-lu aallarteqqillugu."
+        },
+        "INFO": {
+            "NO_PARTICIPANTS": "Maannakkut tusarnaartoqanngilaq",
+            "UNMUTED": "Akinermut mikrofoni ammavoq",
+            "NO_HOST": "Maannakkut rigssalimiik aallakaatitsisoqanngilaq"
+        },
+        "UNMUTE": "Akinermut mikrofoni ammaruk",
+        "MUTE": "Akinermut mikrofoni matuguk",
+        "KICK": "Tusarnaartoq unitsiguk",
+        "EDIT": "Aaqqissoruk",
+        "UNKNOWN": "Ilisimaneqanngilaq",
+        "KINGDOM_HALL": "Rigssali",
+        "PARTICIPANTS": "Tusarnaartut",
+        "ABORT_TRANSMISSION": "Aallakaatitsineq unitsiguk"
+    },
+    "REPORT": {
+        "NUMBER": "Normu",
+        "NAME": "Ateq",
+        "FIRST_CALL": "Sianerneq siulleq",
+        "CALLS": "Sianerneq",
+        "MINUTES": "Minutsit",
+        "TOTAL": "Katillugu",
+        "TITLE": "Tusarnaartunik nalunaarusiaq",
+        "CALL_COMMENCED": "Sianerpoq",
+        "AFTER_TIME": "Nalunaaqutaq xx-nngoreerpat",
+        "BEFORE_TIME": "Nalunaaqutaq xx-nngunngitsoq",
+        "MINIMUM_DURATION": "Min. sivisussusaa"
+    },
+    "GENERAL": {
+        "OK": "Ok"
+    }
+
+}
