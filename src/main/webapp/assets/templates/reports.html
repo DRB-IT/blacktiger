@@ -1,0 +1,23 @@
+<h3>Afsluttede opkald <a href="#" class="btn btn-link btn-sm pull-right">Slet historik <span class="glyphicon glyphicon-trash"></span></a></h3>
+<table class="table table-striped table-hover table-condensed historyTable">
+    <thead>
+    <tr>
+        <th>{{'REPORT.NUMBER' | translate}}</th>
+        <th>{{'REPORT.NAME' | translate}}</th>
+        <th>{{'REPORT.FIRST_CALL' | translate}}</th>
+        <th>{{'REPORT.CALLS' | translate}}</th>
+        <th>{{'REPORT.MINUTES' | translate}}</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="entry in report">
+        <td class="participantNumber">{{entry.phoneNumber}}</td>
+        <td class="participantName">{{entry.name}}</td>
+        <td class="participantHistory">{{entry.firstCallTimestamp | date:'short'}}</td>
+        <td class="participantHistory">{{entry.numberOfCalls}}</td>
+        <td class="participantHistory">{{entry.totalDuration/60 | number:2 }}</td>
+        <td class="participantOptions"><button ng-click="changeName(entry)" title="Rediger navn"><span class="glyphicon glyphicon-pencil"></span></button></td>
+    </tr>
+    </tbody>
+</table>
