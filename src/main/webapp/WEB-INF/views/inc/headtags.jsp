@@ -7,6 +7,7 @@
 <script src="<c:url value="/assets/js/bootstrap.min.js"/>"></script>
 <link rel="shortcut icon" href="<c:url value="assets/img/favicon.ico"/>" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<c:url value="assets/img/tslogo144.png"/>" />
+<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
 <link rel="icon" href="<c:url value="assets/img/icon_favicon.gif"/>" />
 <meta name="msapplication-TileImage" content="<c:url value="assets/img/tslogo144-ms.png"/>" />
 <meta name="msapplication-TileColor" content="#f89406" />

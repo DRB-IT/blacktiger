@@ -1,11 +1,11 @@
 {
     "SYSTEM": {
         "NAME": "Telesal",
-        "COPYRIGHTHOLDER": "Det Regionale Byggeudvalg"
+        "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Lyttere nu",
-        "REPORT": "Lytterrapport",
+        "SETTINGS": "Indstillinger",
         "HELP": "Hjælp"
     },
     "PARTICIPANTS": {
@@ -28,7 +28,8 @@
         "UNKNOWN": "Ukendt",
         "KINGDOM_HALL": "Rigssal",
         "PARTICIPANTS": "Lyttere",
-        "ABORT_TRANSMISSION": "Afbryd transmissionen"
+        "ABORT_TRANSMISSION": "Afbryd",
+        "COMPLETED_CALLS": "Afsluttede opkald"
     },
     "REPORT": {
         "NUMBER": "Nummer",

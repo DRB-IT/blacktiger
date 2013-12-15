@@ -1,0 +1,22 @@
+<div id="songplayer" ng-show="isSupported()">
+    <span class="pull-left" id="songplayer-name"><span class="glyphicon glyphicon-music"></span></span>
+    <div>
+        <div class="pull-left" id="songplayer-controls" ng-show="hasSongsLocally">
+            <select ng-disabled="state=='playing'" class="pull-left form-control" ng-model="currentSong" ng-options="number for number in getSongNumbers()" id="songplayer-number"></select>
+            <div class="btn-group btn-group-xs">
+                <button ng-click="play()" class="btn btn-default" ng-disabled="state=='playing'"><span class="glyphicon glyphicon-play"></span></button>
+                <button ng-click="stop()" class="btn btn-default" ng-disabled="state!='playing'"><span class="glyphicon glyphicon-stop"></span></button>
+                <button ng-click="toggleRandom()" class="btn btn-default" ng-class="{disabled: isRandom()}"><span class="glyphicon glyphicon-random"></span></button>
+            </div>
+        </div>
+        <div id="songplayer-title" class="pull-right"  ng-show="hasSongsLocally"></div>
+        <div class="pull-left" ng-hide="hasSongsLocally">
+            <button class="btn btn-xs" ng-click="startDownload()">Download</button>
+            {{downloadState}}
+        </div>
+        <div id="songplayer-progress" class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="getProgressStyle()"></div>
+        </div>
+    </div>
+    
+</div>

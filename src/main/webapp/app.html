@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" class="js history websockets audio">
+<html lang="da" class="js history websockets audio"> <!--manifest="blacktiger.appcache"-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="robots" content="noindex, nofollow" />
@@ -14,6 +14,7 @@
         <meta name="msapplication-TileImage" content="assets/img/tslogo144-ms.png" />
         <meta name="msapplication-TileColor" content="#f89406" />
         <!--script async="" src="assets/js/analytics.js"></script-->
+        <script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="assets/js/angular/angular.js"></script>
         <script type="text/javascript" src="assets/js/angular/angular-route.js"></script>
         <script type="text/javascript" src="assets/js/angular/angular-translate.js"></script>
@@ -24,13 +25,12 @@
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/app.js"></script>
         <script type="text/javascript" src="assets/js/blacktiger.js"></script>
-        <script type="text/javascript" src="assets/js/songmanager-1.0.js"></script>
     </head>
     <body>
         <div class="container-fluid-header">
             <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span>{{'SYSTEM.NAME' | translate }}</span></span>
             <ul class="menu-bar" data-ng-controller="MenuCtrl">
-                <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')"><a href="{{ link.url }}" title="{{ link.name | translate }}">{{ link.name | translate }}</a></li>
+                <li data-ng-repeat="link in links" data-ng-class="(link.url.substring(1) == location.path() && 'active')"><a href="{{ link.url }}" title="{{ link.name | translate }}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a></li>
             </ul>
             <ul class="menu-bar pull-right">
                 <li><a href="j_spring_security_logout" title="Log ud"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
@@ -39,26 +39,12 @@
         <div class="container-fluid-content">
             <div class="row">
                 <div class="col-md-12" id="MusicContainer">
-                    <div id="songplayer" data-ng-controller="MusicCtrl" ng-show="isSupported()">
-                        <span class="pull-left" id="songplayer-name"><span class="glyphicon glyphicon-music"></span></span>
-                        <div class="pull-left" id="songplayer-controls">
-                            <select ng-disabled="state=='playing'" class="pull-left form-control" ng-model="currentSong" id="songplayer-number"></select>
-                            <div class="btn-group btn-group-xs">
-                                <button ng-click="play()" class="btn btn-default" ng-disabled="state=='playing'"><span class="glyphicon glyphicon-play"></span></button>
-                                <button ng-click="stop()" class="btn btn-default" ng-disabled="state!='playing'"><span class="glyphicon glyphicon-stop"></span></button>
-                                <button ng-click="toggleRandom()" class="btn btn-default" ng-class="{disabled: isRandom()}"><span class="glyphicon glyphicon-random"></span></button>
-                            </div>
-                        </div>
-                        <div id="songplayer-title" class="pull-right"></div>
-                        <div id="songplayer-progress" class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="getProgressStyle()"></div>
-                        </div>
-                    </div>
+                    <musicplayer></musicplayer>
+                    
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-10 col-sm-offset-1" id="ContentContainer" ng-view>
-                </div>
+                <div class="col-sm-10 col-sm-offset-1" id="ContentContainer" ng-view></div>
             </div>
             <div class="row" id="FooterContainer">
                 <div class="col-xs-9"><small data-ng-controller="RoomCtrl">{{currentRoom}}</small></div>
@@ -78,11 +64,6 @@
 </script-->
         <script>
 
-
-            for (var i = 1; i <= SongManager.getNoOfSongs(); i++) {
-                $('#songplayer-number').append(new Option(i, i));
-            }
-
             function showError(message) {
                 $('#error-dialog').text(message);
                 $('#error-dialog').removeClass('hide');
@@ -100,10 +81,7 @@
             if (window.location.search === '?mock') {
                 var mocked = true;
                 document.write("<"+"script type='text/javascript' src='assets/js/angular/angular-mocks.js'><" + "/script>");
-                /*var fileref = document.createElement('script');
-                fileref.setAttribute("type", "text/javascript");
-                fileref.setAttribute("src", "assets/js/angular/angular-mocks.js");
-                document.getElementsByTagName("head")[0].appendChild(fileref);*/
+
             }
             angular.element(document).ready(function() {
                 angular.bootstrap(document, ['blacktiger-app' + (mocked ? '-mocked' : '')]);

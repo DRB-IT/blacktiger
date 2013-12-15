@@ -4,8 +4,8 @@
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute','pascalprecht.translate','blacktiger']).
     config(function($locationProvider, $routeProvider, $translateProvider) {
         $routeProvider.
-            when('/', {controller: ListCtrl, templateUrl: 'assets/views/listParticipants.html'}).
-            when('/reports', {controller: ReportCtrl, templateUrl: 'assets/views/reports.html'}).
+            when('/', {controller: ListCtrl, templateUrl: 'assets/templates/listParticipants.html'}).
+            when('/reports', {controller: ReportCtrl, templateUrl: 'assets/templates/reports.html'}).
             otherwise({redirectTo: '/'});
     
         $translateProvider.useStaticFilesLoader({
@@ -18,16 +18,156 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute','pascalprecht.tr
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en'); 
         
-    });
+    })
+    .filter('cleannumber', function() {
+        return function(input) {
+            //Retrieve and return last part.
+          var data = input.split("-");
+          return data[data.length-1];
+        }
+  }).directive('iconifiednumber', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        number:'@'
+      },
+      controller: function($scope, $element, $attrs) {
+        if($scope.number.indexOf("PC-") === 0) {
+            $scope.iconclass = 'hdd';
+            $scope.cleannumber = $scope.number.substring(3);
+        } else {
+            $scope.iconclass = 'earphone';
+            $scope.cleannumber = $scope.number;
+        }
+      },        
+      template: '<span class="glyphicon glyphicon-{{iconclass}}"></span> {{cleannumber}}'
+    };
+  }).directive('musicplayer', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        
+      },
+      controller: function($rootScope, $q, $scope, $remoteSongs, $storage, $audioplayer) {
+        $scope.currentSong = 0;
+        $scope.progress = 0;
+        $scope.state = $audioplayer.getState();
+        $scope.maxNumber = $remoteSongs.getNumberOfSongs();
+        $scope.downloadState = "Idle";
+        $scope.hasSongsLocally = false;
+        $scope.random = false;
+        
+        $scope.downloadFile = function(deferred, number, until) {
+            $remoteSongs.readBlob(number).then(function(blob) {
+                $storage.writeBlob("song_" + number + ".mp3", blob).then(function() {
+                    if(number < until) {
+                        number ++;
+                        $scope.progress = (number / until) * 100;
+                        $scope.downloadFile(deferred, number, until);
+                    } else {
+                        deferred.resolve();
+                    }
+                });
+               
+            });
+        }
+        
+        $scope.startDownload = function() {
+            $storage.init().then(function() {
+                var deferred = $q.defer(),
+                promise = deferred.promise;
+                $scope.downloadState = "Downloading"; 
+                $scope.downloadFile(deferred, 1, $remoteSongs.getNumberOfSongs());
+                promise.then(function() {
+                   $scope.downloadState = "Idle"; 
+                   $scope.hasSongsLocally = true;
+                   $scope.currentSong = 1;
+                   $scope.progress = 0;
+                });
+            });
+
+            
+        }
+        
+        $scope.getSongNumbers = function() {
+            var numbers = [];
+            for(var i = 1; i<= $remoteSongs.getNumberOfSongs(); i++) {
+                numbers[numbers.length] = i;
+            }
+            return numbers;
+        }
+        $scope.getProgressStyle = function() {
+            return {
+                width:$scope.progress + '%'
+            }
+        }
+
+        $scope.play = function() {
+            $audioplayer.play();
+        }
+
+        $scope.stop = function() {
+            $audioplayer.stop();
+        }
+
+        $scope.toggleRandom = function() {
+            random = !random;
+        }
+
+        $scope.$watch('currentSong', function() {
+            if($scope.hasSongsLocally) {
+                $scope.stop();
+                $storage.readBlob("song_" + $scope.currentSong + ".mp3").then(function(blob) {
+                    $audioplayer.setFile(blob);
+                });
+            }
+        });
+
+        $scope.updateProgress = function() {
+            $scope.state = $audioplayer.getState();
+            $scope.progress = $audioplayer.getProgressPercent();
+            if ($scope.state === 'playing') {
+                window.setTimeout(function() {
+                    $scope.$apply(function() {
+                        $scope.updateProgress(); 
+                    });
+
+
+                }, 100);
+            }
+        }
+
+        $scope.isSupported = function() {
+            return $audioplayer.isSupported();
+        }
+
+        $rootScope.$on('audioplayer.playing', $scope.updateProgress);
+        $rootScope.$on('audioplayer.stopped', $scope.updateProgress);
+        
+        $storage.init().then(function() {
+            var nameArray = [];
+            for(var i=1;i<=$remoteSongs.getNumberOfSongs();i++) {
+                nameArray[i-1] = "song_" + i + ".mp3";
+            }
+            $storage.hasBlobs(nameArray).then(function() {
+                $scope.hasSongsLocally = true;
+                $scope.currentSong = 1;
+            })
+        }, 100);
+        
+      },        
+      templateUrl: 'assets/templates/musicplayer.html'
+    };
+  });
 
 /*************************************** CONTROLLERS ********************************************/
 
 function MenuCtrl($scope, $location) {
     $scope.location = $location;
     $scope.links = [
-        {url: "#/", name: 'NAVIGATION.PARTICIPANTS'},
-        {url: "#/reports", name: 'NAVIGATION.REPORT'},
-        {url: "http://telesal.dk/wiki", name: 'NAVIGATION.HELP'}
+        {url: "#/", name: 'NAVIGATION.PARTICIPANTS', icon:'user'},
+        {url: "#/settings", name: 'NAVIGATION.SETTINGS', icon:'cog'},
+        {url: "http://telesal.dk/wiki", name: 'NAVIGATION.HELP', icon:'question-sign'}
     ];
 }
 
@@ -74,7 +214,7 @@ function ListCtrl($scope, $q, $participant, $phonebook, $room) {
     }
 
     $scope.waitForChanges = function() {
-        $participant.waitForChanges().then(function(data, status, headers, config) {
+        /*$participant.waitForChanges().then(function(data, status, headers, config) {
             $scope.refresh().then(function(){
                 $scope.waitForChanges();
             });
@@ -84,7 +224,7 @@ function ListCtrl($scope, $q, $participant, $phonebook, $room) {
                     $scope.waitForChanges();
                 });
             }, 10000);
-        });
+        });*/
     }
 
     $scope.kickParticipant = function(userId) {
@@ -151,7 +291,7 @@ function ListCtrl($scope, $q, $participant, $phonebook, $room) {
     $scope.waitForChanges();
 }
 
-function ReportCtrl($scope, $repoert, $phonebook) {
+function ReportCtrl($scope, $report, $phonebook) {
     $scope.hourStart = 6;
     $scope.hourEnd = 23;
     $scope.minDuration = 0;
@@ -194,67 +334,6 @@ function ReportCtrl($scope, $repoert, $phonebook) {
     $scope.refresh(); 
 }
 
-function MusicCtrl($scope) {
-    $scope.currentSong = 0;
-    $scope.progress = 0;
-    $scope.state = SongManager.getState();
-
-    $scope.getProgressStyle = function() {
-        return {
-            width:$scope.progress + '%'
-        }
-    }
-    
-    $scope.play = function() {
-        SongManager.play();
-    }
-
-    $scope.stop = function() {
-        SongManager.setRandom(false);
-        SongManager.stop();
-    }
-
-    $scope.toggleRandom = function() {
-        SongManager.setRandom(!SongManager.isRandom());
-    }
-
-    $scope.isRandom = function() {
-        return SongManager.isRandom();
-    }
-
-    $scope.$watch('currentSong', function() {
-        if (SongManager.getCurrentSong() != $scope.currentSong) {
-            SongManager.setCurrentSong($scope.currentSong);
-        }
-    });
-
-    $scope.updateProgress = function() {
-        $scope.progress = SongManager.getProgressPercent();
-        if ($scope.state == 'playing') {
-            window.setTimeout(function() {
-                $scope.$apply(function() {
-                    $scope.updateProgress(); 
-                });
-                
-                
-            }, 100);
-        }
-    }
-    
-    $scope.isSupported = function() {
-        return SongManager.isSupported();
-    }
-
-    SongManager.setChangeHandler(function() {
-        console.log(SongManager.getState());
-        $scope.currentSong = SongManager.getCurrentSong();
-        $scope.state = SongManager.getState();
-        $scope.updateProgress();
-    });
-
-    $scope.currentSong = 1;
-}
-
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 .run(function($httpBackend) {
   participants= [
@@ -262,7 +341,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                 "userId": "1",
                 "muted": true,
                 "host": false,
-                "phoneNumber": "+4551923192",
+                "phoneNumber": "PC-+4551923192",
                 "dateJoined": 1382383383744,
                 "name": "Michael Krog"
             },
@@ -295,9 +374,9 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
   
   $httpBackend.whenGET('rooms').respond(["09991"]);
   $httpBackend.whenGET('rooms/09991').respond(participants);
- 
+  $httpBackend.whenPOST(/^rooms\/09991\/.?/).respond();
   $httpBackend.whenGET(/^rooms\/09991\/changes.?/).respond();
  
   $httpBackend.whenGET(/^assets\/.?/).passThrough();
-  
+  $httpBackend.whenGET(/^http:\/\/telesal.s3.amazonaws.com\/.?/).passThrough();
 });

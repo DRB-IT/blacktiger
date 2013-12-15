@@ -10,13 +10,9 @@
     
     <http disable-url-rewriting="true">
         <intercept-url pattern="/rooms/**" access="ROLE_USER" />
-        <intercept-url pattern="/reports/**" access="ROLE_USER" />
-        <intercept-url pattern="/app.html" access="ROLE_USER" />
         
-        <form-login login-page="/login"/>
         <http-basic/>
         <remember-me key="telesal"/>
-        <logout logout-success-url="/" />
     </http>
 
     

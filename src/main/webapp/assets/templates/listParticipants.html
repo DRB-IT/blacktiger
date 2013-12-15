@@ -13,7 +13,7 @@
 
 <h3>{{'PARTICIPANTS.PARTICIPANTS' | translate}}
     <small class="pull-right" ng-show="(participants|filter:{host:true}).length==0">{{'PARTICIPANTS.INFO.NO_HOST' | translate}}</small>
-    <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
+    <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
 </h3>
 <table class="table table-striped table-hover table-condensed participantsTable">
     <tbody>
@@ -21,13 +21,31 @@
         <td>{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
     </tr>
     <tr ng-repeat="participant in participants | filter:{host:false}">
-        <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}">{{participant.phoneNumber}}</td>
+        <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}"><iconifiednumber number="{{participant.phoneNumber}}"></iconifiednumber></td>
         <td class="participantName">{{participant.name}} <span ng-hide="participant.muted" class="label label-warning">{{'PARTICIPANTS.INFO.UNMUTED' | translate}}</span></td>
         <td class="participantOptions">
             <button ng-click="changeName(participant.userId)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
             <button ng-click="muteParticipant(participant.userId, false)" ng-show="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>
             <button ng-click="muteParticipant(participant.userId, true)" ng-hide="participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>
             <button ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.KICK' | translate}}"><span class="glyphicon glyphicon-remove"></span></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>{{'PARTICIPANTS.COMPLETED_CALLS' | translate}}
+    <a href="/status-no-history.html" onclick="window.confirm('Er du sikker på at du vil slette historiken?')" class="btn btn-link btn-sm pull-right">Slet historik <span class="glyphicon glyphicon-trash"></span></a>
+</h3>
+<table class="table table-striped table-hover table-condensed participantsTable">
+    <tbody>
+    <tr ng-show="completedCalls.length==0">
+        <td>{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
+    </tr>
+    <tr ng-repeat="participant in completedCalls | filter:{host:false}">
+        <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}"><iconifiednumber number="{{participant.phoneNumber}}"></iconifiednumber></td>
+        <td class="participantName">{{participant.name}} </td>
+        <td class="participantOptions">
+            <button ng-click="changeName(participant.userId)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
         </td>
     </tr>
     </tbody>
