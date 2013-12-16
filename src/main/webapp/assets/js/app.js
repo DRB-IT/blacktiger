@@ -118,7 +118,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute','pascalprecht.tr
             if($scope.hasSongsLocally) {
                 $scope.stop();
                 $storage.readBlob("song_" + $scope.currentSong + ".mp3").then(function(blob) {
-                    $audioplayer.setFile(blob);
+                    $audioplayer.setUrl(URL.createObjectURL(blob));
                 });
             }
         });

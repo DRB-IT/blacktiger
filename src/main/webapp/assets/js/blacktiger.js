@@ -18,7 +18,7 @@ angular.module('blacktiger', []
     return {
         getRoomIds: function() {
             var deferred = $q.defer();
-            if (roomIds === ""/*null*/) {
+            if (roomIds === null) {
                 $http({method: 'GET', url: $blacktiger.getServiceUrl() + "rooms"}).success(function(data) {
                     roomIds = data;
                     deferred.resolve(data);
@@ -111,7 +111,7 @@ angular.module('blacktiger', []
 }).factory('$dbStorage', function($q, $timeout) {
     var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction,
-            dbVersion = 1.0, database = null;
+            dbVersion = 1, database = null, dbName = "files", storeName = "songs" ;
 
 
 
@@ -119,7 +119,7 @@ angular.module('blacktiger', []
         var database = ev.target.result;
         // Create an objectStore
         console.log("Creating objectStore")
-        database.createObjectStore("song");
+        database.createObjectStore(storeName);
     }
 
 
@@ -128,11 +128,10 @@ angular.module('blacktiger', []
             var deferred = $q.defer();
 
             if (database === null) {
-                var onOpen = function(ev) {
-                    var database = event.target.result;
+                var onOpen = function(event) {
+                    database = event.target.result;
                     console.log("Success creating/accessing IndexedDB database");
-                    database = request.result;
-
+                    
                     database.onerror = function(event) {
                         console.log("Error creating/accessing IndexedDB database");
                     };
@@ -144,7 +143,7 @@ angular.module('blacktiger', []
                     deferred.reject();
                 }
 
-                var request = indexedDB.open("songFiles", dbVersion);
+                var request = indexedDB.open(dbName, dbVersion);
                 request.onsuccess = onOpen;
                 request.onerror = handleError;
                 request.onupgradeneeded = onUpgrade;
@@ -160,12 +159,13 @@ angular.module('blacktiger', []
         },
         hasBlobs: function(names) {
             var deferred = $q.defer();
-            var transaction = db.transaction(["songs"], IDBTransaction.READ);
-
-            transaction.objectStore("songs").openCursor().onsuccess = function(event) {
+            var transaction = database.transaction([storeName], "readonly");
+            var store = transaction.objectStore(storeName);
+            store.openCursor().onsuccess = function(event) {
                 var cursor = event.target.result;
                 if (cursor) {
-                    var index = names.indexOf(cursor.name);
+                    console.log(cursor.key);
+                    var index = names.indexOf(cursor.key);
                     if (index >= 0) {
                         names.splice(index, 1);
                     }
@@ -183,12 +183,12 @@ angular.module('blacktiger', []
         },
         readBlob: function(name) {
             var deferred = $q.defer();
-            var transaction = db.transaction(["songs"], IDBTransaction.READ);
-            var request = transaction.objectStore("songs").get(name);
+            var transaction = database.transaction([storeName], "readonly");
+            var request = transaction.objectStore(storeName).get(name);
             request.onsuccess = function(event) {
                 console.log("Got file:" + name);
-                var imgFile = event.target.result;
-                deferred.resolve(imgFile.value);
+                var blob = event.target.result;
+                deferred.resolve(blob);
             };
             request.onerror = function(event) {
                 console.log("Error retreiving file:" + name);
@@ -199,16 +199,16 @@ angular.module('blacktiger', []
         writeBlob: function(name, blob) {
             var deferred = $q.defer();
 
-            var transaction = db.transaction(["songs"], IDBTransaction.READ_WRITE);
-            var request = transaction.objectStore("songs").put(blob, name);
-            request.onsuccess(function() {
+            var transaction = database.transaction([storeName], "readwrite"); 
+            var request = transaction.objectStore(storeName).put(blob, name);
+            request.onsuccess = function() {
                 console.log("File persisted:" + name);
                 deferred.resolve();
-            });
-            request.onerror(function(event) {
+            };
+            request.onerror = function(event) {
                 console.log("Error persisting file:" + name);
                 deferred.reject(event);
-            });
+            };
 
             return deferred.promise;
         }
@@ -395,12 +395,12 @@ angular.module('blacktiger', []
         }
     }
 }).factory('$audioplayer', function($rootScope) {
-    var blob;
+    var url;
     var state = 'stopped';
     
     return {
-        setFile: function(value) {
-            blob = value;
+        setUrl: function(value) {
+            url = value;
         },
         getProgressPercent: function() {
             if (state === 'stopped' || !audio) {
@@ -417,7 +417,6 @@ angular.module('blacktiger', []
             if (state === 'playing')
                 return;
 
-            var url = URL.createObjectURL(blob);
             audio = new Audio(url);
             
             var self = this;

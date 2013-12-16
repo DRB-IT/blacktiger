@@ -70,12 +70,12 @@
 
             }
 
-            $(window).on('beforeunload', function() {
-                if (SongManager.getState() == 'playing') {
+            /*$(window).on('beforeunload', function() {
+                if (SongManager.getState() === 'playing') {
                     return 'Leaving the page will stop the music.';
                 }
 
-            });
+            });*/
 
             var mocked = false;
             if (window.location.search === '?mock') {
