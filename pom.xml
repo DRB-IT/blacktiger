@@ -4,7 +4,7 @@
 
     <groupId>dk.drb</groupId>
     <artifactId>blacktiger</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>war</packaging>
 
     <name>Black Tiger</name>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.asteriskjava</groupId>
             <artifactId>asterisk-java</artifactId>
-            <version>1.0.0.M3</version>
+            <version>1.0.0.CI-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.sun.jmx</groupId>

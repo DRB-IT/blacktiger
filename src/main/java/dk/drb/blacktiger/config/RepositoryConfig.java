@@ -4,7 +4,7 @@ import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.UserRepository;
-import dk.drb.blacktiger.repository.asterisk.AsteriskConferenceRepository;
+import dk.drb.blacktiger.repository.asterisk.AsteriskMeetMeRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
@@ -65,7 +65,7 @@ public class RepositoryConfig {
         if(test) {
             return new InMemConferenceRepository();
         } else {
-            AsteriskConferenceRepository repository = new AsteriskConferenceRepository();
+            AsteriskMeetMeRepository repository = new AsteriskMeetMeRepository();
             repository.setAsteriskServer(asteriskServer);
             return repository;
         }

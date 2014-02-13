@@ -13,11 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantEvent;
+import dk.drb.blacktiger.security.SystemUserDetailsManager;
 import dk.drb.blacktiger.service.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,6 +124,21 @@ public class RoomController {
         service.addEventListener(changeReporter);
     }
 
+    @RequestMapping("/rooms")
+    @ResponseBody
+    public String[] getRooms() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<String> rooms = new ArrayList<String>();
+        
+        for(GrantedAuthority authority : auth.getAuthorities()) {
+            if(authority.getAuthority().startsWith(SystemUserDetailsManager.ROLE_ROOMACCESS_PREFIX)) {
+                rooms.add(authority.getAuthority().substring(SystemUserDetailsManager.ROLE_ROOMACCESS_PREFIX.length()));
+            }
+        }
+        
+        return rooms.toArray(new String[0]);
+    }
+    
     /**
      * Accepts requests for changes. This method add the Http Request to a queue and frees the thread handling the request. Another thread will handle
      * the request later on. This should be changed to use Springs builtin Async methods instead when we reach Spring 3.2.
