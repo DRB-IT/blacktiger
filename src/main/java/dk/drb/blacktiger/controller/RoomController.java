@@ -38,13 +38,13 @@ public class RoomController {
     private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
     private static final long ASYNC_TIMEOUT = 30000;
     private final ConferenceService service;
-    private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
-    private final ChangeReporter changeReporter = new ChangeReporter();
+    //private final List<ChangeListenerEntry> changeListeners = Collections.synchronizedList(new ArrayList<ChangeListenerEntry>());
+    //private final ChangeReporter changeReporter = new ChangeReporter();
 
     /**
      * Class for reporting changes to awaiting Http Requests.
      */
-    private class ChangeReporter implements ConferenceEventListener {
+    /*private class ChangeReporter implements ConferenceEventListener {
 
         @Override
         public void onParticipantEvent(ParticipantEvent event) {
@@ -76,12 +76,12 @@ public class RoomController {
             changeListeners.removeAll(clonedList);
 
         }
-    }
+    }*/
 
     /**
      * Entry for awaiting HttpRequest.
      */
-    private class ChangeListenerEntry {
+    /*private class ChangeListenerEntry {
 
         private AsyncContext asyncContext;
         private String roomNo;
@@ -104,7 +104,7 @@ public class RoomController {
         public long getTimestamp() {
             return timestamp;
         }
-    }
+    }*/
 
     /**
      * Constructor for new instance of RoomController.
@@ -119,10 +119,10 @@ public class RoomController {
     /**
      * Init method which needs to be called beforing calling other methods in this controller.
      */
-    @PostConstruct
+    /*@PostConstruct
     public void init() {
         service.addEventListener(changeReporter);
-    }
+    }*/
 
     @RequestMapping("/rooms")
     @ResponseBody
@@ -143,53 +143,22 @@ public class RoomController {
      * Accepts requests for changes. This method add the Http Request to a queue and frees the thread handling the request. Another thread will handle
      * the request later on. This should be changed to use Springs builtin Async methods instead when we reach Spring 3.2.
      */
-    @RequestMapping(value = "/rooms/{roomNo}/changes")
+    /*@RequestMapping(value = "/rooms/{roomNo}/changes")
     public void listenForChange(HttpServletRequest request, HttpServletResponse response, @PathVariable final String roomNo) {
         LOG.debug("Adding new listener [remoteIp={};roomNo={}]", request.getRemoteAddr(), roomNo);
         AsyncContext asyncContext = request.startAsync();
         asyncContext.setTimeout(60000);
         changeListeners.add(new ChangeListenerEntry(asyncContext, roomNo));
-    }
+    }*/
 
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
-    public List<Participant> getAsJson(@PathVariable final String roomNo) {
+    public List<Participant> get(@PathVariable final String roomNo) {
         LOG.debug("Got JSON request for room '{}'.", roomNo);
         return service.listParticipants(roomNo);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
-    @ResponseBody
-    public Participant getParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
-        return service.getParticipant(roomNo, participantId);
-    }
-
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/kick", method = RequestMethod.POST, headers = "Accept=application/json")
-    @ResponseBody
-    public int kickParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
-        service.kickParticipant(roomNo, participantId);
-        return 1;
-    }
-
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
-    @ResponseBody
-    public int muteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
-        service.muteParticipant(roomNo, participantId);
-        return 1;
-    }
-
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/unmute", method = RequestMethod.POST, headers = "Accept=application/json")
-    @ResponseBody
-    public int unmuteParticipantAsJson(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Unmuting participant in room [room={};participant={}].", roomNo, participantId);
-        service.unmuteParticipant(roomNo, participantId);
-        return 1;
-    }
-
-    @Scheduled(fixedDelay = 5000)
+    /*@Scheduled(fixedDelay = 5000)
     public void updateRequests() {
         List<ChangeListenerEntry> clonedList = new ArrayList<ChangeListenerEntry>(changeListeners);
         Iterator<ChangeListenerEntry> it = clonedList.iterator();
@@ -209,7 +178,7 @@ public class RoomController {
 
         changeListeners.removeAll(clonedList);
 
-    }
+    }*/
 
     private void respondChanged(HttpServletResponse response, boolean value) {
         try {
