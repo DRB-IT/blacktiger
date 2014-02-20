@@ -2,6 +2,7 @@ package dk.drb.blacktiger.controller;
 
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.service.ConferenceService;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,22 @@ public class ParticipantController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}", headers = "Accept=application/json")
+    
+    @RequestMapping(value = "/rooms/{roomNo}/participants", headers = "Accept=application/json")
+    @ResponseBody
+    public List<Participant> listParticipants(@PathVariable final String roomNo) {
+        LOG.debug("Got request for participants in room [room={}].", roomNo);
+        return service.listParticipants(roomNo);
+    }
+    
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", headers = "Accept=application/json")
     @ResponseBody
     public Participant getParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Got JSON request for participant in room [room={};participant={}].", roomNo, participantId);
+        LOG.debug("Got request for participant in room [room={};participant={}].", roomNo, participantId);
         return service.getParticipant(roomNo, participantId);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     @ResponseBody
     public int kickParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
@@ -46,7 +55,7 @@ public class ParticipantController {
         return 1;
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody boolean muted) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);

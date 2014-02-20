@@ -32,4 +32,11 @@
                 <netbeans.deploy.clientUrlPart>/app.html</netbeans.deploy.clientUrlPart>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-Integration Test</actionName>
+            <displayName>Integration Test</displayName>
+            <goals>
+                <goal>integration-test</goal>
+            </goals>
+        </action>
     </actions>

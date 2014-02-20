@@ -5,6 +5,7 @@ import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.PhonebookEntry;
+import dk.drb.blacktiger.model.Room;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -33,6 +34,14 @@ public class ConferenceService {
         this.phonebookRepository = phonebookRepository;
     }
 
+    public List<Room> listRooms() {
+        return null;
+    }
+    
+    public Room getRoom(String room) {
+        return null;
+    }
+    
     /**
      * Retrieves a list of participants in  a room.
      * @param roomNo The room number.

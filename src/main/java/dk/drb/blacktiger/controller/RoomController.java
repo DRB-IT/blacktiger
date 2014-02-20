@@ -1,17 +1,12 @@
 package dk.drb.blacktiger.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.security.SystemUserDetailsManager;
+import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.service.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,24 +34,16 @@ public class RoomController {
 
     @RequestMapping("/rooms")
     @ResponseBody
-    public String[] getRooms() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<String> rooms = new ArrayList<String>();
-        
-        for(GrantedAuthority authority : auth.getAuthorities()) {
-            if(authority.getAuthority().startsWith(SystemUserDetailsManager.ROLE_ROOMACCESS_PREFIX)) {
-                rooms.add(authority.getAuthority().substring(SystemUserDetailsManager.ROLE_ROOMACCESS_PREFIX.length()));
-            }
-        }
-        
-        return rooms.toArray(new String[0]);
+    public List<Room> getRooms() {
+        LOG.debug("Got request for all rooms.");
+        return service.listRooms();
     }
     
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")
     @ResponseBody
-    public List<Participant> get(@PathVariable final String roomNo) {
-        LOG.debug("Got JSON request for room '{}'.", roomNo);
-        return service.listParticipants(roomNo);
+    public Room get(@PathVariable final String roomNo) {
+        LOG.debug("Got request for specific room '{}'.", roomNo);
+        return service.getRoom(roomNo);
     }
 
 }

@@ -1,0 +1,107 @@
+17:23:13,929  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
+17:23:36,178  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
+17:26:12,495  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
+17:30:59,135  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
+17:31:35,144  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
+16:52:34,048  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:52:34,181  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+16:52:34,265  INFO ManagerConnectionImpl:94 - Successfully logged in
+16:52:34,295  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+16:52:34,394  INFO AsteriskServerImpl:94 - Initializing done
+16:53:19,958  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:53:20,127  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+16:53:20,531  INFO ManagerConnectionImpl:94 - Successfully logged in
+16:53:20,564  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+16:53:20,951  INFO AsteriskServerImpl:94 - Initializing done
+16:54:20,507  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:54:21,411  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+16:54:21,497  INFO ManagerConnectionImpl:94 - Successfully logged in
+16:54:21,533  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+16:54:21,579  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+16:54:21,579  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+16:54:21,587  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+16:54:21,649  INFO AsteriskServerImpl:94 - Initializing done
+16:54:23,371  INFO ManagerConnectionImpl:94 - Closing socket.
+16:54:23,423  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:54:23,469  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+16:54:23,521  INFO ManagerConnectionImpl:94 - Successfully logged in
+16:55:02,149  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:55:02,304  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+16:55:02,389  INFO ManagerConnectionImpl:94 - Successfully logged in
+16:55:02,429  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+16:55:02,462  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+16:55:02,463  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+16:55:02,471  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+16:55:02,544  INFO AsteriskServerImpl:94 - Initializing done
+16:55:03,220  INFO ManagerConnectionImpl:94 - Closing socket.
+16:55:03,273  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:59:35,406  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:59:35,536  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+16:59:35,607  INFO ManagerConnectionImpl:94 - Successfully logged in
+16:59:35,635  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+16:59:35,675  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+16:59:35,676  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+16:59:35,683  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+16:59:35,748  INFO AsteriskServerImpl:94 - Initializing done
+16:59:35,781  INFO ManagerConnectionImpl:94 - Closing socket.
+16:59:35,833  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+16:59:35,892  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:01:43,720  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:01:43,897  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:01:43,971  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:01:43,990  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:01:44,021  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:01:44,022  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:01:44,030  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+17:01:44,101  INFO AsteriskServerImpl:94 - Initializing done
+17:04:05,884  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:04:06,013  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:04:06,092  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:04:06,130  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:04:06,164  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:04:06,165  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:04:06,172  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+17:04:06,238  INFO AsteriskServerImpl:94 - Initializing done
+17:06:37,741  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:06:37,912  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:06:37,993  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:06:38,045  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:06:38,083  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:06:38,084  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:06:38,092  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+17:07:11,620  INFO AsteriskServerImpl:94 - Initializing done
+17:08:12,765  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:08:12,940  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:08:13,022  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:08:13,058  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:08:13,092  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:08:13,092  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:08:13,099  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+17:08:13,179  INFO AsteriskServerImpl:94 - Initializing done
+17:08:20,551  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:08:20,715  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:08:20,773  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:08:20,807  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:08:20,847  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:08:20,847  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:08:20,855  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+17:08:33,086  INFO AsteriskServerImpl:94 - Initializing done
+17:10:35,737  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:10:35,889  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:10:36,004  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:10:36,044  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:10:36,087  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:10:36,087  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:10:36,095  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
+17:10:36,192  INFO AsteriskServerImpl:94 - Initializing done
+17:18:02,382  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:18:04,484  INFO ManagerConnectionImpl:94 - Closing socket.
+17:18:04,485  INFO ManagerReaderImpl:94 - Terminating reader thread: Socket closed
+17:19:16,849  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:19:16,980  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
+17:19:17,058  INFO ManagerConnectionImpl:94 - Successfully logged in
+17:19:17,089  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
+17:19:17,127  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:19:17,128  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
+17:19:17,135  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000007
+17:19:17,209  INFO AsteriskServerImpl:94 - Initializing done

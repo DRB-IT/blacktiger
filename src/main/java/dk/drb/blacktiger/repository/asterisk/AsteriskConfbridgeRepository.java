@@ -14,6 +14,7 @@ import org.asteriskjava.manager.ResponseEvents;
 import org.asteriskjava.manager.TimeoutException;
 import org.asteriskjava.manager.action.ConfbridgeKickAction;
 import org.asteriskjava.manager.action.ConfbridgeListAction;
+import org.asteriskjava.manager.action.ConfbridgeListRoomsAction;
 import org.asteriskjava.manager.action.ConfbridgeMuteAction;
 import org.asteriskjava.manager.action.ConfbridgeUnmuteAction;
 import org.asteriskjava.manager.action.EventGeneratingAction;
@@ -21,6 +22,7 @@ import org.asteriskjava.manager.action.ManagerAction;
 import org.asteriskjava.manager.event.ConfbridgeJoinEvent;
 import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
 import org.asteriskjava.manager.event.ConfbridgeListEvent;
+import org.asteriskjava.manager.event.ConfbridgeListRoomsEvent;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.ResponseEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
@@ -50,6 +52,20 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         }
     }
 
+    public List findRooms() {
+        ResponseEvents events = sendAction(new ConfbridgeListRoomsAction());
+        
+        List result = new ArrayList();
+        
+        for (ResponseEvent event : events.getEvents()) {
+            if(event instanceof ConfbridgeListRoomsEvent) {
+                ConfbridgeListRoomsEvent roomsEvent = (ConfbridgeListRoomsEvent) event;
+                result.add(roomsEvent.getConference());
+            }
+        }
+        return result;
+    }
+    
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
