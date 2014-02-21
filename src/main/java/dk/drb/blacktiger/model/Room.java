@@ -1,6 +1,7 @@
 
 package dk.drb.blacktiger.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,8 @@ import java.util.List;
 public class Room {
     private String id;
     private String displayName;
-    private List<Participant> participants;
-    private Contact contact;
+    private List<Participant> participants = new ArrayList<Participant>();
+    private Contact contact = new Contact();
 
     public String getId() {
         return id;
@@ -33,16 +34,12 @@ public class Room {
         return participants;
     }
 
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
-    }
-
     public Contact getContact() {
         return contact;
     }
 
     public void setContact(Contact contact) {
-        this.contact = contact;
+        this.contact = contact == null ? new Contact() : contact;
     }
 
     

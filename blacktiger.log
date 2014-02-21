@@ -105,3 +105,136 @@
 17:19:17,128  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
 17:19:17,135  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000007
 17:19:17,209  INFO AsteriskServerImpl:94 - Initializing done
+07:26:01,460  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+07:26:03,575  INFO ManagerConnectionImpl:94 - Closing socket.
+07:26:03,576  INFO ManagerReaderImpl:94 - Terminating reader thread: Socket closed
+08:39:19,082  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+08:39:19,085  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+08:39:19,291  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+08:39:19,292  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+08:39:19,295  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+08:39:19,357  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
+08:39:21,146  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+08:39:51,720  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+08:39:51,723  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+08:39:51,927  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+08:39:51,928  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+08:39:51,932  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+08:39:51,989  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
+16:47:25,188  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+16:47:25,192  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+16:47:25,397  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+16:47:25,397  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+16:47:25,401  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+16:47:25,459  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
+16:48:01,911  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+16:48:01,914  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+16:48:02,139  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+16:48:02,140  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+16:48:02,144  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+16:48:07,026  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
+16:48:28,507  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+16:48:28,511  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+16:48:28,706  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+16:48:28,706  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+16:48:28,710  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+16:48:28,779 DEBUG RoomController:38 - Got request for all rooms.
+16:51:35,733  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+16:51:35,736  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+16:51:35,931  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+16:51:35,932  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+16:51:35,935  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+16:51:36,004 DEBUG RoomController:38 - Got request for all rooms.
+17:00:05,451  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:00:05,454  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:00:05,652  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:00:05,652  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:00:05,656  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:00:05,724 DEBUG RoomController:38 - Got request for all rooms.
+17:07:10,226  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:07:10,229  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:07:10,425  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:07:10,426  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:07:10,429  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:07:10,497 DEBUG RoomController:38 - Got request for all rooms.
+17:12:48,060  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:12:48,063  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:12:48,260  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:12:48,260  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:12:48,264  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:12:48,333 DEBUG RoomController:38 - Got request for all rooms.
+17:12:48,419  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:12:48,419  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:12:48,440  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:12:48,441  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:12:48,441  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:14:54,784  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:14:54,787  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:14:54,986  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:14:54,987  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:14:54,990  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:14:55,060 DEBUG RoomController:38 - Got request for all rooms.
+17:14:55,146  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:14:55,146  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:14:55,167  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:14:55,167  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:14:55,168  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:14:55,194 DEBUG RoomController:45 - Got request for specific room '1'.
+17:14:55,229  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:16:40,250  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:16:40,253  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:16:40,445  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:16:40,446  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:16:40,449  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:16:40,519 DEBUG RoomController:38 - Got request for all rooms.
+17:16:40,603  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:16:40,603  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:16:40,625  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:16:40,625  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:16:40,626  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:16:40,653 DEBUG RoomController:45 - Got request for specific room '1'.
+17:16:40,682  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
+17:17:02,121  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:17:02,124  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:17:02,316  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:17:02,316  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:17:02,320  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:17:02,388 DEBUG RoomController:38 - Got request for all rooms.
+17:17:02,472  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:17:02,472  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:17:02,493  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:17:02,493  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:17:02,494  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:17:02,519 DEBUG RoomController:45 - Got request for specific room '1'.
+17:17:03,537  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:17:03,541  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:17:03,737  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:17:03,738  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:17:03,742  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:17:03,814 DEBUG RoomController:38 - Got request for all rooms.
+17:17:03,901  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:17:03,902  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:17:03,922  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:17:03,922  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:17:03,923  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:17:03,949 DEBUG RoomController:45 - Got request for specific room '1'.
+17:45:37,630  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
+17:45:37,633  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
+17:45:37,829  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:45:37,829  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:45:37,833  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:45:37,891  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/system/information] in DispatcherServlet with name ''
+17:46:02,670  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.SystemController.getInformation(java.lang.String)
+17:46:02,871  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:46:02,871  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:46:02,875  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:47:06,836  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.SystemController.getInformation()
+17:47:07,046  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:47:07,046  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:47:07,050  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:47:07,121 DEBUG PhonebookController:29 - Got request system information.
+17:49:34,028  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.SystemController.getInformation()
+17:49:34,229  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:49:34,229  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:49:34,233  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:49:34,303 DEBUG PhonebookController:29 - Got request system information.

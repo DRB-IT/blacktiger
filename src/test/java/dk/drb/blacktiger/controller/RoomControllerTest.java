@@ -3,47 +3,67 @@
  */
 package dk.drb.blacktiger.controller;
 
-import java.util.Date;
-import dk.drb.blacktiger.model.Participant;
-import static org.junit.Assert.*;
-import org.junit.Ignore;
+import dk.drb.blacktiger.service.ConferenceService;
+
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import static dk.drb.blacktiger.fixture.rest.RoomRestDataFixture.*;
 
 /**
  *
  */
 public class RoomControllerTest {
-    
-    /*@Test
-    public void testKick() {
-        MockService service = new MockService();
-        String roomNo = "123";
-        RoomController instance = new RoomController(service);
-        instance.init();
-        
-        assertEquals(0, instance.showRoomAsJson("09991").size());
-        service.addParticipant(new Participant("123", "12341234", "John Doe", true, false, new Date()));
-        assertEquals(1, instance.showRoomAsJson("09991").size());
-        service.kickParticipant("09991", "123");
+
+    MockMvc mockMvc;
+
+    @InjectMocks
+    RoomController controller;
+
+    @Mock
+    ConferenceService service;
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+
+        this.mockMvc = standaloneSetup(controller)
+                .setMessageConverters(new MappingJackson2HttpMessageConverter()).build();
+    }
+
+    @Test
+    public void thatRoomsCanBeRetrieved() throws Exception {
+        String[] ids = {"1", "2"};
+        when(service.listRooms()).thenReturn(standardListOfRooms(ids));
+
+        this.mockMvc.perform(get("/rooms")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(standardListOfRoomsAsJson(ids)));
     }
     
     @Test
-    @Ignore
-    public void testListenForChange() {
-        System.out.println("listenForChange");
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockService service = new MockService();
-        String roomNo = "123";
-        RoomController instance = new RoomController(service);
-        instance.init();
-        instance.listenForChange(request, response, roomNo);
-        
-        service.fireJoinEvent(roomNo, "321");
-        
-    }*/
+    public void thatARoomCanBeRetrieved() throws Exception {
+        when(service.getRoom(eq("1"))).thenReturn(standardRoom("1"));
 
-    
+        this.mockMvc.perform(get("/rooms/1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(standardRoomAsJson("1")));
+    }
+
 }

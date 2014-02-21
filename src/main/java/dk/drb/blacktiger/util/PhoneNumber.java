@@ -29,8 +29,6 @@ public class PhoneNumber {
             LOG.info("Unable to parse number. [" + number + "]", ex);
             return number;
         }
-        
-        
     }
 
     public static boolean isPhoneNumber(String text, String region) {

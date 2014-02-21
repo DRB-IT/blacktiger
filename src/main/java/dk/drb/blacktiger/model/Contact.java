@@ -10,37 +10,30 @@ public class Contact {
     private String phoneNumber;
     private String comment;
 
-    public String getName() {
-        return name;
+    public Contact() {
     }
 
-    public void setName(String name) {
+    public Contact(String name, String email, String phoneNumber, String comment) {
         this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.comment = comment;
+    }
+    
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-    
-    
 }
