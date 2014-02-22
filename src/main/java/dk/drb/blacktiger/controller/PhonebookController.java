@@ -26,24 +26,22 @@ public class PhonebookController {
      * Updates a phonebook entry taking the requestbody as new name.
      * @return JSON Object with the value '1'.
      */
-    @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.PUT)
     @ResponseBody
-    public int update(@PathVariable final String number, @RequestBody String name) {
+    public void update(@PathVariable final String number, @RequestBody String name) {
         LOG.info("Updating phonebook entry. [number={}; name={}]", number, name);
         service.updatePhonebookEntry(number, name);
-        return 1;
     }
     
     /**
      * Removes a phone book entry.
      * @return JSON Object with the value '1'.
      */
-    @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.DELETE)
     @ResponseBody
-    public int delete(@PathVariable final String number) {
+    public void delete(@PathVariable final String number) {
         LOG.info("Removing phonebook entry. [number={}]", number);
         service.removePhonebookEntry(number);
-        return 1;
     }
     
     /**
