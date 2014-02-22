@@ -55,7 +55,7 @@ public class ParticipantController {
         return 1;
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/mute", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/muted", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public int muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody boolean muted) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
