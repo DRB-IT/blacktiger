@@ -1,9 +1,9 @@
 package dk.drb.blacktiger.repository.asterisk;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
-import dk.drb.blacktiger.model.ParticipantEvent;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceJoinEvent;
+import dk.drb.blacktiger.model.ConferenceLeaveEvent;
 import dk.drb.blacktiger.repository.ConferenceRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public abstract class AbstractAsteriskConferenceRepository implements Conference
     
     public abstract void onManagerEvent(ManagerEvent event);
     
-    protected void fireEvent(final ParticipantEvent event) {
+    protected void fireEvent(final ConferenceEvent event) {
         // These events are actually fired some time before they may actually be fullfilled as the asterisk server. 
         // Wait a little before sending them along
         eventTimer.schedule(new TimerTask() {

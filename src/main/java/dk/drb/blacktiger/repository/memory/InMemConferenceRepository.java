@@ -2,8 +2,8 @@ package dk.drb.blacktiger.repository.memory;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.ConferenceJoinEvent;
+import dk.drb.blacktiger.model.ConferenceLeaveEvent;
 import dk.drb.blacktiger.repository.ConferenceRepository;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -133,13 +133,13 @@ public class InMemConferenceRepository implements ConferenceRepository {
     
     private void fireJoinEvent(String userId) {
         for(ConferenceEventListener l : eventListeners) {
-            l.onParticipantEvent(new ParticipantJoinEvent(ROOM_ID, userId));
+            l.onParticipantEvent(new ConferenceJoinEvent(ROOM_ID, userId));
         }
     }
     
      private void fireLeaveEvent(String userId) {
         for(ConferenceEventListener l : eventListeners) {
-            l.onParticipantEvent(new ParticipantLeaveEvent(ROOM_ID, userId));
+            l.onParticipantEvent(new ConferenceLeaveEvent(ROOM_ID, userId));
         }
     }
     

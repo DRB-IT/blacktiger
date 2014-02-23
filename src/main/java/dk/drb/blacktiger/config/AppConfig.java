@@ -15,33 +15,13 @@ import org.springframework.core.env.Environment;
 
 @Configuration
 @PropertySource({"classpath:blacktiger.properties","file:${user.home}/blacktiger.properties"})
-@Import(RepositoryConfig.class)
+@Import({ServiceConfig.class, WebsocketConfig.class})
 @ImportResource("classpath:springsecurity.xml")
 public class AppConfig {
 
     @Autowired
     Environment env;
 
-    @Bean
-    public CallInformationService callInformationService() {
-        return new CallInformationService();
-    }
-
-    @Bean
-    public ConferenceService conferenceService() {
-        return new ConferenceService();
-    }
-
-    @Bean
-    public PhonebookService phonebookService() {
-        return new PhonebookService();
-    }
-
-    @Bean
-    public UserService userService() {
-        return new UserService();
-    }
-    
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

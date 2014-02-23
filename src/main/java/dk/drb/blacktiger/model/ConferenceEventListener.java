@@ -11,6 +11,6 @@ public interface ConferenceEventListener {
      * Fired when a ParticipantEvent is triggered.
      * @param event The event.
      */
-    void onParticipantEvent(ParticipantEvent event);
+    void onParticipantEvent(ConferenceEvent event);
     
 }

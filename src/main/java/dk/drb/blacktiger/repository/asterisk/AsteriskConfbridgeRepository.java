@@ -2,8 +2,8 @@ package dk.drb.blacktiger.repository.asterisk;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.ConferenceJoinEvent;
+import dk.drb.blacktiger.model.ConferenceLeaveEvent;
 import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
@@ -43,12 +43,12 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         if (event instanceof ConfbridgeJoinEvent) {
             String roomNo = ((ConfbridgeJoinEvent) event).getConference();
             String id = ((ConfbridgeJoinEvent) event).getChannel();
-            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, id));
+            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, id));
         }
         if (event instanceof ConfbridgeLeaveEvent) {
             String roomNo = ((ConfbridgeLeaveEvent) event).getConference();
             String id = ((ConfbridgeJoinEvent) event).getChannel();
-            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, id));
+            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceLeaveEvent(roomNo, id));
         }
     }
 

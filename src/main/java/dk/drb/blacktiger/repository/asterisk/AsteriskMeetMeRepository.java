@@ -2,8 +2,8 @@ package dk.drb.blacktiger.repository.asterisk;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.ConferenceJoinEvent;
+import dk.drb.blacktiger.model.ConferenceLeaveEvent;
 import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.util.ArrayList;
@@ -30,12 +30,12 @@ public class AsteriskMeetMeRepository extends AbstractAsteriskConferenceReposito
         if (event instanceof MeetMeJoinEvent) {
             String roomNo = ((MeetMeJoinEvent) event).getMeetMe();
             Integer index = ((MeetMeJoinEvent) event).getUserNum();
-            AsteriskMeetMeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, index.toString()));
+            AsteriskMeetMeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, index.toString()));
         }
         if (event instanceof MeetMeLeaveEvent) {
             String roomNo = ((MeetMeLeaveEvent) event).getMeetMe();
             Integer index = ((MeetMeLeaveEvent) event).getUserNum();
-            AsteriskMeetMeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, index.toString()));
+            AsteriskMeetMeRepository.this.fireEvent(new ConferenceLeaveEvent(roomNo, index.toString()));
         }
     }
 
