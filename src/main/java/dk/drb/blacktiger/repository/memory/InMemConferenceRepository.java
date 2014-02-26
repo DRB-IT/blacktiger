@@ -19,8 +19,8 @@ public class InMemConferenceRepository implements ConferenceRepository {
 
     private static final String ROOM_ID = "09991";
     private static final Logger LOG = LoggerFactory.getLogger(InMemConferenceRepository.class);
-    private List<Participant> participants = new ArrayList<Participant>();
-    private List<ConferenceEventListener> eventListeners = new ArrayList<ConferenceEventListener>();
+    private List<Participant> participants = new ArrayList<>();
+    private List<ConferenceEventListener> eventListeners = new ArrayList<>();
     private int userCount;
     
     public InMemConferenceRepository() {
@@ -31,16 +31,17 @@ public class InMemConferenceRepository implements ConferenceRepository {
         }
     }
     
-    @Scheduled(fixedDelay = 160000)
+    @Scheduled(fixedDelay = 16000)
     public void addUser() {
         LOG.info("Adding user.");
         String id = Integer.toString(userCount++);
         String number = "+453314144" + userCount;
-        participants.add(new Participant(id, null, number, true, false, new Date()));
+        Participant p = new Participant(id, null, number, true, false, new Date());
+        participants.add(p);
         
         LOG.info("User add [id={}]", id);
         
-        fireJoinEvent(id);
+        fireJoinEvent(p);
     }
     
     @Override
@@ -119,7 +120,7 @@ public class InMemConferenceRepository implements ConferenceRepository {
 
     @Override
     public void addEventListener(ConferenceEventListener listener) {
-        if (listener != null) {
+        if (listener != null && !eventListeners.contains(listener)) {
             eventListeners.add(listener);
         }
     }
@@ -131,9 +132,9 @@ public class InMemConferenceRepository implements ConferenceRepository {
         }
     }
     
-    private void fireJoinEvent(String userId) {
+    private void fireJoinEvent(Participant p) {
         for(ConferenceEventListener l : eventListeners) {
-            l.onParticipantEvent(new ConferenceJoinEvent(ROOM_ID, userId));
+            l.onParticipantEvent(new ConferenceJoinEvent(ROOM_ID, p));
         }
     }
     

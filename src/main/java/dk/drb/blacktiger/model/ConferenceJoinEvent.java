@@ -6,11 +6,21 @@ package dk.drb.blacktiger.model;
  */
 public class ConferenceJoinEvent extends ConferenceEvent {
 
-    public ConferenceJoinEvent(String roomNo, String participantId) {
-        super(roomNo, participantId);
+    private final Participant participant;
+    
+    public ConferenceJoinEvent(String roomNo, Participant participant) {
+        super(roomNo);
+        this.participant = participant;
     }
 
-    
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    @Override
+    public String getType() {
+        return "Join";
+    }
 
     
 }

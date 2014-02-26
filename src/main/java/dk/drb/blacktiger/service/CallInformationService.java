@@ -4,6 +4,7 @@ import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.CallInformation;
 import dk.drb.blacktiger.model.PhonebookEntry;
+import dk.drb.blacktiger.util.Access;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class CallInformationService {
      * @return The list of archived calls.
      */
     public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration) {
+        Access.checkRoomAccess(roomNo);
         List<CallInformation> list = repository.findByRoomNoAndPeriodAndDuration(roomNo, start, end, minimumDuration);
         for(CallInformation info : list) {
             PhonebookEntry entry = phonebookRepository.findByNumber(info.getPhoneNumber());

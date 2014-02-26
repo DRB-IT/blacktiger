@@ -1,4 +1,4 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
 import java.util.Calendar;
 import java.util.Date;

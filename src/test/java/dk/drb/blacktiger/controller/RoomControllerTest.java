@@ -3,6 +3,7 @@
  */
 package dk.drb.blacktiger.controller;
 
+import dk.drb.blacktiger.controller.rest.RoomController;
 import dk.drb.blacktiger.service.ConferenceService;
 
 import org.junit.Before;

@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller;
 
+import dk.drb.blacktiger.controller.rest.ParticipantController;
 import static dk.drb.blacktiger.fixture.rest.ParticipantRestDataFixture.*;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.service.ConferenceService;

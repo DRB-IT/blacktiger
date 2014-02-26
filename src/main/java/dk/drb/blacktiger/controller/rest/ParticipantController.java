@@ -1,4 +1,4 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.service.ConferenceService;

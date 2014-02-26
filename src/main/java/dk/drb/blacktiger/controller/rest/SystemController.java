@@ -1,4 +1,4 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
 import dk.drb.blacktiger.service.SystemService;
 import java.util.HashMap;

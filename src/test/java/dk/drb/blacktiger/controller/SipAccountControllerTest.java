@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller;
 
+import dk.drb.blacktiger.controller.rest.SipAccountController;
 import static dk.drb.blacktiger.fixture.rest.SipAccountRestDataFixture.*;
 import dk.drb.blacktiger.model.SipAccount;
 import dk.drb.blacktiger.service.PhonebookService;

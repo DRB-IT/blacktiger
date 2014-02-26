@@ -8,6 +8,7 @@ import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.asteriskjava.manager.EventTimeoutException;
 import org.asteriskjava.manager.ResponseEvents;
@@ -19,6 +20,7 @@ import org.asteriskjava.manager.action.ConfbridgeMuteAction;
 import org.asteriskjava.manager.action.ConfbridgeUnmuteAction;
 import org.asteriskjava.manager.action.EventGeneratingAction;
 import org.asteriskjava.manager.action.ManagerAction;
+import org.asteriskjava.manager.event.AbstractChannelEvent;
 import org.asteriskjava.manager.event.ConfbridgeJoinEvent;
 import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
 import org.asteriskjava.manager.event.ConfbridgeListEvent;
@@ -42,8 +44,8 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     public void onManagerEvent(ManagerEvent event) {
         if (event instanceof ConfbridgeJoinEvent) {
             String roomNo = ((ConfbridgeJoinEvent) event).getConference();
-            String id = ((ConfbridgeJoinEvent) event).getChannel();
-            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, id));
+            Participant p = participantFromEvent((ConfbridgeJoinEvent) event);
+            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, p));
         }
         if (event instanceof ConfbridgeLeaveEvent) {
             String roomNo = ((ConfbridgeLeaveEvent) event).getConference();
@@ -114,16 +116,24 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     private Participant participantFromEvent(ConfbridgeListEvent event) {
+        return participantFromEventData(event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
+    }
+    
+    private Participant participantFromEvent(AbstractChannelEvent event) {
+        return participantFromEventData(event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
+    }
+    
+    private Participant participantFromEventData(String callerIdNum, String callerIdName, Date dateReceived) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String number = event.getCallerIDnum();
+        String number = callerIdNum;
         boolean host = false;
 
         if (auth != null && number.equalsIgnoreCase(auth.getName())) {
             host = true;
         }
 
-        String phoneNumber = event.getCallerIDnum();
-        String name = event.getCallerIdName();
+        String phoneNumber = callerIdNum;
+        String name = callerIdName;
 
         if (IpPhoneNumber.isIpPhoneNumber(phoneNumber)) {
             phoneNumber = IpPhoneNumber.normalize(phoneNumber);
@@ -131,7 +141,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
         }
 
-        return new Participant(event.getCallerIDnum(), name, phoneNumber, false, host, event.getDateReceived());
+        return new Participant(callerIdNum, name, phoneNumber, false, host, dateReceived);
     }
     
     private ManagerResponse sendAction(ManagerAction action) {

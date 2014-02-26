@@ -5,11 +5,21 @@ package dk.drb.blacktiger.model;
  */
 public class ConferenceLeaveEvent extends ConferenceEvent {
 
+    private final String participantId;
+    
     public ConferenceLeaveEvent(String roomNo, String participantId) {
-        super(roomNo, participantId);
+        super(roomNo);
+        this.participantId = participantId;
     }
 
-    
+    public String getParticipantId() {
+        return participantId;
+    }
+
+    @Override
+    public String getType() {
+        return "Leave";
+    }
 
     
 }

@@ -3,6 +3,7 @@ package dk.drb.blacktiger.service;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  *
@@ -22,6 +23,7 @@ public class PhonebookService {
      * @param phoneNumber The number to retrieve name for.
      * @return The name from the phonebook or null if not available.
      */
+    @Secured("ROLE_USER")
     public String getPhonebookEntry(String phoneNumber) {
         PhonebookEntry entry = repository.findByNumber(phoneNumber);
         if(entry != null) {
@@ -36,6 +38,7 @@ public class PhonebookService {
      * @param phoneNumber The number to change the name for.
      * @param name The new name for the entry.
      */
+    @Secured("ROLE_USER")
     public void updatePhonebookEntry(String phoneNumber, String name) {
         PhonebookEntry entry = repository.findByNumber(phoneNumber);
         if(entry != null) {
@@ -50,6 +53,7 @@ public class PhonebookService {
      * Removes a phonenumber from the phonebook.
      * @param phoneNumber The number to remove the entry for.
      */
+    @Secured("ROLE_USER")
     public void removePhonebookEntry(String phoneNumber) {
         repository.deleteByNumber(phoneNumber);
     }

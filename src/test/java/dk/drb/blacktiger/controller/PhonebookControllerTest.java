@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller;
 
+import dk.drb.blacktiger.controller.rest.PhonebookController;
 import static dk.drb.blacktiger.fixture.rest.SystemRestDataFixture.standardInfoAsJson;
 import dk.drb.blacktiger.service.PhonebookService;
 import dk.drb.blacktiger.service.SystemService;

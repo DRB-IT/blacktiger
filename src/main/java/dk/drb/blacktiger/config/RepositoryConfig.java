@@ -15,16 +15,22 @@ import dk.drb.blacktiger.repository.memory.InMemUserRepository;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.asteriskjava.live.AsteriskServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @Import({DatasourceConfig.class, AsteriskConfig.class})
+@EnableScheduling
 public class RepositoryConfig {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(RepositoryConfig.class);
     
     @Autowired
     Environment env;
@@ -45,6 +51,7 @@ public class RepositoryConfig {
     @PostConstruct
     public void init() {
         if ("true".equalsIgnoreCase(env.getProperty("test"))) {
+            LOG.info("** RUNNING IN TEST MODE **");
             test = true;
         }
     }
@@ -52,6 +59,7 @@ public class RepositoryConfig {
     @Bean
     public CallInformationRepository callInformationRepository() {
         if(test) {
+            LOG.info("** USING InMemCallInformationRepository FOR TEST **");
             return new InMemCallInformationRepository();
         } else {
             JdbcCallInformationRepository repository = new JdbcCallInformationRepository();
@@ -63,6 +71,7 @@ public class RepositoryConfig {
     @Bean
     public ConferenceRepository conferenceRepository() {
         if(test) {
+            LOG.info("** USING InMemConferenceRepository FOR TEST **");
             return new InMemConferenceRepository();
         } else {
             AsteriskMeetMeRepository repository = new AsteriskMeetMeRepository();
@@ -74,6 +83,7 @@ public class RepositoryConfig {
     @Bean
     public PhonebookRepository phonebookRepository() {
         if(test) {
+            LOG.info("** USING InMemPhonebookRepository FOR TEST **");
             return new InMemPhonebookRepository();
         } else {
             JdbcPhonebookRepository repository = new JdbcPhonebookRepository();
@@ -85,6 +95,7 @@ public class RepositoryConfig {
     @Bean
     public UserRepository userRepository() {
         if(test) {
+            LOG.info("** USING InMemUserRepository FOR TEST **");
             return new InMemUserRepository();
         } else {
             JdbcUserRepository repository = new JdbcUserRepository();

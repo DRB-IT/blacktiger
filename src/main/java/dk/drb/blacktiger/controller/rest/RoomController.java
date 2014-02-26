@@ -1,4 +1,4 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
 import java.util.List;
 
@@ -7,7 +7,9 @@ import dk.drb.blacktiger.service.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +36,7 @@ public class RoomController {
 
     @RequestMapping("/rooms")
     @ResponseBody
+    @Secured("ROLE_USER")
     public List<Room> getRooms() {
         LOG.debug("Got request for all rooms.");
         return service.listRooms();

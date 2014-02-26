@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller;
 
+import dk.drb.blacktiger.controller.rest.SystemController;
 import dk.drb.blacktiger.service.SystemService;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,5 @@
 package dk.drb.blacktiger.config;
 
-import dk.drb.blacktiger.service.CallInformationService;
-import dk.drb.blacktiger.service.ConferenceService;
-import dk.drb.blacktiger.service.PhonebookService;
-import dk.drb.blacktiger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

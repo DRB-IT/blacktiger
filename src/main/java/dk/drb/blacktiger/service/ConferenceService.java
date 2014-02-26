@@ -6,11 +6,13 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
+import dk.drb.blacktiger.util.Access;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +41,7 @@ public class ConferenceService {
     }
     
     public Room getRoom(String room) {
+        Access.checkRoomAccess(room);
         return null;
     }
     
@@ -49,7 +52,7 @@ public class ConferenceService {
      */
     public List<Participant> listParticipants(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
-        checkRoomAccess(roomNo);
+        Access.checkRoomAccess(roomNo);
         return decorateWithPhonebookInformation(repository.findByRoomNo(roomNo));
     }
 
@@ -59,9 +62,10 @@ public class ConferenceService {
      * @param participantId The participant id.
      * @return The participant or null if no match found.
      */
+    
     public Participant getParticipant(String roomNo, String participantId) {
         LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, participantId);
-        checkRoomAccess(roomNo);
+        Access.checkRoomAccess(roomNo);
         return decorateWithPhonebookInformation(repository.findByRoomNoAndParticipantId(roomNo, participantId));
     }
 
@@ -71,7 +75,7 @@ public class ConferenceService {
      * @param participantId  The participant id.
      */
     public void kickParticipant(String roomNo, String participantId) {
-        checkRoomAccess(roomNo);
+        Access.checkRoomAccess(roomNo);
         repository.kickParticipant(roomNo, participantId);
     }
 
@@ -81,7 +85,7 @@ public class ConferenceService {
      * @param participantId  The participant id.
      */
     public void muteParticipant(String roomNo, String participantId) {
-        checkRoomAccess(roomNo);
+        Access.checkRoomAccess(roomNo);
         repository.muteParticipant(roomNo, participantId);
     }
 
@@ -91,7 +95,7 @@ public class ConferenceService {
      * @param participantId  The participant id.
      */
     public void unmuteParticipant(String roomNo, String participantId) {
-        checkRoomAccess(roomNo);
+        Access.checkRoomAccess(roomNo);
         repository.unmuteParticipant(roomNo, participantId);
     }
 
@@ -103,32 +107,9 @@ public class ConferenceService {
         repository.removeEventListener(listener);
     }
     
-    /**
-     * Checks whether current user has access to a given room number.
-     */
-    private void checkRoomAccess(String roomNo) {
-        if(!hasRole("ROOMACCESS_" + roomNo)) {
-            throw new SecurityException("Not authorized to access room " + roomNo);
-        }
-    }
     
-    /**
-     * Checks whether current user hols a specific role.
-     */
-    private boolean hasRole(String role) {
-        LOG.debug("Checking if current user has role '{}'", role);
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth!=null && auth.isAuthenticated()) {
-            for(GrantedAuthority ga : auth.getAuthorities()) {
-                if(ga.getAuthority().startsWith("ROLE_") && ga.getAuthority().substring(5).equals(role)) {
-                    return true;
-                }
-            }
-        }
-        LOG.debug("User does not have role. [auth={}]", auth);
-        return false;
-    }
+    
+
     
     private List<Participant> decorateWithPhonebookInformation(List<Participant> participants) {
         for(Participant p : participants) {

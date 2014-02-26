@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceJoinEvent;
+import dk.drb.blacktiger.model.ConferenceLeaveEvent;
 import java.io.IOException;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
@@ -29,7 +31,15 @@ public class EventConverter extends MappingJackson2MessageConverter {
             public void serialize(ConferenceEvent value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
                 jgen.writeStartObject();
                 jgen.writeStringField("roomNo", value.getRoomNo());
-                jgen.writeStringField("participantId", value.getParticipantId());
+                
+                if(value instanceof ConferenceJoinEvent) {
+                    jgen.writeObjectField("participant", ((ConferenceJoinEvent)value).getParticipant());
+                }
+                
+                if(value instanceof ConferenceLeaveEvent) {
+                    jgen.writeStringField("participantId", ((ConferenceLeaveEvent)value).getParticipantId());
+                }
+                
                 jgen.writeStringField("type", value.getClass().getSimpleName());
                 jgen.writeEndObject();
             }
@@ -54,5 +64,7 @@ public class EventConverter extends MappingJackson2MessageConverter {
     protected boolean canConvertFrom(Message<?> message, Class<?> targetClass) {
         return false;
     }
+    
+    
      
 }

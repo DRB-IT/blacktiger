@@ -30,7 +30,8 @@ public class AsteriskMeetMeRepository extends AbstractAsteriskConferenceReposito
         if (event instanceof MeetMeJoinEvent) {
             String roomNo = ((MeetMeJoinEvent) event).getMeetMe();
             Integer index = ((MeetMeJoinEvent) event).getUserNum();
-            AsteriskMeetMeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, index.toString()));
+            Participant p = null;
+            AsteriskMeetMeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, p));
         }
         if (event instanceof MeetMeLeaveEvent) {
             String roomNo = ((MeetMeLeaveEvent) event).getMeetMe();

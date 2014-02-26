@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  *
@@ -18,7 +19,6 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @Import({RepositoryConfig.class})
-@ImportResource("classpath:springsecurity.xml")
 public class ServiceConfig {
     
     @Bean

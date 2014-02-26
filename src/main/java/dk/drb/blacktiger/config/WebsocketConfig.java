@@ -15,6 +15,7 @@ import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -26,10 +27,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  */
 @Configuration
 @EnableScheduling
-@ComponentScan(
-		basePackages="dk.drb.blacktiger.controller",
-		excludeFilters = @ComponentScan.Filter(type= FilterType.ANNOTATION, value = Configuration.class)
-)
+@ComponentScan(basePackages="dk.drb.blacktiger.controller.websocket")
 @Import({ServiceConfig.class})
 @EnableWebSocketMessageBroker
 public class WebsocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
@@ -60,7 +58,7 @@ public class WebsocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        //registry.enableSimpleBroker("/events"); // destination prefix
-        registry.setApplicationDestinationPrefixes("/events");
+        registry.enableSimpleBroker("/events"); // destination prefix
+        registry.setApplicationDestinationPrefixes("/app");
     }
 }

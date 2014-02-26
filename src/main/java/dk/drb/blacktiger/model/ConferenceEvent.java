@@ -8,11 +8,9 @@ import dk.drb.blacktiger.service.*;
 public abstract class ConferenceEvent {
 
     private final String roomNo;
-    private final String participantId;
-
-    public ConferenceEvent(String roomNo, String participantId) {
+    
+    public ConferenceEvent(String roomNo) {
         this.roomNo = roomNo;
-        this.participantId = participantId;
     }
     
     
@@ -20,11 +18,6 @@ public abstract class ConferenceEvent {
         return roomNo;
     }
 
-    public String getParticipantId() {
-        return participantId;
-    }
-    
-    
-    
+    public abstract String getType();
     
 }
