@@ -40,7 +40,7 @@ public class EventConverter extends MappingJackson2MessageConverter {
                     jgen.writeStringField("participantId", ((ParticipantLeaveEvent)value).getParticipantId());
                 }
                 
-                jgen.writeStringField("type", value.getClass().getSimpleName());
+                jgen.writeStringField("type", value.getType());
                 jgen.writeEndObject();
             }
 

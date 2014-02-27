@@ -5,7 +5,8 @@ import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.UserRepository;
-import dk.drb.blacktiger.repository.asterisk.AsteriskMeetMeRepository;
+import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRoomsRepository;
+import dk.drb.blacktiger.repository.asterisk.AsteriskMeetMeParticipantsRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
@@ -71,12 +72,12 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public ParticipantRepository conferenceRepository() {
+    public ParticipantRepository participantRepository() {
         if(test) {
-            LOG.info("** USING InMemConferenceRepository FOR TEST **");
+            LOG.info("** USING InMemParticipantRepository FOR TEST **");
             return new InMemParticipantRepository();
         } else {
-            AsteriskMeetMeRepository repository = new AsteriskMeetMeRepository();
+            AsteriskMeetMeParticipantsRepository repository = new AsteriskMeetMeParticipantsRepository();
             repository.setAsteriskServer(asteriskServer);
             return repository;
         }
@@ -106,12 +107,13 @@ public class RepositoryConfig {
         }
     }
     
-    @Bean ConferenceRoomRepository conferenceRoomRepository() {
+    @Bean 
+    public ConferenceRoomRepository conferenceRoomRepository() {
         if(test) {
             LOG.info("** USING InMemConferenceRoomRepository FOR TEST **");
             return new InMemConferenceRoomRepository();
         } else {
-            return null;
+            return new AsteriskConfbridgeRoomsRepository();
         }
     }
 }

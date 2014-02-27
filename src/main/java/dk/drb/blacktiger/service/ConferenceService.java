@@ -6,6 +6,7 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
+import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,9 +26,10 @@ public class ConferenceService {
     private static final Logger LOG = LoggerFactory.getLogger(ConferenceService.class);
     private ParticipantRepository repository;
     private PhonebookRepository phonebookRepository;
+    private ConferenceRoomRepository roomRepository;
 
     @Autowired
-    public void setRepository(ParticipantRepository repository) {
+    public void setParticipantRepository(ParticipantRepository repository) {
         this.repository = repository;
     }
     
@@ -36,13 +38,20 @@ public class ConferenceService {
         this.phonebookRepository = phonebookRepository;
     }
 
+    @Autowired
+    public void setRoomRepository(ConferenceRoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
+    
+    
+
     public List<Room> listRooms() {
-        return null;
+        return roomRepository.findAll();
     }
     
     public Room getRoom(String room) {
         Access.checkRoomAccess(room);
-        return null;
+        return roomRepository.findOne(room);
     }
     
     /**

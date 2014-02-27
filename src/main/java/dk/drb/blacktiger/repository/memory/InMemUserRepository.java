@@ -10,7 +10,7 @@ public class InMemUserRepository implements UserRepository {
     private List<User> users = new ArrayList<User>();
 
     public InMemUserRepository() {
-        users.add(new User("0999", "123"));
+        users.add(new User("H45-0000", "123"));
     }
     
     

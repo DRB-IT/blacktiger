@@ -34,10 +34,10 @@ public class SystemUserDetailsManager implements UserDetailsService {
             throw new UsernameNotFoundException("User not found. [username=" + username + "]");
         }
 
-        List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authList = new ArrayList<>();
         
         //TODO Retrieve the actual rooms from Asterisk somehow
-        authList.add(new SimpleGrantedAuthority(ROLE_ROOMACCESS_PREFIX + username + "1"));
+        authList.add(new SimpleGrantedAuthority(ROLE_ROOMACCESS_PREFIX + username));
         
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         return new User(user.getUsername(), user.getPassword(), true, true, true, true, authList);

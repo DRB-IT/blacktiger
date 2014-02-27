@@ -37,25 +37,25 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * This implementation of ConferenceRepository uses the MeetMe conference in Asterisk.
  */
-public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepository {
+public class AsteriskConfbridgeParticipantsRepository extends AbstractAsteriskConferenceRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AsteriskConfbridgeRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AsteriskConfbridgeParticipantsRepository.class);
 
     @Override
     public void onManagerEvent(ManagerEvent event) {
         if (event instanceof ConfbridgeJoinEvent) {
             String roomNo = ((ConfbridgeJoinEvent) event).getConference();
             Participant p = participantFromEvent((ConfbridgeJoinEvent) event);
-            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
+            AsteriskConfbridgeParticipantsRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
         }
         if (event instanceof ConfbridgeLeaveEvent) {
             String roomNo = ((ConfbridgeLeaveEvent) event).getConference();
             String id = ((ConfbridgeJoinEvent) event).getChannel();
-            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, id));
+            AsteriskConfbridgeParticipantsRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, id));
         }
     }
 
-    public List findRooms() {
+    /*public List findRooms() {
         ResponseEvents events = sendAction(new ConfbridgeListRoomsAction());
         
         List result = new ArrayList();
@@ -67,23 +67,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             }
         }
         return result;
-    }
-
-    @Override
-    public Room findOne(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Room> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-    @Override
-    public void save(Room room) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
+    }*/
     
     @Override
     public List<Participant> findByRoomNo(String roomNo) {

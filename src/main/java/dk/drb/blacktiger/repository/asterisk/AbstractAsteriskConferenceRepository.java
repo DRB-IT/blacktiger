@@ -20,7 +20,7 @@ import org.asteriskjava.manager.event.MeetMeLeaveEvent;
  *
  * @author michael
  */
-public abstract class AbstractAsteriskConferenceRepository implements ParticipantRepository, ManagerEventListener, ConferenceRoomRepository {
+public abstract class AbstractAsteriskConferenceRepository implements ParticipantRepository, ManagerEventListener {
     protected List<ConferenceEventListener> eventListeners = new ArrayList<ConferenceEventListener>();
     protected Timer eventTimer = new Timer();
     protected AsteriskServer asteriskServer;

@@ -93,6 +93,6 @@ public class EventControllerTest {
 		assertTrue(replyHeaders.getDestination().startsWith("/events/"));
 
 		String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
-                assertEquals("{\"roomNo\":\"H45-0000\",\"participantId\":\"123\",\"type\":\"ConferenceLeaveEvent\"}", json);
+                assertEquals("{\"roomNo\":\"H45-0000\",\"participantId\":\"123\",\"type\":\"Leave\"}", json);
 	}
 }
