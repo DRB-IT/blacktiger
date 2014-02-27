@@ -56,6 +56,12 @@ public class AsteriskConfbridgeRoomsRepository implements ConferenceRoomReposito
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public List<Room> findAllByIds(List<String> ids) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     
     @Override
     public void save(Room room) {

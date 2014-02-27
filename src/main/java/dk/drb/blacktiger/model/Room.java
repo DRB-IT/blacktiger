@@ -11,7 +11,6 @@ import java.util.List;
 public class Room {
     private String id;
     private String displayName;
-    private List<Participant> participants = new ArrayList<Participant>();
     private Contact contact;
 
     public Room() {
@@ -45,10 +44,6 @@ public class Room {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public List<Participant> getParticipants() {
-        return participants;
     }
 
     public Contact getContact() {

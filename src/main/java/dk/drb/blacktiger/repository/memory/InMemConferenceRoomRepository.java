@@ -34,6 +34,17 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     }
 
     @Override
+    public List<Room> findAllByIds(List<String> ids) {
+        List<Room> list = new ArrayList<>();
+        for(Room room : rooms) {
+            if(ids.contains(room.getId())) {
+                list.add(room);
+            }
+        }
+        return list;
+    }
+
+    @Override
     public Room findOne(String id) {
         for(Room room : rooms) {
             if(room.getId().equals(id)) {

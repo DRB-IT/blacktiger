@@ -26,7 +26,7 @@ public class RoomRestDataFixture {
     }
     
     public static String standardRoomAsJson(String id) {
-        return "{\"id\":\"" + id + "\",\"displayName\":\"Room " + id + "\",\"participants\":[],\"contact\":{\"name\":null,\"email\":null,\"phoneNumber\":null,\"comment\":null}}";
+        return "{\"id\":\"" + id + "\",\"displayName\":\"Room " + id + "\",\"contact\":{\"name\":null,\"email\":null,\"phoneNumber\":null,\"comment\":null}}";
     }
     
     public static String standardListOfRoomsAsJson(String ... ids) {

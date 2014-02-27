@@ -46,7 +46,12 @@ public class ConferenceService {
     
 
     public List<Room> listRooms() {
-        return roomRepository.findAll();
+        if(Access.hasRole("ADMIN")) {
+            return roomRepository.findAll();
+        } else {
+            List<String> roomIds = Access.getAccessibleRooms();
+            return roomRepository.findAllByIds(roomIds);
+        }
     }
     
     public Room getRoom(String room) {

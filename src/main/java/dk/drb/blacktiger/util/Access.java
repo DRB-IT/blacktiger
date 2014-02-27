@@ -1,5 +1,7 @@
 package dk.drb.blacktiger.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,7 +27,7 @@ public class Access {
     }
     
         /**
-     * Checks whether current user hols a specific role.
+     * Checks whether current user holds a specific role.
      */
     public static boolean hasRole(String role) {
         LOG.debug("Checking if current user has role '{}'", role);
@@ -39,5 +41,21 @@ public class Access {
         }
         LOG.debug("User does not have role. [auth={}]", auth);
         return false;
+    }
+    
+    public static List<String> getAccessibleRooms() {
+        String prefix = "ROLE_ROOMACCESS_";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<String> list = new ArrayList<>();
+        LOG.debug("Retrieving the accessible rooms for user ({})", auth);
+        if(auth!=null && auth.isAuthenticated()) {
+            for(GrantedAuthority ga : auth.getAuthorities()) {
+                String role = ga.getAuthority();
+                if(role.startsWith(prefix)) {
+                    list.add(role.substring(prefix.length()));
+                }
+            }
+        }
+        return list;
     }
 }

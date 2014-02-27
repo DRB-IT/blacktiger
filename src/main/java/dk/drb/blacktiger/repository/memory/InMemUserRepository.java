@@ -11,6 +11,16 @@ public class InMemUserRepository implements UserRepository {
 
     public InMemUserRepository() {
         users.add(new User("H45-0000", "123"));
+        users.add(new User("H45-0001", "123"));
+        users.add(new User("H45-0002", "123"));
+        users.add(new User("H45-0003", "123"));
+        users.add(new User("H45-0004", "123"));
+        users.add(new User("H45-0005", "123"));
+        users.add(new User("H45-0006", "123"));
+        users.add(new User("H45-0007", "123"));
+        users.add(new User("H45-0008", "123"));
+        users.add(new User("H45-0009", "123"));
+        users.add(new User("admin", "123"));
     }
     
     

@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface ConferenceRoomRepository {
     public List<Room> findAll();
+    public List<Room> findAllByIds(List<String> ids);
+    
     public Room findOne(String id);
     public void save(Room room);
 }
