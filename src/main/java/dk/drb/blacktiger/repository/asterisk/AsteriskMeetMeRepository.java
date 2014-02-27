@@ -2,8 +2,9 @@ package dk.drb.blacktiger.repository.asterisk;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ConferenceJoinEvent;
-import dk.drb.blacktiger.model.ConferenceLeaveEvent;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.util.ArrayList;
@@ -31,12 +32,12 @@ public class AsteriskMeetMeRepository extends AbstractAsteriskConferenceReposito
             String roomNo = ((MeetMeJoinEvent) event).getMeetMe();
             Integer index = ((MeetMeJoinEvent) event).getUserNum();
             Participant p = null;
-            AsteriskMeetMeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, p));
+            AsteriskMeetMeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
         }
         if (event instanceof MeetMeLeaveEvent) {
             String roomNo = ((MeetMeLeaveEvent) event).getMeetMe();
             Integer index = ((MeetMeLeaveEvent) event).getUserNum();
-            AsteriskMeetMeRepository.this.fireEvent(new ConferenceLeaveEvent(roomNo, index.toString()));
+            AsteriskMeetMeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, index.toString()));
         }
     }
 
@@ -120,5 +121,20 @@ public class AsteriskMeetMeRepository extends AbstractAsteriskConferenceReposito
         }
 
         return new Participant(user.getUserNumber().toString(), name, phoneNumber, user.isMuted(), host, user.getDateJoined());
+    }
+
+    @Override
+    public List<Room> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Room findOne(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void save(Room room) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

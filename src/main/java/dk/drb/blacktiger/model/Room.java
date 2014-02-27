@@ -12,8 +12,25 @@ public class Room {
     private String id;
     private String displayName;
     private List<Participant> participants = new ArrayList<Participant>();
-    private Contact contact = new Contact();
+    private Contact contact;
 
+    public Room() {
+        this.contact = new Contact();
+    }
+
+    public Room(String id, String displayName) {
+        this.id = id;
+        this.displayName = displayName;
+        this.contact = new Contact();
+    }
+    
+    public Room(String id, String displayName, String contactName, String contactEmail, String contactPhoneNumber, String contactComment) {
+        this.id = id;
+        this.displayName = displayName;
+        this.contact = new Contact(contactName, contactEmail, contactPhoneNumber, contactComment);
+    }
+
+    
     public String getId() {
         return id;
     }

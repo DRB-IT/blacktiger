@@ -1,6 +1,6 @@
 package dk.drb.blacktiger.service;
 
-import dk.drb.blacktiger.repository.ConferenceRepository;
+import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
@@ -23,11 +23,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class ConferenceService {
  
     private static final Logger LOG = LoggerFactory.getLogger(ConferenceService.class);
-    private ConferenceRepository repository;
+    private ParticipantRepository repository;
     private PhonebookRepository phonebookRepository;
 
     @Autowired
-    public void setRepository(ConferenceRepository repository) {
+    public void setRepository(ParticipantRepository repository) {
         this.repository = repository;
     }
     

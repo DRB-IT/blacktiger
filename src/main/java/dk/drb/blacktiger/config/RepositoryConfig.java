@@ -1,7 +1,8 @@
 package dk.drb.blacktiger.config;
 
 import dk.drb.blacktiger.repository.CallInformationRepository;
-import dk.drb.blacktiger.repository.ConferenceRepository;
+import dk.drb.blacktiger.repository.ConferenceRoomRepository;
+import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.UserRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskMeetMeRepository;
@@ -9,7 +10,8 @@ import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
 import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
-import dk.drb.blacktiger.repository.memory.InMemConferenceRepository;
+import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
+import dk.drb.blacktiger.repository.memory.InMemParticipantRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
 import dk.drb.blacktiger.repository.memory.InMemUserRepository;
 import javax.annotation.PostConstruct;
@@ -69,10 +71,10 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public ConferenceRepository conferenceRepository() {
+    public ParticipantRepository conferenceRepository() {
         if(test) {
             LOG.info("** USING InMemConferenceRepository FOR TEST **");
-            return new InMemConferenceRepository();
+            return new InMemParticipantRepository();
         } else {
             AsteriskMeetMeRepository repository = new AsteriskMeetMeRepository();
             repository.setAsteriskServer(asteriskServer);
@@ -101,6 +103,15 @@ public class RepositoryConfig {
             JdbcUserRepository repository = new JdbcUserRepository();
             repository.setDataSource(asteriskDataSource);
             return repository;
+        }
+    }
+    
+    @Bean ConferenceRoomRepository conferenceRoomRepository() {
+        if(test) {
+            LOG.info("** USING InMemConferenceRoomRepository FOR TEST **");
+            return new InMemConferenceRoomRepository();
+        } else {
+            return null;
         }
     }
 }

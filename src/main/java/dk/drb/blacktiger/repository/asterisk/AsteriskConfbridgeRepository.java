@@ -2,8 +2,9 @@ package dk.drb.blacktiger.repository.asterisk;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ConferenceJoinEvent;
-import dk.drb.blacktiger.model.ConferenceLeaveEvent;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
@@ -45,12 +46,12 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         if (event instanceof ConfbridgeJoinEvent) {
             String roomNo = ((ConfbridgeJoinEvent) event).getConference();
             Participant p = participantFromEvent((ConfbridgeJoinEvent) event);
-            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceJoinEvent(roomNo, p));
+            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
         }
         if (event instanceof ConfbridgeLeaveEvent) {
             String roomNo = ((ConfbridgeLeaveEvent) event).getConference();
             String id = ((ConfbridgeJoinEvent) event).getChannel();
-            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceLeaveEvent(roomNo, id));
+            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, id));
         }
     }
 
@@ -66,6 +67,22 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             }
         }
         return result;
+    }
+
+    @Override
+    public Room findOne(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Room> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    @Override
+    public void save(Room room) {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
     @Override

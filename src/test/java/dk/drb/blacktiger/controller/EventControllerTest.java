@@ -17,8 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.JsonPathExpectationsHelper;
 import dk.drb.blacktiger.config.WebsocketConfig;
 import dk.drb.blacktiger.model.ConferenceEventListener;
-import dk.drb.blacktiger.model.ConferenceJoinEvent;
-import dk.drb.blacktiger.model.ConferenceLeaveEvent;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.service.ConferenceService;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -82,7 +82,7 @@ public class EventControllerTest {
                 this.clientInboundChannel.send(message);
 
                 // Send event
-                eventListener.onParticipantEvent(new ConferenceLeaveEvent("H45-0000", "123"));
+                eventListener.onParticipantEvent(new ParticipantLeaveEvent("H45-0000", "123"));
                 
 		Message<?> reply = this.clientOutboundChannelInterceptor.awaitMessage(5);
 		assertNotNull("No reply recieved", reply);

@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author krog
  */
-public interface ConferenceRepository {
+public interface ParticipantRepository {
     
     List<Participant> findByRoomNo(String roomNo);
     

@@ -4,11 +4,11 @@ package dk.drb.blacktiger.model;
  *
  * @author michael
  */
-public class ConferenceCommentRequestCancelEvent extends ConferenceEvent {
+public class ParticipantCommentRequestEvent extends ConferenceEvent {
 
     private String participantId;
     
-    public ConferenceCommentRequestCancelEvent(String roomNo, String participantId) {
+    public ParticipantCommentRequestEvent(String roomNo, String participantId) {
         super(roomNo);
         this.participantId = participantId;
     }
@@ -19,7 +19,7 @@ public class ConferenceCommentRequestCancelEvent extends ConferenceEvent {
 
     @Override
     public String getType() {
-        return "CommentRequestCancel";
+        return "CommentRequest";
     }
     
 }

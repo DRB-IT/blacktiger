@@ -2,30 +2,36 @@ package dk.drb.blacktiger.repository.memory;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ConferenceJoinEvent;
-import dk.drb.blacktiger.model.ConferenceLeaveEvent;
-import dk.drb.blacktiger.repository.ConferenceRepository;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.repository.ParticipantRepository;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 
-public class InMemConferenceRepository implements ConferenceRepository {
+public class InMemParticipantRepository implements ParticipantRepository {
 
-    private static final String ROOM_ID = "09991";
-    private static final Logger LOG = LoggerFactory.getLogger(InMemConferenceRepository.class);
-    private List<Participant> participants = new ArrayList<>();
+    private static final Logger LOG = LoggerFactory.getLogger(InMemParticipantRepository.class);
+    private Map<String, List<Participant>> participants = new HashMap<>();
     private List<ConferenceEventListener> eventListeners = new ArrayList<>();
     private int userCount;
     
-    public InMemConferenceRepository() {
-    
-        participants.add(new Participant("0999", "Brønderslev", "IP-0999", false, true, new Date()));
+    public InMemParticipantRepository() {
+        for(int i=0;i<10;i++) {
+            List<Participant> list = new ArrayList<>();
+            list.add(new Participant("H45-000" + i, "Test Rigssal 1", "H45-000" + i, false, true, new Date()));
+            participants.put("H45-000" + i, list);
+            
+        }
+        
         for(int i=0;i<10;i++) {
             addUser();
         }
@@ -36,26 +42,27 @@ public class InMemConferenceRepository implements ConferenceRepository {
         LOG.info("Adding user.");
         String id = Integer.toString(userCount++);
         String number = "+453314144" + userCount;
+        String roomNo = "H45-000" + (userCount % 10);
         Participant p = new Participant(id, null, number, true, false, new Date());
-        participants.add(p);
+        participants.get(roomNo).add(p);
         
         LOG.info("User add [id={}]", id);
         
-        fireJoinEvent(p);
+        fireJoinEvent(roomNo, p);
     }
     
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
-        if(ROOM_ID.equals(roomNo)) {
-            return Collections.unmodifiableList(participants);
+        if(participants.containsKey(roomNo)) {
+            return Collections.unmodifiableList(participants.get(roomNo));
         }
         return Collections.EMPTY_LIST;
     }
 
     @Override
     public Participant findByRoomNoAndParticipantId(String roomNo, String participantId) {
-        if(ROOM_ID.equals(roomNo)) {
-            for(Participant p : participants) {
+        if(participants.containsKey(roomNo)) {
+            for(Participant p : participants.get(roomNo)) {
                 if(participantId.equals(p.getUserId())) {
                     return p;
                 }
@@ -67,12 +74,13 @@ public class InMemConferenceRepository implements ConferenceRepository {
     @Override
     public void kickParticipant(String roomNo, String participantId) {
         LOG.info("Kicking user [id={}]", participantId);
-        if(ROOM_ID.equals(roomNo)) {
-            Iterator<Participant> it = participants.iterator();
+        if(participants.containsKey(roomNo)) {
+            Iterator<Participant> it = participants.get(roomNo).iterator();
             while(it.hasNext()) {
                 Participant p = it.next();
                 if(participantId.equals(p.getUserId())) {
                     it.remove();
+                    fireLeaveEvent(roomNo, p.getUserId());
                     break;
                 }
             }
@@ -82,8 +90,8 @@ public class InMemConferenceRepository implements ConferenceRepository {
     @Override
     public void muteParticipant(String roomNo, String participantId) {
         LOG.info("Muting user. [id={}]", participantId);
-        if(ROOM_ID.equals(roomNo)) {
-            for(Participant p : participants) {
+        if(participants.containsKey(roomNo)) {
+            for(Participant p : participants.get(roomNo)) {
                 if(participantId.equals(p.getUserId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
@@ -101,8 +109,8 @@ public class InMemConferenceRepository implements ConferenceRepository {
     @Override
     public void unmuteParticipant(String roomNo, String participantId) {
         LOG.info("Unmuting user. [id={}]", participantId);
-        if(ROOM_ID.equals(roomNo)) {
-            for(Participant p : participants) {
+        if(participants.containsKey(roomNo)) {
+            for(Participant p : participants.get(roomNo)) {
                 if(participantId.equals(p.getUserId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
@@ -132,15 +140,15 @@ public class InMemConferenceRepository implements ConferenceRepository {
         }
     }
     
-    private void fireJoinEvent(Participant p) {
+    private void fireJoinEvent(String roomNo, Participant p) {
         for(ConferenceEventListener l : eventListeners) {
-            l.onParticipantEvent(new ConferenceJoinEvent(ROOM_ID, p));
+            l.onParticipantEvent(new ParticipantJoinEvent(roomNo, p));
         }
     }
     
-     private void fireLeaveEvent(String userId) {
+     private void fireLeaveEvent(String roomNo, String userId) {
         for(ConferenceEventListener l : eventListeners) {
-            l.onParticipantEvent(new ConferenceLeaveEvent(ROOM_ID, userId));
+            l.onParticipantEvent(new ParticipantLeaveEvent(roomNo, userId));
         }
     }
     
