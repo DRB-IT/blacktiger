@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 
 @Configuration
 @PropertySource({"classpath:blacktiger.properties","file:${user.home}/blacktiger.properties"})
-@Import({ServiceConfig.class, WebsocketConfig.class})
+@Import({ServiceConfig.class, WebsocketConfig.class, ControllerConfig.class})
 @ImportResource("classpath:springsecurity.xml")
 public class AppConfig {
 
