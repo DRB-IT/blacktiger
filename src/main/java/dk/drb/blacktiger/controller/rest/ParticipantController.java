@@ -33,14 +33,14 @@ public class ParticipantController {
     }
 
     
-    @RequestMapping(value = "/rooms/{roomNo}/participants", headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/participants", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public List<Participant> listParticipants(@PathVariable final String roomNo) {
         LOG.debug("Got request for participants in room [room={}].", roomNo);
         return service.listParticipants(roomNo);
     }
     
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public Participant getParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Got request for participant in room [room={};participant={}].", roomNo, participantId);
@@ -49,22 +49,20 @@ public class ParticipantController {
 
     @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     @ResponseBody
-    public int kickParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
+    public void kickParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
         service.kickParticipant(roomNo, participantId);
-        return 1;
     }
 
     @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/muted", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public int muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody boolean muted) {
+    public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody boolean muted) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
         if(muted) {
             service.muteParticipant(roomNo, participantId);
         } else {
             service.unmuteParticipant(roomNo, participantId);
         }
-        return 1;
     }
 
 }
