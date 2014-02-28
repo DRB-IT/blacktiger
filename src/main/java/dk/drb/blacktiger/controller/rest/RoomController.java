@@ -46,7 +46,11 @@ public class RoomController {
     @ResponseBody
     public Room get(@PathVariable final String roomNo) {
         LOG.debug("Got request for specific room '{}'.", roomNo);
-        return service.getRoom(roomNo);
+        Room room = service.getRoom(roomNo);
+        if(room == null) {
+            throw new ResourceNotFoundException("Room does not exist.");
+        }
+        return room;
     }
 
 }

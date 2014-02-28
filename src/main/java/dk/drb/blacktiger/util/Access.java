@@ -21,7 +21,7 @@ public class Access {
      * Checks whether current user has access to a given room number.
      */
     public static void checkRoomAccess(String roomNo) {
-        if(!hasRole("ROOMACCESS_" + roomNo)) {
+        if(!hasRole("ROOMACCESS_" + roomNo) && !hasRole("ADMIN")) {
             throw new AccessDeniedException("Not authorized to access room " + roomNo);
         }
     }
@@ -43,9 +43,10 @@ public class Access {
         return false;
     }
     
+
     public static List<String> getAccessibleRooms() {
-        String prefix = "ROLE_ROOMACCESS_";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String prefix = "ROLE_ROOMACCESS_";
         List<String> list = new ArrayList<>();
         LOG.debug("Retrieving the accessible rooms for user ({})", auth);
         if(auth!=null && auth.isAuthenticated()) {
@@ -58,4 +59,5 @@ public class Access {
         }
         return list;
     }
+
 }

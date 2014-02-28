@@ -20,4 +20,11 @@ public class RestExceptionHandler {
     public RestError handleSecurityException(AccessDeniedException ex) {
         return new RestError(ex.getMessage());
     }
+    
+    @ResponseStatus(HttpStatus.NOT_FOUND) 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseBody
+    public RestError handleSecurityException(ResourceNotFoundException ex) {
+        return new RestError(ex.getMessage());
+    }
 }

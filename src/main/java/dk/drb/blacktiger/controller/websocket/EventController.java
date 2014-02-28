@@ -2,11 +2,22 @@ package dk.drb.blacktiger.controller.websocket;
 
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.service.ConferenceService;
+import dk.drb.blacktiger.util.Access;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 
@@ -43,9 +54,32 @@ public class EventController {
         
     }
 
-    /*@SubscribeMapping("/{room}")
-    public void subscribeEventsFor(@DestinationVariable("room") String room) {
-        // Check if user can subscribe to the room
-        System.out.println("room: " + room);
-    }*/
+    @SubscribeMapping("/{room}")
+    public List<ParticipantJoinEvent> subscribeEventsFor(@DestinationVariable("room") String roomId, Principal principal) {
+        // Start out by sending join events for all in the room.
+        List<ParticipantJoinEvent> events = new ArrayList<>();
+        
+        if(principal instanceof Authentication) {
+            Authentication auth = (Authentication) principal;
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            if(Access.hasRole("ADMIN") || Access.getAccessibleRooms().contains(roomId)) {
+
+                if("*".equals(roomId)) {
+                    // Send all participants
+                    for(Room room : service.listRooms()) {
+                        addEvents(events, room.getId());
+                    }
+                } else {
+                    addEvents(events, roomId);
+                }
+            }
+        }
+        return events;
+    }
+    
+    private void addEvents(List<ParticipantJoinEvent> events, String roomId) {
+        for(Participant p : service.listParticipants(roomId)) {
+            events.add(new ParticipantJoinEvent(roomId, p));
+        }
+    }
 }

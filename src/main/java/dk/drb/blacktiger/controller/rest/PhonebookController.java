@@ -53,6 +53,10 @@ public class PhonebookController {
     @ResponseBody
     public String get(@PathVariable final String number) {
         LOG.debug("Retrieving phonebook entry. [number={}]", number);
-        return service.getPhonebookEntry(number);
+        String value = service.getPhonebookEntry(number);
+        if(value == null) {
+            throw new ResourceNotFoundException("Phonenumber(" + number + ") not in phonebook.");
+        }
+        return value;
     }
 }

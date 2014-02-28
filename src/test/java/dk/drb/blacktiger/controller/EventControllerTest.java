@@ -90,7 +90,7 @@ public class EventControllerTest {
 		StompHeaderAccessor replyHeaders = StompHeaderAccessor.wrap(reply);
 		assertEquals("0", replyHeaders.getSessionId());
 		assertEquals("0", replyHeaders.getSubscriptionId());
-		assertTrue(replyHeaders.getDestination().startsWith("/events/"));
+		assertTrue("Destination should start with /events/ but was " + replyHeaders.getDestination()+ ".", replyHeaders.getDestination().startsWith("/events/"));
 
 		String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
                 assertEquals("{\"roomNo\":\"H45-0000\",\"participantId\":\"123\",\"type\":\"Leave\"}", json);

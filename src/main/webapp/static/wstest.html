@@ -14,13 +14,19 @@
         }
 
         function connect() {
-            var socket = new SockJS('/queue');
+            var socket = new SockJS('/socket');
             stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
+            stompClient.connect(123, 123, function(frame) {
                 setConnected(true);
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/events/*', function(greeting){
-                    showEvent(JSON.parse(greeting.body));
+                stompClient.subscribe('/rooms/*', function(data){
+                    events = JSON.parse(data.body);
+                    for(var i=0;i<events.length;i++) {
+                        showEvent(events[i]);
+                    }
+                });
+                stompClient.subscribe('/events/*', function(data){
+                    showEvent(JSON.parse(data.body));
                 });
             });
         }
@@ -38,14 +44,19 @@
 
         function showEvent(event) {
             var response = document.getElementById('response');
-            var text = "Room: "+ event.roomNo + "<br>";
-            text += "Type: " + event.type + "<br>";
-            var p = document.createElement('p');
+            var text = "Event: " + event.participant.userId + "@"+ event.roomNo + " joined<br>";
+            var p = document.createElement('div');
             p.innerHTML = text;
             response.appendChild(p);
             
         }
     </script>
+    <style>
+        body {
+            font-size: 10px;
+            font-family:verdana;
+        }
+    </style>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
