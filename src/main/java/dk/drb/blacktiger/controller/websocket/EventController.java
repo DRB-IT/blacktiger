@@ -13,6 +13,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.security.access.annotation.Secured;
@@ -37,7 +39,7 @@ public class EventController {
 
         @Override
         public void onParticipantEvent(ConferenceEvent event) {
-            messagingTemplate.convertAndSend("/events/" + event.getRoomNo(), event);
+            messagingTemplate.convertAndSend("/queue/events/" + event.getRoomNo(), event);
         }
     }
 
@@ -58,9 +60,9 @@ public class EventController {
     public List<ParticipantJoinEvent> subscribeEventsFor(@DestinationVariable("room") String roomId, Principal principal) {
         // Start out by sending join events for all in the room.
         List<ParticipantJoinEvent> events = new ArrayList<>();
-        
         if(principal instanceof Authentication) {
             Authentication auth = (Authentication) principal;
+            Authentication oldAuth = SecurityContextHolder.getContext().getAuthentication();
             SecurityContextHolder.getContext().setAuthentication(auth);
             if(Access.hasRole("ADMIN") || Access.getAccessibleRooms().contains(roomId)) {
 
@@ -73,8 +75,15 @@ public class EventController {
                     addEvents(events, roomId);
                 }
             }
+            SecurityContextHolder.getContext().setAuthentication(oldAuth);
         }
         return events;
+    }
+    
+    @MessageExceptionHandler
+    @SendToUser("/queue/errors")
+    public String handleException(Throwable exception) {
+        return exception.getMessage();
     }
     
     private void addEvents(List<ParticipantJoinEvent> events, String roomId) {

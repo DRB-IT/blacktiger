@@ -23,7 +23,7 @@
         </init-param>
         <init-param>
             <param-name>cors.allowed.headers</param-name>
-            <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+            <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization</param-value>
         </init-param>
         <init-param>
             <param-name>cors.exposed.headers</param-name>
@@ -46,7 +46,7 @@
         <url-pattern>/reports/*</url-pattern>
     </filter-mapping>
     <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-name>springSecurityFilterChain</filter-name>    
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         <async-supported>true</async-supported>
     </filter>

@@ -2,6 +2,7 @@ package dk.drb.blacktiger.repository.memory;
 
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,18 +14,15 @@ import java.util.List;
 public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
 
     private List<Room> rooms = new ArrayList<>();
-
+    
     public InMemConferenceRoomRepository() {
-        rooms.add(new Room("H45-0000", "Test Rigssal 1"));
-        rooms.add(new Room("H45-0001", "Test Rigssal 2"));
-        rooms.add(new Room("H45-0002", "Test Rigssal 3"));
-        rooms.add(new Room("H45-0003", "Test Rigssal 4"));
-        rooms.add(new Room("H45-0004", "Test Rigssal 5"));
-        rooms.add(new Room("H45-0005", "Test Rigssal 6"));
-        rooms.add(new Room("H45-0006", "Test Rigssal 7"));
-        rooms.add(new Room("H45-0007", "Test Rigssal 8"));
-        rooms.add(new Room("H45-0008", "Test Rigssal 9"));
-        rooms.add(new Room("H45-0009", "Test Rigssal 10"));
+        NumberFormat nf = NumberFormat.getIntegerInstance();
+        nf.setMinimumIntegerDigits(4);
+        nf.setGroupingUsed(false);
+        
+        for(int i=0;i<1000;i++) {
+            rooms.add(new Room("H45-" + nf.format(i), "Test Rigssal " + i));
+        }
     }
     
     

@@ -1,11 +1,15 @@
 package dk.drb.blacktiger.controller.rest;
 
+import dk.drb.blacktiger.controller.rest.model.UserPresentation;
 import dk.drb.blacktiger.service.SystemService;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;    
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +49,12 @@ public class SystemController {
        averageCpuLoadMap.put("tenMinutes", 0.0);
        
        return map;
+    }
+    
+    @RequestMapping(value = "/system/authenticate", produces = "application/json")
+    @ResponseBody
+    public UserPresentation authenticate() {
+        return UserPresentation.from(SecurityContextHolder.getContext().getAuthentication());
     }
     
 }

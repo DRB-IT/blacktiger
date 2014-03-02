@@ -51,7 +51,7 @@ public class WebsocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/events"); // destination prefix
+        registry.enableSimpleBroker("/queue/"); // destination prefix
         registry.setApplicationDestinationPrefixes("/rooms");
     }
 }

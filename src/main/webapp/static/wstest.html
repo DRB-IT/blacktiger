@@ -25,8 +25,12 @@
                         showEvent(events[i]);
                     }
                 });
-                stompClient.subscribe('/events/*', function(data){
+                stompClient.subscribe('/queue/events/*', function(data){
                     showEvent(JSON.parse(data.body));
+                });
+                
+                stompClient.subscribe('/user/queue/errors', function(message){
+                    alert(message);
                 });
             });
         }

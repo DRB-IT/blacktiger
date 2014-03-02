@@ -6,6 +6,7 @@ import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.repository.ParticipantRepository;
 import java.lang.reflect.Field;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -23,26 +24,31 @@ public class InMemParticipantRepository implements ParticipantRepository {
     private Map<String, List<Participant>> participants = new HashMap<>();
     private List<ConferenceEventListener> eventListeners = new ArrayList<>();
     private int userCount;
+    private final NumberFormat roomNumberFormat = NumberFormat.getIntegerInstance();
+    private final NumberFormat phoneNumberFormat = NumberFormat.getIntegerInstance();
     
     public InMemParticipantRepository() {
-        for(int i=0;i<10;i++) {
-            List<Participant> list = new ArrayList<>();
-            list.add(new Participant("H45-000" + i, "Test Rigssal 1", "H45-000" + i, false, true, new Date()));
-            participants.put("H45-000" + i, list);
-            
-        }
         
-        for(int i=0;i<10;i++) {
-            addUser();
+        roomNumberFormat.setMinimumIntegerDigits(4);
+        roomNumberFormat.setGroupingUsed(false);
+        phoneNumberFormat.setMinimumIntegerDigits(8);
+        phoneNumberFormat.setGroupingUsed(false);
+        
+        for(int i=0;i<1000;i++) {
+            List<Participant> list = new ArrayList<>();
+            String id = "H45-" + roomNumberFormat.format(i);
+            list.add(new Participant(id, "Test Rigssal 1", id, false, true, new Date()));
+            participants.put(id, list);
+            
         }
     }
     
-    @Scheduled(fixedDelay = 16000)
+    @Scheduled(fixedDelay = 1000)
     public void addUser() {
         LOG.info("Adding user.");
         String id = Integer.toString(userCount++);
-        String number = "+453314144" + userCount;
-        String roomNo = "H45-000" + (userCount % 10);
+        String number = "+45" + phoneNumberFormat.format(userCount);
+        String roomNo = "H45-" + roomNumberFormat.format(userCount % 1000);
         Participant p = new Participant(id, null, number, true, false, new Date());
         participants.get(roomNo).add(p);
         
