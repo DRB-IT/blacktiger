@@ -4,7 +4,7 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
-import dk.drb.blacktiger.model.Room;
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import org.asteriskjava.manager.ResponseEvents;
 import org.asteriskjava.manager.TimeoutException;
 import org.asteriskjava.manager.action.ConfbridgeKickAction;
 import org.asteriskjava.manager.action.ConfbridgeListAction;
-import org.asteriskjava.manager.action.ConfbridgeListRoomsAction;
 import org.asteriskjava.manager.action.ConfbridgeMuteAction;
 import org.asteriskjava.manager.action.ConfbridgeUnmuteAction;
 import org.asteriskjava.manager.action.EventGeneratingAction;
@@ -25,7 +24,6 @@ import org.asteriskjava.manager.event.AbstractChannelEvent;
 import org.asteriskjava.manager.event.ConfbridgeJoinEvent;
 import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
 import org.asteriskjava.manager.event.ConfbridgeListEvent;
-import org.asteriskjava.manager.event.ConfbridgeListRoomsEvent;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.ResponseEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
@@ -127,8 +125,9 @@ public class AsteriskConfbridgeParticipantsRepository extends AbstractAsteriskCo
     private Participant participantFromEventData(String callerIdNum, String callerIdName, Date dateReceived) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String number = callerIdNum;
-        boolean host = false;
-
+        boolean host = true;
+        CallType callType = CallType.Sip;
+        
         if (auth != null && number.equalsIgnoreCase(auth.getName())) {
             host = true;
         }
@@ -140,9 +139,10 @@ public class AsteriskConfbridgeParticipantsRepository extends AbstractAsteriskCo
             phoneNumber = IpPhoneNumber.normalize(phoneNumber);
         } else if (PhoneNumber.isPhoneNumber(name, "DK")) {
             phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
+            callType = CallType.Phone;
         }
 
-        return new Participant(callerIdNum, name, phoneNumber, false, host, dateReceived);
+        return new Participant(callerIdNum, name, phoneNumber, false, host, callType, dateReceived);
     }
     
     private ManagerResponse sendAction(ManagerAction action) {

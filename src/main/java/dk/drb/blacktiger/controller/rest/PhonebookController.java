@@ -33,16 +33,6 @@ public class PhonebookController {
         service.updatePhonebookEntry(number, name);
     }
     
-    /**
-     * Removes a phone book entry.
-     * @return JSON Object with the value '1'.
-     */
-    @RequestMapping(value = "/phonebook/{number}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public void delete(@PathVariable final String number) {
-        LOG.info("Removing phonebook entry. [number={}]", number);
-        service.removePhonebookEntry(number);
-    }
     
     /**
      * 

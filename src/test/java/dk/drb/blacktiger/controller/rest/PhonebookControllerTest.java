@@ -1,20 +1,11 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
-import dk.drb.blacktiger.controller.rest.PhonebookController;
-import static dk.drb.blacktiger.fixture.rest.SystemRestDataFixture.standardInfoAsJson;
 import dk.drb.blacktiger.service.PhonebookService;
-import dk.drb.blacktiger.service.SystemService;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.eq;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -69,12 +60,5 @@ public class PhonebookControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-    
-    @Test
-    public void thatEntryCanDeleted() throws Exception {
-        
-        this.mockMvc.perform(delete("/phonebook/+1911"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
+
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright by Apaq 2011-2013
  */
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
 import dk.drb.blacktiger.controller.rest.RoomController;
 import dk.drb.blacktiger.service.ConferenceService;

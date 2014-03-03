@@ -4,7 +4,10 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.CallType;
+import dk.drb.blacktiger.model.User;
 import dk.drb.blacktiger.repository.ParticipantRepository;
+import dk.drb.blacktiger.repository.UserRepository;
 import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -14,61 +17,70 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
+/**
+ * An in-memory implementation of ParticipantRepository for Test Scenarios.
+ * It will create a host participant for each user found in <code>UserRepository</code>. Afterwards it will keep on adding non-host participants 
+ * randomly.
+ */
 public class InMemParticipantRepository implements ParticipantRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(InMemParticipantRepository.class);
-    private Map<String, List<Participant>> participants = new HashMap<>();
+    private Map<String, List<Participant>> participantMap = new HashMap<>();
     private List<ConferenceEventListener> eventListeners = new ArrayList<>();
     private int userCount;
-    private final NumberFormat roomNumberFormat = NumberFormat.getIntegerInstance();
     private final NumberFormat phoneNumberFormat = NumberFormat.getIntegerInstance();
+    private UserRepository userRepository;
     
-    public InMemParticipantRepository() {
-        
-        roomNumberFormat.setMinimumIntegerDigits(4);
-        roomNumberFormat.setGroupingUsed(false);
-        phoneNumberFormat.setMinimumIntegerDigits(8);
-        phoneNumberFormat.setGroupingUsed(false);
-        
-        for(int i=0;i<1000;i++) {
+    @PostConstruct
+    protected void init() {
+        for(User user: userRepository.findAll()) {
             List<Participant> list = new ArrayList<>();
-            String id = "H45-" + roomNumberFormat.format(i);
-            list.add(new Participant(id, "Test Rigssal 1", id, false, true, new Date()));
-            participants.put(id, list);
-            
+            String id = user.getUsername();
+            list.add(new Participant(id, "Test Host for Kingdom Hall " + id, id, false, true, CallType.Sip, new Date()));
+            participantMap.put(id, list);
         }
+    }
+    
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
     
     @Scheduled(fixedDelay = 1000)
     public void addUser() {
         LOG.info("Adding user.");
+        Random random = new Random();
+        List<String> keys = new ArrayList<>(participantMap.keySet());
+        String roomNo = keys.get(random.nextInt(keys.size()));
         String id = Integer.toString(userCount++);
         String number = "+45" + phoneNumberFormat.format(userCount);
-        String roomNo = "H45-" + roomNumberFormat.format(userCount % 1000);
-        Participant p = new Participant(id, null, number, true, false, new Date());
-        participants.get(roomNo).add(p);
+        Participant p = new Participant(id, null, number, true, false, CallType.Phone, new Date());
+        participantMap.get(roomNo).add(p);
         
-        LOG.info("User add [id={}]", id);
+        LOG.info("User added [id={}, room={}] ", id, roomNo);
         
         fireJoinEvent(roomNo, p);
     }
     
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
-        if(participants.containsKey(roomNo)) {
-            return Collections.unmodifiableList(participants.get(roomNo));
+        if(participantMap.containsKey(roomNo)) {
+            return Collections.unmodifiableList(participantMap.get(roomNo));
         }
         return Collections.EMPTY_LIST;
     }
 
     @Override
     public Participant findByRoomNoAndParticipantId(String roomNo, String participantId) {
-        if(participants.containsKey(roomNo)) {
-            for(Participant p : participants.get(roomNo)) {
+        if(participantMap.containsKey(roomNo)) {
+            for(Participant p : participantMap.get(roomNo)) {
                 if(participantId.equals(p.getUserId())) {
                     return p;
                 }
@@ -80,8 +92,8 @@ public class InMemParticipantRepository implements ParticipantRepository {
     @Override
     public void kickParticipant(String roomNo, String participantId) {
         LOG.info("Kicking user [id={}]", participantId);
-        if(participants.containsKey(roomNo)) {
-            Iterator<Participant> it = participants.get(roomNo).iterator();
+        if(participantMap.containsKey(roomNo)) {
+            Iterator<Participant> it = participantMap.get(roomNo).iterator();
             while(it.hasNext()) {
                 Participant p = it.next();
                 if(participantId.equals(p.getUserId())) {
@@ -96,8 +108,8 @@ public class InMemParticipantRepository implements ParticipantRepository {
     @Override
     public void muteParticipant(String roomNo, String participantId) {
         LOG.info("Muting user. [id={}]", participantId);
-        if(participants.containsKey(roomNo)) {
-            for(Participant p : participants.get(roomNo)) {
+        if(participantMap.containsKey(roomNo)) {
+            for(Participant p : participantMap.get(roomNo)) {
                 if(participantId.equals(p.getUserId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
@@ -115,8 +127,8 @@ public class InMemParticipantRepository implements ParticipantRepository {
     @Override
     public void unmuteParticipant(String roomNo, String participantId) {
         LOG.info("Unmuting user. [id={}]", participantId);
-        if(participants.containsKey(roomNo)) {
-            for(Participant p : participants.get(roomNo)) {
+        if(participantMap.containsKey(roomNo)) {
+            for(Participant p : participantMap.get(roomNo)) {
                 if(participantId.equals(p.getUserId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");

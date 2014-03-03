@@ -1,5 +1,6 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.websocket;
 
+import dk.drb.blacktiger.controller.rest.TestChannelInterceptor;
 import dk.drb.blacktiger.controller.websocket.EventController;
 import java.nio.charset.Charset;
 import org.junit.Before;

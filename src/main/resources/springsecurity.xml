@@ -9,18 +9,20 @@
 
     
     <http disable-url-rewriting="true">
-        <!--intercept-url pattern="/rooms/**" access="ROLE_USER" />
-        <intercept-url pattern="/rooms" access="ROLE_USER" /-->
-        <!--intercept-url pattern="/socket/**" access="ROLE_USER" /-->
-        <intercept-url pattern="/socket/info" access="ROLE_ANONYMOUS" />
+        <intercept-url pattern="/socket/info" access="ROLE_ANONYMOUS,ROLE_USER" />
         <intercept-url pattern="/socket/**" access="ROLE_USER" />
         <http-basic/>
-        <remember-me key="telesal"/>
     </http>
 
     
     <authentication-manager alias="authenticationManager">
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="123" authorities="ROLE_USER, ROLE_ADMIN" />
+              </user-service>
+        </authentication-provider>
         <authentication-provider user-service-ref="userDetailsManager" />
+
     </authentication-manager>
 
     <beans:bean id="userDetailsManager" class="dk.drb.blacktiger.security.SystemUserDetailsManager" />

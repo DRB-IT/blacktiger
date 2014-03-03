@@ -5,10 +5,9 @@ import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.UserRepository;
+import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeParticipantsRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRoomsRepository;
-import dk.drb.blacktiger.repository.asterisk.AsteriskMeetMeParticipantsRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
-import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
 import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
@@ -77,7 +76,7 @@ public class RepositoryConfig {
             LOG.info("** USING InMemParticipantRepository FOR TEST **");
             return new InMemParticipantRepository();
         } else {
-            AsteriskMeetMeParticipantsRepository repository = new AsteriskMeetMeParticipantsRepository();
+            AsteriskConfbridgeParticipantsRepository repository = new AsteriskConfbridgeParticipantsRepository();
             repository.setAsteriskServer(asteriskServer);
             return repository;
         }
@@ -89,9 +88,8 @@ public class RepositoryConfig {
             LOG.info("** USING InMemPhonebookRepository FOR TEST **");
             return new InMemPhonebookRepository();
         } else {
-            JdbcPhonebookRepository repository = new JdbcPhonebookRepository();
-            repository.setDataSource(callInfoDataSource);
-            return repository;
+            //throw new UnsupportedOperationException("No real implemenation yet");
+            return null;
         }
     }
 

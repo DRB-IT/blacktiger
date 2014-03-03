@@ -1,30 +1,34 @@
 package dk.drb.blacktiger.repository.memory;
 
 import dk.drb.blacktiger.model.Room;
+import dk.drb.blacktiger.model.User;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
-import java.text.NumberFormat;
+import dk.drb.blacktiger.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- *
- * @author michael
+ * An in-memory implementation of ConferenceRoomRepository for use in test scenarios.
  */
 public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
 
     private List<Room> rooms = new ArrayList<>();
+    private UserRepository userRepository;
     
-    public InMemConferenceRoomRepository() {
-        NumberFormat nf = NumberFormat.getIntegerInstance();
-        nf.setMinimumIntegerDigits(4);
-        nf.setGroupingUsed(false);
-        
-        for(int i=0;i<1000;i++) {
-            rooms.add(new Room("H45-" + nf.format(i), "Test Rigssal " + i));
+    @PostConstruct
+    protected void init() {
+        for(User user : userRepository.findAll()) {
+            rooms.add(new Room(user.getUsername(), "Test Kingdom Hall " + user.getUsername()));
         }
     }
     
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     
     @Override
     public List<Room> findAll() {

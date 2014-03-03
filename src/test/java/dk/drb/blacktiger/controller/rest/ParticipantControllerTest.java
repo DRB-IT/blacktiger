@@ -1,4 +1,4 @@
-package dk.drb.blacktiger.controller;
+package dk.drb.blacktiger.controller.rest;
 
 import dk.drb.blacktiger.controller.rest.ParticipantController;
 import static dk.drb.blacktiger.fixture.rest.ParticipantRestDataFixture.*;

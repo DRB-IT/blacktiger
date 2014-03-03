@@ -8,18 +8,20 @@ import java.util.Date;
 public class Participant {
     private String userId;
     private boolean muted;
-    private boolean host;
     private String phoneNumber;
     private Date dateJoined;
     private String name;
+    private CallType type;
+    private boolean host;
 
     public Participant() {
     }
 
     
-    public Participant(String userId, String name, String phoneNumber, boolean muted, boolean host, Date dateJoined) {
+    public Participant(String userId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
         this.userId = userId;
         this.muted = muted;
+        this.type = type;
         this.host = host;
         this.phoneNumber = phoneNumber;
         this.dateJoined = dateJoined;
@@ -38,8 +40,20 @@ public class Participant {
         return this.muted;
     }
 
+    public CallType getType() {
+        return type;
+    }
+
+    public void setType(CallType type) {
+        this.type = type;
+    }
+
     public boolean isHost() {
         return host;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
     }
     
     public String getPhoneNumber() {
@@ -56,10 +70,6 @@ public class Participant {
 
     public void setMuted(boolean muted) {
         this.muted = muted;
-    }
-
-    public void setHost(boolean host) {
-        this.host = host;
     }
 
     public void setPhoneNumber(String phoneNumber) {

@@ -1,7 +1,8 @@
 package dk.drb.blacktiger.service;
 
-import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ParticipantRepository;
@@ -9,18 +10,15 @@ import dk.drb.blacktiger.repository.PhonebookRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +31,8 @@ public class ConferenceServiceTest {
     
     private List<Room> rooms;
     private ConferenceRoomRepository conferenceRoomRepository;
+    private PhonebookRepository phonebookRepository;
+    private ParticipantRepository participantRepository;
     private ConferenceService service;
     
     private Answer<List<Room>> answerSubselectedRooms() {
@@ -52,6 +52,18 @@ public class ConferenceServiceTest {
         };
     }
     
+    private Answer<List<Participant>> answerParticipants() {
+        return new Answer<List<Participant>>() {
+
+            @Override
+            public List<Participant> answer(InvocationOnMock invocation) throws Throwable {
+                List<Participant> list = new ArrayList<>();
+                list.add(new Participant("1", "name", "+4512345678", true, false, CallType.Phone, new Date()));
+                return list;
+            }
+        };
+    }
+    
     @Before
     public void init() {
         rooms = new ArrayList<>();
@@ -63,9 +75,16 @@ public class ConferenceServiceTest {
         conferenceRoomRepository = Mockito.mock(ConferenceRoomRepository.class);
         Mockito.when(conferenceRoomRepository.findAll()).thenReturn(rooms);
         Mockito.when(conferenceRoomRepository.findAllByIds(Mockito.anyList())).then(answerSubselectedRooms());
+        
+        phonebookRepository = Mockito.mock(PhonebookRepository.class);
+        
+        participantRepository = Mockito.mock(ParticipantRepository.class);
+        Mockito.when(participantRepository.findByRoomNo(Mockito.anyString())).then(answerParticipants());
  
         service = new ConferenceService();
         service.setRoomRepository(conferenceRoomRepository);
+        service.setPhonebookRepository(phonebookRepository);
+        service.setParticipantRepository(participantRepository);
     }
     
     @Test
@@ -86,5 +105,17 @@ public class ConferenceServiceTest {
         
         List<Room> result = service.listRooms();
         assertEquals(2, result.size());
+    }
+    
+    @Test
+    public void ifParticipantsAreDecoratedByPhonebookEntries() {
+        Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_ADMIN"));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("john", "doe", auths));
+        
+        Mockito.when(phonebookRepository.findByNumber("+4512345678")).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
+        List<Participant> participants = service.listParticipants("H45-0000");
+        assertEquals(1, participants.size());
+        assertEquals("Jane Doe", participants.get(0).getName());
+        assertEquals("+4512345678", participants.get(0).getPhoneNumber());
     }
 }

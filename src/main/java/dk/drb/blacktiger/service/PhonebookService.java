@@ -42,19 +42,11 @@ public class PhonebookService {
     public void updatePhonebookEntry(String phoneNumber, String name) {
         PhonebookEntry entry = repository.findByNumber(phoneNumber);
         if(entry != null) {
-            entry.setName(name);
+            entry = new PhonebookEntry(entry.getNumber(), name);
         } else {
             entry = new PhonebookEntry(phoneNumber, name);
         }
         repository.save(entry);
     }
     
-    /**
-     * Removes a phonenumber from the phonebook.
-     * @param phoneNumber The number to remove the entry for.
-     */
-    @Secured("ROLE_USER")
-    public void removePhonebookEntry(String phoneNumber) {
-        repository.deleteByNumber(phoneNumber);
-    }
 }

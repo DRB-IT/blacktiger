@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.fixture.rest;
 
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.Participant;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public class ParticipantRestDataFixture {
     }
     
     public static Participant standardParticipant(String id) {
-        return new Participant("1", "John Doe", "+4512345678", true, false, standardDate());
+        return new Participant("1", "John Doe", "+4512345678", true, false, CallType.Sip, standardDate());
     }
     
     public static List<Participant> standardParticipantsList() {
@@ -37,6 +38,6 @@ public class ParticipantRestDataFixture {
     }
     
     public static String standardParticipantAsJson(String id) {
-        return "{\"userId\":\"" + id + "\",\"muted\":true,\"host\":false,\"phoneNumber\":\"+4512345678\",\"dateJoined\":1388530800000,\"name\":\"John Doe\"}";
+        return "{\"userId\":\"" + id + "\",\"muted\":true,\"phoneNumber\":\"+4512345678\",\"dateJoined\":1388530800000,\"name\":\"John Doe\",\"type\":\"Sip\",\"host\":false}";
     }
 }

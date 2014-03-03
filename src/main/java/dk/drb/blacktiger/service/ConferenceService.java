@@ -9,14 +9,9 @@ import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.List;
-import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -120,10 +115,6 @@ public class ConferenceService {
     public void removeEventListener(ConferenceEventListener listener) {
         repository.removeEventListener(listener);
     }
-    
-    
-    
-
     
     private List<Participant> decorateWithPhonebookInformation(List<Participant> participants) {
         for(Participant p : participants) {
