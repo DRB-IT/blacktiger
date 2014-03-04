@@ -8,8 +8,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- *
- * @author michael
+ * Configuration for Spring MVC Controllers.
+ * This configuration class will scan for REST controllers and enable Spring Security Annotations for those.
+ * It will also make sure that requests matching /static/** gets static content served directly.
  */
 @Configuration
 @ComponentScan("dk.drb.blacktiger.controller.rest") 

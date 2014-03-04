@@ -7,6 +7,6 @@ package dk.drb.blacktiger.fixture.rest;
 public class SystemRestDataFixture {
     
     public static String standardInfoAsJson() {
-        return "{\"averageCpuLoad\":{\"oneMinute\":20.0,\"fiveMinutes\":0.0,\"tenMinutes\":0.0},\"load\":{\"disk\":0,\"cpu\":25.0,\"net\":0.0,\"memory\":0},\"cores\":4}";
+        return "{\"averageCpuLoad\":{\"oneMinute\":20.0,\"fiveMinutes\":0.0,\"tenMinutes\":0.0},\"load\":{\"disk\":12.5,\"cpu\":25.0,\"net\":0.0,\"memory\":33.33333333333333},\"cores\":4}";
     }
 }

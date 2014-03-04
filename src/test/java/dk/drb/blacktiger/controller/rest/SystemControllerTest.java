@@ -1,6 +1,5 @@
 package dk.drb.blacktiger.controller.rest;
 
-import dk.drb.blacktiger.controller.rest.SystemController;
 import dk.drb.blacktiger.service.SystemService;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,10 +43,10 @@ public class SystemControllerTest {
     @Test
     public void thatInfoCanBeRetrieved() throws Exception {
         
-        when(service.getFreeDiskSpace()).thenReturn(500000L);
+        when(service.getFreeDiskSpace()).thenReturn(125000L);
         when(service.getTotalDiskSpace()).thenReturn(1000000L);
         when(service.getFreePhysicalMemorySize()).thenReturn(250000L);
-        when(service.getTotalPhysicalMemorySize()).thenReturn(500000L);
+        when(service.getTotalPhysicalMemorySize()).thenReturn(750000L);
         
         when(service.getNumberOfProcessors()).thenReturn(4);
         when(service.getSystemLoad()).thenReturn(25.0);

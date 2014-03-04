@@ -1,8 +1,7 @@
-package dk.drb.blacktiger.controller.rest;
+package dk.drb.blacktiger.controller.rest.model;
 
 /**
- *
- * @author michael
+ * Exception used when resources are not found.
  */
 public class ResourceNotFoundException extends RuntimeException {
 

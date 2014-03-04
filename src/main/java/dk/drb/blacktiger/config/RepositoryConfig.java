@@ -27,6 +27,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * Configuration for Repository classes.
+ */
 @Configuration
 @Import({DatasourceConfig.class, AsteriskConfig.class})
 @EnableScheduling

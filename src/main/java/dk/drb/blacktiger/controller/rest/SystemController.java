@@ -7,17 +7,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;    
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- *
- * @author michael
+ * Controller for retrieving system information as well as authentication information.
  */
 @Controller
 public class SystemController {
@@ -39,8 +35,8 @@ public class SystemController {
        map.put("load", loadMap);
        map.put("averageCpuLoad", averageCpuLoadMap);
        
-       loadMap.put("disk", (service.getFreeDiskSpace() / service.getTotalDiskSpace()) * 100);
-       loadMap.put("memory", (service.getFreePhysicalMemorySize() / service.getTotalPhysicalMemorySize()) * 100);
+       loadMap.put("disk", percentageOf(service.getFreeDiskSpace(), service.getTotalDiskSpace()));
+       loadMap.put("memory", percentageOf(service.getFreePhysicalMemorySize(), service.getTotalPhysicalMemorySize()));
        loadMap.put("cpu", service.getSystemLoad());
        loadMap.put("net", 0.0);
        
@@ -55,6 +51,10 @@ public class SystemController {
     @ResponseBody
     public UserPresentation authenticate() {
         return UserPresentation.from(SecurityContextHolder.getContext().getAuthentication());
+    }
+    
+    private double percentageOf(double minor, double major) {
+        return (minor / major) * 100;
     }
     
 }

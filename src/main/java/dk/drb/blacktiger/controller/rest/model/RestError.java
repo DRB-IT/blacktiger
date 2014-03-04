@@ -1,8 +1,7 @@
-package dk.drb.blacktiger.controller.rest;
+package dk.drb.blacktiger.controller.rest.model;
 
 /**
- *
- * @author michael
+ * REST representation class for exceptions.
  */
 public class RestError {
     

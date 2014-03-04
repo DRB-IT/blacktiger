@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+/**
+ * Configuration for JDBC Datasources.
+ */
 @Configuration
 public class DatasourceConfig {
 

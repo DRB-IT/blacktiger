@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Controller for conference rooms.
+ * Controller for serving participants in a conference room via REST.
  */
 @Controller
 public class ParticipantController {

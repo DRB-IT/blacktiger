@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller.rest;
 
+import dk.drb.blacktiger.controller.rest.model.ResourceNotFoundException;
 import java.util.List;
 
 import dk.drb.blacktiger.model.Room;
