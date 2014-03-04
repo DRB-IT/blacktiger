@@ -5,3 +5,7 @@
 *.war
 *.ear
 /target/
+nb-configuration.xml
+nbactions.xml
+blacktiger.log
+.DS_Store

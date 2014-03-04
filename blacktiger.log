@@ -1,240 +1,728 @@
-17:23:13,929  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
-17:23:36,178  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
-17:26:12,495  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
-17:30:59,135  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
-17:31:35,144  INFO ManagerConnectionImpl:94 - Connecting to 192.168.87.101:5038
-16:52:34,048  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:52:34,181  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-16:52:34,265  INFO ManagerConnectionImpl:94 - Successfully logged in
-16:52:34,295  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-16:52:34,394  INFO AsteriskServerImpl:94 - Initializing done
-16:53:19,958  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:53:20,127  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-16:53:20,531  INFO ManagerConnectionImpl:94 - Successfully logged in
-16:53:20,564  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-16:53:20,951  INFO AsteriskServerImpl:94 - Initializing done
-16:54:20,507  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:54:21,411  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-16:54:21,497  INFO ManagerConnectionImpl:94 - Successfully logged in
-16:54:21,533  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-16:54:21,579  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-16:54:21,579  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-16:54:21,587  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-16:54:21,649  INFO AsteriskServerImpl:94 - Initializing done
-16:54:23,371  INFO ManagerConnectionImpl:94 - Closing socket.
-16:54:23,423  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:54:23,469  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-16:54:23,521  INFO ManagerConnectionImpl:94 - Successfully logged in
-16:55:02,149  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:55:02,304  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-16:55:02,389  INFO ManagerConnectionImpl:94 - Successfully logged in
-16:55:02,429  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-16:55:02,462  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-16:55:02,463  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-16:55:02,471  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-16:55:02,544  INFO AsteriskServerImpl:94 - Initializing done
-16:55:03,220  INFO ManagerConnectionImpl:94 - Closing socket.
-16:55:03,273  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:59:35,406  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:59:35,536  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-16:59:35,607  INFO ManagerConnectionImpl:94 - Successfully logged in
-16:59:35,635  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-16:59:35,675  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-16:59:35,676  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-16:59:35,683  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-16:59:35,748  INFO AsteriskServerImpl:94 - Initializing done
-16:59:35,781  INFO ManagerConnectionImpl:94 - Closing socket.
-16:59:35,833  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-16:59:35,892  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:01:43,720  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:01:43,897  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:01:43,971  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:01:43,990  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:01:44,021  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:01:44,022  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:01:44,030  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-17:01:44,101  INFO AsteriskServerImpl:94 - Initializing done
-17:04:05,884  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:04:06,013  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:04:06,092  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:04:06,130  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:04:06,164  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:04:06,165  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:04:06,172  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-17:04:06,238  INFO AsteriskServerImpl:94 - Initializing done
-17:06:37,741  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:06:37,912  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:06:37,993  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:06:38,045  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:06:38,083  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:06:38,084  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:06:38,092  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-17:07:11,620  INFO AsteriskServerImpl:94 - Initializing done
-17:08:12,765  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:08:12,940  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:08:13,022  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:08:13,058  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:08:13,092  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:08:13,092  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:08:13,099  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-17:08:13,179  INFO AsteriskServerImpl:94 - Initializing done
-17:08:20,551  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:08:20,715  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:08:20,773  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:08:20,807  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:08:20,847  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:08:20,847  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:08:20,855  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-17:08:33,086  INFO AsteriskServerImpl:94 - Initializing done
-17:10:35,737  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:10:35,889  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:10:36,004  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:10:36,044  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:10:36,087  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:10:36,087  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:10:36,095  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000006
-17:10:36,192  INFO AsteriskServerImpl:94 - Initializing done
-17:18:02,382  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:18:04,484  INFO ManagerConnectionImpl:94 - Closing socket.
-17:18:04,485  INFO ManagerReaderImpl:94 - Terminating reader thread: Socket closed
-17:19:16,849  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:19:16,980  INFO ManagerConnectionImpl:94 - Connected via Asterisk Call Manager/1.3
-17:19:17,058  INFO ManagerConnectionImpl:94 - Successfully logged in
-17:19:17,089  INFO ManagerConnectionImpl:94 - Determined Asterisk version: Asterisk 1.6
-17:19:17,127  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinename' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:19:17,128  WARN EventBuilderImpl:110 - Unable to set property 'connectedlinenum' to '<unknown>' on org.asteriskjava.manager.event.StatusEvent: no setter. Please report at http://jira.reucon.org/browse/AJ
-17:19:17,135  INFO ChannelManager:94 - Adding new channel SIP/H45-0000-00000007
-17:19:17,209  INFO AsteriskServerImpl:94 - Initializing done
-07:26:01,460  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-07:26:03,575  INFO ManagerConnectionImpl:94 - Closing socket.
-07:26:03,576  INFO ManagerReaderImpl:94 - Terminating reader thread: Socket closed
-08:39:19,082  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-08:39:19,085  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-08:39:19,291  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-08:39:19,292  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-08:39:19,295  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-08:39:19,357  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
-08:39:21,146  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-08:39:51,720  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-08:39:51,723  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-08:39:51,927  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-08:39:51,928  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-08:39:51,932  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-08:39:51,989  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
-16:47:25,188  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-16:47:25,192  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-16:47:25,397  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-16:47:25,397  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-16:47:25,401  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-16:47:25,459  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
-16:48:01,911  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-16:48:01,914  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-16:48:02,139  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-16:48:02,140  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-16:48:02,144  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-16:48:07,026  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/room] in DispatcherServlet with name ''
-16:48:28,507  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-16:48:28,511  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-16:48:28,706  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-16:48:28,706  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-16:48:28,710  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-16:48:28,779 DEBUG RoomController:38 - Got request for all rooms.
-16:51:35,733  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-16:51:35,736  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-16:51:35,931  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-16:51:35,932  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-16:51:35,935  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-16:51:36,004 DEBUG RoomController:38 - Got request for all rooms.
-17:00:05,451  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:00:05,454  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:00:05,652  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:00:05,652  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:00:05,656  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-17:00:05,724 DEBUG RoomController:38 - Got request for all rooms.
-17:07:10,226  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:07:10,229  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:07:10,425  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:07:10,426  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:07:10,429  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:07:10,497 DEBUG RoomController:38 - Got request for all rooms.
-17:12:48,060  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:12:48,063  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:12:48,260  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:12:48,260  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:12:48,264  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:12:48,333 DEBUG RoomController:38 - Got request for all rooms.
-17:12:48,419  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:12:48,419  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:12:48,440  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:12:48,441  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:12:48,441  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
-17:14:54,784  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:14:54,787  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:14:54,986  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:14:54,987  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:14:54,990  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:14:55,060 DEBUG RoomController:38 - Got request for all rooms.
-17:14:55,146  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:14:55,146  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:14:55,167  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:14:55,167  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:14:55,168  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
-17:14:55,194 DEBUG RoomController:45 - Got request for specific room '1'.
-17:14:55,229  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:16:40,250  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:16:40,253  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:16:40,445  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:16:40,446  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:16:40,449  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:16:40,519 DEBUG RoomController:38 - Got request for all rooms.
-17:16:40,603  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:16:40,603  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:16:40,625  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:16:40,625  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:16:40,626  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
-17:16:40,653 DEBUG RoomController:45 - Got request for specific room '1'.
-17:16:40,682  INFO ManagerConnectionImpl:94 - Connecting to localhost:5038
-17:17:02,121  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:17:02,124  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:17:02,316  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:17:02,316  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:17:02,320  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:17:02,388 DEBUG RoomController:38 - Got request for all rooms.
-17:17:02,472  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:17:02,472  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:17:02,493  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:17:02,493  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:17:02,494  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
-17:17:02,519 DEBUG RoomController:45 - Got request for specific room '1'.
-17:17:03,537  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:17:03,541  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:17:03,737  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:17:03,738  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:17:03,742  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-17:17:03,814 DEBUG RoomController:38 - Got request for all rooms.
-17:17:03,901  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:17:03,902  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:17:03,922  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:17:03,922  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:17:03,923  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
-17:17:03,949 DEBUG RoomController:45 - Got request for specific room '1'.
-17:45:37,630  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.RoomController.get(java.lang.String)
-17:45:37,633  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.RoomController.getRooms()
-17:45:37,829  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:45:37,829  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:45:37,833  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:45:37,891  WARN PageNotFound:1118 - No mapping found for HTTP request with URI [/system/information] in DispatcherServlet with name ''
-17:46:02,670  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.SystemController.getInformation(java.lang.String)
-17:46:02,871  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:46:02,871  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:46:02,875  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-17:47:06,836  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.SystemController.getInformation()
-17:47:07,046  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:47:07,046  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:47:07,050  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
-17:47:07,121 DEBUG PhonebookController:29 - Got request system information.
-17:49:34,028  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.SystemController.getInformation()
-17:49:34,229  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
-17:49:34,229  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
-17:49:34,233  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
-17:49:34,303 DEBUG PhonebookController:29 - Got request system information.
+16:51:25,064  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+16:51:25,089 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+16:51:25,170  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@76f8b22: startup date [Mon Mar 03 16:51:24 CET 2014]; root of context hierarchy
+16:51:25,171  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+16:51:25,174  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+16:51:25,175  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+16:51:25,175  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+16:51:25,176  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+17:01:46,720  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:01:46,723  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:01:46,724  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:01:46,724  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:01:46,920  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:46,921  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:46,924  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:01:47,128  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:01:47,129  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:01:47,129  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:01:47,130  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:01:47,151  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,152  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,152  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,172  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:01:47,172  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:01:47,174  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:01:47,174  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:01:47,197  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,197  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,197  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,211  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:01:47,212  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:01:47,212  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:01:47,212  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:01:47,257  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,258  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,258  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,303  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:01:47,303  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:01:47,321  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,321  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,322  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:01:47,332  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:01:47,332  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:01:47,350  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,350  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,350  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,356  INFO PhonebookController:32 - Updating phonebook entry. [number=+1911; name=Emergency]
+17:01:47,366  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:01:47,367  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:01:47,385  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,385  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,385  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,399  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:01:47,399  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:01:47,414  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,415  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,415  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,435  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:01:47,435  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:01:47,450  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,450  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,451  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,472  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:01:47,472  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:01:47,487  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,488  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,488  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,521  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+17:01:47,521  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+17:01:47,537  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:01:47,538  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:01:47,538  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:01:47,651  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@9457b0f: startup date [Mon Mar 03 17:01:47 CET 2014]; root of context hierarchy
+17:01:47,967  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$6795f8a3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:01:48,096  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+17:01:48,107  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+17:01:48,113  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+17:01:48,329  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+17:01:48,376  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+17:01:48,407  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+17:01:48,464  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+17:01:48,491 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+17:01:48,617  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@9457b0f: startup date [Mon Mar 03 17:01:47 CET 2014]; root of context hierarchy
+17:01:48,618  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+17:01:48,621  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+17:01:48,622  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+17:01:48,622  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+17:01:48,623  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+17:02:06,464  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:06,468  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:06,468  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:06,469  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:06,675  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:06,676  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:06,680  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:02:06,887  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:06,888  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:06,888  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:06,888  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:06,910  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:06,910  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:06,910  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:06,929  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:06,930  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:06,931  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:06,931  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:06,955  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:06,956  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:06,956  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:06,969  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:06,970  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:06,970  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:06,970  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:07,014  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,015  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,015  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:07,058  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:02:07,059  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:02:07,077  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,078  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,078  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:07,083  INFO PhonebookController:32 - Updating phonebook entry. [number=+1911; name=Emergency]
+17:02:07,090  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:02:07,091  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:02:07,109  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,109  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,110  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:02:07,126  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:02:07,126  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:02:07,149  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,149  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,150  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:02:07,163  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:02:07,163  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:02:07,179  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,179  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,180  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:07,201  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:02:07,201  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:02:07,216  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,216  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,217  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:07,237  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:02:07,237  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:02:07,253  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,253  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,254  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:02:07,285  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+17:02:07,285  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+17:02:07,302  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:07,302  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:07,303  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:02:07,417  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@9457b0f: startup date [Mon Mar 03 17:02:07 CET 2014]; root of context hierarchy
+17:02:07,731  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$6795f8a3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:02:07,855  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+17:02:07,865  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+17:02:07,869  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+17:02:08,074  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+17:02:08,132  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+17:02:08,161  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+17:02:08,217  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+17:02:08,241 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+17:02:08,337  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@9457b0f: startup date [Mon Mar 03 17:02:07 CET 2014]; root of context hierarchy
+17:02:08,338  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+17:02:08,340  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+17:02:08,341  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+17:02:08,342  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+17:02:08,342  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+17:02:09,335  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:09,339  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:09,339  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:09,340  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:09,543  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,543  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,547  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:02:09,746  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:09,746  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:09,746  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:09,747  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:09,766  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,766  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,767  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:02:09,786  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:09,786  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:09,788  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:09,788  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:09,811  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,811  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,812  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:09,825  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:02:09,826  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:02:09,826  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:02:09,826  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:02:09,869  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,870  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,870  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:09,915  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:02:09,916  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:02:09,933  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,934  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,934  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:09,945  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:02:09,945  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:02:09,962  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,962  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,962  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:09,967  INFO PhonebookController:32 - Updating phonebook entry. [number=+1911; name=Emergency]
+17:02:09,978  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:02:09,978  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:02:09,995  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:09,995  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:09,996  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:10,008  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:02:10,009  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:02:10,025  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:10,025  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:10,025  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:10,046  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:02:10,046  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:02:10,061  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:10,062  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:10,062  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:10,083  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:02:10,083  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:02:10,100  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:10,100  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:10,100  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:10,134  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+17:02:10,134  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+17:02:10,151  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:02:10,151  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:02:10,151  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:02:10,266  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@30921a8a: startup date [Mon Mar 03 17:02:10 CET 2014]; root of context hierarchy
+17:02:10,580  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$1e7e62af] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:02:10,699  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+17:02:10,709  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+17:02:10,713  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+17:02:10,924  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+17:02:10,973  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+17:02:11,002  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+17:02:11,058  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+17:02:11,084 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+17:02:11,192  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@30921a8a: startup date [Mon Mar 03 17:02:10 CET 2014]; root of context hierarchy
+17:02:11,193  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+17:02:11,195  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+17:02:11,197  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+17:02:11,197  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+17:02:11,198  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+17:18:36,749  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:36,752  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:36,753  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:36,753  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:36,953  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:36,953  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:36,957  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+17:18:37,072  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:37,072  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:37,073  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:37,073  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:37,109  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,109  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,110  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,161  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:37,161  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:37,163  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:37,163  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:37,187  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,187  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,188  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:18:37,264  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:37,265  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:37,265  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:37,265  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:37,309  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,309  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,309  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,339  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:18:37,339  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:18:37,358  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,358  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,359  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:18:37,365  INFO PhonebookController:32 - Updating phonebook entry. [number=+1911; name=Emergency]
+17:18:37,372  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:18:37,372  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:18:37,388  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,388  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,389  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,403  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:18:37,404  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:18:37,422  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,422  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,423  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,437  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:18:37,437  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:18:37,452  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,452  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,452  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,474  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:18:37,474  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:18:37,490  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,490  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,490  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,511  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:18:37,511  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:18:37,527  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,527  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,528  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:18:37,555  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+17:18:37,555  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+17:18:37,573  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:37,573  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:37,573  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:37,687  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@9457b0f: startup date [Mon Mar 03 17:18:37 CET 2014]; root of context hierarchy
+17:18:38,034  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$6795f8a3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:18:38,163  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+17:18:38,174  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+17:18:38,178  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+17:18:38,393  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+17:18:38,443  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+17:18:38,472  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+17:18:38,526  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+17:18:38,552 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+17:18:38,634  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@9457b0f: startup date [Mon Mar 03 17:18:37 CET 2014]; root of context hierarchy
+17:18:38,635  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+17:18:38,638  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+17:18:38,639  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+17:18:38,639  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+17:18:38,639  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+17:18:39,618  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:39,621  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:39,622  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:39,623  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:39,826  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:39,826  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:39,830  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+17:18:40,037  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:40,038  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:40,038  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:40,038  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:40,060  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,060  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,061  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:18:40,079  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:40,080  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:40,081  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:40,082  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:40,104  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,104  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,105  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:18:40,118  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+17:18:40,118  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+17:18:40,119  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+17:18:40,119  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+17:18:40,161  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,161  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,161  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,205  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:18:40,205  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:18:40,224  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,224  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,225  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+17:18:40,230  INFO PhonebookController:32 - Updating phonebook entry. [number=+1911; name=Emergency]
+17:18:40,237  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+17:18:40,237  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+17:18:40,255  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,255  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,255  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,269  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:18:40,269  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:18:40,286  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,286  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,287  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,299  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+17:18:40,300  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+17:18:40,314  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,314  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,315  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,334  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:18:40,334  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:18:40,349  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,350  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,350  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,371  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+17:18:40,371  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+17:18:40,387  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,387  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,387  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,417  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+17:18:40,417  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+17:18:40,434  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+17:18:40,435  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+17:18:40,435  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+17:18:40,549  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@30921a8a: startup date [Mon Mar 03 17:18:40 CET 2014]; root of context hierarchy
+17:18:40,865  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$1e7e62af] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:18:40,992  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+17:18:41,003  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+17:18:41,007  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+17:18:41,218  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+17:18:41,268  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+17:18:41,300  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+17:18:41,356  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+17:18:41,382 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+17:18:41,482  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@30921a8a: startup date [Mon Mar 03 17:18:40 CET 2014]; root of context hierarchy
+17:18:41,483  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+17:18:41,485  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+17:18:41,487  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+17:18:41,487  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+17:18:41,487  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+07:15:30,948  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:15:30,951  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:15:30,952  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:15:30,952  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:15:31,152  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,152  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,156  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+07:15:31,365  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:15:31,365  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:15:31,366  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:15:31,366  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:15:31,387  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,388  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,388  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,407  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:15:31,407  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:15:31,409  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:15:31,409  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:15:31,430  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,431  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,431  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,445  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:15:31,445  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:15:31,446  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:15:31,446  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:15:31,488  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,488  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,489  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:15:31,532  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:15:31,532  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:15:31,550  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,551  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,551  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,556  INFO PhonebookController:33 - Updating phonebook entry. [number=+1911; name=Emergency]
+07:15:31,563  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:15:31,563  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:15:31,581  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,581  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,581  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,595  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:15:31,596  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:15:31,613  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,614  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,614  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,626  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:15:31,627  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:15:31,642  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,642  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,643  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:15:31,665  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:15:31,666  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:15:31,681  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,681  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,682  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:15:31,703  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:15:31,704  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:15:31,719  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,719  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,719  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,745  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+07:15:31,745  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+07:15:31,761  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:15:31,761  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:15:31,761  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:15:31,890  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@70f6431f: startup date [Tue Mar 04 07:15:31 CET 2014]; root of context hierarchy
+07:15:32,206  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$8e64cbb5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07:15:32,326  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+07:15:32,336  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+07:15:32,340  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+07:15:32,554  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+07:15:32,599  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+07:15:32,628  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+07:15:32,686  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+07:15:32,712 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+07:15:32,803  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@70f6431f: startup date [Tue Mar 04 07:15:31 CET 2014]; root of context hierarchy
+07:15:32,804  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+07:15:32,806  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+07:15:32,808  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+07:15:32,808  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+07:15:32,808  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+07:17:26,807  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:17:26,811  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:17:26,811  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:17:26,811  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:17:27,006  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,006  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,009  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+07:17:27,208  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:17:27,208  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:17:27,209  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:17:27,209  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:17:27,230  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,230  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,230  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,249  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:17:27,250  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:17:27,251  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:17:27,252  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:17:27,274  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,274  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,275  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:17:27,288  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:17:27,289  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:17:27,289  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:17:27,289  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:17:27,332  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,332  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,333  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:17:27,375  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:17:27,376  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:17:27,396  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,397  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,397  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,408  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:17:27,409  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:17:27,426  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,426  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,426  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,431  INFO PhonebookController:33 - Updating phonebook entry. [number=+1911; name=Emergency]
+07:17:27,442  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:17:27,443  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:17:27,460  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,460  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,461  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:17:27,473  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:17:27,474  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:17:27,489  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,489  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,489  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,509  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:17:27,509  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:17:27,524  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,524  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,525  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,545  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:17:27,545  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:17:27,559  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,559  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,560  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,592  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+07:17:27,592  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+07:17:27,608  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:17:27,609  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:17:27,609  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:17:27,733  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@65fa6817: startup date [Tue Mar 04 07:17:27 CET 2014]; root of context hierarchy
+07:17:28,040  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$64897ccf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07:17:28,159  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+07:17:28,170  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+07:17:28,174  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+07:17:28,400  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+07:17:28,461  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+07:17:28,489  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+07:17:28,545  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+07:17:28,570 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+07:17:28,652  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@65fa6817: startup date [Tue Mar 04 07:17:27 CET 2014]; root of context hierarchy
+07:17:28,653  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+07:17:28,655  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+07:17:28,657  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+07:17:28,657  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+07:17:28,657  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+07:19:30,101  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:30,104  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:30,105  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:30,105  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:30,317  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,317  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,321  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 4 ms
+07:19:30,521  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:30,521  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:30,522  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:30,522  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:30,543  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,544  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,544  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,562  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:30,562  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:30,564  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:30,564  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:30,585  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,586  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,586  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,599  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:30,600  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:30,601  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:30,601  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:30,642  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,643  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,643  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,684  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:19:30,684  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:19:30,702  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,702  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,702  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,713  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:19:30,713  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:19:30,731  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,731  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,731  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,737  INFO PhonebookController:33 - Updating phonebook entry. [number=+1911; name=Emergency]
+07:19:30,747  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:19:30,748  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:19:30,766  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,766  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,766  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,778  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:19:30,779  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:19:30,793  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,793  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,794  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,812  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:19:30,812  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:19:30,828  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,829  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,829  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:30,849  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:19:30,849  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:19:30,864  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,864  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,865  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:19:30,892  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+07:19:30,892  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+07:19:30,908  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:30,908  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:30,908  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:31,022  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@15d44e01: startup date [Tue Mar 04 07:19:31 CET 2014]; root of context hierarchy
+07:19:31,331  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$f7c610ab] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07:19:31,449  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+07:19:31,459  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+07:19:31,462  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+07:19:31,672  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+07:19:31,716  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+07:19:31,746  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+07:19:31,799  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+07:19:31,825 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+07:19:31,937  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@15d44e01: startup date [Tue Mar 04 07:19:31 CET 2014]; root of context hierarchy
+07:19:31,938  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+07:19:31,940  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+07:19:31,942  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+07:19:31,942  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+07:19:31,942  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
+07:19:32,890  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:32,894  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:32,894  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:32,894  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:33,084  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,084  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,088  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 3 ms
+07:19:33,302  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:33,302  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:33,303  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:33,303  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:33,322  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,322  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,323  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 1 ms
+07:19:33,341  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:33,341  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:33,343  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:33,343  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:33,365  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,365  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,365  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,379  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Participant> dk.drb.blacktiger.controller.rest.ParticipantController.listParticipants(java.lang.String)
+07:19:33,379  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Participant dk.drb.blacktiger.controller.rest.ParticipantController.getParticipant(java.lang.String,java.lang.String)
+07:19:33,380  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.kickParticipant(java.lang.String,java.lang.String)
+07:19:33,380  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}/participants/{participantId}/muted],methods=[POST],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.ParticipantController.muteParticipant(java.lang.String,java.lang.String,boolean)
+07:19:33,422  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,422  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,422  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,464  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:19:33,464  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:19:33,482  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,482  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,482  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,493  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.lang.String dk.drb.blacktiger.controller.rest.PhonebookController.get(java.lang.String)
+07:19:33,493  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/phonebook/{number}],methods=[PUT],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.PhonebookController.update(java.lang.String,java.lang.String)
+07:19:33,511  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,511  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,511  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,516  INFO PhonebookController:33 - Updating phonebook entry. [number=+1911; name=Emergency]
+07:19:33,526  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:19:33,527  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:19:33,543  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,543  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,544  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,556  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms/{roomNo}],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.model.Room dk.drb.blacktiger.controller.rest.RoomController.get(java.lang.String)
+07:19:33,557  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/rooms],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.Room> dk.drb.blacktiger.controller.rest.RoomController.getRooms()
+07:19:33,571  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,572  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,572  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,592  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:19:33,592  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:19:33,608  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,608  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,609  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,628  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[GET],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.util.List<dk.drb.blacktiger.model.SipAccount> dk.drb.blacktiger.controller.rest.SipAccountController.listAccounts(java.lang.String,java.lang.String)
+07:19:33,628  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/sipaccounts],methods=[POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void dk.drb.blacktiger.controller.rest.SipAccountController.createAccount(dk.drb.blacktiger.model.SipAccount)
+07:19:33,643  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,644  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,644  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,671  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/authenticate],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public dk.drb.blacktiger.controller.rest.model.UserPresentation dk.drb.blacktiger.controller.rest.SystemController.authenticate()
+07:19:33,671  INFO StandaloneMockMvcBuilder$StaticRequestMappingHandlerMapping:182 - Mapped "{[/system/information],methods=[],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}" onto public java.util.Map dk.drb.blacktiger.controller.rest.SystemController.getInformation()
+07:19:33,687  INFO MockServletContext:430 - Initializing Spring FrameworkServlet ''
+07:19:33,687  INFO TestDispatcherServlet:479 - FrameworkServlet '': initialization started
+07:19:33,687  INFO TestDispatcherServlet:498 - FrameworkServlet '': initialization completed in 0 ms
+07:19:33,798  INFO GenericApplicationContext:513 - Refreshing org.springframework.context.support.GenericApplicationContext@72a8857e: startup date [Tue Mar 04 07:19:33 CET 2014]; root of context hierarchy
+07:19:34,101  INFO PostProcessorRegistrationDelegate$BeanPostProcessorChecker:309 - Bean 'org.springframework.scheduling.annotation.SchedulingConfiguration' of type [class org.springframework.scheduling.annotation.SchedulingConfiguration$$EnhancerBySpringCGLIB$$a696819d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07:19:34,217  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientInboundChannelExecutor'
+07:19:34,228  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'clientOutboundChannelExecutor'
+07:19:34,231  INFO ThreadPoolTaskExecutor:165 - Initializing ExecutorService  'brokerChannelExecutor'
+07:19:34,433  INFO ThreadPoolTaskScheduler:165 - Initializing ExecutorService  'messageBrokerSockJsTaskScheduler'
+07:19:34,485  INFO SimpleUrlHandlerMapping:315 - Mapped URL path [/socket/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+07:19:34,514  INFO SimpAnnotationMethodMessageHandler:291 - Mapped "{[/{room}],messageType=[SUBSCRIBE]}" onto public java.util.List<dk.drb.blacktiger.model.ParticipantJoinEvent> dk.drb.blacktiger.controller.websocket.EventController.subscribeEventsFor(java.lang.String,java.security.Principal)
+07:19:34,568  INFO DefaultLifecycleProcessor:341 - Starting beans in phase 2147483647
+07:19:34,592 ERROR SubProtocolWebSocketHandler:247 - Session not found for session with id 0
+07:19:34,678  INFO GenericApplicationContext:873 - Closing org.springframework.context.support.GenericApplicationContext@72a8857e: startup date [Tue Mar 04 07:19:33 CET 2014]; root of context hierarchy
+07:19:34,679  INFO DefaultLifecycleProcessor:356 - Stopping beans in phase 2147483647
+07:19:34,683  INFO ThreadPoolTaskScheduler:203 - Shutting down ExecutorService 'messageBrokerSockJsTaskScheduler'
+07:19:34,684  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'brokerChannelExecutor'
+07:19:34,685  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+07:19:34,685  INFO ThreadPoolTaskExecutor:203 - Shutting down ExecutorService 'clientInboundChannelExecutor'
