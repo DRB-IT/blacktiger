@@ -34,9 +34,9 @@ public class CallInformationService {
      * @param minimumDuration The minimum duration in seconds for each call to include.
      * @return The list of archived calls.
      */
-    public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration) {
+    public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration, String[] numbers) {
         Access.checkRoomAccess(roomNo);
-        List<CallInformation> list = repository.findByRoomNoAndPeriodAndDuration(roomNo, start, end, minimumDuration);
+        List<CallInformation> list = repository.findByRoomNoAndPeriodAndDurationAndNumbers(roomNo, start, end, minimumDuration, numbers);
         for(CallInformation info : list) {
             PhonebookEntry entry = phonebookRepository.findByNumber(info.getPhoneNumber());
             if(entry != null) {

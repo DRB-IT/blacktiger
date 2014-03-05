@@ -254,28 +254,23 @@
                         </goals>
                         <configuration>
                             <skip>false</skip>
-                            <excludes>
-                                <exclude>**/*IntegrationTest.java</exclude>
-                            </excludes>
                         </configuration>
                     </execution>
- 
+
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.16</version>
+                <executions>
                     <execution>
-                        <id>surefire-itest</id>
-                        <phase>integration-test</phase>
                         <goals>
-                            <goal>test</goal>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
-                        <configuration>
-                            <skip>false</skip>
-                            <includes>
-                                <include>**/*IntegrationTest.java</include>
-                            </includes>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-           
         </plugins>
     </build>
 

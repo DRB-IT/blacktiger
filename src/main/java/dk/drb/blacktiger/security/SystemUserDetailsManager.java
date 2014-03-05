@@ -38,6 +38,8 @@ public class SystemUserDetailsManager implements UserDetailsService {
         
         authList.add(new SimpleGrantedAuthority(ROLE_ROOMACCESS_PREFIX + username));
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authList.add(new SimpleGrantedAuthority("ROLE_HOST"));
+        
         return new User(user.getUsername(), user.getPassword(), true, true, true, true, authList);
     }
 

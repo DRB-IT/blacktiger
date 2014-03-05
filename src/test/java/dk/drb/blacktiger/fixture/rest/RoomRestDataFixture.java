@@ -13,7 +13,7 @@ public class RoomRestDataFixture {
     public static Room standardRoom(String id) {
         Room room = new Room();
         room.setId(id);
-        room.setDisplayName("Room " + id);
+        room.setName("Room " + id);
         return room;
     }
     
@@ -26,7 +26,7 @@ public class RoomRestDataFixture {
     }
     
     public static String standardRoomAsJson(String id) {
-        return "{\"id\":\"" + id + "\",\"displayName\":\"Room " + id + "\",\"contact\":{\"name\":null,\"email\":null,\"phoneNumber\":null,\"comment\":null}}";
+        return "{\"id\":\"" + id + "\",\"name\":\"Room " + id + "\",\"contact\":{\"name\":null,\"email\":null,\"phoneNumber\":null,\"comment\":null}}";
     }
     
     public static String standardListOfRoomsAsJson(String ... ids) {

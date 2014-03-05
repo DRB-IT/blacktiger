@@ -1,7 +1,6 @@
 package dk.drb.blacktiger.controller.websocket;
 
 import dk.drb.blacktiger.controller.rest.TestChannelInterceptor;
-import dk.drb.blacktiger.controller.websocket.EventController;
 import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +14,8 @@ import org.springframework.messaging.support.AbstractSubscribableChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.util.JsonPathExpectationsHelper;
 import dk.drb.blacktiger.config.WebsocketConfig;
 import dk.drb.blacktiger.model.ConferenceEventListener;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.service.ConferenceService;
 import org.mockito.Mockito;

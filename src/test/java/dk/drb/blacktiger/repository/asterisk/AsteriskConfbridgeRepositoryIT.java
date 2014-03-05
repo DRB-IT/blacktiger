@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
  *
  * @author michael
  */
-public class AsteriskConfbridgeRepositoryTestInt {
+public class AsteriskConfbridgeRepositoryIT {
     
-    public AsteriskConfbridgeRepositoryTestInt() {
+    public AsteriskConfbridgeRepositoryIT() {
     }
     
     @BeforeClass

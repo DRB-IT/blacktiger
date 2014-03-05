@@ -1,11 +1,13 @@
 package dk.drb.blacktiger.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.domain.Persistable;
 
 /**
  * Defines a user in the system.
  */
-public class User implements Persistable<Integer>{
+public class User implements Persistable<Integer> {
+
     private Integer id;
     private String username;
     private String password;
@@ -18,7 +20,7 @@ public class User implements Persistable<Integer>{
         this.username = username;
         this.password = password;
     }
-    
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -36,7 +38,7 @@ public class User implements Persistable<Integer>{
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getUsername() {
         return this.username;
     }
@@ -44,7 +46,7 @@ public class User implements Persistable<Integer>{
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public String getPassword() {
         return this.password;
     }
@@ -52,5 +54,9 @@ public class User implements Persistable<Integer>{
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

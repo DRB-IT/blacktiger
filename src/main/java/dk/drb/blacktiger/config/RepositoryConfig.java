@@ -4,6 +4,7 @@ import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
+import dk.drb.blacktiger.repository.SipAccountRepository;
 import dk.drb.blacktiger.repository.UserRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeParticipantsRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRoomsRepository;
@@ -13,6 +14,7 @@ import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
 import dk.drb.blacktiger.repository.memory.InMemParticipantRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
+import dk.drb.blacktiger.repository.memory.InMemSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemUserRepository;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -91,7 +93,8 @@ public class RepositoryConfig {
             LOG.info("** USING InMemPhonebookRepository FOR TEST **");
             return new InMemPhonebookRepository();
         } else {
-            //throw new UnsupportedOperationException("No real implemenation yet");
+            LOG.error("No real implementation for PhonebookRepository.");
+            
             return null;
         }
     }
@@ -115,6 +118,17 @@ public class RepositoryConfig {
             return new InMemConferenceRoomRepository();
         } else {
             return new AsteriskConfbridgeRoomsRepository();
+        }
+    }
+    
+    @Bean
+    public SipAccountRepository sipAccountRepository() {
+        if(test) {
+            LOG.info("** USING InMemSipAccountRepository FOR TEST **");
+            return new InMemSipAccountRepository();
+        } else {
+            LOG.error("No real implementation for SipAccountRepository.");
+            return null;
         }
     }
 }

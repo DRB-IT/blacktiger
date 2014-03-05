@@ -1,10 +1,13 @@
 package dk.drb.blacktiger.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  *
  * @author michael
  */
 public class SipAccount {
+
     private String name;
     private String email;
     private String phoneNumber;
@@ -31,5 +34,10 @@ public class SipAccount {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

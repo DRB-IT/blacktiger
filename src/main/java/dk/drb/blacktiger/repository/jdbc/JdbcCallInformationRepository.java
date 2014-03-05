@@ -46,6 +46,12 @@ public class JdbcCallInformationRepository implements CallInformationRepository 
                 + "FROM cdr where calldate > ? and calldate < ? and dcontext LIKE ? group by src having totalDuration > ? ORDER BY firstCallTimeStamp";
         return this.jdbcTemplate.query(sql, new Object[]{start, end, roomSearch, minimumDuration}, mapper);
     }
+
+    @Override
+    public List<CallInformation> findByRoomNoAndPeriodAndDurationAndNumbers(String roomNo, Date start, Date end, int minimumDuration, String[] numbers) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
     
 }

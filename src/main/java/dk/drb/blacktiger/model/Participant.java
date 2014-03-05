@@ -1,11 +1,13 @@
 package dk.drb.blacktiger.model;
 
 import java.util.Date;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Defines a Participant in a conference room.
  */
 public class Participant {
+
     private String userId;
     private boolean muted;
     private String phoneNumber;
@@ -17,7 +19,6 @@ public class Participant {
     public Participant() {
     }
 
-    
     public Participant(String userId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
         this.userId = userId;
         this.muted = muted;
@@ -27,15 +28,15 @@ public class Participant {
         this.dateJoined = dateJoined;
         this.name = name;
     }
-    
+
     public Date getDateJoined() {
         return dateJoined;
     }
-    
+
     public String getUserId() {
         return this.userId;
     }
-    
+
     public boolean isMuted() {
         return this.muted;
     }
@@ -55,7 +56,7 @@ public class Participant {
     public void setHost(boolean host) {
         this.host = host;
     }
-    
+
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
@@ -83,6 +84,9 @@ public class Participant {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

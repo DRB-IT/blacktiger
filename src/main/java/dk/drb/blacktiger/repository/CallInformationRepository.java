@@ -10,4 +10,5 @@ import java.util.List;
 public interface CallInformationRepository  {
     
     List<CallInformation> findByRoomNoAndPeriodAndDuration(String roomNo, Date start, Date end, int minimumDuration);
+    List<CallInformation> findByRoomNoAndPeriodAndDurationAndNumbers(String roomNo, Date start, Date end, int minimumDuration, String[] numbers);
 }

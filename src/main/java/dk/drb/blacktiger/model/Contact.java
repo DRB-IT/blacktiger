@@ -1,10 +1,13 @@
 package dk.drb.blacktiger.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  *
  * @author michael
  */
 public class Contact {
+
     private String name;
     private String email;
     private String phoneNumber;
@@ -19,7 +22,7 @@ public class Contact {
         this.phoneNumber = phoneNumber;
         this.comment = comment;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -36,4 +39,8 @@ public class Contact {
         return comment;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

@@ -1,6 +1,7 @@
 package dk.drb.blacktiger.model;
 
 import java.util.Date;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Defines information about calls for a specific number for use in reports.
@@ -60,7 +61,9 @@ public class CallInformation {
     public void setFirstCallTimestamp(Date firstCallTimestamp) {
         this.firstCallTimestamp = firstCallTimestamp;
     }
-    
-    
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

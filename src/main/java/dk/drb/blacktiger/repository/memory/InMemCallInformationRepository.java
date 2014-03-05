@@ -1,25 +1,91 @@
 package dk.drb.blacktiger.repository.memory;
 
 import dk.drb.blacktiger.model.CallInformation;
+import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.repository.CallInformationRepository;
+import dk.drb.blacktiger.repository.ParticipantRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.naming.ldap.HasControls;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  */
-public class InMemCallInformationRepository implements CallInformationRepository {
+public class InMemCallInformationRepository implements CallInformationRepository, ConferenceEventListener {
 
+    private ParticipantRepository participantRepository;
+    private Map<String, List<CallInformation>> callMap = new HashMap<>();
+    private Map<String, Participant> participantMap = new HashMap<>();
+
+    @Autowired
+    public void setParticipantRepository(ParticipantRepository participantRepository) {
+        if(this.participantRepository != null) {
+            this.participantRepository.removeEventListener(this);
+        }
+        
+        this.participantRepository = participantRepository;
+        this.participantRepository.addEventListener(this);
+    }
+    
     @Override
     public List<CallInformation> findByRoomNoAndPeriodAndDuration(String roomNo, Date start, Date end, int minimumDuration) {
-        CallInformation ci = new CallInformation("+4551923171", "Hannah Krog", 2, 1123, new Date());
-        CallInformation ci2 = new CallInformation("+4551923192", "Michael Krog", 4, 3123, new Date());
+        return findByRoomNoAndPeriodAndDurationAndNumbers(roomNo, start, end, minimumDuration, null);
+    }
+
+    @Override
+    public List<CallInformation> findByRoomNoAndPeriodAndDurationAndNumbers(String roomNo, Date start, Date end, int minimumDuration, String[] numbers) {
+        List<CallInformation> list = callMap.get(roomNo);
+        List<CallInformation> result = new ArrayList<>();
         
-        List<CallInformation> list = new ArrayList<CallInformation>();
-        list.add(ci);
-        list.add(ci2);
-        return list;
+        if(list == null) {
+            list = new ArrayList<>();
+        }
+        
+        if(numbers != null) {
+            List<String> numberList = Arrays.asList(numbers);
+            for(CallInformation ci : list) {
+                if(numberList.contains(ci.getPhoneNumber())) {
+                    result.add(ci);
+                }
+            }
+        } else {
+            result.addAll(list);
+        }
+        return result;
+    }
+    
+    @Override
+    public void onParticipantEvent(ConferenceEvent event) {
+        if(event instanceof ParticipantJoinEvent) {
+            ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
+            participantMap.put(joinEvent.getParticipant().getUserId(), joinEvent.getParticipant());
+        }
+        
+        if(event instanceof ParticipantLeaveEvent) {
+            ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
+            Participant participant = participantMap.get(leaveEvent.getParticipantId());
+            if(participant != null) {
+                int durationInSeconds = (int) ((System.currentTimeMillis() - participant.getDateJoined().getTime()) / 1000);
+                CallInformation ci = new CallInformation(participant.getPhoneNumber(), participant.getName(), 1, durationInSeconds, 
+                        participant.getDateJoined());
+                
+                List<CallInformation> list = callMap.get(event.getRoomNo());
+                if(list==null) {
+                    list = new ArrayList<>();
+                    callMap.put(event.getRoomNo(), list);
+                }
+                list.add(ci);
+            }
+        }
     }
     
 }
