@@ -73,6 +73,7 @@ public class StoredProcedureAuthenticationProvider implements AuthenticationProv
 
             return new UsernamePasswordAuthenticationToken(username, password, authList);
         } catch(DataAccessException ex) {
+            LOG.error("Error when communicating with database.", ex);
             throw new AuthenticationServiceException("Unable to authenticate user because of error while communicating with backendprovider.", ex);
         }
     }

@@ -9,3 +9,4 @@ nb-configuration.xml
 nbactions.xml
 blacktiger.log
 .DS_Store
+.vagrant

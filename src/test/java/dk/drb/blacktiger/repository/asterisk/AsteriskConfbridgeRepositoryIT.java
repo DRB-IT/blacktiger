@@ -29,7 +29,7 @@ public class AsteriskConfbridgeRepositoryIT {
     
     @Before
     public void setUp() {
-        asteriskServer = new DefaultAsteriskServer("localhost", "blacktiger", "1915_tEok");
+        asteriskServer = new DefaultAsteriskServer("localhost", "vagrant", "vagrant");
         asteriskServer.initialize();
         repository = new AsteriskConfbridgeParticipantsRepository();
         repository.setAsteriskServer(asteriskServer);
