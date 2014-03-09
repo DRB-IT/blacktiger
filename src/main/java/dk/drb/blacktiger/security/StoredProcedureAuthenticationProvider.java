@@ -5,7 +5,6 @@ import static dk.drb.blacktiger.security.SystemUserDetailsManager.ROLE_ROOMACCES
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,16 +28,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  */
 public class StoredProcedureAuthenticationProvider implements AuthenticationProvider {
 
-    /**
-     * Users 'H45-8654', '643+25Airp7x' 'H45-9000-1', 'Ftddrnyw9k@z' 'H45-9000-2', '72p9an#dvFbz'
-     */
-    private static final String ENC_KEY = "{ -------- telesal.org -------- }";
     private static final Logger LOG = LoggerFactory.getLogger(JdbcUserRepository.class);
-    private static final String TABLE_NAME = "sip";
     private JdbcTemplate jdbcTemplate;
+    private String encryptionKey;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    public void setEncryptionKey(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
     }
 
     /**
@@ -59,7 +57,7 @@ public class StoredProcedureAuthenticationProvider implements AuthenticationProv
        
         try {
             boolean authenticated = this.jdbcTemplate.queryForObject("select verify_hall_login(?,?,?)", Boolean.class, username, passwordHash, 
-                    ENC_KEY);
+                    encryptionKey);
 
             if(!authenticated) {
                 throw new BadCredentialsException("Username or password is not valid.");
