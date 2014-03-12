@@ -2,17 +2,14 @@ package dk.drb.blacktiger.config;
 
 import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
-import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.SipAccountRepository;
 import dk.drb.blacktiger.repository.UserRepository;
-import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeParticipantsRepository;
-import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRoomsRepository;
+import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
 import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
-import dk.drb.blacktiger.repository.memory.InMemParticipantRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
 import dk.drb.blacktiger.repository.memory.InMemSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemUserRepository;
@@ -76,18 +73,6 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public ParticipantRepository participantRepository() {
-        if(test) {
-            LOG.info("** USING InMemParticipantRepository FOR TEST **");
-            return new InMemParticipantRepository();
-        } else {
-            AsteriskConfbridgeParticipantsRepository repository = new AsteriskConfbridgeParticipantsRepository();
-            repository.setAsteriskServer(asteriskServer);
-            return repository;
-        }
-    }
-
-    @Bean
     public PhonebookRepository phonebookRepository() {
         if(test) {
             LOG.info("** USING InMemPhonebookRepository FOR TEST **");
@@ -117,7 +102,7 @@ public class RepositoryConfig {
             LOG.info("** USING InMemConferenceRoomRepository FOR TEST **");
             return new InMemConferenceRoomRepository();
         } else {
-            return new AsteriskConfbridgeRoomsRepository();
+            return new AsteriskConfbridgeRepository();
         }
     }
     

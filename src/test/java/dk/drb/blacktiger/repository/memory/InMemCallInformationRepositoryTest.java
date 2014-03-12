@@ -5,7 +5,7 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
-import dk.drb.blacktiger.repository.ParticipantRepository;
+import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import java.util.Date;
 import java.util.List;
 import org.junit.Before;
@@ -21,17 +21,17 @@ import org.mockito.stubbing.Answer;
  */
 public class InMemCallInformationRepositoryTest {
 
-    private ParticipantRepository participantRepository;
+    private ConferenceRoomRepository confRepo;
     private ConferenceEventListener eventListener;
     private InMemCallInformationRepository instance;
     
     @Before
     public void setUp() throws Exception {
-        participantRepository = Mockito.mock(ParticipantRepository.class);
-        Mockito.doAnswer(eventListenerAnswer()).when(participantRepository).addEventListener(Mockito.any(ConferenceEventListener.class));
+        confRepo = Mockito.mock(ConferenceRoomRepository.class);
+        Mockito.doAnswer(eventListenerAnswer()).when(confRepo).addEventListener(Mockito.any(ConferenceEventListener.class));
         
         instance = new InMemCallInformationRepository();
-        instance.setParticipantRepository(participantRepository);
+        instance.setParticipantRepository(confRepo);
     }
 
     private Answer<Void> eventListenerAnswer() {

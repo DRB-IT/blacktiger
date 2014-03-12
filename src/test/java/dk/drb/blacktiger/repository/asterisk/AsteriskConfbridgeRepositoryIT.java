@@ -16,10 +16,7 @@ import net.sourceforge.peers.sip.transport.SipRequest;
 import net.sourceforge.peers.sip.transport.SipResponse;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -84,12 +81,13 @@ public class AsteriskConfbridgeRepositoryIT {
             sipRequest = agent.getUac().invite(callDestination, null);
         }
         
-        public void hangup() {
+        public void hangup() throws SipUriSyntaxException {
             agent.getUac().terminate(sipRequest);
         }
         
         public void unregister() throws SipUriSyntaxException {
             agent.getUac().unregister();
+            agent.close();
         }
     }
     
@@ -97,12 +95,12 @@ public class AsteriskConfbridgeRepositoryIT {
     public void setUp() {
         asteriskServer = new DefaultAsteriskServer("192.168.50.2", "vagrant", "vagrant");
         asteriskServer.initialize();
-        repository = new AsteriskConfbridgeRoomsRepository();
+        repository = new AsteriskConfbridgeRepository();
         repository.setAsteriskServer(asteriskServer);
     }
     
     private AsteriskServer asteriskServer;
-    private AsteriskConfbridgeRoomsRepository repository;
+    private AsteriskConfbridgeRepository repository;
     
     @Test
     public void testListRooms() throws Exception {
@@ -116,22 +114,26 @@ public class AsteriskConfbridgeRepositoryIT {
             Thread.sleep(100);
         }
         
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         
-        List<Room> result = repository.findRooms();
+        List<Room> result = repository.findAll();
         assertEquals(10, result.size());
         
-        /*for(Caller caller : callers) {
+        Room room = repository.findOne(result.get(0).getId());
+        assertNotNull(room);
+        
+        for(Caller caller : callers) {
             caller.hangup();
             Thread.sleep(200);
             caller.unregister();
             Thread.sleep(100);
         }
         
-        Thread.sleep(1000);
+        /* Thread.sleep(1000);
         
         result = repository.findRooms();
-        assertEquals(0, result.size());*/
+        assertEquals(0, result.size());
+                */
 
     }
 

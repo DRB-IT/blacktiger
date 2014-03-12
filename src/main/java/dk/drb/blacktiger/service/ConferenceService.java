@@ -1,6 +1,5 @@
 package dk.drb.blacktiger.service;
 
-import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
@@ -19,15 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ConferenceService {
  
     private static final Logger LOG = LoggerFactory.getLogger(ConferenceService.class);
-    private ParticipantRepository repository;
     private PhonebookRepository phonebookRepository;
     private ConferenceRoomRepository roomRepository;
 
-    @Autowired
-    public void setParticipantRepository(ParticipantRepository repository) {
-        this.repository = repository;
-    }
-    
     @Autowired
     public void setPhonebookRepository(PhonebookRepository phonebookRepository) {
         this.phonebookRepository = phonebookRepository;
@@ -62,7 +55,7 @@ public class ConferenceService {
     public List<Participant> listParticipants(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
         Access.checkRoomAccess(roomNo);
-        return decorateWithPhonebookInformation(repository.findByRoomNo(roomNo));
+        return decorateWithPhonebookInformation(roomRepository.findByRoomNo(roomNo));
     }
 
     /**
@@ -75,7 +68,7 @@ public class ConferenceService {
     public Participant getParticipant(String roomNo, String participantId) {
         LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, participantId);
         Access.checkRoomAccess(roomNo);
-        return decorateWithPhonebookInformation(repository.findByRoomNoAndParticipantId(roomNo, participantId));
+        return decorateWithPhonebookInformation(roomRepository.findByRoomNoAndParticipantId(roomNo, participantId));
     }
 
     /**
@@ -85,7 +78,7 @@ public class ConferenceService {
      */
     public void kickParticipant(String roomNo, String participantId) {
         Access.checkRoomAccess(roomNo);
-        repository.kickParticipant(roomNo, participantId);
+        roomRepository.kickParticipant(roomNo, participantId);
     }
 
     /**
@@ -95,7 +88,7 @@ public class ConferenceService {
      */
     public void muteParticipant(String roomNo, String participantId) {
         Access.checkRoomAccess(roomNo);
-        repository.muteParticipant(roomNo, participantId);
+        roomRepository.muteParticipant(roomNo, participantId);
     }
 
     /**
@@ -105,15 +98,15 @@ public class ConferenceService {
      */
     public void unmuteParticipant(String roomNo, String participantId) {
         Access.checkRoomAccess(roomNo);
-        repository.unmuteParticipant(roomNo, participantId);
+        roomRepository.unmuteParticipant(roomNo, participantId);
     }
 
     public void addEventListener(ConferenceEventListener listener) {
-        repository.addEventListener(listener);
+        roomRepository.addEventListener(listener);
     }
 
     public void removeEventListener(ConferenceEventListener listener) {
-        repository.removeEventListener(listener);
+        roomRepository.removeEventListener(listener);
     }
     
     private List<Participant> decorateWithPhonebookInformation(List<Participant> participants) {

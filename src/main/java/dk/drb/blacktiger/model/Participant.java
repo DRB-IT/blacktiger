@@ -1,6 +1,8 @@
 package dk.drb.blacktiger.model;
 
 import java.util.Date;
+import java.util.Objects;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -89,4 +91,38 @@ public class Participant {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this, new String[]{"dateJoined"});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Participant other = (Participant) obj;
+        if (!Objects.equals(this.userId, other.userId)) {
+            return false;
+        }
+        if (this.muted != other.muted) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        if (this.host != other.host) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

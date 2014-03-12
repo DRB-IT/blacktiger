@@ -2,10 +2,6 @@ package dk.drb.blacktiger.repository.asterisk;
 
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.ConferenceEvent;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.ParticipantLeaveEvent;
-import dk.drb.blacktiger.repository.ParticipantRepository;
-import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -13,14 +9,12 @@ import java.util.TimerTask;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.manager.ManagerEventListener;
 import org.asteriskjava.manager.event.ManagerEvent;
-import org.asteriskjava.manager.event.MeetMeJoinEvent;
-import org.asteriskjava.manager.event.MeetMeLeaveEvent;
 
 /**
  *
  * @author michael
  */
-public abstract class AbstractAsteriskConferenceRepository implements ParticipantRepository, ManagerEventListener {
+public abstract class AbstractAsteriskConferenceRepository implements ManagerEventListener {
     protected List<ConferenceEventListener> eventListeners = new ArrayList<ConferenceEventListener>();
     protected Timer eventTimer = new Timer();
     protected AsteriskServer asteriskServer;
@@ -49,7 +43,6 @@ public abstract class AbstractAsteriskConferenceRepository implements Participan
     }
     
     
-    @Override
     public void addEventListener(ConferenceEventListener listener) {
         if (listener != null) {
             eventListeners.add(listener);

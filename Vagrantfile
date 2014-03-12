@@ -8,4 +8,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 3306, host: 3307
   config.vm.provision "shell", path: "src/test/scripts/initialize.sh"
   config.vm.network "private_network", ip: "192.168.50.2"
+  config.vm.network "public_network"
 end

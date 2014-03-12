@@ -5,7 +5,6 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
-import dk.drb.blacktiger.repository.ParticipantRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +31,6 @@ public class ConferenceServiceTest {
     private List<Room> rooms;
     private ConferenceRoomRepository conferenceRoomRepository;
     private PhonebookRepository phonebookRepository;
-    private ParticipantRepository participantRepository;
     private ConferenceService service;
     
     private Answer<List<Room>> answerSubselectedRooms() {
@@ -75,16 +73,15 @@ public class ConferenceServiceTest {
         conferenceRoomRepository = Mockito.mock(ConferenceRoomRepository.class);
         Mockito.when(conferenceRoomRepository.findAll()).thenReturn(rooms);
         Mockito.when(conferenceRoomRepository.findAllByIds(Mockito.anyList())).then(answerSubselectedRooms());
+        Mockito.when(conferenceRoomRepository.findByRoomNo(Mockito.anyString())).then(answerParticipants());
         
         phonebookRepository = Mockito.mock(PhonebookRepository.class);
         
-        participantRepository = Mockito.mock(ParticipantRepository.class);
-        Mockito.when(participantRepository.findByRoomNo(Mockito.anyString())).then(answerParticipants());
- 
+        
         service = new ConferenceService();
         service.setRoomRepository(conferenceRoomRepository);
         service.setPhonebookRepository(phonebookRepository);
-        service.setParticipantRepository(participantRepository);
+        
     }
     
     @Test

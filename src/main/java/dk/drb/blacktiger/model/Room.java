@@ -18,6 +18,11 @@ public class Room {
         this.contact = new Contact();
     }
 
+    public Room(String id) {
+        this.id = id;
+        this.contact = new Contact();
+    }
+    
     public Room(String id, String displayName) {
         this.id = id;
         this.name = displayName;

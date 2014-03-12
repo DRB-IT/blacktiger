@@ -7,14 +7,13 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.repository.CallInformationRepository;
-import dk.drb.blacktiger.repository.ParticipantRepository;
+import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.naming.ldap.HasControls;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -22,18 +21,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class InMemCallInformationRepository implements CallInformationRepository, ConferenceEventListener {
 
-    private ParticipantRepository participantRepository;
+    private ConferenceRoomRepository roomRepository;
     private Map<String, List<CallInformation>> callMap = new HashMap<>();
     private Map<String, Participant> participantMap = new HashMap<>();
 
     @Autowired
-    public void setParticipantRepository(ParticipantRepository participantRepository) {
-        if(this.participantRepository != null) {
-            this.participantRepository.removeEventListener(this);
+    public void setParticipantRepository(ConferenceRoomRepository roomRepository) {
+        if(this.roomRepository != null) {
+            this.roomRepository.removeEventListener(this);
         }
         
-        this.participantRepository = participantRepository;
-        this.participantRepository.addEventListener(this);
+        this.roomRepository = roomRepository;
+        this.roomRepository.addEventListener(this);
     }
     
     @Override
