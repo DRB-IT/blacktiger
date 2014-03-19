@@ -52,7 +52,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
     private static final Logger LOG = LoggerFactory.getLogger(AsteriskConfbridgeRepository.class);
     private static final String DIGIT_COMMENT_REQUEST = "1";
-    private static final String DIGIT_COMMENT_REQUEST_CANCEL = "2";
+    private static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
     
     private final Map<String, Room> roomMap = new HashMap<>();
     private final Map<String, List<Participant>> participantMap = new HashMap<>();
