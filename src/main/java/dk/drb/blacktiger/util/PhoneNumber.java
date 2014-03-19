@@ -16,7 +16,6 @@ public class PhoneNumber {
 
     private static final Logger LOG = LoggerFactory.getLogger(PhoneNumber.class);
     private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^\\+?\\d{2,15}$");
-    private static final String DEFAULT_COUNTRY_CODE = "+45";
     private static final PhoneNumberUtil.PhoneNumberFormat FORMAT = PhoneNumberUtil.PhoneNumberFormat.E164;
 
     public static String normalize(String number, String region) {
@@ -32,6 +31,9 @@ public class PhoneNumber {
     }
 
     public static boolean isPhoneNumber(String text, String region) {
+        if (text == null) {
+            return false;
+        }
         return PHONE_NUMBER_PATTERN.matcher(text).matches();
     }
 }

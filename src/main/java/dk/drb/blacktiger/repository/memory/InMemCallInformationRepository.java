@@ -66,7 +66,7 @@ public class InMemCallInformationRepository implements CallInformationRepository
     public void onParticipantEvent(ConferenceEvent event) {
         if(event instanceof ParticipantJoinEvent) {
             ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
-            participantMap.put(joinEvent.getParticipant().getUserId(), joinEvent.getParticipant());
+            participantMap.put(joinEvent.getParticipant().getCallerId(), joinEvent.getParticipant());
         }
         
         if(event instanceof ParticipantLeaveEvent) {

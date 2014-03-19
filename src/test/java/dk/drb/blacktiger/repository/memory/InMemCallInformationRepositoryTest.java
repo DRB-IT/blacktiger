@@ -63,7 +63,7 @@ public class InMemCallInformationRepositoryTest {
         result = instance.findByRoomNoAndPeriodAndDurationAndNumbers(roomNo, start, end, minimumDuration, numbers);
         assertEquals(0, result.size());
         
-        eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomNo, participant.getUserId()));
+        eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomNo, participant.getCallerId()));
         result = instance.findByRoomNoAndPeriodAndDurationAndNumbers(roomNo, start, end, minimumDuration, numbers);
         assertEquals(1, result.size());
     }

@@ -15,33 +15,24 @@ import org.asteriskjava.manager.event.ManagerEvent;
  * @author michael
  */
 public abstract class AbstractAsteriskConferenceRepository implements ManagerEventListener {
-    protected List<ConferenceEventListener> eventListeners = new ArrayList<ConferenceEventListener>();
+    protected List<ConferenceEventListener> eventListeners = new ArrayList<>();
     protected Timer eventTimer = new Timer();
     protected AsteriskServer asteriskServer;
-    private static final int DEFAULT_EVENT_IDLE_TIME = 500;
     private ManagerEventListener managerEventListener;
 
     protected void setManagerEventListener(ManagerEventListener managerEventListener) {
         this.managerEventListener = managerEventListener;
     }
     
+    @Override
     public abstract void onManagerEvent(ManagerEvent event);
     
     protected void fireEvent(final ConferenceEvent event) {
-        // These events are actually fired some time before they may actually be fullfilled as the asterisk server. 
-        // Wait a little before sending them along
-        eventTimer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                for (ConferenceEventListener listener : eventListeners) {
-                    listener.onParticipantEvent(event);
-                }
-            }
-        }, DEFAULT_EVENT_IDLE_TIME);
+        for (ConferenceEventListener listener : eventListeners) {
+            listener.onParticipantEvent(event);
+        }
         
     }
-    
     
     public void addEventListener(ConferenceEventListener listener) {
         if (listener != null) {

@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class Participant {
 
-    private String userId;
+    private String callerId;
     private boolean muted;
     private String phoneNumber;
     private Date dateJoined;
@@ -21,8 +21,8 @@ public class Participant {
     public Participant() {
     }
 
-    public Participant(String userId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
-        this.userId = userId;
+    public Participant(String callerId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
+        this.callerId = callerId;
         this.muted = muted;
         this.type = type;
         this.host = host;
@@ -35,8 +35,8 @@ public class Participant {
         return dateJoined;
     }
 
-    public String getUserId() {
-        return this.userId;
+    public String getCallerId() {
+        return this.callerId;
     }
 
     public boolean isMuted() {
@@ -67,8 +67,8 @@ public class Participant {
         return name;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCallerId(String callerId) {
+        this.callerId = callerId;
     }
 
     public void setMuted(boolean muted) {
@@ -106,7 +106,7 @@ public class Participant {
             return false;
         }
         final Participant other = (Participant) obj;
-        if (!Objects.equals(this.userId, other.userId)) {
+        if (!Objects.equals(this.callerId, other.callerId)) {
             return false;
         }
         if (this.muted != other.muted) {

@@ -5,6 +5,9 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.CallType;
+import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ParticipantCommentRequestCancelEvent;
+import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.util.IpPhoneNumber;
@@ -19,6 +22,7 @@ import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.manager.EventTimeoutException;
 import org.asteriskjava.manager.ResponseEvents;
 import org.asteriskjava.manager.TimeoutException;
+import org.asteriskjava.manager.action.AbstractManagerAction;
 import org.asteriskjava.manager.action.ConfbridgeKickAction;
 import org.asteriskjava.manager.action.ConfbridgeListAction;
 import org.asteriskjava.manager.action.ConfbridgeListRoomsAction;
@@ -33,6 +37,7 @@ import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
 import org.asteriskjava.manager.event.ConfbridgeListEvent;
 import org.asteriskjava.manager.event.ConfbridgeListRoomsEvent;
 import org.asteriskjava.manager.event.ConfbridgeStartEvent;
+import org.asteriskjava.manager.event.DtmfEvent;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.ResponseEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
@@ -47,8 +52,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepository implements ConferenceRoomRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(AsteriskConfbridgeRepository.class);
+    private static final String DIGIT_COMMENT_REQUEST = "1";
+    private static final String DIGIT_COMMENT_REQUEST_CANCEL = "2";
+    
     private final Map<String, Room> roomMap = new HashMap<>();
     private final Map<String, List<Participant>> participantMap = new HashMap<>();
+    private final Map<String, String> channelRoomMap = new HashMap<>();
+    private final Map<String, String> channelCallerIdMap = new HashMap<>();
 
     public AsteriskConfbridgeRepository() {
         setManagerEventListener(this);
@@ -70,20 +80,62 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             onConfbridgeEnd((ConfbridgeEndEvent) event);
         }
         
+        if(event instanceof DtmfEvent) {
+            onDtmfEvent((DtmfEvent) event);
+        }
+        
+    }
+    
+    private void onDtmfEvent(DtmfEvent event) {
+        if(event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
+            // A DTMF event has been received. We need to retrieve roomId and callerId. 
+            String roomId = channelRoomMap.get(event.getChannel());
+            String callerId = channelCallerIdMap.get(event.getChannel());
+           
+            ConferenceEvent ce = null;
+            switch(event.getDigit()) {
+                case DIGIT_COMMENT_REQUEST:
+                    ce = new ParticipantCommentRequestEvent(roomId, callerId);
+                    break;
+                case DIGIT_COMMENT_REQUEST_CANCEL:
+                    ce = new ParticipantCommentRequestCancelEvent(roomId, callerId);
+                    break;
+            }
+            
+            AsteriskConfbridgeRepository.this.fireEvent(ce);
+        }
     }
     
     private void onConfbridgeJoinEvent(ConfbridgeJoinEvent event) {
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
         getParticipantListSynced(roomNo).add(p);
+        channelCallerIdMap.put(event.getChannel(), event.getCallerIdNum());
+        channelRoomMap.put(event.getChannel(), event.getConference());
         AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
     }
     
     private void onConfbridgeLeaveEvent(ConfbridgeLeaveEvent event) {
+        Participant toRemove = null;
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
-        getParticipantListSynced(roomNo).remove(p);
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p.getUserId()));
+        List<Participant> list = getParticipantListSynced(roomNo);
+        
+        for(Participant current : list) {
+            if(p.getCallerId().equals(current.getCallerId())) {
+                toRemove = current;
+                break;
+            }
+        }
+        
+        if(toRemove != null) {
+            list.remove(toRemove);
+        }
+        
+        channelCallerIdMap.remove(event.getChannel());
+        channelRoomMap.remove(event.getChannel());
+        
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p.getCallerId()));
     }
 
     private void onConfbridgeStart(ConfbridgeStartEvent e) {
@@ -100,7 +152,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
         List<Participant> participants = participantMap.get(roomId);
         if(participants == null) {
-            participants = new ArrayList<>();
+            participants = readParticipantsFromServer(roomId);
             participantMap.put(roomId, participants);
         }
         return participants;
@@ -114,10 +166,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         
         for(Room room : readRoomsFromServer()) {
             roomMap.put(room.getId(), room);
-            
-            List<Participant> participantsFromServer = readParticipantsFromServer(room.getId());
-            List<Participant> participants = getParticipantListSynced(room.getId());
-            participants.addAll(participantsFromServer);
+            getParticipantListSynced(room.getId());
         }
     }
     
@@ -143,7 +192,13 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         List<Participant> result = new ArrayList<>();
 
         for (ResponseEvent event : events.getEvents()) {
-            result.add(participantFromEvent((ConfbridgeListEvent)event));
+            if(event instanceof ConfbridgeListEvent) {
+                ConfbridgeListEvent confbridgeListEvent = (ConfbridgeListEvent)event;
+                Participant p = participantFromEvent(confbridgeListEvent);
+                result.add(p);
+                channelCallerIdMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getCallerIDnum());
+                channelRoomMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getConference());
+            }
         }
         return result;
     }
@@ -173,22 +228,15 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
-        
-        ResponseEvents events = sendAction(new ConfbridgeListAction(roomNo));
-        List<Participant> result = new ArrayList<>();
-
-        for (ResponseEvent event : events.getEvents()) {
-            result.add(participantFromEvent((ConfbridgeListEvent)event));
-        }
-        return result;
+        return getParticipantListSynced(roomNo);
     }
 
     @Override
-    public Participant findByRoomNoAndParticipantId(String roomNo, String participantId) {
-        LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, participantId);
+    public Participant findByRoomNoAndParticipantId(String roomNo, String callerId) {
+        LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, callerId);
         List<Participant> participants = findByRoomNo(roomNo);
         for(Participant p : participants) {
-            if(participantId.equals(p.getUserId())) {
+            if(callerId.equals(p.getCallerId())) {
                 return p;
             }
         }
@@ -196,18 +244,18 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     @Override
-    public void kickParticipant(String roomNo, String participantId) {
-        ManagerResponse response = sendAction(new ConfbridgeKickAction(roomNo, participantId));
+    public void kickParticipant(String roomNo, String callerId) {
+        ManagerResponse response = sendAction(new ConfbridgeKickAction(roomNo, callerId));
     }
 
     @Override
-    public void muteParticipant(String roomNo, String participantId) {
-        ManagerResponse response = sendAction(new ConfbridgeMuteAction(roomNo, participantId));
+    public void muteParticipant(String roomNo, String callerId) {
+        setMutenessOfParticipant(roomNo, callerId, true);
     }
 
     @Override
-    public void unmuteParticipant(String roomNo, String participantId) {
-        ManagerResponse response = sendAction(new ConfbridgeUnmuteAction(roomNo, participantId));
+    public void unmuteParticipant(String roomNo, String callerId) {
+        setMutenessOfParticipant(roomNo, callerId, false);
     }
 
     @Override
@@ -217,6 +265,20 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         }
     }
 
+    private void setMutenessOfParticipant(String roomId, String callerId, boolean value) {
+        // Because Asterisk 11 does not send events when muteness changes, we have to keep that info here ourselves.
+        // That also means that we have no idea if other parties mutes a user
+        AbstractManagerAction a = value == true ? new ConfbridgeMuteAction(roomId, callerId) : new ConfbridgeUnmuteAction(roomId, callerId);
+        sendAction(a);
+        
+        for(Participant p : getParticipantListSynced(roomId)) {
+            if(callerId.equals(p.getCallerId())) {
+                p.setMuted(value);
+                break;
+            }
+        }
+    }
+    
     private Participant participantFromEvent(ConfbridgeListEvent event) {
         return participantFromEventData(event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
     }
@@ -228,13 +290,14 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private Participant participantFromEventData(String callerIdNum, String callerIdName, Date dateReceived) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String number = callerIdNum;
-        boolean host = true;
+        boolean host = false;
         CallType callType = CallType.Sip;
         
         if (auth != null && number.equalsIgnoreCase(auth.getName())) {
             host = true;
         }
 
+        boolean muted = !host;
         String phoneNumber = callerIdNum;
         String name = callerIdName;
 
@@ -245,7 +308,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             callType = CallType.Phone;
         }
 
-        return new Participant(callerIdNum, name, phoneNumber, false, host, callType, dateReceived);
+        return new Participant(callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
     }
     
     private ManagerResponse sendAction(ManagerAction action) {

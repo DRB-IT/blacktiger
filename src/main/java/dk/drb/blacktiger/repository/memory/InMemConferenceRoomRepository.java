@@ -80,8 +80,8 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
             int toRemove = random.nextInt(participantsInRoom.size());
             if (!participantsInRoom.get(toRemove).isHost()) {
                 Participant p = participantsInRoom.remove(toRemove);
-                LOG.debug("User removed [id={}, room={}] ", p.getUserId(), roomNo);
-                fireLeaveEvent(roomNo, p.getUserId());
+                LOG.debug("User removed [id={}, room={}] ", p.getCallerId(), roomNo);
+                fireLeaveEvent(roomNo, p.getCallerId());
             }
         }
     }
@@ -129,7 +129,7 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     public Participant findByRoomNoAndParticipantId(String roomNo, String participantId) {
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
-                if (participantId.equals(p.getUserId())) {
+                if (participantId.equals(p.getCallerId())) {
                     return p;
                 }
             }
@@ -144,9 +144,9 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
             Iterator<Participant> it = participantMap.get(roomNo).iterator();
             while (it.hasNext()) {
                 Participant p = it.next();
-                if (participantId.equals(p.getUserId())) {
+                if (participantId.equals(p.getCallerId())) {
                     it.remove();
-                    fireLeaveEvent(roomNo, p.getUserId());
+                    fireLeaveEvent(roomNo, p.getCallerId());
                     break;
                 }
             }
@@ -158,7 +158,7 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
         LOG.info("Muting user. [id={}]", participantId);
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
-                if (participantId.equals(p.getUserId())) {
+                if (participantId.equals(p.getCallerId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
                         f.setAccessible(true);
@@ -177,7 +177,7 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
         LOG.info("Unmuting user. [id={}]", participantId);
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
-                if (participantId.equals(p.getUserId())) {
+                if (participantId.equals(p.getCallerId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
                         f.setAccessible(true);

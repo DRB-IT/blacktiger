@@ -6,15 +6,15 @@ package dk.drb.blacktiger.model;
  */
 public class ParticipantCommentRequestCancelEvent extends ConferenceEvent {
 
-    private String participantId;
+    private final String callerId;
     
-    public ParticipantCommentRequestCancelEvent(String roomNo, String participantId) {
+    public ParticipantCommentRequestCancelEvent(String roomNo, String callerId) {
         super(roomNo);
-        this.participantId = participantId;
+        this.callerId = callerId;
     }
 
-    public String getParticipantId() {
-        return participantId;
+    public String getCallerId() {
+        return callerId;
     }
 
     @Override
