@@ -20,6 +20,10 @@ public class Participant {
 
     public Participant() {
     }
+    
+    public Participant(String callerId, String name, boolean muted, boolean host, CallType type, Date dateJoined) {
+        this(callerId, name, null, muted, host, type, dateJoined);
+    }
 
     public Participant(String callerId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
         this.callerId = callerId;

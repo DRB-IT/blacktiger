@@ -30,17 +30,7 @@ public class DatasourceConfig {
         config.setReleaseHelperThreads(3);
         return config;
     }
-
-    @Bean(name = "callinfoDatasource")
-    public DataSource callInfoDataSource() {
-        BoneCPDataSource source = new BoneCPDataSource(getDefaulBoneCpConfig());
-        source.setDriverClass(env.getProperty("phoneinfojdbc.driverClassName"));
-        source.setJdbcUrl(env.getProperty("phoneinfojdbc.url"));
-        source.setUsername(env.getProperty("phoneinfojdbc.username"));
-        source.setPassword(env.getProperty("phoneinfojdbc.password"));
-        return source;
-    }
-
+    
     @Bean(name = "asteriskDatasource")
     public DataSource asteriskDataSource() {
         BoneCPDataSource source = new BoneCPDataSource(getDefaulBoneCpConfig());

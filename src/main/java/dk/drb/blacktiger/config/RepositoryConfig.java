@@ -6,8 +6,9 @@ import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.SipAccountRepository;
 import dk.drb.blacktiger.repository.UserRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRepository;
+import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
-import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
+import dk.drb.blacktiger.repository.jdbc.JdbcSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
@@ -40,15 +41,11 @@ public class RepositoryConfig {
     Environment env;
     
     @Autowired
-    private AsteriskServer asteriskServer;
-    
-    @Autowired
-    @Qualifier(value = "callinfoDatasource")
-    private DataSource callInfoDataSource;
-    
-    @Autowired
     @Qualifier(value = "asteriskDatasource")
     private DataSource asteriskDataSource;
+    
+    @Autowired
+    private AsteriskServer asteriskServer;
     
     private boolean test;
 
@@ -67,7 +64,7 @@ public class RepositoryConfig {
             return new InMemCallInformationRepository();
         } else {
             JdbcCallInformationRepository repository = new JdbcCallInformationRepository();
-            repository.setDataSource(callInfoDataSource);
+            repository.setDataSource(asteriskDataSource);
             return repository;
         }
     }
@@ -78,9 +75,9 @@ public class RepositoryConfig {
             LOG.info("** USING InMemPhonebookRepository FOR TEST **");
             return new InMemPhonebookRepository();
         } else {
-            LOG.error("No real implementation for PhonebookRepository.");
-            
-            return null;
+            JdbcPhonebookRepository repo = new JdbcPhonebookRepository();
+            repo.setDataSource(asteriskDataSource);
+            return repo;
         }
     }
 
@@ -90,9 +87,8 @@ public class RepositoryConfig {
             LOG.info("** USING InMemUserRepository FOR TEST **");
             return new InMemUserRepository();
         } else {
-            JdbcUserRepository repository = new JdbcUserRepository();
-            repository.setDataSource(asteriskDataSource);
-            return repository;
+            LOG.error("There is no REAL UserRepository.");
+            return null;
         }
     }
     
@@ -102,7 +98,10 @@ public class RepositoryConfig {
             LOG.info("** USING InMemConferenceRoomRepository FOR TEST **");
             return new InMemConferenceRoomRepository();
         } else {
-            return new AsteriskConfbridgeRepository();
+            AsteriskConfbridgeRepository repo = new AsteriskConfbridgeRepository();
+            asteriskServer.initialize();
+            repo.setAsteriskServer(asteriskServer);
+            return repo;
         }
     }
     
@@ -112,8 +111,7 @@ public class RepositoryConfig {
             LOG.info("** USING InMemSipAccountRepository FOR TEST **");
             return new InMemSipAccountRepository();
         } else {
-            LOG.error("No real implementation for SipAccountRepository.");
-            return null;
+            return new JdbcSipAccountRepository();
         }
     }
 }

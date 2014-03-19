@@ -4,17 +4,10 @@ package dk.drb.blacktiger.model;
 /**
  * A <code>ParticipantEvent</code> for when a <code>Participant</code> joins a conference room.
  */
-public class ParticipantJoinEvent extends ConferenceEvent {
-
-    private final Participant participant;
+public class ParticipantJoinEvent extends ParticipantEvent {
     
     public ParticipantJoinEvent(String roomNo, Participant participant) {
-        super(roomNo);
-        this.participant = participant;
-    }
-
-    public Participant getParticipant() {
-        return participant;
+        super(roomNo, participant);
     }
 
     @Override

@@ -1,6 +1,6 @@
 import groovy.sql.Sql
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3307/telesal", "root", "root", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://192.168.50.2/telesal", "root", "root", "com.mysql.jdbc.Driver")
 def key = "enckey";
 
 //Create halls

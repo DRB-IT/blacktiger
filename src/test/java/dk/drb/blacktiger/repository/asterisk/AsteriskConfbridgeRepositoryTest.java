@@ -1,7 +1,9 @@
 package dk.drb.blacktiger.repository.asterisk;
 
+import dk.drb.blacktiger.model.ConferenceEndEvent;
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestCancelEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
 import java.text.DecimalFormat;
@@ -264,18 +266,50 @@ public class AsteriskConfbridgeRepositoryTest {
     
     @Test
     public void ifConferenceStartEventIsHandled() {
+        final List<ConferenceEvent> conferenceEvents = new ArrayList<>();
+        
+        repo.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                conferenceEvents.add(event);
+            }
+        });
+        
         ConfbridgeStartEvent event = new ConfbridgeStartEvent(this);
         event.setConference("H45-0001");
         listener.onManagerEvent(event);
         assertEquals(2, repo.findAll().size());
+        
+        ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
+        assertTrue(lastEvent instanceof ConferenceStartEvent);
+        
+        ConferenceStartEvent confEvent = (ConferenceStartEvent) lastEvent;
+        assertEquals("H45-0001", confEvent.getRoomNo());
     }
     
     @Test
     public void ifConferenceEndEventIsHandled() {
+        final List<ConferenceEvent> conferenceEvents = new ArrayList<>();
+        
+        repo.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                conferenceEvents.add(event);
+            }
+        });
+        
         ConfbridgeEndEvent event = new ConfbridgeEndEvent(this);
         event.setConference("H45-0000");
         listener.onManagerEvent(event);
+        assertEquals(0, repo.findAll().size());
         assertNull(repo.findOne("H45-0000"));
         
+        ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
+        assertTrue(lastEvent instanceof ConferenceEndEvent);
+        
+        ConferenceEndEvent confEvent = (ConferenceEndEvent) lastEvent;
+        assertEquals("H45-0000", confEvent.getRoomNo());
     }
 }

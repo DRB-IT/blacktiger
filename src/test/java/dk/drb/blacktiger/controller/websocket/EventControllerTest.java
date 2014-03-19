@@ -18,6 +18,10 @@ import dk.drb.blacktiger.config.WebsocketConfig;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.service.ConferenceService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -28,7 +32,9 @@ import org.mockito.stubbing.Answer;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebsocketConfig.class})
 public class EventControllerTest {
-
+    static {
+        System.setProperty("test", "true");
+    }
     @Autowired private AbstractSubscribableChannel clientInboundChannel;
 
 	@Autowired private AbstractSubscribableChannel clientOutboundChannel;
@@ -79,10 +85,28 @@ public class EventControllerTest {
 		this.clientOutboundChannelInterceptor.startRecording();
                 this.clientInboundChannel.send(message);
 
+                final List<Message> replies = new ArrayList<>();
+                Thread t = new Thread() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            Message<?> reply = EventControllerTest.this.clientOutboundChannelInterceptor.awaitMessage(5);
+                            replies.add(reply);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(EventControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                };
+                t.start();
+                Thread.sleep(1000);
+                
                 // Send event
                 eventListener.onParticipantEvent(new ParticipantLeaveEvent("H45-0000", "123"));
                 
-		Message<?> reply = this.clientOutboundChannelInterceptor.awaitMessage(5);
+                t.join();
+                
+		Message<?> reply = replies.get(replies.size()-1);
 		assertNotNull("No reply recieved", reply);
 
 		StompHeaderAccessor replyHeaders = StompHeaderAccessor.wrap(reply);
@@ -91,6 +115,6 @@ public class EventControllerTest {
 		assertTrue("Destination should start with /events/ but was " + replyHeaders.getDestination()+ ".", replyHeaders.getDestination().startsWith("/queue/events/"));
 
 		String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
-                assertEquals("{\"roomNo\":\"H45-0000\",\"participantId\":\"123\",\"type\":\"Leave\"}", json);
+                assertEquals("{\"roomNo\":\"H45-0000\",\"callerId\":\"123\",\"type\":\"Leave\"}", json);
 	}
 }

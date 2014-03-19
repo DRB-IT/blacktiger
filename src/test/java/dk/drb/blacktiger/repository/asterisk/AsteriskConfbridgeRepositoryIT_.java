@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  *
  * @author michael
  */
-public class AsteriskConfbridgeRepositoryIT {
+public class AsteriskConfbridgeRepositoryIT_ {
     
     private class SipListener extends BaseSipListener {
 

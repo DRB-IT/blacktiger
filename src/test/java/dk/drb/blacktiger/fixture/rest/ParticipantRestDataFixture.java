@@ -38,6 +38,6 @@ public class ParticipantRestDataFixture {
     }
     
     public static String standardParticipantAsJson(String id) {
-        return "{\"userId\":\"" + id + "\",\"muted\":true,\"phoneNumber\":\"+4512345678\",\"dateJoined\":1388530800000,\"name\":\"John Doe\",\"type\":\"Sip\",\"host\":false}";
+        return "{\"callerId\":\"" + id + "\",\"muted\":true,\"phoneNumber\":\"+4512345678\",\"dateJoined\":1388530800000,\"name\":\"John Doe\",\"type\":\"Sip\",\"host\":false}";
     }
 }

@@ -48,7 +48,17 @@
 
         function showEvent(event) {
             var response = document.getElementById('response');
-            var text = "Event: " + event.participant.userId + "@"+ event.roomNo + " joined<br>";
+            var callerId = null;
+            
+            if(event.participant) {
+                callerId = event.participant.callerId;
+            }
+            
+            if(event.callerId) {
+                callerId = event.callerId;
+            }
+            
+            var text = "Event: " + callerId + "@"+ event.roomNo + " triggered " + event.type + "<br>";
             var p = document.createElement('div');
             p.innerHTML = text;
             response.appendChild(p);

@@ -117,8 +117,9 @@ public class ConferenceService {
     }
     
     private Participant decorateWithPhonebookInformation(Participant participant) {
-        PhonebookEntry entry = phonebookRepository.findByNumber(participant.getPhoneNumber());
+        PhonebookEntry entry = phonebookRepository.findByCallerId(participant.getCallerId());
         if(entry != null) {
+            participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());
         }
         return participant;

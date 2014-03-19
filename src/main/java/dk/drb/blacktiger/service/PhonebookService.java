@@ -25,7 +25,7 @@ public class PhonebookService {
      */
     @Secured("ROLE_USER")
     public String getPhonebookEntry(String phoneNumber) {
-        PhonebookEntry entry = repository.findByNumber(phoneNumber);
+        PhonebookEntry entry = repository.findByCallerId(phoneNumber);
         if(entry != null) {
             return entry.getName();
         } else {
@@ -40,7 +40,7 @@ public class PhonebookService {
      */
     @Secured("ROLE_USER")
     public void updatePhonebookEntry(String phoneNumber, String name) {
-        PhonebookEntry entry = repository.findByNumber(phoneNumber);
+        PhonebookEntry entry = repository.findByCallerId(phoneNumber);
         if(entry != null) {
             entry = new PhonebookEntry(entry.getNumber(), name);
         } else {

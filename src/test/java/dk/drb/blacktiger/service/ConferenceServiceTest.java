@@ -56,7 +56,7 @@ public class ConferenceServiceTest {
             @Override
             public List<Participant> answer(InvocationOnMock invocation) throws Throwable {
                 List<Participant> list = new ArrayList<>();
-                list.add(new Participant("1", "name", "+4512345678", true, false, CallType.Phone, new Date()));
+                list.add(new Participant("#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date()));
                 return list;
             }
         };
@@ -109,7 +109,7 @@ public class ConferenceServiceTest {
         Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_ADMIN"));
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("john", "doe", auths));
         
-        Mockito.when(phonebookRepository.findByNumber("+4512345678")).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
+        Mockito.when(phonebookRepository.findByCallerId("#00000001")).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
         List<Participant> participants = service.listParticipants("H45-0000");
         assertEquals(1, participants.size());
         assertEquals("Jane Doe", participants.get(0).getName());

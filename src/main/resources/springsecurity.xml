@@ -21,11 +21,15 @@
                 <user name="admin" password="123" authorities="ROLE_USER, ROLE_ADMIN" />
               </user-service>
         </authentication-provider>
-        <authentication-provider user-service-ref="userDetailsManager" />
+        <authentication-provider ref="authProvider" />
 
     </authentication-manager>
 
-    <beans:bean id="userDetailsManager" class="dk.drb.blacktiger.security.SystemUserDetailsManager" />
+    <beans:bean id="authProvider" class="dk.drb.blacktiger.security.StoredProcedureAuthenticationProvider">
+        <beans:property name="encryptionKey" value="enckey"/>
+        <beans:property name="dataSource" ref="asteriskDatasource"/>
+        
+    </beans:bean>
 
     <global-method-security secured-annotations="enabled" />
 

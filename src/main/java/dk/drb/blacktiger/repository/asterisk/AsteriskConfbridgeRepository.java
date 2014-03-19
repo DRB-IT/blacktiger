@@ -5,7 +5,9 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.CallType;
+import dk.drb.blacktiger.model.ConferenceEndEvent;
 import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestCancelEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
 import dk.drb.blacktiger.model.Room;
@@ -30,7 +32,6 @@ import org.asteriskjava.manager.action.ConfbridgeMuteAction;
 import org.asteriskjava.manager.action.ConfbridgeUnmuteAction;
 import org.asteriskjava.manager.action.EventGeneratingAction;
 import org.asteriskjava.manager.action.ManagerAction;
-import org.asteriskjava.manager.event.AbstractChannelEvent;
 import org.asteriskjava.manager.event.ConfbridgeEndEvent;
 import org.asteriskjava.manager.event.ConfbridgeJoinEvent;
 import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
@@ -43,8 +44,6 @@ import org.asteriskjava.manager.event.ResponseEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * This implementation of ConferenceRepository uses the Confbridge conference in Asterisk.
@@ -142,11 +141,16 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         LOG.debug("Handling ConfbridgeStartEvent.");
         Room room = new Room(e.getConference());
         roomMap.put(e.getConference(), room);
+        
+        AsteriskConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(e.getConference()));
+        
     }
     
     private void onConfbridgeEnd(ConfbridgeEndEvent e) {
         LOG.debug("Handling ConfbridgeEndEvent.");
         roomMap.remove(e.getConference());
+        
+        AsteriskConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(e.getConference()));
     }
 
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
@@ -162,8 +166,9 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     public void setAsteriskServer(AsteriskServer asteriskServer) {
         super.setAsteriskServer(asteriskServer); 
         
-        roomMap.clear();
+        LOG.info("Asterisk Server specified. Reading rooms from server.");
         
+        roomMap.clear();
         for(Room room : readRoomsFromServer()) {
             roomMap.put(room.getId(), room);
             getParticipantListSynced(room.getId());
@@ -280,20 +285,22 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
     
     private Participant participantFromEvent(ConfbridgeListEvent event) {
-        return participantFromEventData(event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
+        return participantFromEventData(event.getConference(), event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
     }
     
-    private Participant participantFromEvent(AbstractChannelEvent event) {
-        return participantFromEventData(event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
+    private Participant participantFromEvent(ConfbridgeJoinEvent event) {
+        return participantFromEventData(event.getConference(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
     }
     
-    private Participant participantFromEventData(String callerIdNum, String callerIdName, Date dateReceived) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String number = callerIdNum;
+    private Participant participantFromEvent(ConfbridgeLeaveEvent event) {
+        return participantFromEventData(event.getConference(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
+    }
+    
+    private Participant participantFromEventData(String conference, String callerIdNum, String callerIdName, Date dateReceived) {
         boolean host = false;
         CallType callType = CallType.Sip;
         
-        if (auth != null && number.equalsIgnoreCase(auth.getName())) {
+        if (callerIdNum.equals(conference)) {
             host = true;
         }
 

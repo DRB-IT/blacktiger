@@ -1,6 +1,5 @@
 package dk.drb.blacktiger.security;
 
-import dk.drb.blacktiger.repository.jdbc.JdbcUserRepository;
 import static dk.drb.blacktiger.security.SystemUserDetailsManager.ROLE_ROOMACCESS_PREFIX;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -28,7 +27,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  */
 public class StoredProcedureAuthenticationProvider implements AuthenticationProvider {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JdbcUserRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StoredProcedureAuthenticationProvider.class);
     private JdbcTemplate jdbcTemplate;
     private String encryptionKey;
 

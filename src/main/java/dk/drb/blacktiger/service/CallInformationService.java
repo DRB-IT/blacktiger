@@ -38,7 +38,7 @@ public class CallInformationService {
         Access.checkRoomAccess(roomNo);
         List<CallInformation> list = repository.findByRoomNoAndPeriodAndDurationAndNumbers(roomNo, start, end, minimumDuration, numbers);
         for(CallInformation info : list) {
-            PhonebookEntry entry = phonebookRepository.findByNumber(info.getPhoneNumber());
+            PhonebookEntry entry = phonebookRepository.findByCallerId(info.getPhoneNumber());
             if(entry != null) {
                 info.setName(entry.getName());
             }
