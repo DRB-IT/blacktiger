@@ -82,6 +82,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     protected void handleEventQueue() {
         ManagerEvent event = null;
         while ((event = managerEvents.poll()) != null) {
+            LOG.debug("Handling event from queue. [event={}]", event);
             if (event instanceof ConfbridgeJoinEvent) {
                 onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
             }
