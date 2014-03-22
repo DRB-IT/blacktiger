@@ -7,10 +7,16 @@
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
+    <http request-matcher-ref="jsonMatcher" disable-url-rewriting="true" entry-point-ref="restAuthenticationEntryPoint">
+        <intercept-url pattern="/rooms/**" access="ROLE_USER" />
+        <intercept-url pattern="/system/**" access="ROLE_USER" />
+        <intercept-url pattern="/phonebook/**" access="ROLE_USER" />
+        <intercept-url pattern="/reports/**" access="ROLE_USER" />
+    </http>
     
     <http disable-url-rewriting="true">
-        <intercept-url pattern="/socket/info" access="ROLE_ANONYMOUS,ROLE_USER" />
         <intercept-url pattern="/socket/**" access="ROLE_USER" />
+        <intercept-url pattern="/static/wstest.html" access="ROLE_USER" />
         <http-basic/>
     </http>
 
@@ -30,7 +36,13 @@
         <beans:property name="dataSource" ref="asteriskDatasource"/>
         
     </beans:bean>
+    
+    <beans:bean id="restAuthenticationEntryPoint" class="dk.drb.blacktiger.security.RestAuthenticationEntryPoint"/>
 
+    <beans:bean id="jsonMatcher" class="org.springframework.security.web.util.ELRequestMatcher">
+        <beans:constructor-arg value="hasHeader('Accept','application/json')"/>
+    </beans:bean> 
+    
     <global-method-security secured-annotations="enabled" />
 
 </beans:beans>
