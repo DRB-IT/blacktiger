@@ -18,8 +18,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.manager.EventTimeoutException;
 import org.asteriskjava.manager.ResponseEvents;
@@ -44,6 +47,7 @@ import org.asteriskjava.manager.event.ResponseEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * This implementation of ConferenceRepository uses the Confbridge conference in Asterisk.
@@ -53,46 +57,59 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private static final Logger LOG = LoggerFactory.getLogger(AsteriskConfbridgeRepository.class);
     private static final String DIGIT_COMMENT_REQUEST = "1";
     private static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
-    
+
     private final Map<String, Room> roomMap = new HashMap<>();
     private final Map<String, List<Participant>> participantMap = new HashMap<>();
     private final Map<String, String> channelRoomMap = new HashMap<>();
     private final Map<String, String> channelCallerIdMap = new HashMap<>();
+    private final Queue<ManagerEvent> managerEvents = new LinkedList<>();
 
     public AsteriskConfbridgeRepository() {
         setManagerEventListener(this);
     }
-    
+
     @Override
-    public void onManagerEvent(ManagerEvent event) {
-        if (event instanceof ConfbridgeJoinEvent) {
-            onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
+    public void onManagerEvent(final ManagerEvent event) {
+        try {
+            managerEvents.add(event);
+        } catch (IllegalStateException ex) {
+            LOG.error("Unable to add event to queue.", ex);
         }
-        if (event instanceof ConfbridgeLeaveEvent) {
-            onConfbridgeLeaveEvent((ConfbridgeLeaveEvent) event);
-        }
-        if(event instanceof ConfbridgeStartEvent) {
-            onConfbridgeStart((ConfbridgeStartEvent) event);
-        }
-        
-        if(event instanceof ConfbridgeEndEvent) {
-            onConfbridgeEnd((ConfbridgeEndEvent) event);
-        }
-        
-        if(event instanceof DtmfEvent) {
-            onDtmfEvent((DtmfEvent) event);
-        }
-        
+
     }
-    
+
+    @Scheduled(fixedDelay = 50)
+    protected void handleEventQueue() {
+        ManagerEvent event = null;
+        while ((event = managerEvents.poll()) != null) {
+            if (event instanceof ConfbridgeJoinEvent) {
+                onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
+            }
+            if (event instanceof ConfbridgeLeaveEvent) {
+                onConfbridgeLeaveEvent((ConfbridgeLeaveEvent) event);
+            }
+            if (event instanceof ConfbridgeStartEvent) {
+                onConfbridgeStart((ConfbridgeStartEvent) event);
+            }
+
+            if (event instanceof ConfbridgeEndEvent) {
+                onConfbridgeEnd((ConfbridgeEndEvent) event);
+            }
+
+            if (event instanceof DtmfEvent) {
+                onDtmfEvent((DtmfEvent) event);
+            }
+        }
+    }
+
     private void onDtmfEvent(DtmfEvent event) {
-        if(event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
+        if (event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
             // A DTMF event has been received. We need to retrieve roomId and callerId. 
             String roomId = channelRoomMap.get(event.getChannel());
             String callerId = channelCallerIdMap.get(event.getChannel());
-           
+
             ConferenceEvent ce = null;
-            switch(event.getDigit()) {
+            switch (event.getDigit()) {
                 case DIGIT_COMMENT_REQUEST:
                     ce = new ParticipantCommentRequestEvent(roomId, callerId);
                     break;
@@ -100,11 +117,11 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
                     ce = new ParticipantCommentRequestCancelEvent(roomId, callerId);
                     break;
             }
-            
+
             AsteriskConfbridgeRepository.this.fireEvent(ce);
         }
     }
-    
+
     private void onConfbridgeJoinEvent(ConfbridgeJoinEvent event) {
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
@@ -113,27 +130,27 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         channelRoomMap.put(event.getChannel(), event.getConference());
         AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
     }
-    
+
     private void onConfbridgeLeaveEvent(ConfbridgeLeaveEvent event) {
         Participant toRemove = null;
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
         List<Participant> list = getParticipantListSynced(roomNo);
-        
-        for(Participant current : list) {
-            if(p.getCallerId().equals(current.getCallerId())) {
+
+        for (Participant current : list) {
+            if (p.getCallerId().equals(current.getCallerId())) {
                 toRemove = current;
                 break;
             }
         }
-        
-        if(toRemove != null) {
+
+        if (toRemove != null) {
             list.remove(toRemove);
         }
-        
+
         channelCallerIdMap.remove(event.getChannel());
         channelRoomMap.remove(event.getChannel());
-        
+
         AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p.getCallerId()));
     }
 
@@ -141,64 +158,64 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         LOG.debug("Handling ConfbridgeStartEvent.");
         Room room = new Room(e.getConference());
         roomMap.put(e.getConference(), room);
-        
+
         AsteriskConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(e.getConference()));
-        
+
     }
-    
+
     private void onConfbridgeEnd(ConfbridgeEndEvent e) {
         LOG.debug("Handling ConfbridgeEndEvent.");
         roomMap.remove(e.getConference());
-        
+
         AsteriskConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(e.getConference()));
     }
 
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
         List<Participant> participants = participantMap.get(roomId);
-        if(participants == null) {
+        if (participants == null) {
             participants = readParticipantsFromServer(roomId);
             participantMap.put(roomId, participants);
         }
         return participants;
     }
-    
+
     @Override
     public void setAsteriskServer(AsteriskServer asteriskServer) {
-        super.setAsteriskServer(asteriskServer); 
-        
+        super.setAsteriskServer(asteriskServer);
+
         LOG.info("Asterisk Server specified. Reading rooms from server.");
-        
+
         roomMap.clear();
-        for(Room room : readRoomsFromServer()) {
+        for (Room room : readRoomsFromServer()) {
             roomMap.put(room.getId(), room);
             getParticipantListSynced(room.getId());
         }
     }
-    
+
     /**
      * Reads rooms directly from the asterisk server.
      */
     private List<Room> readRoomsFromServer() {
         ResponseEvents events = sendAction(new ConfbridgeListRoomsAction());
-        
+
         List<Room> result = new ArrayList();
-        
+
         for (ResponseEvent event : events.getEvents()) {
-            if(event instanceof ConfbridgeListRoomsEvent) {
+            if (event instanceof ConfbridgeListRoomsEvent) {
                 ConfbridgeListRoomsEvent roomsEvent = (ConfbridgeListRoomsEvent) event;
                 result.add(new Room(roomsEvent.getConference()));
             }
         }
         return result;
     }
-    
+
     private List<Participant> readParticipantsFromServer(String roomId) {
         ResponseEvents events = sendAction(new ConfbridgeListAction(roomId));
         List<Participant> result = new ArrayList<>();
 
         for (ResponseEvent event : events.getEvents()) {
-            if(event instanceof ConfbridgeListEvent) {
-                ConfbridgeListEvent confbridgeListEvent = (ConfbridgeListEvent)event;
+            if (event instanceof ConfbridgeListEvent) {
+                ConfbridgeListEvent confbridgeListEvent = (ConfbridgeListEvent) event;
                 Participant p = participantFromEvent(confbridgeListEvent);
                 result.add(p);
                 channelCallerIdMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getCallerIDnum());
@@ -221,15 +238,15 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     @Override
     public List<Room> findAllByIds(List<String> ids) {
         List<Room> rooms = new ArrayList<>();
-        for(String id : ids) {
+        for (String id : ids) {
             Room room = roomMap.get(id);
-            if(room != null) {
+            if (room != null) {
                 rooms.add(room);
             }
         }
         return rooms;
     }
-    
+
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
@@ -240,8 +257,8 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     public Participant findByRoomNoAndParticipantId(String roomNo, String callerId) {
         LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, callerId);
         List<Participant> participants = findByRoomNo(roomNo);
-        for(Participant p : participants) {
-            if(callerId.equals(p.getCallerId())) {
+        for (Participant p : participants) {
+            if (callerId.equals(p.getCallerId())) {
                 return p;
             }
         }
@@ -275,31 +292,31 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         // That also means that we have no idea if other parties mutes a user
         AbstractManagerAction a = value == true ? new ConfbridgeMuteAction(roomId, callerId) : new ConfbridgeUnmuteAction(roomId, callerId);
         sendAction(a);
-        
-        for(Participant p : getParticipantListSynced(roomId)) {
-            if(callerId.equals(p.getCallerId())) {
+
+        for (Participant p : getParticipantListSynced(roomId)) {
+            if (callerId.equals(p.getCallerId())) {
                 p.setMuted(value);
                 break;
             }
         }
     }
-    
+
     private Participant participantFromEvent(ConfbridgeListEvent event) {
         return participantFromEventData(event.getConference(), event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
     }
-    
+
     private Participant participantFromEvent(ConfbridgeJoinEvent event) {
         return participantFromEventData(event.getConference(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
     }
-    
+
     private Participant participantFromEvent(ConfbridgeLeaveEvent event) {
         return participantFromEventData(event.getConference(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
     }
-    
+
     private Participant participantFromEventData(String conference, String callerIdNum, String callerIdName, Date dateReceived) {
         boolean host = false;
         CallType callType = CallType.Sip;
-        
+
         if (callerIdNum.equals(conference)) {
             host = true;
         }
@@ -317,7 +334,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
         return new Participant(callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
     }
-    
+
     private ManagerResponse sendAction(ManagerAction action) {
         try {
             return asteriskServer.getManagerConnection().sendAction(action);
@@ -331,10 +348,10 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             throw new RuntimeException(ex);
         }
     }
-    
+
     private ResponseEvents sendAction(EventGeneratingAction action) {
         try {
-            return asteriskServer.getManagerConnection().sendEventGeneratingAction(action, 100);
+            return asteriskServer.getManagerConnection().sendEventGeneratingAction(action, 1000);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         } catch (EventTimeoutException ex) {
