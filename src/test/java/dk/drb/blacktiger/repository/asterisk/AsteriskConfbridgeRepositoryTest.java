@@ -147,6 +147,7 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeStartEvent e = new ConfbridgeStartEvent(this);
         e.setConference("H45-0001");
         listener.onManagerEvent(e);
+        repo.handleEventQueue();
         assertEquals(2, repo.findAll().size());
     }
     
@@ -155,6 +156,7 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeEndEvent e = new ConfbridgeEndEvent(this);
         e.setConference("H45-0000");
         listener.onManagerEvent(e);
+        repo.handleEventQueue();
         assertEquals(0, repo.findAll().size());
     }
     
@@ -171,6 +173,7 @@ public class AsteriskConfbridgeRepositoryTest {
     @Test
     public void ifUserCanBeKickedAndEmitsLeaveEvent() {
         repo.kickParticipant("H45-0000", "1");
+        repo.handleEventQueue();
         assertEquals(9, repo.findByRoomNo("H45-0000").size());
     }
     
@@ -182,6 +185,7 @@ public class AsteriskConfbridgeRepositoryTest {
         e.setChannel("#00000000");
         e.setConference("H45-0000");
         listener.onManagerEvent(e);
+        repo.handleEventQueue();
         assertEquals(9, repo.findByRoomNo("H45-0000").size());
     }
     
@@ -227,6 +231,7 @@ public class AsteriskConfbridgeRepositoryTest {
         event.setDigit("1");
         event.setChannel("#00000000");
         listener.onManagerEvent(event);
+        repo.handleEventQueue();
         
         ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
         assertTrue(lastEvent instanceof ParticipantCommentRequestEvent);
@@ -252,9 +257,10 @@ public class AsteriskConfbridgeRepositoryTest {
         DtmfEvent event = new DtmfEvent(this);
         event.setBegin(false);
         event.setEnd(true);
-        event.setDigit("2");
+        event.setDigit("0");
         event.setChannel("#00000000");
         listener.onManagerEvent(event);
+        repo.handleEventQueue();
         
         ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
         assertTrue(lastEvent instanceof ParticipantCommentRequestCancelEvent);
@@ -279,6 +285,8 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeStartEvent event = new ConfbridgeStartEvent(this);
         event.setConference("H45-0001");
         listener.onManagerEvent(event);
+        repo.handleEventQueue();
+        
         assertEquals(2, repo.findAll().size());
         
         ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
@@ -303,6 +311,8 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeEndEvent event = new ConfbridgeEndEvent(this);
         event.setConference("H45-0000");
         listener.onManagerEvent(event);
+        repo.handleEventQueue();
+        
         assertEquals(0, repo.findAll().size());
         assertNull(repo.findOne("H45-0000"));
         
