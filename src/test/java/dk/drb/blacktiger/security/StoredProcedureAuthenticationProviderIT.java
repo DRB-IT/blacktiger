@@ -1,13 +1,8 @@
 package dk.drb.blacktiger.security;
 
 import javax.sql.DataSource;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,7 +21,7 @@ public class StoredProcedureAuthenticationProviderIT {
     @Test
     public void testAuthenticate() {
         System.out.println("authenticate");
-        Authentication authentication = new UsernamePasswordAuthenticationToken("H45-0000", "Test-12345");
+        Authentication authentication = new UsernamePasswordAuthenticationToken("H45-0000", "12345");
         DataSource dataSource = new DriverManagerDataSource("jdbc:mysql://192.168.50.2:3306/telesal", "root", "root");
         StoredProcedureAuthenticationProvider instance = new StoredProcedureAuthenticationProvider();
         instance.setDataSource(dataSource);

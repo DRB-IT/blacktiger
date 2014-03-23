@@ -7,6 +7,7 @@ import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.util.Access;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,18 @@ public class ConferenceService {
     
 
     public List<Room> listRooms() {
+        List<Room> rooms;
         if(Access.hasRole("ADMIN")) {
-            return roomRepository.findAll();
+            rooms = roomRepository.findAll();
         } else {
-            List<String> roomIds = Access.getAccessibleRooms();
-            return roomRepository.findAllByIds(roomIds);
+            rooms = new ArrayList<>();
+            for(String roomId:Access.getAccessibleRooms()) {
+                rooms.add(new Room(roomId));
+            }
         }
+        
+        //Decorate rooms with contact and displayname
+        return rooms;
     }
     
     public Room getRoom(String room) {

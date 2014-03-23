@@ -10,6 +10,8 @@ import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestCancelEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
+import dk.drb.blacktiger.model.ParticipantMuteEvent;
+import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.util.IpPhoneNumber;
@@ -21,7 +23,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.manager.EventTimeoutException;
@@ -160,6 +161,9 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         Room room = new Room(e.getConference());
         roomMap.put(e.getConference(), room);
 
+        // This room just started - make sure to register a list of participants without reading participants from server.
+        getParticipantListSynced(e.getConference(), false);
+        
         AsteriskConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(e.getConference()));
 
     }
@@ -170,8 +174,22 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
         AsteriskConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(e.getConference()));
     }
+    
+    private void onMuted(String conference, String callerId) {
+        LOG.debug("Handling onMuted.");
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantMuteEvent(conference, callerId));
+    }
+
+    private void onUnmuted(String conference, String callerId) {
+        LOG.debug("Handling onUnmuted.");
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantUnmuteEvent(conference, callerId));
+    }
 
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
+        return getParticipantListSynced(roomId, true);
+    }
+    
+    private synchronized List<Participant> getParticipantListSynced(String roomId, boolean readParticipantsOnCreate) {
         List<Participant> participants = participantMap.get(roomId);
         if (participants == null) {
             participants = readParticipantsFromServer(roomId);
@@ -274,11 +292,13 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     @Override
     public void muteParticipant(String roomNo, String callerId) {
         setMutenessOfParticipant(roomNo, callerId, true);
+        onMuted(roomNo, callerId);
     }
 
     @Override
     public void unmuteParticipant(String roomNo, String callerId) {
         setMutenessOfParticipant(roomNo, callerId, false);
+        onUnmuted(roomNo, callerId);
     }
 
     @Override
@@ -300,6 +320,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
                 break;
             }
         }
+        
     }
 
     private Participant participantFromEvent(ConfbridgeListEvent event) {

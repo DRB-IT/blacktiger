@@ -25,12 +25,8 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     
     private class GetNameStoredProcedure extends StoredProcedure {
         
-        private static final String SQL = "sysdate";
-
-        public GetNameStoredProcedure (JdbcTemplate jdbcTemplate) {
-            setJdbcTemplate(jdbcTemplate);
-            setFunction(true);
-            setSql("call get_call_info(?,?,?,?,?,?)");
+        public GetNameStoredProcedure(JdbcTemplate jdbcTemplate) {
+            super(jdbcTemplate, "get_call_info");
             declareParameter(new SqlParameter("number", Types.VARCHAR));
             declareParameter(new SqlParameter("hall", Types.VARCHAR));
             declareParameter(new SqlParameter("key", Types.VARCHAR));
@@ -48,6 +44,30 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
             return execute(params);
         }
     }
+    
+    private class ChangeNameStoredProcedure extends StoredProcedure {
+        
+        public ChangeNameStoredProcedure(JdbcTemplate jdbcTemplate) {
+            super(jdbcTemplate, "rename_caller");
+            setFunction(true);
+            declareParameter(new SqlOutParameter("result", Types.VARCHAR));
+            declareParameter(new SqlParameter("number", Types.VARCHAR));
+            declareParameter(new SqlParameter("name", Types.VARCHAR));
+            declareParameter(new SqlParameter("hall", Types.VARCHAR));
+            declareParameter(new SqlParameter("key", Types.VARCHAR));
+            compile();
+        }
+
+        public String execute(String number, String name, String hall) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("number", number);
+            params.put("name", name);
+            params.put("hall", hall);
+            params.put("key", encryptionKey);
+            
+            return (String) execute(params).get("result");
+        }
+    }
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -62,12 +82,20 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
         GetNameStoredProcedure procedure = new GetNameStoredProcedure(jdbcTemplate);
         Map data = procedure.execute(number, "<UNKNOWN>");
         
-        return new PhonebookEntry((String)data.get("name"), (String)data.get("e164"));
+        String name = (String)data.get("name");
+        if(name.startsWith("*ERROR*")) {
+            LOG.debug("Stored procedure returned a result specifying an error. Ignoring result. [message={}]", name);
+            return null;
+        } else {
+            return new PhonebookEntry((String)data.get("e164"), name); 
+        }
     }
 
     @Override
     public PhonebookEntry save(PhonebookEntry entry) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ChangeNameStoredProcedure procedure = new ChangeNameStoredProcedure(jdbcTemplate);
+        String name = procedure.execute(entry.getNumber(), entry.getName(), "<UNKNOWN>");
+        return new PhonebookEntry(entry.getNumber(), name);
     }
     
 }

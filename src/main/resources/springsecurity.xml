@@ -12,10 +12,12 @@
         <intercept-url pattern="/system/**" access="ROLE_USER" />
         <intercept-url pattern="/phonebook/**" access="ROLE_USER" />
         <intercept-url pattern="/reports/**" access="ROLE_USER" />
+        <http-basic/>
     </http>
     
     <http disable-url-rewriting="true">
-        <intercept-url pattern="/socket/**" access="ROLE_USER" />
+        <!--intercept-url pattern="/socket/info" access="ROLE_ANONYMOUS" />
+        <intercept-url pattern="/socket/**" access="ROLE_USER" /-->
         <intercept-url pattern="/static/wstest.html" access="ROLE_USER" />
         <http-basic/>
     </http>

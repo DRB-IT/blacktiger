@@ -6,12 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Controller for serving participants in a conference room via REST.
@@ -47,18 +49,29 @@ public class ParticipantController {
         return service.getParticipant(roomNo, participantId);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-    @ResponseBody
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.OK)
     public void kickParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
         LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
         service.kickParticipant(roomNo, participantId);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/muted", method = RequestMethod.POST, headers = "Accept=application/json")
-    @ResponseBody
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/muted", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
     public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody boolean muted) {
         LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
         if(muted) {
+            service.muteParticipant(roomNo, participantId);
+        } else {
+            service.unmuteParticipant(roomNo, participantId);
+        }
+    }
+    
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody Participant participant) {
+        LOG.debug("PErsisting participant in room [room={};participant={}].", roomNo, participantId);
+        if(participant.isMuted()) {
             service.muteParticipant(roomNo, participantId);
         } else {
             service.unmuteParticipant(roomNo, participantId);
