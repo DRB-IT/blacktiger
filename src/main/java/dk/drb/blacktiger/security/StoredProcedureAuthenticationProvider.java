@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.util.Assert;
 
 /**
  *
@@ -39,6 +41,11 @@ public class StoredProcedureAuthenticationProvider implements AuthenticationProv
         this.encryptionKey = encryptionKey;
     }
 
+    @PostConstruct
+    protected void init() {
+        Assert.notNull(encryptionKey, "Encryption key not set.");
+    }
+    
     /**
      *
      * @param authentication
