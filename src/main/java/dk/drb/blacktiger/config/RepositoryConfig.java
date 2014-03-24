@@ -75,8 +75,11 @@ public class RepositoryConfig {
             LOG.info("** USING InMemPhonebookRepository FOR TEST **");
             return new InMemPhonebookRepository();
         } else {
+            String encryptionKey = env.getProperty("encryptionKey");
             JdbcPhonebookRepository repo = new JdbcPhonebookRepository();
             repo.setDataSource(asteriskDataSource);
+            repo.setEncryptionKey(encryptionKey);
+            LOG.info("Creating JdbcPhonebookRepository instance [datasource={};encryptionKey={}]", asteriskDataSource != null, encryptionKey != null);
             return repo;
         }
     }
