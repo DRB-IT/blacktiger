@@ -5,6 +5,7 @@ import dk.drb.blacktiger.repository.PhonebookRepository;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
+import org.springframework.util.Assert;
 
 /**
  * An implementation of the phonebook repository that integrates with the stored procedures available.
@@ -75,6 +77,11 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
 
     public void setEncryptionKey(String encryptionKey) {
         this.encryptionKey = encryptionKey;
+    }
+    
+    @PostConstruct
+    protected void init() {
+        Assert.notNull(encryptionKey, "Encryption key not set.");
     }
     
     @Override
