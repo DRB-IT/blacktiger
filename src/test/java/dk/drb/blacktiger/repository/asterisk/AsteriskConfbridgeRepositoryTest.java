@@ -167,7 +167,7 @@ public class AsteriskConfbridgeRepositoryTest {
     
     @Test
     public void ifOneParticipantCanBeRetreived() {
-        assertNotNull(repo.findByRoomNoAndParticipantId("H45-0000", "1"));
+        assertNotNull(repo.findByRoomNoAndCallerId("H45-0000", "1"));
     }
     
     @Test
@@ -195,19 +195,19 @@ public class AsteriskConfbridgeRepositoryTest {
         String callerId = "0";
         
         // They are initially muted
-        assertEquals(true, repo.findByRoomNoAndParticipantId(roomId, callerId).isMuted());
+        assertEquals(true, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
         
         // So when we mute them they should stay muted
         repo.muteParticipant(roomId, callerId);
-        assertEquals(true, repo.findByRoomNoAndParticipantId(roomId, callerId).isMuted());
+        assertEquals(true, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
         
         // But we should also be able to unmute them
         repo.unmuteParticipant(roomId, callerId);
-        assertEquals(false, repo.findByRoomNoAndParticipantId(roomId, callerId).isMuted());
+        assertEquals(false, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
         
         // and re-mute them
         repo.muteParticipant(roomId, callerId);
-        assertEquals(true, repo.findByRoomNoAndParticipantId(roomId, callerId).isMuted());
+        assertEquals(true, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
         
         
     }

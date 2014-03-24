@@ -42,39 +42,39 @@ public class ParticipantController {
         return service.listParticipants(roomNo);
     }
     
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{callerId}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public Participant getParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Got request for participant in room [room={};participant={}].", roomNo, participantId);
-        return service.getParticipant(roomNo, participantId);
+    public Participant getParticipant(@PathVariable final String roomNo, @PathVariable final String callerId) {
+        LOG.debug("Got request for participant in room [room={};participant={}].", roomNo, callerId);
+        return service.getParticipant(roomNo, callerId);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{callerId}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void kickParticipant(@PathVariable final String roomNo, @PathVariable final String participantId) {
-        LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, participantId);
-        service.kickParticipant(roomNo, participantId);
+    public void kickParticipant(@PathVariable final String roomNo, @PathVariable final String callerId) {
+        LOG.debug("Kicking participant from room [room={};participant={}].", roomNo, callerId);
+        service.kickParticipant(roomNo, callerId);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}/muted", method = RequestMethod.POST)
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{callerId}/muted", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody boolean muted) {
-        LOG.debug("Muting participant in room [room={};participant={}].", roomNo, participantId);
+    public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String callerId, @RequestBody boolean muted) {
+        LOG.debug("Muting participant in room [room={};participant={}].", roomNo, callerId);
         if(muted) {
-            service.muteParticipant(roomNo, participantId);
+            service.muteParticipant(roomNo, callerId);
         } else {
-            service.unmuteParticipant(roomNo, participantId);
+            service.unmuteParticipant(roomNo, callerId);
         }
     }
     
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{participantId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{callerId}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
-    public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String participantId, @RequestBody Participant participant) {
-        LOG.debug("PErsisting participant in room [room={};participant={}].", roomNo, participantId);
+    public void muteParticipant(@PathVariable final String roomNo, @PathVariable final String callerId, @RequestBody Participant participant) {
+        LOG.debug("PErsisting participant in room [room={};participant={}].", roomNo, callerId);
         if(participant.isMuted()) {
-            service.muteParticipant(roomNo, participantId);
+            service.muteParticipant(roomNo, callerId);
         } else {
-            service.unmuteParticipant(roomNo, participantId);
+            service.unmuteParticipant(roomNo, callerId);
         }
     }
 

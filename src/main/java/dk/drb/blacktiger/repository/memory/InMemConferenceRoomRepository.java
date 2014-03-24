@@ -126,10 +126,10 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     }
 
     @Override
-    public Participant findByRoomNoAndParticipantId(String roomNo, String participantId) {
+    public Participant findByRoomNoAndCallerId(String roomNo, String callerId) {
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
-                if (participantId.equals(p.getCallerId())) {
+                if (callerId.equals(p.getCallerId())) {
                     return p;
                 }
             }
@@ -138,13 +138,13 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     }
 
     @Override
-    public void kickParticipant(String roomNo, String participantId) {
-        LOG.info("Kicking user [id={}]", participantId);
+    public void kickParticipant(String roomNo, String callerId) {
+        LOG.info("Kicking user [id={}]", callerId);
         if (participantMap.containsKey(roomNo)) {
             Iterator<Participant> it = participantMap.get(roomNo).iterator();
             while (it.hasNext()) {
                 Participant p = it.next();
-                if (participantId.equals(p.getCallerId())) {
+                if (callerId.equals(p.getCallerId())) {
                     it.remove();
                     fireLeaveEvent(roomNo, p.getCallerId());
                     break;
@@ -154,16 +154,16 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     }
 
     @Override
-    public void muteParticipant(String roomNo, String participantId) {
-        LOG.info("Muting user. [id={}]", participantId);
+    public void muteParticipant(String roomNo, String callerId) {
+        LOG.info("Muting user. [id={}]", callerId);
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
-                if (participantId.equals(p.getCallerId())) {
+                if (callerId.equals(p.getCallerId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
                         f.setAccessible(true);
                         f.setBoolean(p, true);
-                        LOG.info("User muted. [id={}; muted={}]", participantId, p.isMuted());
+                        LOG.info("User muted. [id={}; muted={}]", callerId, p.isMuted());
                     } catch (Exception ex) {
                         LOG.error("Unable to mute.", ex);
                     }
@@ -173,16 +173,16 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     }
 
     @Override
-    public void unmuteParticipant(String roomNo, String participantId) {
-        LOG.info("Unmuting user. [id={}]", participantId);
+    public void unmuteParticipant(String roomNo, String callerId) {
+        LOG.info("Unmuting user. [id={}]", callerId);
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
-                if (participantId.equals(p.getCallerId())) {
+                if (callerId.equals(p.getCallerId())) {
                     try {
                         Field f = p.getClass().getDeclaredField("muted");
                         f.setAccessible(true);
                         f.setBoolean(p, false);
-                        LOG.info("User unmuted. [id={}; muted={}]", participantId, p.isMuted());
+                        LOG.info("User unmuted. [id={}; muted={}]", callerId, p.isMuted());
 
                     } catch (Exception ex) {
                         LOG.error("Unable to mute.", ex);

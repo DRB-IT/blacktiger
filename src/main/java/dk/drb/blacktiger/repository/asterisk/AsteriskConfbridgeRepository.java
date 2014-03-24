@@ -273,7 +273,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     @Override
-    public Participant findByRoomNoAndParticipantId(String roomNo, String callerId) {
+    public Participant findByRoomNoAndCallerId(String roomNo, String callerId) {
         LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, callerId);
         List<Participant> participants = findByRoomNo(roomNo);
         for (Participant p : participants) {

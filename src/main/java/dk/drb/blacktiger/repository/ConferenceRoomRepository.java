@@ -17,12 +17,12 @@ public interface ConferenceRoomRepository {
     
         List<Participant> findByRoomNo(String roomNo);
     
-    Participant findByRoomNoAndParticipantId(String roomNo, String participantId);
+    Participant findByRoomNoAndCallerId(String roomNo, String callerId);
     
-    void kickParticipant(String roomNo, String participantId);
+    void kickParticipant(String roomNo, String callerId);
    
-    void muteParticipant(String roomNo, String participantId);
-    void unmuteParticipant(String roomNo, String participantId);
+    void muteParticipant(String roomNo, String callerId);
+    void unmuteParticipant(String roomNo, String callerId);
     
     void addEventListener(ConferenceEventListener listener);
     void removeEventListener(ConferenceEventListener listener);

@@ -90,44 +90,44 @@ public class ConferenceService {
     /**
      * Retrieves a specific participant in a room. 
      * @param roomNo The room number
-     * @param participantId The participant id.
+     * @param callerId The callerId.
      * @return The participant or null if no match found.
      */
     
-    public Participant getParticipant(String roomNo, String participantId) {
-        LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, participantId);
+    public Participant getParticipant(String roomNo, String callerId) {
+        LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, callerId);
         Access.checkRoomAccess(roomNo);
-        return decorateWithPhonebookInformation(roomRepository.findByRoomNoAndParticipantId(roomNo, participantId));
+        return decorateWithPhonebookInformation(roomRepository.findByRoomNoAndCallerId(roomNo, callerId));
     }
 
     /**
      * Kick a participant from a room.
      * @param roomNo The room number.
-     * @param participantId  The participant id.
+     * @param callerId  The callerId.
      */
-    public void kickParticipant(String roomNo, String participantId) {
+    public void kickParticipant(String roomNo, String callerId) {
         Access.checkRoomAccess(roomNo);
-        roomRepository.kickParticipant(roomNo, participantId);
+        roomRepository.kickParticipant(roomNo, callerId);
     }
 
     /**
      * Mutes a participant in a room.
      * @param roomNo The room number.
-     * @param participantId  The participant id.
+     * @param callerId  The callerId.
      */
-    public void muteParticipant(String roomNo, String participantId) {
+    public void muteParticipant(String roomNo, String callerId) {
         Access.checkRoomAccess(roomNo);
-        roomRepository.muteParticipant(roomNo, participantId);
+        roomRepository.muteParticipant(roomNo, callerId);
     }
 
     /**
      * Unmutes a participant.
      * @param roomNo The room number.
-     * @param participantId  The participant id.
+     * @param callerId  The callerId.
      */
-    public void unmuteParticipant(String roomNo, String participantId) {
+    public void unmuteParticipant(String roomNo, String callerId) {
         Access.checkRoomAccess(roomNo);
-        roomRepository.unmuteParticipant(roomNo, participantId);
+        roomRepository.unmuteParticipant(roomNo, callerId);
     }
 
     public void addEventListener(ConferenceEventListener listener) {
