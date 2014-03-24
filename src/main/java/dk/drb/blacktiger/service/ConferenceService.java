@@ -1,8 +1,10 @@
 package dk.drb.blacktiger.service;
 
+import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
@@ -21,6 +23,26 @@ public class ConferenceService {
     private static final Logger LOG = LoggerFactory.getLogger(ConferenceService.class);
     private PhonebookRepository phonebookRepository;
     private ConferenceRoomRepository roomRepository;
+    
+    private class ConferenceEventListenerWrapper implements ConferenceEventListener {
+
+        private ConferenceEventListener wrapped;
+
+        public ConferenceEventListenerWrapper(ConferenceEventListener wrapped) {
+            this.wrapped = wrapped;
+        }
+        
+        @Override
+        public void onParticipantEvent(ConferenceEvent event) {
+            if(event instanceof ParticipantJoinEvent) {
+                ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
+                Participant p = decorateWithPhonebookInformation(joinEvent.getParticipant());
+                event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
+            }
+            wrapped.onParticipantEvent(event);
+        }
+        
+    }
 
     @Autowired
     public void setPhonebookRepository(PhonebookRepository phonebookRepository) {
@@ -109,7 +131,7 @@ public class ConferenceService {
     }
 
     public void addEventListener(ConferenceEventListener listener) {
-        roomRepository.addEventListener(listener);
+        roomRepository.addEventListener(new ConferenceEventListenerWrapper(listener));
     }
 
     public void removeEventListener(ConferenceEventListener listener) {
