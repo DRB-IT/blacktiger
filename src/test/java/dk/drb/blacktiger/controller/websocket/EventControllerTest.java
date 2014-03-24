@@ -78,7 +78,7 @@ public class EventControllerTest {
 
                 StompHeaderAccessor headers = StompHeaderAccessor.create(StompCommand.SUBSCRIBE);
 		headers.setSubscriptionId("0");
-		headers.setDestination("/queue/events/*");
+		headers.setDestination("/queue/events/H45-0000");
 		headers.setSessionId("0");
 		Message<byte[]> message = MessageBuilder.withPayload("\"\"".getBytes()).setHeaders(headers).build();
 

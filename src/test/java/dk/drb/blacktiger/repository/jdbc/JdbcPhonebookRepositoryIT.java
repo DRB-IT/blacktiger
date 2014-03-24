@@ -52,6 +52,9 @@ public class JdbcPhonebookRepositoryIT {
         PhonebookEntry entry = new PhonebookEntry("+4599999901", "Jane Doe");
         PhonebookEntry result = repo.save(entry);
         assertEquals("Jane Doe", result.getName());
+        
+        result = repo.findByCallerId("+4599999901");
+        assertEquals("Jane Doe", result.getName());
     }
     
 }
