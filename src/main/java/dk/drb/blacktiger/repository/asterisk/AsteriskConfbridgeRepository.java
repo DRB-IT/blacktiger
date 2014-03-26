@@ -48,6 +48,7 @@ import org.asteriskjava.manager.event.ResponseEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
@@ -317,6 +318,10 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         LOG.debug("Setting muteness for channel. [room={};channel={},value={}]", new Object[]{roomId, channel, value});
         AbstractManagerAction a = value == true ? new ConfbridgeMuteAction(roomId, denormChannel) : new ConfbridgeUnmuteAction(roomId, denormChannel);
         ManagerResponse response = sendAction(a);
+        
+        if("Error".equals(response.getResponse())) {
+            throw new InvalidDataAccessResourceUsageException(response.getMessage());
+        }
         
         for (Participant p : getParticipantListSynced(roomId)) {
             if (channel.equals(p.getChannel())) {
