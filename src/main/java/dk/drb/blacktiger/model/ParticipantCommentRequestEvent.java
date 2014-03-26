@@ -6,8 +6,8 @@ package dk.drb.blacktiger.model;
  */
 public class ParticipantCommentRequestEvent extends SparseParticipantEvent {
 
-    public ParticipantCommentRequestEvent(String roomNo, String callerId) {
-        super(roomNo, callerId);
+    public ParticipantCommentRequestEvent(String roomNo, String channel) {
+        super(roomNo, channel);
     }
 
     @Override

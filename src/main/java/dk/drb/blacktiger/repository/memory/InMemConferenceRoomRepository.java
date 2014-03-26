@@ -126,7 +126,7 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
     }
 
     @Override
-    public Participant findByRoomNoAndCallerId(String roomNo, String callerId) {
+    public Participant findByRoomNoAndChannel(String roomNo, String callerId) {
         if (participantMap.containsKey(roomNo)) {
             for (Participant p : participantMap.get(roomNo)) {
                 if (callerId.equals(p.getCallerId())) {

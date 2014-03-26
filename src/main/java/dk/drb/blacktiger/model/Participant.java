@@ -11,6 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class Participant {
 
     private String callerId;
+    private String channel;
     private boolean muted;
     private String phoneNumber;
     private Date dateJoined;
@@ -21,12 +22,13 @@ public class Participant {
     public Participant() {
     }
     
-    public Participant(String callerId, String name, boolean muted, boolean host, CallType type, Date dateJoined) {
-        this(callerId, name, null, muted, host, type, dateJoined);
+    public Participant(String channel, String callerId, String name, boolean muted, boolean host, CallType type, Date dateJoined) {
+        this(callerId, channel, name, null, muted, host, type, dateJoined);
     }
 
-    public Participant(String callerId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
+    public Participant(String channel, String callerId, String name, String phoneNumber, boolean muted, boolean host, CallType type, Date dateJoined) {
         this.callerId = callerId;
+        this.channel = channel;
         this.muted = muted;
         this.type = type;
         this.host = host;
@@ -43,6 +45,10 @@ public class Participant {
         return this.callerId;
     }
 
+    public String getChannel() {
+        return channel;
+    }
+    
     public boolean isMuted() {
         return this.muted;
     }
@@ -75,6 +81,10 @@ public class Participant {
         this.callerId = callerId;
     }
 
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+    
     public void setMuted(boolean muted) {
         this.muted = muted;
     }

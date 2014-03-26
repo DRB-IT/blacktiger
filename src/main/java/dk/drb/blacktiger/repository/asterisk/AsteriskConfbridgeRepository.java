@@ -62,7 +62,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private final Map<String, Room> roomMap = new HashMap<>();
     private final Map<String, List<Participant>> participantMap = new HashMap<>();
     private final Map<String, String> channelRoomMap = new HashMap<>();
-    private final Map<String, String> channelCallerIdMap = new HashMap<>();
+    //private final Map<String, String> channelCallerIdMap = new HashMap<>();
     private final Queue<ManagerEvent> managerEvents = new LinkedList<>();
 
     public AsteriskConfbridgeRepository() {
@@ -108,15 +108,15 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         if (event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
             // A DTMF event has been received. We need to retrieve roomId and callerId. 
             String roomId = channelRoomMap.get(event.getChannel());
-            String callerId = channelCallerIdMap.get(event.getChannel());
+            //String callerId = channelCallerIdMap.get(event.getChannel());
 
             ConferenceEvent ce = null;
             switch (event.getDigit()) {
                 case DIGIT_COMMENT_REQUEST:
-                    ce = new ParticipantCommentRequestEvent(roomId, callerId);
+                    ce = new ParticipantCommentRequestEvent(roomId, normalizeChannelName(event.getChannel()));
                     break;
                 case DIGIT_COMMENT_REQUEST_CANCEL:
-                    ce = new ParticipantCommentRequestCancelEvent(roomId, callerId);
+                    ce = new ParticipantCommentRequestCancelEvent(roomId, normalizeChannelName(event.getChannel()));
                     break;
             }
 
@@ -128,7 +128,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
         getParticipantListSynced(roomNo).add(p);
-        channelCallerIdMap.put(event.getChannel(), event.getCallerIdNum());
+        //channelCallerIdMap.put(event.getChannel(), event.getCallerIdNum());
         channelRoomMap.put(event.getChannel(), event.getConference());
         AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
     }
@@ -140,7 +140,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         List<Participant> list = getParticipantListSynced(roomNo);
 
         for (Participant current : list) {
-            if (p.getCallerId().equals(current.getCallerId())) {
+            if (p.getChannel().equals(current.getChannel())) {
                 toRemove = current;
                 break;
             }
@@ -150,10 +150,10 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             list.remove(toRemove);
         }
 
-        channelCallerIdMap.remove(event.getChannel());
+        //channelCallerIdMap.remove(event.getChannel());
         channelRoomMap.remove(event.getChannel());
 
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p.getCallerId()));
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p.getChannel()));
     }
 
     private void onConfbridgeStart(ConfbridgeStartEvent e) {
@@ -175,14 +175,14 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         AsteriskConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(e.getConference()));
     }
     
-    private void onMuted(String conference, String callerId) {
+    private void onMuted(String conference, String channel) {
         LOG.debug("Handling onMuted.");
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantMuteEvent(conference, callerId));
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantMuteEvent(conference, channel));
     }
 
-    private void onUnmuted(String conference, String callerId) {
+    private void onUnmuted(String conference, String channel) {
         LOG.debug("Handling onUnmuted.");
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantUnmuteEvent(conference, callerId));
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantUnmuteEvent(conference, channel));
     }
 
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
@@ -192,7 +192,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private synchronized List<Participant> getParticipantListSynced(String roomId, boolean readParticipantsOnCreate) {
         List<Participant> participants = participantMap.get(roomId);
         if (participants == null) {
-            participants = readParticipantsFromServer(roomId);
+            participants = readParticipantsOnCreate ? readParticipantsFromServer(roomId) : new ArrayList<Participant>();
             participantMap.put(roomId, participants);
         }
         return participants;
@@ -237,7 +237,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
                 ConfbridgeListEvent confbridgeListEvent = (ConfbridgeListEvent) event;
                 Participant p = participantFromEvent(confbridgeListEvent);
                 result.add(p);
-                channelCallerIdMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getCallerIDnum());
+                //channelCallerIdMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getCallerIDnum());
                 channelRoomMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getConference());
             }
         }
@@ -273,11 +273,11 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     @Override
-    public Participant findByRoomNoAndCallerId(String roomNo, String callerId) {
-        LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, callerId);
+    public Participant findByRoomNoAndChannel(String roomNo, String channel) {
+        LOG.debug("Retrieving participant. [room={};channel={}]", roomNo, channel);
         List<Participant> participants = findByRoomNo(roomNo);
         for (Participant p : participants) {
-            if (callerId.equals(p.getCallerId())) {
+            if (channel.equals(p.getChannel())) {
                 return p;
             }
         }
@@ -285,20 +285,20 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     @Override
-    public void kickParticipant(String roomNo, String callerId) {
-        ManagerResponse response = sendAction(new ConfbridgeKickAction(roomNo, callerId));
+    public void kickParticipant(String roomNo, String channel) {
+        ManagerResponse response = sendAction(new ConfbridgeKickAction(roomNo, denormalizeChannelName(channel)));
     }
 
     @Override
-    public void muteParticipant(String roomNo, String callerId) {
-        setMutenessOfParticipant(roomNo, callerId, true);
-        onMuted(roomNo, callerId);
+    public void muteParticipant(String roomNo, String channel) {
+        setMutenessOfParticipant(roomNo, channel, true);
+        onMuted(roomNo, channel);
     }
 
     @Override
-    public void unmuteParticipant(String roomNo, String callerId) {
-        setMutenessOfParticipant(roomNo, callerId, false);
-        onUnmuted(roomNo, callerId);
+    public void unmuteParticipant(String roomNo, String channel) {
+        setMutenessOfParticipant(roomNo, channel, false);
+        onUnmuted(roomNo, channel);
     }
 
     @Override
@@ -308,14 +308,18 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         }
     }
 
-    private void setMutenessOfParticipant(String roomId, String callerId, boolean value) {
+    private void setMutenessOfParticipant(String roomId, String channel, boolean value) {
         // Because Asterisk 11 does not send events when muteness changes, we have to keep that info here ourselves.
         // That also means that we have no idea if other parties mutes a user
-        AbstractManagerAction a = value == true ? new ConfbridgeMuteAction(roomId, callerId) : new ConfbridgeUnmuteAction(roomId, callerId);
-        sendAction(a);
-
+        
+        String denormChannel = denormalizeChannelName(channel);
+        
+        LOG.debug("Setting muteness for channel. [room={};channel={},value={}]", new Object[]{roomId, channel, value});
+        AbstractManagerAction a = value == true ? new ConfbridgeMuteAction(roomId, denormChannel) : new ConfbridgeUnmuteAction(roomId, denormChannel);
+        ManagerResponse response = sendAction(a);
+        
         for (Participant p : getParticipantListSynced(roomId)) {
-            if (callerId.equals(p.getCallerId())) {
+            if (channel.equals(p.getChannel())) {
                 p.setMuted(value);
                 break;
             }
@@ -324,18 +328,18 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     private Participant participantFromEvent(ConfbridgeListEvent event) {
-        return participantFromEventData(event.getConference(), event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
+        return participantFromEventData(event.getConference(), event.getChannel(), event.getCallerIDnum(), event.getCallerIdName(), event.getDateReceived());
     }
 
     private Participant participantFromEvent(ConfbridgeJoinEvent event) {
-        return participantFromEventData(event.getConference(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
+        return participantFromEventData(event.getConference(), event.getChannel(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
     }
 
     private Participant participantFromEvent(ConfbridgeLeaveEvent event) {
-        return participantFromEventData(event.getConference(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
+        return participantFromEventData(event.getConference(), event.getChannel(), event.getCallerIdNum(), event.getCallerIdName(), event.getDateReceived());
     }
 
-    private Participant participantFromEventData(String conference, String callerIdNum, String callerIdName, Date dateReceived) {
+    private Participant participantFromEventData(String conference, String channel, String callerIdNum, String callerIdName, Date dateReceived) {
         boolean host = false;
         CallType callType = CallType.Sip;
 
@@ -354,7 +358,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             callType = CallType.Phone;
         }
 
-        return new Participant(callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
+        return new Participant(normalizeChannelName(channel), callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
     }
 
     private ManagerResponse sendAction(ManagerAction action) {
@@ -383,5 +387,13 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         } catch (IllegalStateException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    
+    private String normalizeChannelName(String channel) {
+        return channel.replace("/", "___");
+    }
+    
+    private String denormalizeChannelName(String channel) {
+        return channel.replace("___", "/");
     }
 }

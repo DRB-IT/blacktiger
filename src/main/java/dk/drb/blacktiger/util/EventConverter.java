@@ -39,7 +39,7 @@ public class EventConverter extends MappingJackson2MessageConverter {
                 }
                 
                 if(value instanceof SparseParticipantEvent) {
-                    jgen.writeStringField("callerId", ((SparseParticipantEvent)value).getCallerId());
+                    jgen.writeStringField("channel", ((SparseParticipantEvent)value).getChannel());
                 }
                 
                 jgen.writeStringField("type", value.getType());

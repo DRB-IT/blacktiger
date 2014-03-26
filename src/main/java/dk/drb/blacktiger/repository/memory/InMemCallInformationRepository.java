@@ -71,7 +71,7 @@ public class InMemCallInformationRepository implements CallInformationRepository
         
         if(event instanceof ParticipantLeaveEvent) {
             ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
-            Participant participant = participantMap.get(leaveEvent.getCallerId());
+            Participant participant = participantMap.get(leaveEvent.getChannel());
             if(participant != null) {
                 int durationInSeconds = (int) ((System.currentTimeMillis() - participant.getDateJoined().getTime()) / 1000);
                 CallInformation ci = new CallInformation(participant.getPhoneNumber(), participant.getName(), 1, durationInSeconds, 

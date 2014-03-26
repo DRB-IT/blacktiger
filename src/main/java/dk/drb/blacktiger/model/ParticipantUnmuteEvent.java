@@ -6,8 +6,8 @@ package dk.drb.blacktiger.model;
  */
 public class ParticipantUnmuteEvent extends SparseParticipantEvent {
     
-    public ParticipantUnmuteEvent(String roomNo, String callerId) {
-        super(roomNo, callerId);
+    public ParticipantUnmuteEvent(String roomNo, String channel) {
+        super(roomNo, channel);
     }
 
     @Override

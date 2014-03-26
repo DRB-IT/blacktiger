@@ -15,14 +15,14 @@ public interface ConferenceRoomRepository {
     
     public Room findOne(String id);
     
-        List<Participant> findByRoomNo(String roomNo);
+    List<Participant> findByRoomNo(String roomNo);
     
-    Participant findByRoomNoAndCallerId(String roomNo, String callerId);
+    Participant findByRoomNoAndChannel(String roomNo, String channel);
     
-    void kickParticipant(String roomNo, String callerId);
+    void kickParticipant(String roomNo, String channel);
    
-    void muteParticipant(String roomNo, String callerId);
-    void unmuteParticipant(String roomNo, String callerId);
+    void muteParticipant(String roomNo, String channel);
+    void unmuteParticipant(String roomNo, String channel);
     
     void addEventListener(ConferenceEventListener listener);
     void removeEventListener(ConferenceEventListener listener);

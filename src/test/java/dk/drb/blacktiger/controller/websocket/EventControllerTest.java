@@ -115,6 +115,6 @@ public class EventControllerTest {
 		assertTrue("Destination should start with /events/ but was " + replyHeaders.getDestination()+ ".", replyHeaders.getDestination().startsWith("/queue/events/"));
 
 		String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
-                assertEquals("{\"roomNo\":\"H45-0000\",\"callerId\":\"123\",\"type\":\"Leave\"}", json);
+                assertEquals("{\"roomNo\":\"H45-0000\",\"channel\":\"123\",\"type\":\"Leave\"}", json);
 	}
 }

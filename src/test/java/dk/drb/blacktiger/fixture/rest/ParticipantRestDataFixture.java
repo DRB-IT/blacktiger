@@ -24,7 +24,7 @@ public class ParticipantRestDataFixture {
     }
     
     public static Participant standardParticipant(String id) {
-        return new Participant("1", "John Doe", "+4512345678", true, false, CallType.Sip, standardDate());
+        return new Participant("1/SIP", "1", "John Doe", "+4512345678", true, false, CallType.Sip, standardDate());
     }
     
     public static List<Participant> standardParticipantsList() {
@@ -38,6 +38,6 @@ public class ParticipantRestDataFixture {
     }
     
     public static String standardParticipantAsJson(String id) {
-        return "{\"callerId\":\"" + id + "\",\"muted\":true,\"phoneNumber\":\"+4512345678\",\"dateJoined\":1388530800000,\"name\":\"John Doe\",\"type\":\"Sip\",\"host\":false}";
+        return "{\"callerId\":\"" + id + "\",\"channel\":\"" + id + "/SIP\",\"muted\":true,\"phoneNumber\":\"+4512345678\",\"dateJoined\":1388530800000,\"name\":\"John Doe\",\"type\":\"Sip\",\"host\":false}";
     }
 }

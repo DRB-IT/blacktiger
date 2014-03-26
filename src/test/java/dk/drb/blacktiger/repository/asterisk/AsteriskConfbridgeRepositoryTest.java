@@ -82,9 +82,9 @@ public class AsteriskConfbridgeRepositoryTest {
                 for(int i=0;i<10;i++) {
                     ConfbridgeListEvent e = new ConfbridgeListEvent(this);
                     e.setConference("H45-0000");
-                    e.setCallerIDnum(Integer.toString(i));
+                    e.setCallerIDnum("#" + nf.format(i));
                     e.setCallerIdName("John Doe");
-                    e.setChannel("#" + nf.format(i));
+                    e.setChannel("SIP/#" + nf.format(i));
                     events.addEvent(e);
                 }
                 return events;
@@ -100,7 +100,7 @@ public class AsteriskConfbridgeRepositoryTest {
                 ConfbridgeLeaveEvent e = new ConfbridgeLeaveEvent(this);
                 e.setConference("H45-0000");
                 e.setCallerIdNum("0");
-                e.setChannel("#00000000");
+                e.setChannel("SIP/#00000000");
                 e.setCallerIdName("John Doe");
                 listener.onManagerEvent(e);
                 
@@ -167,12 +167,12 @@ public class AsteriskConfbridgeRepositoryTest {
     
     @Test
     public void ifOneParticipantCanBeRetreived() {
-        assertNotNull(repo.findByRoomNoAndCallerId("H45-0000", "1"));
+        assertNotNull(repo.findByRoomNoAndChannel("H45-0000", "SIP___#00000000"));
     }
     
     @Test
     public void ifUserCanBeKickedAndEmitsLeaveEvent() {
-        repo.kickParticipant("H45-0000", "1");
+        repo.kickParticipant("H45-0000", "SIP/#00000000");
         repo.handleEventQueue();
         assertEquals(9, repo.findByRoomNo("H45-0000").size());
     }
@@ -182,7 +182,7 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeLeaveEvent e = new ConfbridgeLeaveEvent(this);
         e.setCallerIdName("John Doe");
         e.setCallerIdNum("0");
-        e.setChannel("#00000000");
+        e.setChannel("SIP/#00000000");
         e.setConference("H45-0000");
         listener.onManagerEvent(e);
         repo.handleEventQueue();
@@ -192,22 +192,22 @@ public class AsteriskConfbridgeRepositoryTest {
     @Test
     public void ifUserCanHaveMutenessChanged() {
         String roomId = "H45-0000";
-        String callerId = "0";
+        String channel = "SIP___#00000000";
         
         // They are initially muted
-        assertEquals(true, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
+        assertEquals(true, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
         
         // So when we mute them they should stay muted
-        repo.muteParticipant(roomId, callerId);
-        assertEquals(true, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
+        repo.muteParticipant(roomId, channel);
+        assertEquals(true, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
         
         // But we should also be able to unmute them
-        repo.unmuteParticipant(roomId, callerId);
-        assertEquals(false, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
+        repo.unmuteParticipant(roomId, channel);
+        assertEquals(false, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
         
         // and re-mute them
-        repo.muteParticipant(roomId, callerId);
-        assertEquals(true, repo.findByRoomNoAndCallerId(roomId, callerId).isMuted());
+        repo.muteParticipant(roomId, channel);
+        assertEquals(true, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
         
         
     }
@@ -229,7 +229,7 @@ public class AsteriskConfbridgeRepositoryTest {
         event.setBegin(false);
         event.setEnd(true);
         event.setDigit("1");
-        event.setChannel("#00000000");
+        event.setChannel("SIP/#00000000");
         listener.onManagerEvent(event);
         repo.handleEventQueue();
         
@@ -238,7 +238,7 @@ public class AsteriskConfbridgeRepositoryTest {
         
         ParticipantCommentRequestEvent commentRequestEvent = (ParticipantCommentRequestEvent) lastEvent;
         assertEquals("H45-0000", commentRequestEvent.getRoomNo());
-        assertEquals("0", commentRequestEvent.getCallerId());
+        assertEquals("SIP___#00000000", commentRequestEvent.getChannel());
         
     }
     
@@ -258,7 +258,7 @@ public class AsteriskConfbridgeRepositoryTest {
         event.setBegin(false);
         event.setEnd(true);
         event.setDigit("0");
-        event.setChannel("#00000000");
+        event.setChannel("SIP/#00000000");
         listener.onManagerEvent(event);
         repo.handleEventQueue();
         
@@ -267,7 +267,7 @@ public class AsteriskConfbridgeRepositoryTest {
         
         ParticipantCommentRequestCancelEvent commentRequestEvent = (ParticipantCommentRequestCancelEvent) lastEvent;
         assertEquals("H45-0000", commentRequestEvent.getRoomNo());
-        assertEquals("0", commentRequestEvent.getCallerId());
+        assertEquals("SIP___#00000000", commentRequestEvent.getChannel());
     }
     
     @Test
