@@ -26,7 +26,7 @@
     <authentication-manager alias="authenticationManager">
         <authentication-provider>
             <user-service>
-                <user name="admin" password="123" authorities="ROLE_USER, ROLE_ADMIN" />
+                <user name="${admin.user}" password="${admin.password}" authorities="ROLE_USER, ROLE_ADMIN" />
               </user-service>
         </authentication-provider>
         <authentication-provider ref="authProvider" />
@@ -34,7 +34,7 @@
     </authentication-manager>
 
     <beans:bean id="authProvider" class="dk.drb.blacktiger.security.StoredProcedureAuthenticationProvider">
-        <beans:property name="encryptionKey" value="enckey"/>
+        <beans:property name="encryptionKey" value="${encryptionKey}"/>
         <beans:property name="dataSource" ref="asteriskDatasource"/>
         
     </beans:bean>
