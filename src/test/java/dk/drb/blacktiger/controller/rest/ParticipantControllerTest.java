@@ -21,7 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -90,8 +90,8 @@ public class ParticipantControllerTest {
         String id = "1";
         when(service.getParticipant(eq("H45-0000"), eq(id))).thenReturn(standardParticipant(id));
         
-        this.mockMvc.perform(post("/rooms/H45-0000/participants/" + id + "/muted")
-                .contentType(MediaType.APPLICATION_JSON).content("true"))
+        this.mockMvc.perform(put("/rooms/H45-0000/participants/" + id)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"muted\":true}"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

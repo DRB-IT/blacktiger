@@ -2,18 +2,21 @@ package dk.drb.blacktiger.config;
 
 import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
+import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.SipAccountRepository;
 import dk.drb.blacktiger.repository.UserRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
+import dk.drb.blacktiger.repository.jdbc.JdbcContactRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
 import dk.drb.blacktiger.repository.memory.InMemSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemUserRepository;
+import dk.drb.blacktiger.repository.memory.InMemoryContactRepository;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.asteriskjava.live.AsteriskServer;
@@ -115,6 +118,21 @@ public class RepositoryConfig {
             return new InMemSipAccountRepository();
         } else {
             return new JdbcSipAccountRepository();
+        }
+    }
+    
+    @Bean
+    public ContactRepository contactRepository() {
+        if(test) {
+            LOG.info("** Using ContactRepository FOR TEST **");
+            return new InMemoryContactRepository();
+        } else {
+            String encryptionKey = env.getProperty("encryptionKey");
+            JdbcContactRepository repo = new JdbcContactRepository();
+            repo.setDataSource(asteriskDataSource);
+            repo.setEncryptionKey(encryptionKey);
+            LOG.info("Creating JdbcContactRepository instance [datasource={};encryptionKey={}]", asteriskDataSource != null, encryptionKey != null);
+            return repo;
         }
     }
 }

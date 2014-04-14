@@ -1,17 +1,11 @@
 package dk.drb.blacktiger.repository.jdbc;
 
 import dk.drb.blacktiger.model.PhonebookEntry;
-import dk.drb.blacktiger.security.StoredProcedureAuthenticationProvider;
 import javax.sql.DataSource;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 
 /**
  *

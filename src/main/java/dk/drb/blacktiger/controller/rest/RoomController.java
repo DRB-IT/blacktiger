@@ -12,7 +12,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -54,4 +56,10 @@ public class RoomController {
         return room;
     }
 
+    @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json", method = RequestMethod.PUT)
+    @ResponseBody
+    public void save(@PathVariable final String roomNo, @RequestBody Room room) {
+        LOG.debug("Persisting room {}.", room);
+        service.saveRoom(room);
+    }
 }

@@ -1,7 +1,8 @@
 package dk.drb.blacktiger.repository.jdbc;
 
+import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.PhonebookEntry;
-import dk.drb.blacktiger.repository.PhonebookRepository;
+import dk.drb.blacktiger.repository.ContactRepository;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,56 +17,66 @@ import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.util.Assert;
 
 /**
- * An implementation of the phonebook repository that integrates with the stored procedures available.
+ *
+ * @author michael
  */
-public class JdbcPhonebookRepository implements PhonebookRepository {
-
+public class JdbcContactRepository implements ContactRepository {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcPhonebookRepository.class);
     private JdbcTemplate jdbcTemplate;
     private String encryptionKey;
+
+
     
-    private class GetNameStoredProcedure extends StoredProcedure {
+    private class GetContactSP extends StoredProcedure {
         
-        public GetNameStoredProcedure(JdbcTemplate jdbcTemplate) {
-            super(jdbcTemplate, "get_call_info");
-            declareParameter(new SqlParameter("number", Types.VARCHAR));
+        public GetContactSP(JdbcTemplate jdbcTemplate) {
+            super(jdbcTemplate, "get_hall_info");
             declareParameter(new SqlParameter("hall", Types.VARCHAR));
             declareParameter(new SqlParameter("key", Types.VARCHAR));
-            declareParameter(new SqlOutParameter("e164", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("country_code", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("zip", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("city", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("hallNo", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("dialin", Types.VARCHAR));
             declareParameter(new SqlOutParameter("name", Types.VARCHAR));
-            declareParameter(new SqlOutParameter("type", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("email", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("phone", Types.VARCHAR));
+            declareParameter(new SqlOutParameter("comment", Types.VARCHAR));
+
             compile();
         }
 
-        public Map execute(String number, String hall) {
+        public Map execute(String hall) {
             Map<String, Object> params = new HashMap<>();
-            params.put("number", number);
             params.put("hall", hall);
             params.put("key", encryptionKey);
             return execute(params);
         }
     }
     
-    private class ChangeNameStoredProcedure extends StoredProcedure {
+    private class UpdateContactSP extends StoredProcedure {
         
-        public ChangeNameStoredProcedure(JdbcTemplate jdbcTemplate) {
-            super(jdbcTemplate, "rename_caller");
+        public UpdateContactSP(JdbcTemplate jdbcTemplate) {
+            super(jdbcTemplate, "update_contact");
             setFunction(true);
             declareParameter(new SqlOutParameter("result", Types.VARCHAR));
-            declareParameter(new SqlParameter("number", Types.VARCHAR));
-            declareParameter(new SqlParameter("name", Types.VARCHAR));
             declareParameter(new SqlParameter("hall", Types.VARCHAR));
+            declareParameter(new SqlParameter("name", Types.VARCHAR));
+            declareParameter(new SqlParameter("email", Types.VARCHAR));
+            declareParameter(new SqlParameter("phone", Types.VARCHAR));
+            declareParameter(new SqlParameter("comment", Types.VARCHAR));
             declareParameter(new SqlParameter("key", Types.VARCHAR));
             compile();
         }
 
-        public String execute(String number, String name, String hall) {
+        public String execute(String hall, Contact contact) {
             Map<String, Object> params = new HashMap<>();
-            params.put("number", number);
-            params.put("name", name);
             params.put("hall", hall);
+            params.put("name", contact.getName());
+            params.put("email", contact.getEmail());
+            params.put("phone", contact.getPhoneNumber());
+            params.put("comment", contact.getComment());
             params.put("key", encryptionKey);
-            
             return (String) execute(params).get("result");
         }
     }
@@ -84,24 +95,24 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     }
     
     @Override
-    public PhonebookEntry findByCallerId(String number) {
-        GetNameStoredProcedure procedure = new GetNameStoredProcedure(jdbcTemplate);
-        Map data = procedure.execute(number, "<UNKNOWN>");
+    public Contact findByRoomId(String roomId) {
+        GetContactSP sp = new GetContactSP(jdbcTemplate);
+        Map<String, String> data = sp.execute(roomId);
         
         String name = (String)data.get("name");
         if(name.startsWith("*ERROR*")) {
             LOG.debug("Stored procedure returned a result specifying an error. Ignoring result. [message={}]", name);
             return null;
         } else {
-            return new PhonebookEntry((String)data.get("e164"), name); 
+            return new Contact(data.get("name"), data.get("email"), data.get("phone"), data.get("comment"));
         }
+        
     }
 
     @Override
-    public PhonebookEntry save(PhonebookEntry entry) {
-        ChangeNameStoredProcedure procedure = new ChangeNameStoredProcedure(jdbcTemplate);
-        String name = procedure.execute(entry.getNumber(), entry.getName(), "<UNKNOWN>");
-        return new PhonebookEntry(entry.getNumber(), name);
+    public void save(String roomId, Contact contact) {
+        UpdateContactSP sp = new UpdateContactSP(jdbcTemplate);
+        String result = sp.execute(roomId, contact);
     }
     
 }

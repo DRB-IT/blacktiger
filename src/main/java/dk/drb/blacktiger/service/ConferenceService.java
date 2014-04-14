@@ -3,17 +3,21 @@ package dk.drb.blacktiger.service;
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
+import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 /**
  *
@@ -23,6 +27,7 @@ public class ConferenceService {
     private static final Logger LOG = LoggerFactory.getLogger(ConferenceService.class);
     private PhonebookRepository phonebookRepository;
     private ConferenceRoomRepository roomRepository;
+    private ContactRepository contactRepository;
     
     private class ConferenceEventListenerWrapper implements ConferenceEventListener {
 
@@ -43,6 +48,13 @@ public class ConferenceService {
         }
         
     }
+    
+    @PostConstruct
+    protected void init() {
+        Assert.notNull(phonebookRepository, "PhonebookRepository must be specified. Was null.");
+        Assert.notNull(contactRepository, "ContactRepository must be specified. Was null.");
+        Assert.notNull(roomRepository, "RoomRepository must be specified. Was null.");
+    }
 
     @Autowired
     public void setPhonebookRepository(PhonebookRepository phonebookRepository) {
@@ -53,9 +65,12 @@ public class ConferenceService {
     public void setRoomRepository(ConferenceRoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
-    
-    
 
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
+    
     public List<Room> listRooms() {
         List<Room> rooms;
         if(Access.hasRole("ADMIN")) {
@@ -67,13 +82,24 @@ public class ConferenceService {
             }
         }
         
-        //Decorate rooms with contact and displayname
-        return rooms;
+        return decorateRooms(rooms);
     }
     
-    public Room getRoom(String room) {
-        Access.checkRoomAccess(room);
-        return roomRepository.findOne(room);
+    public Room getRoom(String roomId) {
+        Access.checkRoomAccess(roomId);
+        Room room = roomRepository.findOne(roomId);
+        if(room != null) {
+            decorateRoom(room);
+        }
+        return room;
+    }
+    
+    /**
+     * Saves contact information for the room. It does not save any other information.
+     */
+    public void saveRoom(Room room) {
+        Access.checkRoomAccess(room.getId());
+        contactRepository.save(room.getId(), room.getContact());
     }
     
     /**
@@ -152,6 +178,20 @@ public class ConferenceService {
             participant.setName(entry.getName());
         }
         return participant;
+    }
+    
+    private List<Room> decorateRooms(List<Room> rooms) {
+        for(Room room : rooms) {
+            decorateRoom(room);
+        }return rooms;
+    }
+    
+    private Room decorateRoom(Room room) {
+        if(room != null) {
+            Contact contact = contactRepository.findByRoomId(room.getId());
+            room.setContact(contact);
+        }
+        return room;
     }
     
 }
