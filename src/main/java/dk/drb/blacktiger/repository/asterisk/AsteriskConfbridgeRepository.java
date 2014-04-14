@@ -109,14 +109,15 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         if (event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
             // A DTMF event has been received. We need to retrieve roomId and callerId. 
             String roomId = channelRoomMap.get(event.getChannel());
-            //String callerId = channelCallerIdMap.get(event.getChannel());
-
+            
             ConferenceEvent ce = null;
             switch (event.getDigit()) {
                 case DIGIT_COMMENT_REQUEST:
+                    LOG.debug("Dtmf Event is a Comment Request.");
                     ce = new ParticipantCommentRequestEvent(roomId, normalizeChannelName(event.getChannel()));
                     break;
                 case DIGIT_COMMENT_REQUEST_CANCEL:
+                    LOG.debug("Dtmf Event is a Comment Cancel Request.");
                     ce = new ParticipantCommentRequestCancelEvent(roomId, normalizeChannelName(event.getChannel()));
                     break;
             }

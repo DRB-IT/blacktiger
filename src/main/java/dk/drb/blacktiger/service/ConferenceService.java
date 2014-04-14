@@ -40,6 +40,7 @@ public class ConferenceService {
         @Override
         public void onParticipantEvent(ConferenceEvent event) {
             if(event instanceof ParticipantJoinEvent) {
+                LOG.debug("Decorating event with phonebook information.");
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
                 Participant p = decorateWithPhonebookInformation(joinEvent.getParticipant());
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);

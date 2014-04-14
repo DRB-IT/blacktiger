@@ -9,12 +9,15 @@ import java.util.TimerTask;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.manager.ManagerEventListener;
 import org.asteriskjava.manager.event.ManagerEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author michael
  */
 public abstract class AbstractAsteriskConferenceRepository implements ManagerEventListener {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractAsteriskConferenceRepository.class);
     protected List<ConferenceEventListener> eventListeners = new ArrayList<>();
     protected Timer eventTimer = new Timer();
     protected AsteriskServer asteriskServer;
@@ -28,6 +31,7 @@ public abstract class AbstractAsteriskConferenceRepository implements ManagerEve
     public abstract void onManagerEvent(ManagerEvent event);
     
     protected void fireEvent(final ConferenceEvent event) {
+        LOG.debug("Firering conferenceevent to {} listeners.", eventListeners.size());
         for (ConferenceEventListener listener : eventListeners) {
             listener.onParticipantEvent(event);
         }
