@@ -5,7 +5,6 @@ import dk.drb.blacktiger.model.ConferenceEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.manager.ManagerEventListener;
 import org.asteriskjava.manager.event.ManagerEvent;
@@ -31,7 +30,7 @@ public abstract class AbstractAsteriskConferenceRepository implements ManagerEve
     public abstract void onManagerEvent(ManagerEvent event);
     
     protected void fireEvent(final ConferenceEvent event) {
-        LOG.debug("Firering conferenceevent to {} listeners.", eventListeners.size());
+        LOG.debug("Firering conferenceevent to {} listeners. [event={}]", eventListeners.size(), event);
         for (ConferenceEventListener listener : eventListeners) {
             listener.onParticipantEvent(event);
         }
