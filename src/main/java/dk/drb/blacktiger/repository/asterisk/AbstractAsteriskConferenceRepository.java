@@ -38,16 +38,22 @@ public abstract class AbstractAsteriskConferenceRepository implements ManagerEve
     }
     
     public void addEventListener(ConferenceEventListener listener) {
+        LOG.debug("Adding ConferenceEventListener [listener={}]", listener);
+   
         if (listener != null) {
             eventListeners.add(listener);
         }
     }
 
     public void setAsteriskServer(AsteriskServer asteriskServer) {
+        LOG.info("Setting asteriskServer for ConferenceRepository. [server={}]", asteriskServer);
         if (this.asteriskServer != null) {
+            LOG.debug("Removing existing managerEventListener");
             this.asteriskServer.getManagerConnection().removeEventListener(managerEventListener);
         }
         this.asteriskServer = asteriskServer;
+   
+        LOG.debug("Adding managerEventListener");
         this.asteriskServer.getManagerConnection().addEventListener(managerEventListener);
     }
     

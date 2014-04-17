@@ -67,11 +67,13 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private final Queue<ManagerEvent> managerEvents = new LinkedList<>();
 
     public AsteriskConfbridgeRepository() {
+        LOG.debug("Instantiating AsteriskConfbridgeRepository");
         setManagerEventListener(this);
     }
 
     @Override
     public void onManagerEvent(final ManagerEvent event) {
+        LOG.debug("Manager event recieved and being added to queue. [event={}]", event);
         try {
             managerEvents.add(event);
         } catch (IllegalStateException ex) {
