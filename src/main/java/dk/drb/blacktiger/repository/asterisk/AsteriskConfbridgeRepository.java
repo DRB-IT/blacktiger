@@ -330,8 +330,8 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     private void setMutenessOfParticipant(String roomId, String channel, boolean value) {
-        // Because Asterisk 11 does not send events when muteness changes, we have to keep that info here ourselves.
-        // That also means that we have no idea if other parties mutes a user
+        // Because Asterisk 11 does not send events when muteness changes and also does not carry any information whether a channel is muted or not,
+        // we have to keep that info here ourselves. That also means that we have no idea if other parties mutes a user.
         
         String denormChannel = denormalizeChannelName(channel);
         
