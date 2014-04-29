@@ -8,7 +8,6 @@ import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.model.User;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
-import dk.drb.blacktiger.repository.UserRepository;
 import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -32,29 +31,11 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(InMemConferenceRoomRepository.class);
     private List<Room> rooms = new ArrayList<>();
-    private UserRepository userRepository;
     private Map<String, List<Participant>> participantMap = new HashMap<>();
     private List<ConferenceEventListener> eventListeners = new ArrayList<>();
     private int userCount;
     private final NumberFormat phoneNumberFormat = NumberFormat.getIntegerInstance();
 
-    @PostConstruct
-    protected void init() {
-        for(User user : userRepository.findAll()) {
-            rooms.add(new Room(user.getUsername(), "Test Kingdom Hall " + user.getUsername()));
-        }
-        
-        phoneNumberFormat.setMinimumIntegerDigits(8);
-        phoneNumberFormat.setGroupingUsed(false);
-        
-        for (User user : userRepository.findAll()) {
-            List<Participant> list = new ArrayList<>();
-            String id = user.getUsername();
-            list.add(new Participant(id, "Test Host for Kingdom Hall " + id, id, false, true, CallType.Sip, new Date()));
-            participantMap.put(id, list);
-        }
-    }
-    
     @Scheduled(fixedDelay = 50)
     public void maintain() {
         LOG.debug("Adding user.");
@@ -84,11 +65,6 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
                 fireLeaveEvent(roomNo, p.getCallerId());
             }
         }
-    }
-    
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
     }
     
     @Override

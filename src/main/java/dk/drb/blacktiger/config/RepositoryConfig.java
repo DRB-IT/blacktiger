@@ -5,7 +5,6 @@ import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.SipAccountRepository;
-import dk.drb.blacktiger.repository.UserRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
@@ -15,7 +14,6 @@ import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
 import dk.drb.blacktiger.repository.memory.InMemSipAccountRepository;
-import dk.drb.blacktiger.repository.memory.InMemUserRepository;
 import dk.drb.blacktiger.repository.memory.InMemoryContactRepository;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -84,17 +82,6 @@ public class RepositoryConfig {
             repo.setEncryptionKey(encryptionKey);
             LOG.info("Creating JdbcPhonebookRepository instance [datasource={};encryptionKey={}]", asteriskDataSource != null, encryptionKey != null);
             return repo;
-        }
-    }
-
-    @Bean
-    public UserRepository userRepository() {
-        if(test) {
-            LOG.info("** USING InMemUserRepository FOR TEST **");
-            return new InMemUserRepository();
-        } else {
-            LOG.error("There is no REAL UserRepository.");
-            return null;
         }
     }
     

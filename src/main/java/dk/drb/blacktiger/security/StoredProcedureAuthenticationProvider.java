@@ -1,6 +1,5 @@
 package dk.drb.blacktiger.security;
 
-import static dk.drb.blacktiger.security.SystemUserDetailsManager.ROLE_ROOMACCESS_PREFIX;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +28,7 @@ import org.springframework.util.Assert;
  */
 public class StoredProcedureAuthenticationProvider implements AuthenticationProvider {
 
+    public static final String ROLE_ROOMACCESS_PREFIX = "ROLE_ROOMACCESS_";
     private static final Logger LOG = LoggerFactory.getLogger(StoredProcedureAuthenticationProvider.class);
     private JdbcTemplate jdbcTemplate;
     private String encryptionKey;
