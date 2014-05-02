@@ -4,17 +4,20 @@ import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
+import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.repository.SipAccountRepository;
 import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcContactRepository;
+import dk.drb.blacktiger.repository.jdbc.JdbcRoomInfoRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemCallInformationRepository;
 import dk.drb.blacktiger.repository.memory.InMemConferenceRoomRepository;
 import dk.drb.blacktiger.repository.memory.InMemPhonebookRepository;
 import dk.drb.blacktiger.repository.memory.InMemSipAccountRepository;
 import dk.drb.blacktiger.repository.memory.InMemoryContactRepository;
+import dk.drb.blacktiger.repository.memory.InMemoryRoomInfoRepository;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.asteriskjava.live.AsteriskServer;
@@ -119,6 +122,21 @@ public class RepositoryConfig {
             repo.setDataSource(asteriskDataSource);
             repo.setEncryptionKey(encryptionKey);
             LOG.info("Creating JdbcContactRepository instance [datasource={};encryptionKey={}]", asteriskDataSource != null, encryptionKey != null);
+            return repo;
+        }
+    }
+    
+    @Bean
+    public RoomInfoRepository roomInfoRepository() {
+        if(test) {
+            LOG.info("** Using RoomInfoRepository FOR TEST **");
+            return new InMemoryRoomInfoRepository();
+        } else {
+            String encryptionKey = env.getProperty("encryptionKey");
+            JdbcRoomInfoRepository repo = new JdbcRoomInfoRepository();
+            repo.setDataSource(asteriskDataSource);
+            repo.setEncryptionKey(encryptionKey);
+            LOG.info("Creating JdbcRoomInfoRepository instance [datasource={};encryptionKey={}]", asteriskDataSource != null, encryptionKey != null);
             return repo;
         }
     }

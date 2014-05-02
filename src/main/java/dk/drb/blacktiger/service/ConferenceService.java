@@ -10,6 +10,7 @@ import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
+import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class ConferenceService {
     private PhonebookRepository phonebookRepository;
     private ConferenceRoomRepository roomRepository;
     private ContactRepository contactRepository;
+    private RoomInfoRepository roomInfoRepository;
     
     private class ConferenceEventListenerWrapper implements ConferenceEventListener {
 
@@ -55,6 +57,7 @@ public class ConferenceService {
         Assert.notNull(phonebookRepository, "PhonebookRepository must be specified. Was null.");
         Assert.notNull(contactRepository, "ContactRepository must be specified. Was null.");
         Assert.notNull(roomRepository, "RoomRepository must be specified. Was null.");
+        Assert.notNull(roomInfoRepository, "RoomInfoRepository must be specified. Was null.");
     }
 
     @Autowired
@@ -70,6 +73,11 @@ public class ConferenceService {
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
+    }
+
+    @Autowired
+    public void setRoomInfoRepository(RoomInfoRepository roomInfoRepository) {
+        this.roomInfoRepository = roomInfoRepository;
     }
     
     public List<Room> listRooms() {
@@ -189,8 +197,16 @@ public class ConferenceService {
     
     private Room decorateRoom(Room room) {
         if(room != null) {
+            Room roomInfo = roomInfoRepository.findById(room.getId());
+            if(roomInfo == null) {
+                // If no room found then just make an empty one to merge in.
+                roomInfo = new Room();
+            }
+            
             Contact contact = contactRepository.findByRoomId(room.getId());
-            room.setContact(contact);
+            roomInfo.setContact(contact);
+            
+            room.mergeIn(roomInfo);
         }
         return room;
     }

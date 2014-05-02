@@ -7,6 +7,7 @@ import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
+import dk.drb.blacktiger.repository.RoomInfoRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,6 +35,7 @@ public class ConferenceServiceTest {
     private PhonebookRepository phonebookRepository;
     private ConferenceService service;
     private ContactRepository contactRepository;
+    private RoomInfoRepository roomInfoRepository;
     
     private Answer<List<Room>> answerSubselectedRooms() {
         return new Answer<List<Room>>() {
@@ -81,11 +83,13 @@ public class ConferenceServiceTest {
         
         contactRepository = Mockito.mock(ContactRepository.class);
         
+        roomInfoRepository = Mockito.mock(RoomInfoRepository.class);
+        
         service = new ConferenceService();
         service.setRoomRepository(conferenceRoomRepository);
         service.setPhonebookRepository(phonebookRepository);
         service.setContactRepository(contactRepository);
-        
+        service.setRoomInfoRepository(roomInfoRepository);
     }
     
     @Test
