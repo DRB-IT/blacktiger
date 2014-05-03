@@ -89,12 +89,20 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
     public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber) {
         GetSipSP sp = new GetSipSP(jdbcTemplate);
         Map<String, String> map = sp.execute(phoneNumber, key);
-        SipAccount account = new SipAccount();
-        account.setName(map.get("name"));
-        account.setPhoneNumber(map.get("phoneNumber"));
-        account.setSipId(map.get("sip_id"));
-        account.setSipPass(map.get("sip_pass"));
-        return account;
+        
+        if(map.get("name") == null &&
+                map.get("phoneNumber") == null &&
+                map.get("sip_id") == null &&
+                map.get("sip_pass") == null) {
+            return null;
+        } else {
+            SipAccount account = new SipAccount();
+            account.setName(map.get("name"));
+            account.setPhoneNumber(map.get("phoneNumber"));
+            account.setSipId(map.get("sip_id"));
+            account.setSipPass(map.get("sip_pass"));
+            return account;
+        }
     }
 
     @Override
