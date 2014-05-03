@@ -7,6 +7,6 @@ import dk.drb.blacktiger.model.PhonebookEntry;
  */
 public interface PhonebookRepository {
     
-    PhonebookEntry findByCallerId(String number);
-    PhonebookEntry save(PhonebookEntry entry);
+    PhonebookEntry findByCallerId(String hallCalling, String number);
+    PhonebookEntry save(String hallCalling, PhonebookEntry entry);
 }

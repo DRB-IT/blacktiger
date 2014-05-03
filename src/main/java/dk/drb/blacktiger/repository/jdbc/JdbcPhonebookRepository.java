@@ -84,9 +84,9 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     }
     
     @Override
-    public PhonebookEntry findByCallerId(String number) {
+    public PhonebookEntry findByCallerId(String hallCalling, String number) {
         GetNameStoredProcedure procedure = new GetNameStoredProcedure(jdbcTemplate);
-        Map data = procedure.execute(number, "<UNKNOWN>");
+        Map data = procedure.execute(number, hallCalling);
         
         String name = (String)data.get("name");
         if(name.startsWith("*ERROR*")) {
@@ -98,9 +98,9 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     }
 
     @Override
-    public PhonebookEntry save(PhonebookEntry entry) {
+    public PhonebookEntry save(String hallCalling, PhonebookEntry entry) {
         ChangeNameStoredProcedure procedure = new ChangeNameStoredProcedure(jdbcTemplate);
-        String name = procedure.execute(entry.getNumber(), entry.getName(), "<UNKNOWN>");
+        String name = procedure.execute(entry.getNumber(), entry.getName(), hallCalling);
         return new PhonebookEntry(entry.getNumber(), name);
     }
     

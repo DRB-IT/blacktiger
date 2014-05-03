@@ -60,7 +60,7 @@ public class ConferenceServiceTest {
             @Override
             public List<Participant> answer(InvocationOnMock invocation) throws Throwable {
                 List<Participant> list = new ArrayList<>();
-                list.add(new Participant("#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date()));
+                list.add(new Participant("SIP/#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date()));
                 return list;
             }
         };
@@ -69,7 +69,7 @@ public class ConferenceServiceTest {
     @Before
     public void init() {
         rooms = new ArrayList<>();
-        rooms.add(new Room("H45-0000", "Number 1"));
+        rooms.add(new Room("H45-0000-1", "Number 1"));
         rooms.add(new Room("H45-0001", "Number 2"));
         rooms.add(new Room("H45-0002", "Number 3"));
         rooms.add(new Room("H45-0003", "Number 4"));
@@ -104,7 +104,7 @@ public class ConferenceServiceTest {
     @Test
     public void ifNormalUserCanOnlyRetrieveASubset() {
         Collection<? extends GrantedAuthority> auths = Arrays.asList(
-                (GrantedAuthority)new SimpleGrantedAuthority("ROLE_ROOMACCESS_H45-0000"),
+                (GrantedAuthority)new SimpleGrantedAuthority("ROLE_ROOMACCESS_H45-0000-1"),
                 (GrantedAuthority)new SimpleGrantedAuthority("ROLE_ROOMACCESS_H45-0001"));
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("john", "doe", auths));
         
@@ -115,10 +115,10 @@ public class ConferenceServiceTest {
     @Test
     public void ifParticipantsAreDecoratedByPhonebookEntries() {
         Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_ADMIN"));
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("john", "doe", auths));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("H45-0000-1", "doe", auths));
         
-        Mockito.when(phonebookRepository.findByCallerId("#00000001")).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
-        List<Participant> participants = service.listParticipants("H45-0000");
+        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
+        List<Participant> participants = service.listParticipants("H45-0000-1");
         assertEquals(1, participants.size());
         assertEquals("Jane Doe", participants.get(0).getName());
         assertEquals("+4512345678", participants.get(0).getPhoneNumber());

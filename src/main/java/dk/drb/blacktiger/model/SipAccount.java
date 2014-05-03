@@ -11,6 +11,8 @@ public class SipAccount {
     private String name;
     private String email;
     private String phoneNumber;
+    private String sipId;
+    private String sipPass;
 
     public String getName() {
         return name;
@@ -36,6 +38,22 @@ public class SipAccount {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getSipId() {
+        return sipId;
+    }
+
+    public void setSipId(String sipId) {
+        this.sipId = sipId;
+    }
+
+    public String getSipPass() {
+        return sipPass;
+    }
+
+    public void setSipPass(String sipPass) {
+        this.sipPass = sipPass;
+    }
+    
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

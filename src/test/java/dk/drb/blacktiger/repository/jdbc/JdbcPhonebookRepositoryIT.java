@@ -30,7 +30,7 @@ public class JdbcPhonebookRepositoryIT {
     public void testFindByCallerId() {
         System.out.println("findByCallerId");
         
-        PhonebookEntry result = repo.findByCallerId("#00000000");
+        PhonebookEntry result = repo.findByCallerId("H45-0000-1", "#00000000");
         assertNotNull(result);
         
         assertEquals("John Doe", result.getName());
@@ -44,10 +44,10 @@ public class JdbcPhonebookRepositoryIT {
     public void testSave() {
         System.out.println("save");
         PhonebookEntry entry = new PhonebookEntry("+4599999901", "Jane Doe");
-        PhonebookEntry result = repo.save(entry);
+        PhonebookEntry result = repo.save("H45-0000-1", entry);
         assertEquals("Jane Doe", result.getName());
         
-        result = repo.findByCallerId("+4599999901");
+        result = repo.findByCallerId("H45-0000-1", "+4599999901");
         assertEquals("Jane Doe", result.getName());
     }
     

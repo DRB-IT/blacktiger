@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class SipAccountRestDataFixture {
     
-    public static List<SipAccount> standardList() {
+    public static SipAccount standard() {
         SipAccount account = new SipAccount();
         account.setName("John Doe");
         account.setEmail("john@doe.dk");
         account.setPhoneNumber("+4512345678");
-        List<SipAccount> list = new ArrayList<SipAccount>();
-        list.add(account);
-        return list;
+        account.setSipId("#00000000");
+        account.setSipPass("12345");
+        return account;
     }
     
     public static String standardAccountAsJson() {

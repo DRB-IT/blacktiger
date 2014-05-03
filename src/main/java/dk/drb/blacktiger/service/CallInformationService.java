@@ -8,6 +8,8 @@ import dk.drb.blacktiger.util.Access;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -34,11 +36,14 @@ public class CallInformationService {
      * @param minimumDuration The minimum duration in seconds for each call to include.
      * @return The list of archived calls.
      */
+    @Secured("ROLE_USER")
     public List<CallInformation> getReport(String roomNo, Date start, Date end, int minimumDuration, String[] numbers) {
         Access.checkRoomAccess(roomNo);
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        
         List<CallInformation> list = repository.findByRoomNoAndPeriodAndDurationAndNumbers(roomNo, start, end, minimumDuration, numbers);
         for(CallInformation info : list) {
-            PhonebookEntry entry = phonebookRepository.findByCallerId(info.getPhoneNumber());
+            PhonebookEntry entry = phonebookRepository.findByCallerId(hall, info.getPhoneNumber());
             if(entry != null) {
                 info.setName(entry.getName());
             }

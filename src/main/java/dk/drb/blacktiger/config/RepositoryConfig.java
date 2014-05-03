@@ -107,7 +107,12 @@ public class RepositoryConfig {
             LOG.info("** USING InMemSipAccountRepository FOR TEST **");
             return new InMemSipAccountRepository();
         } else {
-            return new JdbcSipAccountRepository();
+            String encryptionKey = env.getProperty("encryptionKey");
+            JdbcSipAccountRepository repo = new JdbcSipAccountRepository();
+            repo.setDataSource(asteriskDataSource);
+            repo.setEncryptionKey(encryptionKey);
+            LOG.info("Creating JdbcSipAccountRepository instance [datasource={};encryptionKey={}]", asteriskDataSource != null, encryptionKey != null);
+            return repo;
         }
     }
     

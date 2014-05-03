@@ -8,6 +8,6 @@ import java.util.List;
  * @author michael
  */
 public interface SipAccountRepository {
-    public List<SipAccount> findByKeyAndPhonenumber(String key, String phoneNumber);
-    public void save(SipAccount account);
+    public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber);
+    public void save(String hall, SipAccount account);
 }

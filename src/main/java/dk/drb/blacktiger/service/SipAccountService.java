@@ -5,6 +5,7 @@ import dk.drb.blacktiger.repository.SipAccountRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -19,12 +20,13 @@ public class SipAccountService {
         this.sipAccountRepository = sipAccountRepository;
     }
     
-    public List<SipAccount> findByKeyAndPhonenumber(String key, String phoneNumber) {
-        return sipAccountRepository.findByKeyAndPhonenumber(key, phoneNumber);
+    public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber) {
+        return sipAccountRepository.findOneByKeyAndPhonenumber(key, phoneNumber);
     }
     
     @Secured("ROLE_USER")
     public void save(SipAccount account) {
-        sipAccountRepository.save(account);
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        sipAccountRepository.save(hall, account);
     }
 }

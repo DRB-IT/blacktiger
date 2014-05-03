@@ -4,6 +4,7 @@ import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -25,7 +26,9 @@ public class PhonebookService {
      */
     @Secured("ROLE_USER")
     public String getPhonebookEntry(String phoneNumber) {
-        PhonebookEntry entry = repository.findByCallerId(phoneNumber);
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        PhonebookEntry entry = repository.findByCallerId(hall, phoneNumber);
         if(entry != null) {
             return entry.getName();
         } else {
@@ -40,13 +43,15 @@ public class PhonebookService {
      */
     @Secured("ROLE_USER")
     public void updatePhonebookEntry(String phoneNumber, String name) {
-        PhonebookEntry entry = repository.findByCallerId(phoneNumber);
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        PhonebookEntry entry = repository.findByCallerId(hall, phoneNumber);
         if(entry != null) {
             entry = new PhonebookEntry(entry.getNumber(), name);
         } else {
             entry = new PhonebookEntry(phoneNumber, name);
         }
-        repository.save(entry);
+        repository.save(hall, entry);
     }
     
 }

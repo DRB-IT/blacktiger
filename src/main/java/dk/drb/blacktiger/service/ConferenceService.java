@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 
 /**
@@ -181,7 +182,9 @@ public class ConferenceService {
     }
     
     private Participant decorateWithPhonebookInformation(Participant participant) {
-        PhonebookEntry entry = phonebookRepository.findByCallerId(participant.getCallerId());
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        
+        PhonebookEntry entry = phonebookRepository.findByCallerId(hall, participant.getCallerId());
         if(entry != null) {
             participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());

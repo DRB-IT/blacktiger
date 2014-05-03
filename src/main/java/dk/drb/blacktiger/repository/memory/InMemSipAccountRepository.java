@@ -21,17 +21,12 @@ public class InMemSipAccountRepository implements SipAccountRepository {
     private Map<String, SipAccount> accountMap = new HashMap<>();
     
     @Override
-    public List<SipAccount> findByKeyAndPhonenumber(String key, String phoneNumber) {
-        List<SipAccount> accounts = new ArrayList<>();
-        SipAccount account = accountMap.get(key);
-        if(account!=null) {
-            accounts.add(account);
-        }
-        return accounts;
+    public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber) {
+        return accountMap.get(key);
     }
 
     @Override
-    public void save(SipAccount account) {
+    public void save(String hall, SipAccount account) {
         String id = UUID.randomUUID().toString();
         LOG.info("Saving sipaccount. [id={}, account={}", id, account);
         accountMap.put(id, account);

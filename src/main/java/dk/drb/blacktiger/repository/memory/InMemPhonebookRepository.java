@@ -10,12 +10,12 @@ public class InMemPhonebookRepository implements PhonebookRepository {
     private Map<String, PhonebookEntry> phonebook = new HashMap<>();
     
     @Override
-    public PhonebookEntry findByCallerId(String number) {
+    public PhonebookEntry findByCallerId(String hallCalling, String number) {
         return phonebook.get(number);
     }
 
     @Override
-    public PhonebookEntry save(PhonebookEntry entity) {
+    public PhonebookEntry save(String hallCalling, PhonebookEntry entity) {
         phonebook.put(entity.getNumber(), entity);
         return entity;
     }
