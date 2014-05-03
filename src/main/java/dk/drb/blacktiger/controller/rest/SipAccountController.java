@@ -24,7 +24,7 @@ public class SipAccountController {
     @RequestMapping(value="/sipaccounts/{phoneNumber}", method = RequestMethod.GET)
     @ResponseBody
     public SipAccount listAccounts(@RequestParam String key, @PathVariable String phoneNumber) {
-        return RestExceptionHandler.notNull(service.findOneByKeyAndPhonenumber(key, phoneNumber));
+        return RestExceptionHandler.notNull(service.findOneByKeyAndPhonenumber(key, phoneNumber), "SipAccount not found.");
     }
     
     @RequestMapping(value="/sipaccounts", method = RequestMethod.POST)

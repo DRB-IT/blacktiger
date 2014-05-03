@@ -44,10 +44,6 @@ public class PhonebookController {
     @ResponseBody
     public String get(@PathVariable final String number) {
         LOG.debug("Retrieving phonebook entry. [number={}]", number);
-        String value = service.getPhonebookEntry(number);
-        if(value == null) {
-            throw new ResourceNotFoundException("Phonenumber(" + number + ") not in phonebook.");
-        }
-        return value;
+        return RestExceptionHandler.notNull(service.getPhonebookEntry(number), "Phonenumber(" + number + ") not in phonebook.");
     }
 }

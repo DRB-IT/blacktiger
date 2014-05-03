@@ -38,7 +38,7 @@ public class RestExceptionHandler {
         return new RestError(ex.getMessage());
     }
     
-    public static <T> T notNull(T object) {
+    public static <T> T notNull(T object, String message) {
         if(object == null) {
             throw new ResourceNotFoundException("The resource could not be found.");
         }

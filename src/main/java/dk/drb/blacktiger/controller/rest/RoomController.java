@@ -5,6 +5,7 @@ import java.util.List;
 
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.service.ConferenceService;
+import groovy.util.ResourceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +49,7 @@ public class RoomController {
     @ResponseBody
     public Room get(@PathVariable final String roomNo) {
         LOG.debug("Got request for specific room '{}'.", roomNo);
-        Room room = service.getRoom(roomNo);
-        if(room == null) {
-            throw new ResourceNotFoundException("Room does not exist.");
-        }
-        return room;
+        return RestExceptionHandler.notNull(service.getRoom(roomNo), "Room does not exist.");
     }
 
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json", method = RequestMethod.PUT)
