@@ -37,4 +37,11 @@ public class RestExceptionHandler {
     public RestError handleSecurityException(DataAccessException ex) {
         return new RestError(ex.getMessage());
     }
+    
+    public static <T> T notNull(T object) {
+        if(object == null) {
+            throw new ResourceNotFoundException("The resource could not be found.");
+        }
+        return object;
+    }
 }
