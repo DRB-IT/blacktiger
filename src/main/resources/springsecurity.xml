@@ -17,7 +17,7 @@
         <intercept-url pattern="/system/**" access="ROLE_USER" />
         <intercept-url pattern="/phonebook/**" access="ROLE_USER" />
         <intercept-url pattern="/reports/**" access="ROLE_USER" />
-        <http-basic/>
+        <http-basic entry-point-ref="restAuthenticationEntryPoint"/>
     </http>
     
     <http disable-url-rewriting="true">
