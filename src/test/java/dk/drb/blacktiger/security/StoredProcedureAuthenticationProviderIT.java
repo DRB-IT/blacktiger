@@ -21,7 +21,7 @@ public class StoredProcedureAuthenticationProviderIT {
     @Test
     public void testAuthenticate() {
         System.out.println("authenticate");
-        Authentication authentication = new UsernamePasswordAuthenticationToken("H45-0000", "12345");
+        Authentication authentication = new UsernamePasswordAuthenticationToken("H45-0000-1", "12345");
         DataSource dataSource = new DriverManagerDataSource("jdbc:mysql://192.168.50.2:3306/telesal", "root", "root");
         StoredProcedureAuthenticationProvider instance = new StoredProcedureAuthenticationProvider();
         instance.setDataSource(dataSource);

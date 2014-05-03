@@ -32,18 +32,18 @@ public class JdbcContactRepositoryIT {
     @Test
     public void testGetAndSave() {
         System.out.println("save");
-        Contact orgEntry = repo.findByRoomId("H45-0000");
+        Contact orgEntry = repo.findByRoomId("H45-0000-1");
         
         Contact entry = new Contact("Jane Doe", "jane@doe.dk", "+4512341234", "Doooe!");
-        repo.save("H45-0000", entry);
+        repo.save("H45-0000-1", entry);
         
-        entry = repo.findByRoomId("H45-0000");
+        entry = repo.findByRoomId("H45-0000-1");
         assertEquals("Jane Doe", entry.getName());
         
         
-        repo.save("H45-0000", orgEntry);
+        repo.save("H45-0000-1", orgEntry);
         
-        entry = repo.findByRoomId("H45-0000");
+        entry = repo.findByRoomId("H45-0000-1");
         assertEquals(orgEntry.getName(), entry.getName());
         
     }
