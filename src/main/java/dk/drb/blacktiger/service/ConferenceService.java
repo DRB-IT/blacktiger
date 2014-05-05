@@ -45,7 +45,7 @@ public class ConferenceService {
             if(event instanceof ParticipantJoinEvent) {
                 LOG.debug("Decorating event with phonebook information.");
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
-                Participant p = decorateWithPhonebookInformation(joinEvent.getParticipant());
+                Participant p = decorateWithPhonebookInformation(joinEvent.getRoomNo(), joinEvent.getParticipant());
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
             }
             wrapped.onParticipantEvent(event);
@@ -120,7 +120,8 @@ public class ConferenceService {
     public List<Participant> listParticipants(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
         Access.checkRoomAccess(roomNo);
-        return decorateWithPhonebookInformation(roomRepository.findByRoomNo(roomNo));
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        return decorateWithPhonebookInformation(hall, roomRepository.findByRoomNo(roomNo));
     }
 
     /**
@@ -133,7 +134,8 @@ public class ConferenceService {
     public Participant getParticipant(String roomNo, String channel) {
         LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, channel);
         Access.checkRoomAccess(roomNo);
-        return decorateWithPhonebookInformation(roomRepository.findByRoomNoAndChannel(roomNo, channel));
+        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
+        return decorateWithPhonebookInformation(hall, roomRepository.findByRoomNoAndChannel(roomNo, channel));
     }
 
     /**
@@ -174,16 +176,14 @@ public class ConferenceService {
         roomRepository.removeEventListener(listener);
     }
     
-    private List<Participant> decorateWithPhonebookInformation(List<Participant> participants) {
+    private List<Participant> decorateWithPhonebookInformation(String hall, List<Participant> participants) {
         for(Participant p : participants) {
-            decorateWithPhonebookInformation(p);
+            decorateWithPhonebookInformation(hall, p);
         }
         return participants;
     }
     
-    private Participant decorateWithPhonebookInformation(Participant participant) {
-        String hall = SecurityContextHolder.getContext().getAuthentication().getName();
-        
+    private Participant decorateWithPhonebookInformation(String hall, Participant participant) {
         PhonebookEntry entry = phonebookRepository.findByCallerId(hall, participant.getCallerId());
         if(entry != null) {
             participant.setPhoneNumber(entry.getNumber());

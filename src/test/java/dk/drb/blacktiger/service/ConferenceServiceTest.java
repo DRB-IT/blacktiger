@@ -1,7 +1,10 @@
 package dk.drb.blacktiger.service;
 
 import dk.drb.blacktiger.model.CallType;
+import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
@@ -36,6 +39,10 @@ public class ConferenceServiceTest {
     private ConferenceService service;
     private ContactRepository contactRepository;
     private RoomInfoRepository roomInfoRepository;
+    private ConferenceEventListener conferenceEventListener;
+    private List<Participant> participants = Arrays.asList(new Participant[]{
+        new Participant("SIP/#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date())
+    });
     
     private Answer<List<Room>> answerSubselectedRooms() {
         return new Answer<List<Room>>() {
@@ -59,9 +66,18 @@ public class ConferenceServiceTest {
 
             @Override
             public List<Participant> answer(InvocationOnMock invocation) throws Throwable {
-                List<Participant> list = new ArrayList<>();
-                list.add(new Participant("SIP/#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date()));
-                return list;
+                return participants;
+            }
+        };
+    }
+    
+    private Answer<Void> answerAddConfListener() {
+        return new Answer<Void>() {
+
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                conferenceEventListener = (ConferenceEventListener) invocation.getArguments()[0];
+                return null;
             }
         };
     }
@@ -78,6 +94,7 @@ public class ConferenceServiceTest {
         Mockito.when(conferenceRoomRepository.findAll()).thenReturn(rooms);
         Mockito.when(conferenceRoomRepository.findAllByIds(Mockito.anyList())).then(answerSubselectedRooms());
         Mockito.when(conferenceRoomRepository.findByRoomNo(Mockito.anyString())).then(answerParticipants());
+        Mockito.doAnswer(answerAddConfListener()).when(conferenceRoomRepository).addEventListener(Mockito.any(ConferenceEventListener.class));
         
         phonebookRepository = Mockito.mock(PhonebookRepository.class);
         
@@ -99,6 +116,7 @@ public class ConferenceServiceTest {
         
         List<Room> result = service.listRooms();
         assertEquals(4, result.size());
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
     
     @Test
@@ -110,6 +128,7 @@ public class ConferenceServiceTest {
         
         List<Room> result = service.listRooms();
         assertEquals(2, result.size());
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
     
     @Test
@@ -122,5 +141,28 @@ public class ConferenceServiceTest {
         assertEquals(1, participants.size());
         assertEquals("Jane Doe", participants.get(0).getName());
         assertEquals("+4512345678", participants.get(0).getPhoneNumber());
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
+    
+    @Test
+    public void ifJoinEventsAreDecorated() {
+        final ConferenceEvent[] eventArray = new ConferenceEvent[1];
+        
+        service.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                eventArray[0] = event;
+            }
+        });
+        
+        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
+        
+        conferenceEventListener.onParticipantEvent(new ParticipantJoinEvent("H45-0000-1", participants.get(0)));
+        
+        Participant p = ((ParticipantJoinEvent) eventArray[0]).getParticipant();
+        assertEquals("Jane Doe", p.getName());
+        assertEquals("+4512345678", p.getPhoneNumber());
+        
     }
 }
