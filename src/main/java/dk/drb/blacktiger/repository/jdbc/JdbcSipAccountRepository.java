@@ -1,11 +1,9 @@
 package dk.drb.blacktiger.repository.jdbc;
 
-import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.SipAccount;
 import dk.drb.blacktiger.repository.SipAccountRepository;
 import java.sql.Types;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -40,6 +38,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
         }
 
         public void execute(String phoneNumber, String name, String email, String hall) {
+            LOG.debug("Executing Stored Procedure [phoneNumber={};name={};email={};hall={}]", new Object[]{phoneNumber, name, email, hall});
             Map<String, Object> params = new HashMap<>();
             params.put("number", phoneNumber);
             params.put("name", name);
@@ -65,6 +64,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
         }
 
         public Map execute(String number, String key) {
+            LOG.debug("Executing Stored Procedure [number=;key=]", number, key);
             Map<String, Object> params = new HashMap<>();
             params.put("user_number", number);
             params.put("user_key", key);
@@ -84,9 +84,11 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
     @PostConstruct
     protected void init() {
         Assert.notNull(encryptionKey, "Encryption key not set.");
+        Assert.notNull(jdbcTemplate, "datasource not set.");
     }
     @Override
     public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber) {
+        LOG.debug("Retrieving phonenumber [key={};phoneNumber={}]", key, phoneNumber);
         GetSipSP sp = new GetSipSP(jdbcTemplate);
         Map<String, String> map = sp.execute(phoneNumber, key);
         
@@ -94,8 +96,10 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
                 map.get("phoneNumber") == null &&
                 map.get("sip_id") == null &&
                 map.get("sip_pass") == null) {
+            LOG.debug("No data in data returned from stored procedure. Returning null to caller.");
             return null;
         } else {
+            LOG.debug("Data successfully retrieved from stored procedure. Building and returning SipAccount object.");
             SipAccount account = new SipAccount();
             account.setName(map.get("name"));
             account.setPhoneNumber(map.get("phoneNumber"));
@@ -107,6 +111,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
 
     @Override
     public void save(String hall, SipAccount account) {
+        LOG.info("Creating new SipAccount. [hall={};account={}]", hall, account);
         CreateComputerCallerSP sp = new CreateComputerCallerSP(jdbcTemplate);
         sp.execute(account.getPhoneNumber(), account.getName(), account.getEmail(), hall);
     }
