@@ -19,12 +19,14 @@ CREATE TABLE callers (
 # SIP accounts which must be created or given a new password
 #DROP TABLE new_accounts;
 CREATE TABLE new_accounts (
-	id INT NOT NULL UNIQUE,
-	e_mail VARCHAR(256),
-	url_param VARCHAR(16),
-	sip_id VARCHAR(16),
-	sip_pw VARCHAR(16),
-	PRIMARY KEY (id)
+        id INT NOT NULL UNIQUE,
+        e_mail VARCHAR(256),
+        url_param VARCHAR(16),
+        sip_id VARCHAR(16),
+        sip_pw VARCHAR(16),
+        countrycode VARCHAR(4),
+        mail_text BLOB,
+        PRIMARY KEY (id)
 );
 
 # Log of all calls
