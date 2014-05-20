@@ -1,6 +1,7 @@
 package dk.drb.blacktiger.controller.rest;
 
 import static dk.drb.blacktiger.fixture.rest.SipAccountRestDataFixture.*;
+import dk.drb.blacktiger.model.SipAccount;
 import dk.drb.blacktiger.service.SipAccountService;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.any;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -43,7 +45,7 @@ public class SipAccountControllerTest {
 
     @Test
     public void thatEntryCanBeCreated() throws Exception {
-        
+        when(service.save(any(SipAccount.class))).thenReturn(Boolean.TRUE);
         this.mockMvc.perform(post("/sipaccounts").content(standardAccountAsJson())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
