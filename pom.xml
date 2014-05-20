@@ -291,6 +291,36 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>maven-replacer-plugin</artifactId>
+        <executions>
+            <execution>
+                <phase>compile</phase>
+                <goals>
+                    <goal>replace</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <basedir>${project.basedir}/src/test/scripts/</basedir>
+            <includes>
+                <include>initialize.sh</include>
+            </includes>
+            <regexFlags>
+                <regexFlag>CASE_INSENSITIVE</regexFlag>
+                <regexFlag>MULTILINE</regexFlag>
+                <regexFlag>DOTALL</regexFlag>
+            </regexFlags>
+            <replacements>
+                <replacement>
+                    <token>blacktiger-\d\.\d(\.\d)?(-SNAPSHOT)?</token>
+                    <value>blacktiger-${project.version}</value>
+                </replacement>
+            </replacements>
+        </configuration>
+    </plugin>
+            <!-- \{\{project\.version\}\} -->
         </plugins>
     </build>
 
