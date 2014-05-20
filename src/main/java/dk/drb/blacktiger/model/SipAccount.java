@@ -14,6 +14,17 @@ public class SipAccount {
     private String sipId;
     private String sipPass;
 
+    public SipAccount() {
+    }
+
+    public SipAccount(String name, String email, String phoneNumber) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.sipId = sipId;
+        this.sipPass = sipPass;
+    }
+    
     public String getName() {
         return name;
     }

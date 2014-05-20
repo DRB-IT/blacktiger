@@ -26,10 +26,11 @@ public class InMemSipAccountRepository implements SipAccountRepository {
     }
 
     @Override
-    public void save(String hall, SipAccount account) {
+    public boolean save(String hall, SipAccount account) {
         String id = UUID.randomUUID().toString();
         LOG.info("Saving sipaccount. [id={}, account={}", id, account);
         accountMap.put(id, account);
+        return true;
     }
     
 }

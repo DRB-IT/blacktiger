@@ -45,14 +45,15 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
             params.put("email", email);
             params.put("hall", hall);
             params.put("key", encryptionKey);
-            execute(params);
+            Map<String, Object> result = execute(params);
+            LOG.info("Result: {}", result);
         }
     }
     
     private class GetSipSP extends StoredProcedure {
         
         public GetSipSP(JdbcTemplate jdbcTemplate) {
-            super(jdbcTemplate, "get_sip_credentials"); //"+46123456789","1XO1Z08",@key,@phone,@name,@sip_id,@pass
+            super(jdbcTemplate, "get_sip_credentials"); 
             declareParameter(new SqlParameter("user_number", Types.VARCHAR));
             declareParameter(new SqlParameter("user_key", Types.VARCHAR));
             declareParameter(new SqlParameter("key", Types.VARCHAR));
@@ -110,10 +111,17 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
     }
 
     @Override
-    public void save(String hall, SipAccount account) {
+    public boolean save(String hall, SipAccount account) {
         LOG.info("Creating new SipAccount. [hall={};account={}]", hall, account);
         CreateComputerCallerSP sp = new CreateComputerCallerSP(jdbcTemplate);
-        sp.execute(account.getPhoneNumber(), account.getName(), account.getEmail(), hall);
+        
+        try {
+            sp.execute(account.getPhoneNumber(), account.getName(), account.getEmail(), hall);
+            return true;
+        } catch(Exception e) {
+            LOG.error("Error while saving sipaccount.", e);
+            return false;
+        }
     }
     
 }

@@ -2,7 +2,6 @@ package dk.drb.blacktiger.service;
 
 import dk.drb.blacktiger.model.SipAccount;
 import dk.drb.blacktiger.repository.SipAccountRepository;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +24,8 @@ public class SipAccountService {
     }
     
     @Secured("ROLE_USER")
-    public void save(SipAccount account) {
+    public boolean  save(SipAccount account) {
         String hall = SecurityContextHolder.getContext().getAuthentication().getName();
-        sipAccountRepository.save(hall, account);
+        return sipAccountRepository.save(hall, account);
     }
 }

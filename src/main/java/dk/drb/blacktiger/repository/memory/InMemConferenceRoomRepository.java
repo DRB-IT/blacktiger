@@ -41,8 +41,13 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
         LOG.debug("Adding user.");
         Random random = new Random();
         List<String> keys = new ArrayList<>(participantMap.keySet());
-        String roomNo = keys.get(random.nextInt(keys.size()));
+        String roomNo = keys.isEmpty() ? "H45-0000" : keys.get(random.nextInt(keys.size()));
         List<Participant> participantsInRoom = participantMap.get(roomNo);
+        
+        if(participantsInRoom == null) {
+            participantsInRoom = new ArrayList<>();
+            participantMap.put(roomNo, participantsInRoom);
+        }
 
         int votesForJoin = random.nextInt(Math.max(1, 15 - participantsInRoom.size()));
         int votesForLeave = random.nextInt(Math.max(1, participantsInRoom.size() - 5));

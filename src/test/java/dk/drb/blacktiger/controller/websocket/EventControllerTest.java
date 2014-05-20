@@ -78,7 +78,7 @@ public class EventControllerTest {
 
                 StompHeaderAccessor headers = StompHeaderAccessor.create(StompCommand.SUBSCRIBE);
 		headers.setSubscriptionId("0");
-		headers.setDestination("/queue/events/H45-0000");
+		headers.setDestination("/queue/events/H45-1234");
 		headers.setSessionId("0");
 		Message<byte[]> message = MessageBuilder.withPayload("\"\"".getBytes()).setHeaders(headers).build();
 
@@ -102,7 +102,7 @@ public class EventControllerTest {
                 Thread.sleep(1000);
                 
                 // Send event
-                eventListener.onParticipantEvent(new ParticipantLeaveEvent("H45-0000", "123"));
+                eventListener.onParticipantEvent(new ParticipantLeaveEvent("H45-1234", "123"));
                 
                 t.join();
                 
@@ -115,6 +115,6 @@ public class EventControllerTest {
 		assertTrue("Destination should start with /events/ but was " + replyHeaders.getDestination()+ ".", replyHeaders.getDestination().startsWith("/queue/events/"));
 
 		String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
-                assertEquals("{\"roomNo\":\"H45-0000\",\"channel\":\"123\",\"type\":\"Leave\"}", json);
+                assertEquals("{\"roomNo\":\"H45-1234\",\"channel\":\"123\",\"type\":\"Leave\"}", json);
 	}
 }

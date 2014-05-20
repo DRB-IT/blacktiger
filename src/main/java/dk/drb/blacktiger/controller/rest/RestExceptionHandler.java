@@ -34,7 +34,14 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) 
     @ExceptionHandler(DataAccessException.class)
     @ResponseBody
-    public RestError handleSecurityException(DataAccessException ex) {
+    public RestError handleInternalErrorException(DataAccessException ex) {
+        return new RestError(ex.getMessage());
+    }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST) 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseBody
+    public RestError handleBadRequest(IllegalArgumentException ex) {
         return new RestError(ex.getMessage());
     }
     

@@ -30,6 +30,9 @@ public class SipAccountController {
     @RequestMapping(value="/sipaccounts", method = RequestMethod.POST)
     @ResponseBody
     public void createAccount(@RequestBody SipAccount account) {
-        service.save(account);
+        boolean accepted = service.save(account);
+        if(!accepted) {
+            throw new IllegalArgumentException("Request for new account was not accepted, - most likely because of illegal arguments.");
+        }
     }
 }
