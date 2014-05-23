@@ -48,7 +48,11 @@ public class JdbcRoomInfoRepository implements RoomInfoRepository {
             room.setHallNumber(data.get("hallNo"));
             room.setPhoneNumber(data.get("dialin"));
             room.setCountryCallingCode(data.get("country_code"));
-            room.setName(room.getCity() + " " + room.getHallNumber());
+            room.setName(room.getCity());
+            
+            if(room.getHallNumber() != null) {
+                room.setName(", " + room.getHallNumber());
+            }
             return room;
             
         }

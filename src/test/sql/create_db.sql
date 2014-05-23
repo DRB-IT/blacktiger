@@ -71,7 +71,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `regex_patterns`(
 )
 BEGIN
 	SET regex_phone		= "^\\+[0-9]{5,15}$";								#Example: +46123456789
-	SET regex_computer	= "^#[0-9]{8}$";									#Example: #12345678
+	SET regex_computer	= "^L[0-9]{8}$";									#Example: L12345678
 	SET regex_hall		= "^H[0-9]{1,3}-[A-Z0-9]{3,9}(-([A-Z0-9]{1,2}))?$";	#Example: H45-8654, H45-2400-10, H45-2400-C
 	SET regex_email		= "^[^@ ]{1,}@{1}[^@ ]{1,}[\.]{1}[^@ \.]{2,}$";		#Example: a.b@c.d.ef
 END$$
@@ -260,7 +260,7 @@ BEGIN
 
 END$$
 
-# ======== Create computer caller
+# ======== Create computer caller (DEPRECATED)
 delimiter $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_computer_caller`(
 	IN e164 			VARCHAR(16),  	# National phone number, leading zero allowed
@@ -270,22 +270,26 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `create_computer_caller`(
 	IN key_ 			VARCHAR(40)
 )
 BEGIN
-	DECLARE slength 	INT DEFAULT 12;			# SIP secret length
-	DECLARE alength 	INT DEFAULT 8;			# SIP account length
-	DECLARE mlength 	INT DEFAULT 6;			# Minimum match of x last digits in phone number when doing SIP credential retrivial
-	DECLARE pass 		VARCHAR(16) DEFAULT "";	# Random SIP pw
-	DECLARE new_sip_id 	VARCHAR(16);			# Random SIP user
-	DECLARE db_index	INT;					# id in db
-	DECLARE url_param 	VARCHAR(16);			# URL parameter to get SIP credentials
-	DECLARE c_phone 	VARBINARY(16);			# Encrypted phone
-	DECLARE c_name 		VARBINARY(256);			# Encrypted name
-	DECLARE c_pass 		VARBINARY(16);			# Encrypted SIP pw
-	DECLARE c_sipid 	VARBINARY(16);			# Encrypted SIP id
-	DECLARE old_sip_id	VARCHAR(16);
-	DECLARE s_key 		VARBINARY(20) DEFAULT UNHEX(SHA(key_));	# Hash of encryption key
-	DECLARE regex_phone VARCHAR(64);
-	DECLARE regex_hall VARCHAR(64);
-	DECLARE regex_email VARCHAR(64);
+	DECLARE slength 		INT DEFAULT 12;			# SIP secret length
+	DECLARE alength 		INT DEFAULT 8;			# SIP account length
+	DECLARE mlength 		INT DEFAULT 6;			# Minimum match of x last digits in phone number when doing SIP credential retrivial
+	DECLARE listenerprefix	CHAR(1) DEFAULT "L";	# Listeners SIP URIs starts with this
+	DECLARE hallprefix		CHAR(1) DEFAULT "H";	# Halls SIP URIs starts with this
+	DECLARE zipprefix		CHAR(1) DEFAULT "-";	# Halls SIP URIs has this between country code and zip code
+	DECLARE pass 			VARCHAR(16) DEFAULT "";	# Random SIP pw
+	DECLARE new_sip_id 		VARCHAR(16);			# Random SIP user
+	DECLARE db_index		INT;					# id in db
+	DECLARE url_param 		VARCHAR(16);			# URL parameter to get SIP credentials
+	DECLARE c_phone 		VARBINARY(16);			# Encrypted phone
+	DECLARE c_name 			VARBINARY(256);			# Encrypted name
+	DECLARE c_pass 			VARBINARY(16);			# Encrypted SIP pw
+	DECLARE c_sipid 		VARBINARY(16);			# Encrypted SIP id
+	DECLARE old_sip_id		VARCHAR(16);
+	DECLARE s_key 			VARBINARY(20) DEFAULT UNHEX(SHA(key_));	# Hash of encryption key
+	DECLARE regex_phone 	VARCHAR(64);
+	DECLARE regex_hall  	VARCHAR(64);
+	DECLARE regex_email 	VARCHAR(64);
+	DECLARE ccode			VARCHAR(4);
 	CALL regex_patterns(regex_phone,@notused1,regex_hall,regex_email);
 
 # Check if valid phone number
@@ -311,7 +315,7 @@ BEGIN
 		IF LENGTH(@a) < alength THEN
 			SET @a = LPAD(@a,alength,'0');
 		END IF;
-		SET new_sip_id = CONCAT("#",@a);
+		SET new_sip_id = CONCAT(listenerprefix,@a);
 		SET c_sipid = AES_ENCRYPT(new_sip_id,s_key);
 	UNTIL (SELECT id FROM callers WHERE sip_id = c_sipid) IS NULL END REPEAT; # Be sure it is unique
 
@@ -352,19 +356,26 @@ BEGIN
 # Generate URL parameter for SIP credentials retrivial
 	SET url_param = CONV(CRC32(RIGHT(e164,mlength))+db_index,10,36);
 
+# Get phone country code from hall id - Example: "H45-1234" returns "45"
+	SET ccode = replace(substr(hall,'1',locate(zipprefix,hall)-1),hallprefix,'');
+
 # Add to list of new SIP records to be created/updated in Asterisk and email to be sent
-	INSERT INTO new_accounts (id,e_mail,url_param,sip_id,sip_pw) VALUES (
+	INSERT INTO new_accounts (id,e_mail,url_param,sip_id,sip_pw,countrycode,mail_text) VALUES (
 		db_index,
 		e_mail,
 		url_param,
 		new_sip_id,
-		pass
+		pass,
+		ccode,
+		"x"
 	)
 	ON DUPLICATE KEY UPDATE
 		e_mail = e_mail,
 		url_param = url_param,
 		sip_id = new_sip_id,
-		sip_pw = pass;
+		sip_pw = pass,
+		countrycode = ccode,
+		mail_text = "x";
 END$$
 
 # ======== Create password
@@ -383,11 +394,11 @@ BEGIN
 		SET @isym = FLOOR(RAND() * (slength - 2)) + 2; # index of symbol
 	UNTIL @isym != @icap END REPEAT;
 	CASE FLOOR(RAND()*5)
-		WHEN '0' THEN SET @sym = "-"; # symbols
-		WHEN '1' THEN SET @sym = "#";
-		WHEN '2' THEN SET @sym = "@";
-		WHEN '3' THEN SET @sym = "=";
-		WHEN '4' THEN SET @sym = "+";
+		WHEN '0' THEN SET @sym = "&"; # Allowed symbols according to RFC 3261
+		WHEN '1' THEN SET @sym = "=";
+		WHEN '2' THEN SET @sym = "+";
+		WHEN '3' THEN SET @sym = "$";
+		WHEN '4' THEN SET @sym = ",";
 	END CASE;
 	REPEAT
 		SET @len = slength;
@@ -407,6 +418,7 @@ BEGIN
 	UNTIL pass REGEXP "[0-9]" AND pass REGEXP BINARY "[a-z]" END REPEAT; # Be sure there are digits and lowercase letters
 RETURN pass;
 END$$
+
 
 # ======== Get call info
 delimiter $$
@@ -808,5 +820,124 @@ BEGIN
 		AES_ENCRYPT(callee,s_key),
 		activity
 	);
+END$$
+
+# ======== Create Computer Listener
+delimiter $$
+REATE DEFINER=`root`@`localhost` PROCEDURE `create_computer_listener`(
+	IN e164 			VARCHAR(16),  	# National phone number, leading zero allowed
+	IN name 			VARCHAR(256) CHARACTER SET utf8,
+	IN e_mail 			VARCHAR(256) CHARACTER SET utf8,
+	IN hall 			VARCHAR(16),
+	IN mailtext			TEXT CHARACTER SET utf8,
+	IN key_ 			VARCHAR(40)
+)
+BEGIN
+	DECLARE slength 		INT DEFAULT 12;			# SIP secret length
+	DECLARE alength 		INT DEFAULT 8;			# SIP account length
+	DECLARE mlength 		INT DEFAULT 6;			# Minimum match of x last digits in phone number when doing SIP credential retrivial
+	DECLARE listenerprefix	CHAR(1) DEFAULT "L";	# Listeners SIP URIs starts with this
+	DECLARE hallprefix		CHAR(1) DEFAULT "H";	# Halls SIP URIs starts with this
+	DECLARE zipprefix		CHAR(1) DEFAULT "-";	# Halls SIP URIs has this between country code and zip code
+	DECLARE pass 			VARCHAR(16) DEFAULT "";	# Random SIP pw
+	DECLARE new_sip_id 		VARCHAR(16);			# Random SIP user
+	DECLARE db_index		INT;					# id in db
+	DECLARE url_param 		VARCHAR(16);			# URL parameter to get SIP credentials
+	DECLARE c_phone 		VARBINARY(16);			# Encrypted phone
+	DECLARE c_name 			VARBINARY(256);			# Encrypted name
+	DECLARE c_pass 			VARBINARY(16);			# Encrypted SIP pw
+	DECLARE c_sipid 		VARBINARY(16);			# Encrypted SIP id
+	DECLARE old_sip_id		VARCHAR(16);
+	DECLARE s_key 			VARBINARY(20) DEFAULT UNHEX(SHA(key_));	# Hash of encryption key
+	DECLARE regex_phone 	VARCHAR(64);
+	DECLARE regex_hall  	VARCHAR(64);
+	DECLARE regex_email 	VARCHAR(64);
+	DECLARE ccode			VARCHAR(4);
+	CALL regex_patterns(regex_phone,@notused1,regex_hall,regex_email);
+
+# Check if valid phone number
+	IF e164 NOT REGEXP regex_phone THEN
+		CALL ERROR_not_E.164_number_format; # erstat med SIGNAL i MySQL 5.5+
+	END IF;
+
+	IF hall NOT REGEXP regex_hall THEN
+		CALL ERROR_not_valid_hall_format; # erstat med SIGNAL i MySQL 5.5+
+	END IF;
+
+# Check if valid email
+	IF e_mail NOT REGEXP regex_email THEN
+		CALL ERROR_not_valid_email_format; # erstat med SIGNAL i MySQL 5.5+
+	END IF;
+
+# Create SIP secret
+	SET pass = create_password(slength);
+
+# Create a random, unique SIP account number 
+	REPEAT
+		SET @a = FLOOR(RAND()*99999999);
+		IF LENGTH(@a) < alength THEN
+			SET @a = LPAD(@a,alength,'0');
+		END IF;
+		SET new_sip_id = CONCAT(listenerprefix,@a);
+		SET c_sipid = AES_ENCRYPT(new_sip_id,s_key);
+	UNTIL (SELECT id FROM callers WHERE sip_id = c_sipid) IS NULL END REPEAT; # Be sure it is unique
+
+# Encrypt 
+	SET c_phone = AES_ENCRYPT(e164,s_key);
+	SET c_name = AES_ENCRYPT(TRIM(name),s_key);
+	SET c_pass = AES_ENCRYPT(pass,s_key);
+
+# Insert or update records in callers db
+	INSERT INTO callers (updated,updater,phone,label,sip_id,sip_pw) VALUES (
+		CURRENT_TIMESTAMP,
+		hall,
+		c_phone,
+		c_name,
+		c_sipid,
+		c_pass
+	)
+	ON DUPLICATE KEY UPDATE  # new_sip_id (c_sipid) is not used if existing phone number, old sip_id remain
+		updated = CURRENT_TIMESTAMP,
+		updater = hall,
+		label = c_name,
+		sip_pw = c_pass;
+
+
+# Get index number in callers db
+	SET db_index = (SELECT id FROM callers WHERE phone = c_phone);
+
+# Get existing sip_id (or null if none)
+    SET old_sip_id = (SELECT sip_id FROM callers WHERE id = db_index);
+
+# If sipid is null store new sipid (if phonenumber was alredy present, but without sipid)
+	IF (old_sip_id) IS NULL THEN
+		UPDATE callers SET sip_id = c_sipid WHERE id = db_index; # insert new sip_id
+	ELSE
+		SET new_sip_id = AES_DECRYPT(old_sip_id,s_key); # Get old sip_id
+	END IF;
+
+# Generate URL parameter for SIP credentials retrivial
+	SET url_param = CONV(CRC32(RIGHT(e164,mlength))+db_index,10,36);
+
+# Get phone country code from hall id - Example: "H45-1234" returns "45"
+	SET ccode = replace(substr(hall,'1',locate(zipprefix,hall)-1),hallprefix,'');
+
+# Add to list of new SIP records to be created/updated in Asterisk and email to be sent
+	INSERT INTO new_accounts (id,e_mail,url_param,sip_id,sip_pw,countrycode,mail_text) VALUES (
+		db_index,
+		e_mail,
+		url_param,
+		new_sip_id,
+		pass,
+		ccode,
+		mailtext
+	)
+	ON DUPLICATE KEY UPDATE
+		e_mail = e_mail,
+		url_param = url_param,
+		sip_id = new_sip_id,
+		sip_pw = pass,
+		countrycode = ccode,
+		mail_text = mailtext;
 END$$
 
