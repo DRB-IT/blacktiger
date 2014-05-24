@@ -24,8 +24,8 @@ public class SipAccountService {
     }
     
     @Secured("ROLE_USER")
-    public boolean  save(SipAccount account) {
+    public boolean create(SipAccount account, String mailText) {
         String hall = SecurityContextHolder.getContext().getAuthentication().getName();
-        return sipAccountRepository.save(hall, account);
+        return sipAccountRepository.create(hall, account, mailText);
     }
 }

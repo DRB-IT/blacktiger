@@ -45,8 +45,8 @@ public class SipAccountControllerTest {
 
     @Test
     public void thatEntryCanBeCreated() throws Exception {
-        when(service.save(any(SipAccount.class))).thenReturn(Boolean.TRUE);
-        this.mockMvc.perform(post("/sipaccounts").content(standardAccountAsJson())
+        when(service.create(any(SipAccount.class), any(String.class))).thenReturn(Boolean.TRUE);
+        this.mockMvc.perform(post("/sipaccounts").content(standardCreateAccountRequestAsJson())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());

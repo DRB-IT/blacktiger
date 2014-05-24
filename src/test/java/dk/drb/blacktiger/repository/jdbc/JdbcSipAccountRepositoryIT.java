@@ -27,14 +27,14 @@ public class JdbcSipAccountRepositoryIT {
     @Test
     public void testSaveOk() {
         SipAccount account = new SipAccount("John Doe", "john@doe.com", "+4512341234");
-        boolean accepted = repo.save("H45-0000-1", account);
+        boolean accepted = repo.create("H45-0000-1", account, "Welcome Message");
         assertTrue(accepted);
     }
     
     @Test
     public void testSaveFails() {
         SipAccount account = new SipAccount("Jane Doe", "jane@doe.com", "34234&%&€&#%");
-        boolean accepted = repo.save("H45-0000-1", account);
+        boolean accepted = repo.create("H45-0000-1", account, "Welcome Message");
         assertFalse(accepted);
     }
     

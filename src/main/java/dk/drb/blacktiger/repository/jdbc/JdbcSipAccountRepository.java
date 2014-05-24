@@ -25,6 +25,34 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
     private JdbcTemplate jdbcTemplate;
     private String encryptionKey;
     
+    private class CreateComputerListenerSP extends StoredProcedure {
+        
+        public CreateComputerListenerSP(JdbcTemplate jdbcTemplate) {
+            super(jdbcTemplate, "create_computer_listener"); //@e164,@name,@email,@hall,@mailtext, @key
+            declareParameter(new SqlParameter("e164", Types.VARCHAR));
+            declareParameter(new SqlParameter("name", Types.VARCHAR));
+            declareParameter(new SqlParameter("email", Types.VARCHAR));
+            declareParameter(new SqlParameter("hall", Types.VARCHAR));
+            declareParameter(new SqlParameter("mailtext", Types.VARCHAR));
+            declareParameter(new SqlParameter("key", Types.VARCHAR));
+            compile();
+        }
+
+        public void execute(String phoneNumber, String name, String email, String hall, String mailText) {
+            LOG.debug("Executing Stored Procedure [phoneNumber={};name={};email={};hall={};mailtext={}]", 
+                    new Object[]{phoneNumber, name, email, hall, mailText});
+            Map<String, Object> params = new HashMap<>();
+            params.put("e164", phoneNumber);
+            params.put("name", name);
+            params.put("email", email);
+            params.put("hall", hall);
+            params.put("mailtext", mailText);
+            params.put("key", encryptionKey);
+            Map<String, Object> result = execute(params);
+            LOG.info("Result: {}", result);
+        }
+    }
+    
     private class CreateComputerCallerSP extends StoredProcedure {
         
         public CreateComputerCallerSP(JdbcTemplate jdbcTemplate) {
@@ -111,12 +139,12 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
     }
 
     @Override
-    public boolean save(String hall, SipAccount account) {
+    public boolean create(String hall, SipAccount account, String mailText) {
         LOG.info("Creating new SipAccount. [hall={};account={}]", hall, account);
-        CreateComputerCallerSP sp = new CreateComputerCallerSP(jdbcTemplate);
+        CreateComputerListenerSP sp = new CreateComputerListenerSP(jdbcTemplate);
         
         try {
-            sp.execute(account.getPhoneNumber(), account.getName(), account.getEmail(), hall);
+            sp.execute(account.getPhoneNumber(), account.getName(), account.getEmail(), hall, mailText);
             return true;
         } catch(Exception e) {
             LOG.error("Error while saving sipaccount.", e);

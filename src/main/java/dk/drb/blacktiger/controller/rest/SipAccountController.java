@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller.rest;
 
+import dk.drb.blacktiger.controller.rest.model.SipAccountCreateRequest;
 import dk.drb.blacktiger.model.SipAccount;
 import dk.drb.blacktiger.service.SipAccountService;
 import java.util.List;
@@ -29,8 +30,8 @@ public class SipAccountController {
     
     @RequestMapping(value="/sipaccounts", method = RequestMethod.POST)
     @ResponseBody
-    public void createAccount(@RequestBody SipAccount account) {
-        boolean accepted = service.save(account);
+    public void createAccount(@RequestBody SipAccountCreateRequest accountCreateRequest) {
+        boolean accepted = service.create(accountCreateRequest.getAccount(), accountCreateRequest.getMailText());
         if(!accepted) {
             throw new IllegalArgumentException("Request for new account was not accepted, - most likely because of illegal arguments.");
         }

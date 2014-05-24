@@ -27,4 +27,15 @@ public class SipAccountRestDataFixture {
             "    \"email\": \"john@doe.com\"\n" +
             "}";
     }
+    
+    public static String standardCreateAccountRequestAsJson() {
+        return "{\n"+
+            "  \"account\": {\n" +
+            "    \"phoneNumber\": \"+4512121212\",\n" +
+            "    \"name\": \"John Doe\",\n" +
+            "    \"email\": \"john@doe.com\"\n" +
+            "  }," +
+            "  \"mailText\": \"Welcome Message\"\n" +
+            "}";
+    }
 }

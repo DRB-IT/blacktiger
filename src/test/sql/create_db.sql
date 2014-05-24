@@ -824,7 +824,7 @@ END$$
 
 # ======== Create Computer Listener
 delimiter $$
-REATE DEFINER=`root`@`localhost` PROCEDURE `create_computer_listener`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_computer_listener`(
 	IN e164 			VARCHAR(16),  	# National phone number, leading zero allowed
 	IN name 			VARCHAR(256) CHARACTER SET utf8,
 	IN e_mail 			VARCHAR(256) CHARACTER SET utf8,

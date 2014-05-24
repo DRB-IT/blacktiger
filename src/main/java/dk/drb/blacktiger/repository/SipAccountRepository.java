@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface SipAccountRepository {
     public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber);
-    public boolean save(String hall, SipAccount account);
+    public boolean create(String hall, SipAccount account, String mailText);
 }
