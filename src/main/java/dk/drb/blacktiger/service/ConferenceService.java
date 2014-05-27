@@ -6,8 +6,10 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
+import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.RoomInfoRepository;
@@ -31,6 +33,7 @@ public class ConferenceService {
     private ConferenceRoomRepository roomRepository;
     private ContactRepository contactRepository;
     private RoomInfoRepository roomInfoRepository;
+    private CallInformationRepository callInformationRepository;
     
     private class ConferenceEventListenerWrapper implements ConferenceEventListener {
 
@@ -47,7 +50,17 @@ public class ConferenceService {
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
                 Participant p = decorateWithPhonebookInformation(joinEvent.getRoomNo(), joinEvent.getParticipant());
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
+                callInformationRepository.logAction(p.getPhoneNumber(), joinEvent.getRoomNo(), "call");
             }
+            if(event instanceof ParticipantLeaveEvent) {
+                ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
+                String room = event.getRoomNo();
+                Participant p = decorateWithPhonebookInformation(room, leaveEvent.getParticipant());
+                if(p != null) {
+                    callInformationRepository.logAction(p.getPhoneNumber(), room, "hangup");
+                }
+            }
+            
             wrapped.onParticipantEvent(event);
         }
         
@@ -59,6 +72,7 @@ public class ConferenceService {
         Assert.notNull(contactRepository, "ContactRepository must be specified. Was null.");
         Assert.notNull(roomRepository, "RoomRepository must be specified. Was null.");
         Assert.notNull(roomInfoRepository, "RoomInfoRepository must be specified. Was null.");
+        Assert.notNull(callInformationRepository, "CallInformationRepository must be specified. Was null.");
     }
 
     @Autowired
@@ -80,7 +94,12 @@ public class ConferenceService {
     public void setRoomInfoRepository(RoomInfoRepository roomInfoRepository) {
         this.roomInfoRepository = roomInfoRepository;
     }
-    
+
+    @Autowired
+    public void setCallInformationRepository(CallInformationRepository callInformationRepository) {
+        this.callInformationRepository = callInformationRepository;
+    }
+
     public List<Room> listRooms() {
         List<Room> rooms;
         if(Access.hasRole("ADMIN")) {

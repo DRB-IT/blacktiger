@@ -7,6 +7,7 @@ import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.Room;
+import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
@@ -40,6 +41,7 @@ public class ConferenceServiceTest {
     private ContactRepository contactRepository;
     private RoomInfoRepository roomInfoRepository;
     private ConferenceEventListener conferenceEventListener;
+    private CallInformationRepository callInformationRepository;
     private List<Participant> participants = Arrays.asList(new Participant[]{
         new Participant("SIP/#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date())
     });
@@ -102,11 +104,16 @@ public class ConferenceServiceTest {
         
         roomInfoRepository = Mockito.mock(RoomInfoRepository.class);
         
+        callInformationRepository = Mockito.mock(CallInformationRepository.class);
+        
         service = new ConferenceService();
         service.setRoomRepository(conferenceRoomRepository);
         service.setPhonebookRepository(phonebookRepository);
         service.setContactRepository(contactRepository);
         service.setRoomInfoRepository(roomInfoRepository);
+        service.setCallInformationRepository(callInformationRepository);
+        
+        service.init();
     }
     
     @Test

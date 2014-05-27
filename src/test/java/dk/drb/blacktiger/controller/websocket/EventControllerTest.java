@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import dk.drb.blacktiger.config.WebsocketConfig;
 import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.service.ConferenceService;
 import java.util.ArrayList;
@@ -102,7 +103,9 @@ public class EventControllerTest {
                 Thread.sleep(1000);
                 
                 // Send event
-                eventListener.onParticipantEvent(new ParticipantLeaveEvent("H45-1234", "123"));
+                Participant p = new Participant();
+                p.setCallerId("123");
+                eventListener.onParticipantEvent(new ParticipantLeaveEvent("H45-1234", p));
                 
                 t.join();
                 
@@ -115,6 +118,6 @@ public class EventControllerTest {
 		assertTrue("Destination should start with /events/ but was " + replyHeaders.getDestination()+ ".", replyHeaders.getDestination().startsWith("/queue/events/"));
 
 		String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
-                assertEquals("{\"roomNo\":\"H45-1234\",\"channel\":\"123\",\"type\":\"Leave\"}", json);
+                assertEquals("{\"roomNo\":\"H45-1234\",\"participant\":{\"callerId\":\"123\",\"channel\":null,\"muted\":false,\"phoneNumber\":null,\"dateJoined\":null,\"name\":null,\"type\":null,\"host\":false},\"type\":\"Leave\"}", json);
 	}
 }

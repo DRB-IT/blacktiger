@@ -71,7 +71,7 @@ public class InMemCallInformationRepository implements CallInformationRepository
         
         if(event instanceof ParticipantLeaveEvent) {
             ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
-            Participant participant = participantMap.get(leaveEvent.getChannel());
+            Participant participant = leaveEvent.getParticipant();
             if(participant != null) {
                 int durationInSeconds = (int) ((System.currentTimeMillis() - participant.getDateJoined().getTime()) / 1000);
                 CallInformation ci = new CallInformation(participant.getPhoneNumber(), participant.getName(), 1, durationInSeconds, 
@@ -86,5 +86,12 @@ public class InMemCallInformationRepository implements CallInformationRepository
             }
         }
     }
+
+    @Override
+    public void logAction(String caller, String callee, String action) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

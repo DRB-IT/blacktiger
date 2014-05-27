@@ -157,7 +157,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         //channelCallerIdMap.remove(event.getChannel());
         channelRoomMap.remove(event.getChannel());
 
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p.getChannel()));
+        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p));
     }
 
     private void onConfbridgeStart(ConfbridgeStartEvent e) {

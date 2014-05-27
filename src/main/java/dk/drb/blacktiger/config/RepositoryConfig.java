@@ -67,8 +67,10 @@ public class RepositoryConfig {
             LOG.info("** USING InMemCallInformationRepository FOR TEST **");
             return new InMemCallInformationRepository();
         } else {
+            String encryptionKey = env.getProperty("encryptionKey");
             JdbcCallInformationRepository repository = new JdbcCallInformationRepository();
             repository.setDataSource(asteriskDataSource);
+            repository.setEncryptionKey(encryptionKey);
             return repository;
         }
     }

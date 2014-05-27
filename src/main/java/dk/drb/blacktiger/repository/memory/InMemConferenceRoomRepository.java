@@ -67,7 +67,7 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
             if (!participantsInRoom.get(toRemove).isHost()) {
                 Participant p = participantsInRoom.remove(toRemove);
                 LOG.debug("User removed [id={}, room={}] ", p.getCallerId(), roomNo);
-                fireLeaveEvent(roomNo, p.getCallerId());
+                fireLeaveEvent(roomNo, p);
             }
         }
     }
@@ -127,7 +127,7 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
                 Participant p = it.next();
                 if (callerId.equals(p.getCallerId())) {
                     it.remove();
-                    fireLeaveEvent(roomNo, p.getCallerId());
+                    fireLeaveEvent(roomNo, p);
                     break;
                 }
             }
@@ -193,9 +193,9 @@ public class InMemConferenceRoomRepository implements ConferenceRoomRepository {
         }
     }
 
-    private void fireLeaveEvent(String roomNo, String userId) {
+    private void fireLeaveEvent(String roomNo, Participant participant) {
         for (ConferenceEventListener l : eventListeners) {
-            l.onParticipantEvent(new ParticipantLeaveEvent(roomNo, userId));
+            l.onParticipantEvent(new ParticipantLeaveEvent(roomNo, participant));
         }
     }
     
