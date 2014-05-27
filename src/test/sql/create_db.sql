@@ -19,14 +19,20 @@ CREATE TABLE callers (
 # SIP accounts which must be created or given a new password
 #DROP TABLE new_accounts;
 CREATE TABLE new_accounts (
-        id INT NOT NULL UNIQUE,
-        e_mail VARCHAR(256),
-        url_param VARCHAR(16),
-        sip_id VARCHAR(16),
-        sip_pw VARCHAR(16),
-        countrycode VARCHAR(4),
-        mail_text BLOB,
-        PRIMARY KEY (id)
+	id INT NOT NULL UNIQUE,
+	sip_id VARCHAR(16),
+	sip_pw VARCHAR(16),
+	countrycode VARCHAR(4),
+	PRIMARY KEY (id)
+);
+
+#DROP TABLE mail_queue;
+CREATE TABLE mail_queue (
+	id INT NOT NULL AUTO_INCREMENT,
+	e_mail VARCHAR(256),
+	e_mail_subject TEXT,
+	e_mail_body TEXT,
+	PRIMARY KEY (id)
 );
 
 # Log of all calls
@@ -599,16 +605,16 @@ END$$
 
 # ======== Pop new account
 delimiter $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pop_new_account`(
 	IN erase BOOLEAN  # FALSE for debug to avoid deleting from queue
 )
 BEGIN
 	SELECT 							# Return the oldest entry from the queue
 		id,
-		e_mail,
-		url_param,
 		sip_id,
-		sip_pw
+		sip_pw,
+		countrycode
 	FROM new_accounts
 	ORDER BY id ASC LIMIT 1;
 		
@@ -824,8 +830,9 @@ END$$
 
 # ======== Create Computer Listener
 delimiter $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_computer_listener`(
-	IN e164 			VARCHAR(16),  	# National phone number, leading zero allowed
+	IN e164 			VARCHAR(16),  	# National phone number
 	IN name 			VARCHAR(256) CHARACTER SET utf8,
 	IN e_mail 			VARCHAR(256) CHARACTER SET utf8,
 	IN hall 			VARCHAR(16),
@@ -839,6 +846,8 @@ BEGIN
 	DECLARE listenerprefix	CHAR(1) DEFAULT "L";	# Listeners SIP URIs starts with this
 	DECLARE hallprefix		CHAR(1) DEFAULT "H";	# Halls SIP URIs starts with this
 	DECLARE zipprefix		CHAR(1) DEFAULT "-";	# Halls SIP URIs has this between country code and zip code
+	DECLARE	tokenstr		CHAR(5) DEFAULT "token";
+	DECLARE httpstr			CHAR(7) DEFAULT "http://";
 	DECLARE pass 			VARCHAR(16) DEFAULT "";	# Random SIP pw
 	DECLARE new_sip_id 		VARCHAR(16);			# Random SIP user
 	DECLARE db_index		INT;					# id in db
@@ -853,6 +862,8 @@ BEGIN
 	DECLARE regex_hall  	VARCHAR(64);
 	DECLARE regex_email 	VARCHAR(64);
 	DECLARE ccode			VARCHAR(4);
+	DECLARE emailurl		VARCHAR(256);
+	DECLARE email_subject	TEXT CHARACTER SET utf8;
 	CALL regex_patterns(regex_phone,@notused1,regex_hall,regex_email);
 
 # Check if valid phone number
@@ -922,22 +933,121 @@ BEGIN
 # Get phone country code from hall id - Example: "H45-1234" returns "45"
 	SET ccode = replace(substr(hall,'1',locate(zipprefix,hall)-1),hallprefix,'');
 
-# Add to list of new SIP records to be created/updated in Asterisk and email to be sent
-	INSERT INTO new_accounts (id,e_mail,url_param,sip_id,sip_pw,countrycode,mail_text) VALUES (
+# Add to list of new SIP records to be created/updated in Asterisk
+	INSERT INTO new_accounts (id,sip_id,sip_pw,countrycode) VALUES (
 		db_index,
-		e_mail,
-		url_param,
 		new_sip_id,
 		pass,
-		ccode,
-		mailtext
+		ccode
 	)
 	ON DUPLICATE KEY UPDATE
-		e_mail = e_mail,
-		url_param = url_param,
 		sip_id = new_sip_id,
 		sip_pw = pass,
-		countrycode = ccode,
-		mail_text = mailtext;
+		countrycode = ccode;
+
+# Add to mail queue
+	SET email_subject = CONCAT(SUBSTRING_INDEX(name,' ',1),' (',REPLACE(hall,hallprefix,''),')');
+	SET mailtext = CONCAT(mailtext,'\n\n',httpstr,@@hostname,"?",tokenstr,"=",url_param,'\n');
+	INSERT INTO mail_queue (e_mail,e_mail_subject,e_mail_body) VALUES (
+		e_mail,
+		email_subject,
+		mailtext
+	);
+END$$
+
+delimiter $$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `recover_password`(
+	req_name			TEXT CHARACTER SET utf8,	# requesters name
+	req_phone			VARCHAR(16),  				# requesters phone no.
+	req_email			VARCHAR(255),				# requesters email
+	hallcity			TEXT CHARACTER SET utf8,	# city where hall is located
+	hallphone			VARCHAR(16),  				# telesal phone no. including plus and countrycode
+	email_subject		TEXT CHARACTER SET utf8,	# {%1}=hallcity
+	email_body			TEXT CHARACTER SET utf8,	# {%1}=name, {%2}=req_phone, {%3}=req_email, {%4}=hallphone, {%5}=sip_pw
+	req_email_body		TEXT CHARACTER SET utf8,	# {%1}=hallphone, {%2}=sip_id, {%3}=contact_name, {%4}=contact_phone, {%5}=contact_email
+	key_				VARCHAR(40)
+) RETURNS int(11)
+BEGIN
+	DECLARE c_dialin_phone VARBINARY(16); # Encrypted dialin no.
+	DECLARE city VARCHAR(256);
+	DECLARE sip_pw VARCHAR(16);
+	DECLARE name VARCHAR(256);
+	DECLARE contact_email VARCHAR(256);
+	DECLARE contact_name VARCHAR(256);
+	DECLARE user_comment VARCHAR(256);
+	DECLARE sip_id VARCHAR(16);
+	DECLARE contact_phone VARCHAR(16);
+
+	DECLARE s_key VARBINARY(20) DEFAULT UNHEX(SHA(key_));	# Hash of encryption key
+
+	SET c_dialin_phone = AES_ENCRYPT(hallphone,s_key);
+	SELECT
+		CONVERT(AES_DECRYPT(callers.label,s_key) USING utf8),
+		CONVERT(AES_DECRYPT(contacts.sip_id,s_key) USING utf8),
+		CONVERT(AES_DECRYPT(callers.sip_pw,s_key) USING utf8),
+		CONVERT(AES_DECRYPT(contacts.contact_name,s_key) USING utf8),
+		CONVERT(AES_DECRYPT(contacts.contact_email,s_key) USING utf8),
+		CONVERT(AES_DECRYPT(contacts.contact_phone,s_key) USING utf8)
+	INTO
+		city,
+		sip_id,
+		sip_pw,
+		contact_name,
+		contact_email,
+		contact_phone
+	FROM contacts
+	INNER JOIN callers
+	ON contacts.sip_id = callers.sip_id
+	WHERE callers.phone = c_dialin_phone;
+
+	IF contact_email IS NOT NULL THEN	# If a valid hall phone number and contact person is found
+		SET email_subject = REPLACE(email_subject,'{%1}',hallcity);
+		SET email_body = REPLACE(email_body,'{%1}',req_name);
+		SET email_body = REPLACE(email_body,'{%2}',req_phone);
+		SET email_body = REPLACE(email_body,'{%3}',req_email);
+		SET email_body = REPLACE(email_body,'{%4}',hallphone);
+		SET email_body = REPLACE(email_body,'{%5}',sip_pw);
+		SET req_email_body = REPLACE(req_email_body,'{%1}',hallphone);
+		SET req_email_body = REPLACE(req_email_body,'{%2}',sip_id);
+		SET req_email_body = REPLACE(req_email_body,'{%3}',contact_name);
+		SET req_email_body = REPLACE(req_email_body,'{%4}',contact_phone);
+		SET req_email_body = REPLACE(req_email_body,'{%5}',contact_email);
+		INSERT INTO mail_queue (e_mail,e_mail_subject,e_mail_body) VALUES (
+			contact_email,
+			email_subject,
+			email_body
+		);
+		INSERT INTO mail_queue (e_mail,e_mail_subject,e_mail_body) VALUES (
+			req_email,
+			email_subject,
+			req_email_body
+		);
+		RETURN TRUE;
+	ELSE
+		RETURN FALSE;
+	END IF;
+END$$
+
+delimiter $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pop_mail_queue`(
+	IN erase BOOLEAN  # FALSE for debug to avoid deleting from queue
+)
+BEGIN
+	SELECT 							# Return the oldest entry from the queue
+		id,
+		e_mail,
+		e_mail_subject,
+		e_mail_body
+	FROM mail_queue
+	ORDER BY id ASC LIMIT 1;
+		
+	IF erase = TRUE THEN
+		DELETE FROM					# Delete the oldest entry from the queue
+			mail_queue
+		WHERE id IS NOT NULL		# WHERE nessesary because of safe mode
+		ORDER BY id ASC LIMIT 1;  
+	END IF;
 END$$
 

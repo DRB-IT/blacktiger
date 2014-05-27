@@ -28,4 +28,5 @@ public class SipAccountService {
         String hall = SecurityContextHolder.getContext().getAuthentication().getName();
         return sipAccountRepository.create(hall, account, mailText);
     }
+
 }

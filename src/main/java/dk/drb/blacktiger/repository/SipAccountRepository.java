@@ -10,4 +10,6 @@ import java.util.List;
 public interface SipAccountRepository {
     public SipAccount findOneByKeyAndPhonenumber(String key, String phoneNumber);
     public boolean create(String hall, SipAccount account, String mailText);
+    boolean sendPasswordEmail(String name, String phoneNumber, String email, String cityOfHall, String phoneNumberOfHall, String emailSubject, 
+            String emailTextManager, String emailTextUser);
 }

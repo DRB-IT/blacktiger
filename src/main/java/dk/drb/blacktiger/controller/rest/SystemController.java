@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller.rest;
 
+import dk.drb.blacktiger.controller.rest.model.SendPasswordRequest;
 import dk.drb.blacktiger.controller.rest.model.UserPresentation;
 import dk.drb.blacktiger.service.SystemService;
 import java.util.HashMap;
@@ -9,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -51,6 +54,12 @@ public class SystemController {
     @ResponseBody
     public UserPresentation authenticate() {
         return UserPresentation.from(SecurityContextHolder.getContext().getAuthentication());
+    }
+    
+    @RequestMapping(value = "/system/passwordRequests", produces = "application/json", method = RequestMethod.POST)
+    @ResponseBody
+    public void requstPassword(@RequestBody SendPasswordRequest request) {
+        service.sendPasswordEmail(request.getName(), request.getPhoneNumber(), request.getEmail(), request.getCityOfHall(), request.getPhoneNumberOfHall());
     }
     
     private double percentageOf(double minor, double major) {

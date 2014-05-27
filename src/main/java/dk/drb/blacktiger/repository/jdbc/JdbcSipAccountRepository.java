@@ -24,6 +24,8 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcSipAccountRepository.class);
     private JdbcTemplate jdbcTemplate;
     private String encryptionKey;
+
+
     
     private class CreateComputerListenerSP extends StoredProcedure {
         
@@ -53,25 +55,39 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
         }
     }
     
-    private class CreateComputerCallerSP extends StoredProcedure {
+    private class SendPasswordSP extends StoredProcedure {
         
-        public CreateComputerCallerSP(JdbcTemplate jdbcTemplate) {
-            super(jdbcTemplate, "create_computer_caller"); //@number,@name,@email,@hall,@key
-            declareParameter(new SqlParameter("number", Types.VARCHAR));
+        public SendPasswordSP(JdbcTemplate jdbcTemplate) {
+            //navn, mobilnummer, e-mail; salens by, salens tlf-nummer, email-subject, email-tekst til teknisk ansvarlig, email-tekst til ansøger.
+            super(jdbcTemplate, "recover_password"); 
+            setFunction(true);
+            
+            declareParameter(new SqlOutParameter("result", Types.BOOLEAN));
             declareParameter(new SqlParameter("name", Types.VARCHAR));
+            declareParameter(new SqlParameter("phoneNumber", Types.VARCHAR));
             declareParameter(new SqlParameter("email", Types.VARCHAR));
-            declareParameter(new SqlParameter("hall", Types.VARCHAR));
+            declareParameter(new SqlParameter("cityOfHall", Types.VARCHAR));
+            declareParameter(new SqlParameter("phoneNumberOfHall", Types.VARCHAR));
+            declareParameter(new SqlParameter("emailSubject", Types.VARCHAR));
+            declareParameter(new SqlParameter("emailTextManager", Types.VARCHAR));
+            declareParameter(new SqlParameter("emailTextUser", Types.VARCHAR));
             declareParameter(new SqlParameter("key", Types.VARCHAR));
             compile();
         }
 
-        public void execute(String phoneNumber, String name, String email, String hall) {
-            LOG.debug("Executing Stored Procedure [phoneNumber={};name={};email={};hall={}]", new Object[]{phoneNumber, name, email, hall});
+        public void execute(String name, String phoneNumber, String email, String cityOfHall, String phoneNumberOfHall, String emailSubject, 
+                String emailTextManager, String emailTextUser) {
+            LOG.debug("Executing Stored Procedure [name={};phoneNumber={};email={};cityOfHall={};phoneNumberOfHall={}]", 
+                    new Object[]{name, phoneNumber, email, cityOfHall, phoneNumberOfHall});
             Map<String, Object> params = new HashMap<>();
-            params.put("number", phoneNumber);
             params.put("name", name);
+            params.put("phoneNumber", phoneNumber);
             params.put("email", email);
-            params.put("hall", hall);
+            params.put("cityOfHall", cityOfHall);
+            params.put("phoneNumberOfHall", phoneNumberOfHall);
+            params.put("emailSubject", emailSubject);
+            params.put("emailTextManager", emailTextManager);
+            params.put("emailTextUser", emailTextUser);
             params.put("key", encryptionKey);
             Map<String, Object> result = execute(params);
             LOG.info("Result: {}", result);
@@ -152,4 +168,17 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
         }
     }
     
+        @Override
+    public boolean sendPasswordEmail(String name, String phoneNumber, String email, String cityOfHall, String phoneNumberOfHall, String emailSubject, String emailTextManager, String emailTextUser) {
+        LOG.info("Sending password for sipaccount. [name={};phoneNumber={}]", name, phoneNumber);
+        SendPasswordSP sp = new SendPasswordSP(jdbcTemplate);
+        
+        try {
+            sp.execute(name, phoneNumber, email, cityOfHall, phoneNumberOfHall, emailSubject, emailTextManager, emailTextUser);
+            return true;
+        } catch(Exception e) {
+            LOG.error("Error while sending password.", e);
+            return false;
+        }
+    }
 }

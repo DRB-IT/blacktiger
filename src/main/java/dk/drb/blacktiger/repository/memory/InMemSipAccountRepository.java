@@ -2,10 +2,7 @@ package dk.drb.blacktiger.repository.memory;
 
 import dk.drb.blacktiger.model.SipAccount;
 import dk.drb.blacktiger.repository.SipAccountRepository;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -31,6 +28,11 @@ public class InMemSipAccountRepository implements SipAccountRepository {
         LOG.info("Saving sipaccount. [id={}, account={}", id, account);
         accountMap.put(id, account);
         return true;
+    }
+
+    @Override
+    public boolean sendPasswordEmail(String name, String phoneNumber, String email, String cityOfHall, String phoneNumberOfHall, String emailSubject, String emailTextManager, String emailTextUser) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
