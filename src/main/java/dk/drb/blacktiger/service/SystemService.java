@@ -55,13 +55,11 @@ public class SystemService {
     }
     
         
-    public void sendPasswordEmail(String name, String phoneNumber, String email,  String cityOfHall, String phoneNumberOfHall) {
+    public boolean sendPasswordEmail(String name, String phoneNumber, String email,  String cityOfHall, String phoneNumberOfHall) {
         String emailSubject = "Telesal i {%1}", 
                 emailTextManager = "{%1} har aktiveret 'glemt kode' for salen med nummer {%4} som du er teknisk ansvarlig for. Han har telefon {%2} og e-mail {%3}.\\n\\nKoden er: {%5}\\n", 
                 emailTextUser = "Du har aktiveret 'glemt kode' for salen med nummer {%4}. Koden er nu sendt i en e-mail til {%5}, som er den adresse der er registreret for den teknisk ansvarlige for denne sal. Han hedder {%3} og har telefon {%4}.\\n\\nBrugernavnet der skal bruges sammen med koden er {%2}.";
-        boolean ok = sipAccountRepository.sendPasswordEmail(name, phoneNumber, email, cityOfHall, phoneNumberOfHall, emailSubject, emailTextManager, emailTextUser);
-        if(!ok) {
-            throw new UnknownError("An unknown error occured while sending password.");
-        }
+        return sipAccountRepository.sendPasswordEmail(name, phoneNumber, email, cityOfHall, phoneNumberOfHall, emailSubject, emailTextManager, emailTextUser);
+
     }
 }

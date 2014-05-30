@@ -75,7 +75,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
             compile();
         }
 
-        public void execute(String name, String phoneNumber, String email, String cityOfHall, String phoneNumberOfHall, String emailSubject, 
+        public boolean execute(String name, String phoneNumber, String email, String cityOfHall, String phoneNumberOfHall, String emailSubject, 
                 String emailTextManager, String emailTextUser) {
             LOG.debug("Executing Stored Procedure [name={};phoneNumber={};email={};cityOfHall={};phoneNumberOfHall={}]", 
                     new Object[]{name, phoneNumber, email, cityOfHall, phoneNumberOfHall});
@@ -91,6 +91,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
             params.put("key", encryptionKey);
             Map<String, Object> result = execute(params);
             LOG.info("Result: {}", result);
+            return (boolean) result.get("result");
         }
     }
     
@@ -174,8 +175,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
         SendPasswordSP sp = new SendPasswordSP(jdbcTemplate);
         
         try {
-            sp.execute(name, phoneNumber, email, cityOfHall, phoneNumberOfHall, emailSubject, emailTextManager, emailTextUser);
-            return true;
+            return sp.execute(name, phoneNumber, email, cityOfHall, phoneNumberOfHall, emailSubject, emailTextManager, emailTextUser);
         } catch(Exception e) {
             LOG.error("Error while sending password.", e);
             return false;

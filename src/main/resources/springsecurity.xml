@@ -13,6 +13,7 @@
     <context:property-placeholder ignore-resource-not-found="true" location="classpath:blacktiger.properties,file:${user.home}/blacktiger.properties" />
     
     <http request-matcher-ref="jsonMatcher" disable-url-rewriting="true" entry-point-ref="restAuthenticationEntryPoint">
+        <intercept-url pattern="/system/passwordRequests" access="ROLE_USER,ROLE_ANONYMOUS" />
         <intercept-url pattern="/rooms/**" access="ROLE_USER" />
         <intercept-url pattern="/system/**" access="ROLE_USER" />
         <intercept-url pattern="/phonebook/**" access="ROLE_USER" />

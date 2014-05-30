@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.controller.rest;
 
+import dk.drb.blacktiger.controller.rest.model.ResourceNotFoundException;
 import dk.drb.blacktiger.controller.rest.model.SendPasswordRequest;
 import dk.drb.blacktiger.controller.rest.model.UserPresentation;
 import dk.drb.blacktiger.service.SystemService;
@@ -59,7 +60,10 @@ public class SystemController {
     @RequestMapping(value = "/system/passwordRequests", produces = "application/json", method = RequestMethod.POST)
     @ResponseBody
     public void requstPassword(@RequestBody SendPasswordRequest request) {
-        service.sendPasswordEmail(request.getName(), request.getPhoneNumber(), request.getEmail(), request.getCityOfHall(), request.getPhoneNumberOfHall());
+        boolean ok = service.sendPasswordEmail(request.getName(), request.getPhoneNumber(), request.getEmail(), request.getCityOfHall(), request.getPhoneNumberOfHall());
+        if(!ok) {
+            throw new ResourceNotFoundException("No hall found using the specified input.");
+        }
     }
     
     private double percentageOf(double minor, double major) {
