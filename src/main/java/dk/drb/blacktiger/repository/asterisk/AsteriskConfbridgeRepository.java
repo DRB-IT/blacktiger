@@ -132,7 +132,6 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
         getParticipantListSynced(roomNo).add(p);
-        //channelCallerIdMap.put(event.getChannel(), event.getCallerIdNum());
         channelRoomMap.put(event.getChannel(), event.getConference());
         AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
     }
