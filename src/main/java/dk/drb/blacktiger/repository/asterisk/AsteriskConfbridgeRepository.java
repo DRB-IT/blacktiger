@@ -130,33 +130,38 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
     private void onConfbridgeJoinEvent(ConfbridgeJoinEvent event) {
         String roomNo = event.getConference();
-        Participant p = participantFromEvent(event);
-        getParticipantListSynced(roomNo).add(p);
-        channelRoomMap.put(event.getChannel(), event.getConference());
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
+        if(isRoomExist(roomNo)) {
+            Participant p = participantFromEvent(event);
+            getParticipantListSynced(roomNo).add(p);
+            channelRoomMap.put(event.getChannel(), event.getConference());
+            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
+        }
     }
 
     private void onConfbridgeLeaveEvent(ConfbridgeLeaveEvent event) {
         Participant toRemove = null;
         String roomNo = event.getConference();
-        Participant p = participantFromEvent(event);
-        List<Participant> list = getParticipantListSynced(roomNo);
+        
+        if(isRoomExist(roomNo)) {
+            Participant p = participantFromEvent(event);
+            List<Participant> list = getParticipantListSynced(roomNo);
 
-        for (Participant current : list) {
-            if (p.getChannel().equals(current.getChannel())) {
-                toRemove = current;
-                break;
+            for (Participant current : list) {
+                if (p.getChannel().equals(current.getChannel())) {
+                    toRemove = current;
+                    break;
+                }
             }
+
+            if (toRemove != null) {
+                list.remove(toRemove);
+            }
+
+            //channelCallerIdMap.remove(event.getChannel());
+            channelRoomMap.remove(event.getChannel());
+
+            AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p));
         }
-
-        if (toRemove != null) {
-            list.remove(toRemove);
-        }
-
-        //channelCallerIdMap.remove(event.getChannel());
-        channelRoomMap.remove(event.getChannel());
-
-        AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p));
     }
 
     private void onConfbridgeStart(ConfbridgeStartEvent e) {
@@ -192,6 +197,10 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         AsteriskConfbridgeRepository.this.fireEvent(new ParticipantUnmuteEvent(conference, channel));
     }
 
+    private boolean isRoomExist(String roomId) {
+        return participantMap.containsKey(roomId);
+    }
+    
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
         return getParticipantListSynced(roomId, true);
     }
