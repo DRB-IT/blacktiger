@@ -38,7 +38,7 @@ public class JdbcRoomInfoRepository implements RoomInfoRepository {
         Map<String, String> data = sp.execute(id, encryptionKey);
         
         String name = (String)data.get("name");
-        if(name.startsWith("*ERROR*")) {
+        if(name == null || name.startsWith("*ERROR*")) {
             LOG.debug("Stored procedure returned a result specifying an error. Ignoring result. [message={}]", name);
             return null;
         } else {
