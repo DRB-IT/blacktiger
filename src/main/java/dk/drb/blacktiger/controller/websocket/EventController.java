@@ -59,40 +59,10 @@ public class EventController {
         LOG.info("EventController initialized.");
     }
 
-    @SubscribeMapping("/{room}")
-    public List<ParticipantJoinEvent> subscribeEventsFor(@DestinationVariable("room") String roomId, Principal principal) {
-        LOG.info("Subscription request recieved [room={}]", roomId);
-        // Start out by sending join events for all in the room.
-        List<ParticipantJoinEvent> events = new ArrayList<>();
-        if(principal instanceof Authentication) {
-            Authentication auth = (Authentication) principal;
-            Authentication oldAuth = SecurityContextHolder.getContext().getAuthentication();
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            if(Access.hasRole("ADMIN") || Access.getAccessibleRooms().contains(roomId)) {
-
-                if("*".equals(roomId)) {
-                    // Send all participants
-                    for(Room room : service.listRooms()) {
-                        addEvents(events, room.getId());
-                    }
-                } else {
-                    addEvents(events, roomId);
-                }
-            }
-            SecurityContextHolder.getContext().setAuthentication(oldAuth);
-        }
-        return events;
-    }
-    
     @MessageExceptionHandler
     @SendToUser("/queue/errors")
     public String handleException(Throwable exception) {
         return exception.getMessage();
     }
-    
-    private void addEvents(List<ParticipantJoinEvent> events, String roomId) {
-        for(Participant p : service.listParticipants(roomId)) {
-            events.add(new ParticipantJoinEvent(roomId, p));
-        }
-    }
+
 }

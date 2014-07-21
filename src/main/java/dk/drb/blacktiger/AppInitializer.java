@@ -47,7 +47,7 @@ public class AppInitializer implements WebApplicationInitializer {
         filter.setInitParameter("cors.support.credentials", "true");
         filter.setInitParameter("cors.preflight.maxage", "10");
         filter.setAsyncSupported(true);
-        filter.addMappingForUrlPatterns(null, true, "/rooms/*", "/system/*", "/users/*", "/reports/*", "/phonebook/*", "/sipaccounts/*");
+        filter.addMappingForUrlPatterns(null, true, "/rooms/*", "/system/*", "/users/*", "/reports/*", "/phonebook/*", "/sipaccounts/*", "/participants");
     }
     
     private void applyDispatcherServlet(ServletContext servletContext, WebApplicationContext appContext) {
