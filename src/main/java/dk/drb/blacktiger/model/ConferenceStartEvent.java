@@ -6,14 +6,20 @@ package dk.drb.blacktiger.model;
  */
 public class ConferenceStartEvent extends ConferenceEvent {
 
-    public ConferenceStartEvent(String roomNo) {
-        super(roomNo);
+    private Room room;
+    
+    public ConferenceStartEvent(Room room) {
+        super(room.getId());
+        this.room = room;
     }
 
     @Override
     public String getType() {
         return "ConferenceStart";
     }
-    
+
+    public Room getRoom() {
+        return room;
+    }
     
 }

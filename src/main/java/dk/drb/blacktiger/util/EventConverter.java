@@ -10,9 +10,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.ParticipantEvent;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.SparseParticipantEvent;
 import java.io.IOException;
 import org.springframework.messaging.Message;
@@ -40,6 +39,10 @@ public class EventConverter extends MappingJackson2MessageConverter {
                 
                 if(value instanceof SparseParticipantEvent) {
                     jgen.writeStringField("channel", ((SparseParticipantEvent)value).getChannel());
+                }
+                
+                if(value instanceof ConferenceStartEvent) {
+                    jgen.writeObjectField("room", ((ConferenceStartEvent)value).getRoom());
                 }
                 
                 jgen.writeStringField("type", value.getType());

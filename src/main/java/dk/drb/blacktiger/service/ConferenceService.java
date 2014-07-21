@@ -3,6 +3,7 @@ package dk.drb.blacktiger.service;
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
@@ -59,6 +60,11 @@ public class ConferenceService {
                 if(p != null) {
                     callInformationRepository.logAction(p.getPhoneNumber(), room, "hangup");
                 }
+            }
+            
+            if(event instanceof ConferenceStartEvent) {
+                ConferenceStartEvent startEvent = (ConferenceStartEvent) event;
+                decorateRoom(startEvent.getRoom());
             }
             
             wrapped.onParticipantEvent(event);

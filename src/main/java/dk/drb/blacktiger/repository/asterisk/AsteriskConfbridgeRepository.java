@@ -174,7 +174,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         
         LOG.debug("Room created and added to roomMap. [currentRooms={}]", roomMap.values().size());
         
-        AsteriskConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(e.getConference()));
+        AsteriskConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(room));
 
     }
 
