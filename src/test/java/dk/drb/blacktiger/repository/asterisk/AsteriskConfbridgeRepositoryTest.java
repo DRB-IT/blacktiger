@@ -24,6 +24,8 @@ import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
 import org.asteriskjava.manager.event.ConfbridgeListEvent;
 import org.asteriskjava.manager.event.ConfbridgeListRoomsEvent;
 import org.asteriskjava.manager.event.ConfbridgeStartEvent;
+import org.asteriskjava.manager.event.ConnectEvent;
+import org.asteriskjava.manager.event.DisconnectEvent;
 import org.asteriskjava.manager.event.DtmfEvent;
 import org.asteriskjava.manager.internal.ResponseEventsImpl;
 import org.asteriskjava.manager.response.ManagerResponse;
@@ -158,6 +160,27 @@ public class AsteriskConfbridgeRepositoryTest {
         listener.onManagerEvent(e);
         repo.handleEventQueue();
         assertEquals(0, repo.findAll().size());
+    }
+    
+    @Test
+    public void ifDisconnectEventsWillResetData() {
+        DisconnectEvent e = new DisconnectEvent(this);
+        listener.onManagerEvent(e);
+        repo.handleEventQueue();
+        assertEquals(0, repo.findAll().size());
+    }
+    
+        @Test
+    public void ifConnectEventsWillReloadData() {
+        DisconnectEvent e = new DisconnectEvent(this);
+        listener.onManagerEvent(e);
+        repo.handleEventQueue();
+        
+        ConnectEvent e2 = new ConnectEvent(this);
+        listener.onManagerEvent(e2);
+        repo.handleEventQueue();
+        
+        assertEquals(1, repo.findAll().size());
     }
     
     @Test

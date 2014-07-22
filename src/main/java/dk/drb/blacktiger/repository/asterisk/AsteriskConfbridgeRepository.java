@@ -42,6 +42,8 @@ import org.asteriskjava.manager.event.ConfbridgeLeaveEvent;
 import org.asteriskjava.manager.event.ConfbridgeListEvent;
 import org.asteriskjava.manager.event.ConfbridgeListRoomsEvent;
 import org.asteriskjava.manager.event.ConfbridgeStartEvent;
+import org.asteriskjava.manager.event.ConnectEvent;
+import org.asteriskjava.manager.event.DisconnectEvent;
 import org.asteriskjava.manager.event.DtmfEvent;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.ResponseEvent;
@@ -60,10 +62,21 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     private static final String DIGIT_COMMENT_REQUEST = "1";
     private static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
 
+    /**
+     * A map with all conferencetooms started on server.
+     */
     private final Map<String, Room> roomMap = new HashMap<>();
+    
+    /**
+     * A map contaning lists of participants for each room.
+     */
     private final Map<String, List<Participant>> participantMap = new HashMap<>();
+    
+    /**
+     * A map between channels and rooms. 
+     * This is used for DTMF events which never carries the conference room which the user sending the DTMF event resides in.
+     */
     private final Map<String, String> channelRoomMap = new HashMap<>();
-    //private final Map<String, String> channelCallerIdMap = new HashMap<>();
     private final Queue<ManagerEvent> managerEvents = new LinkedList<>();
 
     public AsteriskConfbridgeRepository() {
@@ -104,9 +117,28 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             if (event instanceof DtmfEvent) {
                 onDtmfEvent((DtmfEvent) event);
             }
+            
+            if(event instanceof DisconnectEvent) {
+                onDisconnectEvent((DisconnectEvent) event);
+            }
+            
+            if(event instanceof ConnectEvent) {
+                reload();
+            }
         }
     }
 
+    private void onDisconnectEvent(DisconnectEvent event) {
+        LOG.info("Disconnect event recieved. Informing all partakers thats participants have left and Conference rooms have ended.");
+        for(Map.Entry<String, List<Participant>> entry : participantMap.entrySet()) {
+            for(Participant participant : entry.getValue()) {
+                AsteriskConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(entry.getKey(), participant));
+            }
+            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(entry.getKey()));
+        }
+        reset();
+    }
+    
     private void onDtmfEvent(DtmfEvent event) {
         if (event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
             // A DTMF event has been received. We need to retrieve roomId and callerId. 
@@ -198,7 +230,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     }
 
     private boolean isRoomExist(String roomId) {
-        return participantMap.containsKey(roomId);
+        return roomMap.containsKey(roomId);
     }
     
     private synchronized List<Participant> getParticipantListSynced(String roomId) {
@@ -222,13 +254,33 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
         LOG.info("Asterisk Server specified. Reading rooms from server.");
 
-        roomMap.clear();
+        reload();
+    }
+
+    
+    private void reset() {
+        this.roomMap.clear();
+        this.channelRoomMap.clear();
+        this.participantMap.clear();
+    }
+    
+    private void reload() {
+        reset();
+        
         for (Room room : readRoomsFromServer()) {
             roomMap.put(room.getId(), room);
             getParticipantListSynced(room.getId());
         }
+        
+        for(Map.Entry<String, List<Participant>> entry : participantMap.entrySet()) {
+            AsteriskConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(roomMap.get(entry.getKey())));
+            for(Participant participant : entry.getValue()) {
+                AsteriskConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(entry.getKey(), participant));
+            }
+            
+        }
     }
-
+    
     /**
      * Reads rooms directly from the asterisk server.
      */
