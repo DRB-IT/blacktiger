@@ -17,6 +17,8 @@ import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,7 @@ public class ConferenceService {
     private ContactRepository contactRepository;
     private RoomInfoRepository roomInfoRepository;
     private CallInformationRepository callInformationRepository;
+    private Map<ConferenceEventListener, ConferenceEventListenerWrapper> listenerMap = new WeakHashMap<>();
     
     private class ConferenceEventListenerWrapper implements ConferenceEventListener {
 
@@ -194,11 +197,17 @@ public class ConferenceService {
     }
 
     public void addEventListener(ConferenceEventListener listener) {
-        roomRepository.addEventListener(new ConferenceEventListenerWrapper(listener));
+        ConferenceEventListenerWrapper wrapped = new ConferenceEventListenerWrapper(listener);
+        listenerMap.put(listener, wrapped);
+        roomRepository.addEventListener(wrapped);
     }
 
     public void removeEventListener(ConferenceEventListener listener) {
-        roomRepository.removeEventListener(listener);
+        ConferenceEventListenerWrapper wrapped = listenerMap.get(listener);
+        if(wrapped != null) {
+            roomRepository.removeEventListener(listener);
+            listenerMap.remove(listener);
+        }
     }
     
     private List<Participant> decorateWithPhonebookInformation(String hall, List<Participant> participants) {

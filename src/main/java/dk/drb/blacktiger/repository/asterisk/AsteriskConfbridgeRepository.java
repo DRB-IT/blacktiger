@@ -381,13 +381,6 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         onUnmuted(roomNo, channel);
     }
 
-    @Override
-    public void removeEventListener(ConferenceEventListener listener) {
-        LOG.debug("Removing eventlistener [listener={}]", listener);
-        if (listener != null) {
-            eventListeners.remove(listener);
-        }
-    }
 
     private void setMutenessOfParticipant(String roomId, String channel, boolean value) {
         // Because Asterisk 11 does not send events when muteness changes and also does not carry any information whether a channel is muted or not,
