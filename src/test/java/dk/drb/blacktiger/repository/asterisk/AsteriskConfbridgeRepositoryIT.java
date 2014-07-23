@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  *
  * @author michael
  */
-public class AsteriskConfbridgeRepositoryIT_ {
+public class AsteriskConfbridgeRepositoryIT {
     
     private class SipListener extends BaseSipListener {
 
@@ -61,7 +61,7 @@ public class AsteriskConfbridgeRepositoryIT_ {
         private SipRequest sipRequest;
         private UserAgent agent;
         
-        public Caller(String username, String callDestination) throws UnknownHostException, SocketException {
+        public Caller(String username, String password, String callDestination) throws UnknownHostException, SocketException {
             this.username = username;
             this.callDestination = callDestination;
             
@@ -69,7 +69,7 @@ public class AsteriskConfbridgeRepositoryIT_ {
             cfg.setDomain("192.168.50.2");
             cfg.setLocalInetAddress(InetAddress.getByName("192.168.50.1"));
             cfg.setUserPart(username);
-            cfg.setPassword("Test-12345");
+            cfg.setPassword(password);
             agent = new UserAgent(listener, cfg);
         }
         
@@ -104,36 +104,35 @@ public class AsteriskConfbridgeRepositoryIT_ {
     
     @Test
     public void testListRooms() throws Exception {
-        NumberFormat nf = new DecimalFormat("0000");
-        List<Caller> callers = new ArrayList<>();
-        for(int i=0;i<10;i++) {
-            String id = nf.format(i);
-            Caller caller = new Caller("H45-" + id, "sip:+450000" + id + "@192.168.50.2");
-            caller.register();
-            caller.call();
-            Thread.sleep(100);
-        }
+        Caller caller = null;
         
+        try {
+        List<Room> rooms = repository.findAll();
+        assertEquals(0, rooms.size());
+        
+        caller = new Caller("H45-0002", "12345", "sip:+4500000002@192.168.50.2");
+        caller.register();
+        caller.call();
+            
         Thread.sleep(2000);
         
-        List<Room> result = repository.findAll();
-        assertEquals(10, result.size());
+        repository.handleEventQueue();
         
-        Room room = repository.findOne(result.get(0).getId());
+        rooms = repository.findAll();
+        assertEquals(1, rooms.size());
+        
+        Room room = repository.findOne(rooms.get(0).getId());
         assertNotNull(room);
         
-        for(Caller caller : callers) {
-            caller.hangup();
-            Thread.sleep(200);
-            caller.unregister();
-            Thread.sleep(100);
+        } catch(Throwable t) {
+            if(caller != null) {
+                caller.hangup();
+                Thread.sleep(200);
+                caller.unregister();
+                Thread.sleep(100);
+            }
         }
         
-        /* Thread.sleep(1000);
-        
-        result = repository.findRooms();
-        assertEquals(0, result.size());
-                */
 
     }
 
