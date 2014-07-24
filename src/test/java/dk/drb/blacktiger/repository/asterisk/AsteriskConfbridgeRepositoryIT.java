@@ -1,12 +1,12 @@
 package dk.drb.blacktiger.repository.asterisk;
 
+import dk.drb.blacktiger.model.ConferenceEvent;
+import dk.drb.blacktiger.model.ConferenceEventListener;
+import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
 import dk.drb.blacktiger.model.Room;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.peers.JavaConfig;
 import net.sourceforge.peers.sip.core.useragent.BaseSipListener;
@@ -16,6 +16,7 @@ import net.sourceforge.peers.sip.transport.SipRequest;
 import net.sourceforge.peers.sip.transport.SipResponse;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -89,6 +90,10 @@ public class AsteriskConfbridgeRepositoryIT {
             agent.getUac().unregister();
             agent.close();
         }
+        
+        public void sendDtmf(char digit) {
+            agent.getMediaManager().sendDtmf(digit);
+        }
     }
     
     @Before
@@ -99,6 +104,10 @@ public class AsteriskConfbridgeRepositoryIT {
         repository.setAsteriskServer(asteriskServer);
     }
     
+    @After
+    public void tearDown() {
+        asteriskServer.shutdown();
+    }
     private AsteriskServer asteriskServer;
     private AsteriskConfbridgeRepository repository;
     
@@ -132,10 +141,45 @@ public class AsteriskConfbridgeRepositoryIT {
                 Thread.sleep(100);
             }
         }
-        
-
     }
 
+    @Test
+    public void testParticipantAnswerRequest() throws Exception {
+        Caller caller = null;
+        final boolean[] answerRequested = {false}; 
+        ConferenceEventListener eventListener = new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                if(event instanceof ParticipantCommentRequestEvent) {
+                    answerRequested[0] = true;
+                }
+            }
+        };
+        
+        try {
+            caller = new Caller("H45-0002", "12345", "sip:+4500000002@192.168.50.2");
+            caller.register();
+            caller.call();
+
+            Thread.sleep(2000);
+
+            caller.sendDtmf('1');
+
+            repository.addEventListener(eventListener);
+            repository.handleEventQueue();
+            repository.removeEventListener(eventListener);
+
+            assertTrue(answerRequested[0]);
+
+        
+        } catch(Throwable t) {
+            caller.hangup();
+            Thread.sleep(200);
+            caller.unregister();
+            Thread.sleep(100);
+        }
+    }
     
     
 }

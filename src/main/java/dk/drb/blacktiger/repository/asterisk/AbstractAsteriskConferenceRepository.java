@@ -56,8 +56,10 @@ public abstract class AbstractAsteriskConferenceRepository implements ManagerEve
     public void setAsteriskServer(AsteriskServer asteriskServer) {
         LOG.info("Setting asteriskServer for ConferenceRepository. [server={}]", asteriskServer);
         if (this.asteriskServer != null) {
-            LOG.debug("Removing existing managerEventListener");
+            LOG.warn("** Asterisk server has been set before. This can cause undesirable behaviour. **");
+            LOG.info("Cleaning up before adding new asteriskServer connection. Closing old connection.");
             this.asteriskServer.getManagerConnection().removeEventListener(managerEventListener);
+            this.asteriskServer.shutdown();
         }
         this.asteriskServer = asteriskServer;
    
