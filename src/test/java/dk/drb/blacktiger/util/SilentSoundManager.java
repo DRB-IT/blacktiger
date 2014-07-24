@@ -1,6 +1,6 @@
 package dk.drb.blacktiger.util;
 
-import net.sourceforge.peers.media.SoundManager;
+import dk.apaq.peers.media.SoundManager;
 
 
 public class SilentSoundManager implements SoundManager {

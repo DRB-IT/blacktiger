@@ -3,10 +3,10 @@ package dk.drb.blacktiger.e2e;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
-import net.sourceforge.peers.JavaConfig;
-import net.sourceforge.peers.sip.core.useragent.UserAgent;
-import net.sourceforge.peers.sip.transport.SipRequest;
-import net.sourceforge.peers.sip.transport.SipResponse;
+import dk.apaq.peers.JavaConfig;
+import dk.apaq.peers.sip.core.useragent.UserAgent;
+import dk.apaq.peers.sip.transport.SipRequest;
+import dk.apaq.peers.sip.transport.SipResponse;
 import org.junit.Test;
 
 /**

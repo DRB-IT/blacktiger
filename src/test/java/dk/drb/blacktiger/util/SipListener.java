@@ -1,7 +1,7 @@
 package dk.drb.blacktiger.util;
 
-import net.sourceforge.peers.sip.core.useragent.BaseSipListener;
-import net.sourceforge.peers.sip.transport.SipResponse;
+import dk.apaq.peers.sip.core.useragent.BaseSipListener;
+import dk.apaq.peers.sip.transport.SipResponse;
 
 
 public class SipListener extends BaseSipListener {

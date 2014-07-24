@@ -3,10 +3,10 @@ package dk.drb.blacktiger.util;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import net.sourceforge.peers.JavaConfig;
-import net.sourceforge.peers.sip.core.useragent.UserAgent;
-import net.sourceforge.peers.sip.syntaxencoding.SipUriSyntaxException;
-import net.sourceforge.peers.sip.transport.SipRequest;
+import dk.apaq.peers.JavaConfig;
+import dk.apaq.peers.sip.core.useragent.UserAgent;
+import dk.apaq.peers.sip.syntaxencoding.SipUriSyntaxException;
+import dk.apaq.peers.sip.transport.SipRequest;
 
 public class Caller {
 
