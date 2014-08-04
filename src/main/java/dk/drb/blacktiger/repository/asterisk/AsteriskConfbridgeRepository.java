@@ -438,9 +438,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         String phoneNumber = callerIdNum;
         String name = callerIdName;
 
-        if (IpPhoneNumber.isIpPhoneNumber(phoneNumber)) {
-            phoneNumber = IpPhoneNumber.normalize(phoneNumber);
-        } else if (PhoneNumber.isPhoneNumber(name, "DK")) {
+        if (PhoneNumber.isPhoneNumber(phoneNumber, "DK")) {
             phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
             callType = CallType.Phone;
         }
