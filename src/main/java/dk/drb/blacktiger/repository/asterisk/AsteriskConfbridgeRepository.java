@@ -1,6 +1,5 @@
 package dk.drb.blacktiger.repository.asterisk;
 
-import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
@@ -14,7 +13,6 @@ import dk.drb.blacktiger.model.ParticipantMuteEvent;
 import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
-import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,6 +70,8 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
      */
     private final Map<String, List<Participant>> participantMap = new HashMap<>();
     
+    private boolean normalizePhoneNumbers = false;
+    
     /**
      * A map between channels and rooms. 
      * This is used for DTMF events which never carries the conference room which the user sending the DTMF event resides in.
@@ -94,6 +94,12 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         }
 
     }
+
+    public void setNormalizePhoneNumbers(boolean normalizePhoneNumbers) {
+        this.normalizePhoneNumbers = normalizePhoneNumbers;
+    }
+    
+    
 
     @Scheduled(fixedDelay = 50)
     protected void handleEventQueue() {
@@ -439,7 +445,9 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         String name = callerIdName;
 
         if (PhoneNumber.isPhoneNumber(phoneNumber, "DK")) {
-            phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
+            if(normalizePhoneNumbers) {
+                phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
+            }
             callType = CallType.Phone;
         }
 

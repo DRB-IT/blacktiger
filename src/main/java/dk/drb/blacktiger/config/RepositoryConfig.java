@@ -99,6 +99,7 @@ public class RepositoryConfig {
             AsteriskConfbridgeRepository repo = new AsteriskConfbridgeRepository();
             asteriskServer.initialize();
             repo.setAsteriskServer(asteriskServer);
+            repo.setNormalizePhoneNumbers(env.getProperty("asterisk.normalizePhoneNumbers").equalsIgnoreCase("true"));
             return repo;
         }
     }
