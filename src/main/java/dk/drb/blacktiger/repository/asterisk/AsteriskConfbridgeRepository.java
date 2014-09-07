@@ -442,7 +442,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
         boolean muted = !host;
         String phoneNumber = callerIdNum;
-        String name = callerIdName;
+        String name = null;
 
         if (PhoneNumber.isPhoneNumber(phoneNumber, "DK")) {
             if(normalizePhoneNumbers) {
