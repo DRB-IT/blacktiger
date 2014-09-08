@@ -1051,3 +1051,50 @@ BEGIN
 	END IF;
 END$$
 
+
+
+delimiter $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_hall`(
+	IN search VARCHAR(256),
+	IN key_ VARCHAR(40)
+)
+BEGIN
+	DECLARE search_str VARCHAR(256);
+	DECLARE s_key VARBINARY(20) DEFAULT UNHEX(SHA(key_));
+
+	CREATE TEMPORARY TABLE IF NOT EXISTS tmp_list AS SELECT
+		contacts.id,
+		contacts.updated,
+		CONVERT(AES_DECRYPT(callers.label,s_key) USING utf8) AS city,
+		CONVERT(AES_DECRYPT(contacts.sip_id,s_key) USING utf8) AS sip_id,
+		CONVERT(AES_DECRYPT(callers.sip_pw,s_key) USING utf8) AS sip_pw,
+		CONVERT(AES_DECRYPT(callers.phone,s_key) USING utf8) AS dialin_phone,
+		CONVERT(AES_DECRYPT(contacts.contact_name,s_key) USING utf8) AS contact_name,
+		CONVERT(AES_DECRYPT(contacts.contact_email,s_key) USING utf8) AS contact_email,
+		CONVERT(AES_DECRYPT(contacts.contact_phone,s_key) USING utf8) AS contact_phone,
+		CONVERT(AES_DECRYPT(contacts.user_comment,s_key) USING utf8) AS user_comment,
+		CONVERT(AES_DECRYPT(contacts.admin_comment,s_key) USING utf8) AS admin_comment
+	FROM contacts
+	INNER JOIN callers
+	ON contacts.sip_id = callers.sip_id;
+	
+	SET search_str = REPLACE(search,' ',''); -- Strip spaces before compare
+	SET search_str = CONCAT('%',search_str,'%'); -- Put wildcards at the ends
+
+	SELECT updated, sip_id, dialin_phone, contact_name, contact_email, contact_phone, user_comment, admin_comment
+	FROM tmp_list
+	WHERE
+		REPLACE(city,' ','') LIKE search_str OR -- Strip spaces before compare
+		REPLACE(sip_id,' ','') LIKE search_str OR
+		REPLACE(dialin_phone,' ','') LIKE search_str OR
+		REPLACE(contact_name,' ','') LIKE search_str OR
+		REPLACE(contact_email,' ','') LIKE search_str OR
+		REPLACE(contact_phone,' ','') LIKE search_str OR
+		REPLACE(user_comment,' ','') LIKE search_str OR
+		REPLACE(admin_comment,' ','') LIKE search_str OR
+		sip_pw LIKE search	-- Excact match on pw!
+	ORDER BY sip_id;
+
+	DROP TABLE tmp_list;
+END$$
