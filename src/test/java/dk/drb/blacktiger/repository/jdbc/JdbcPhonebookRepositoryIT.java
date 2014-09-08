@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.repository.jdbc;
 
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import javax.sql.DataSource;
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class JdbcPhonebookRepositoryIT {
         assertNotNull("Entry was not found", result);
         
         assertEquals("John Doe", result.getName());
-        
+        assertEquals(CallType.Sip, result.getCallType());
     }
 
     /**
@@ -43,7 +44,7 @@ public class JdbcPhonebookRepositoryIT {
     @Test
     public void testSave() {
         System.out.println("save");
-        PhonebookEntry entry = new PhonebookEntry("+4599999901", "Jane Doe");
+        PhonebookEntry entry = new PhonebookEntry("+4599999901", "Jane Doe", CallType.Sip);
         PhonebookEntry result = repo.save("H45-0000-1", entry);
         assertEquals("Jane Doe", result.getName());
         

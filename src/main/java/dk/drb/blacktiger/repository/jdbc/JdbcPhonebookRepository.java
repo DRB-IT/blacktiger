@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.repository.jdbc;
 
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import java.sql.Types;
@@ -93,7 +94,8 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
             LOG.debug("Stored procedure returned a result specifying an error. Ignoring result. [message={}]", name);
             return null;
         } else {
-            return new PhonebookEntry((String)data.get("e164"), name); 
+            // Type: H=hall, P=phone, C=computer,
+            return new PhonebookEntry((String)data.get("e164"), name, CallType.fromCode((String)data.get("type"))); 
         }
     }
 
@@ -101,7 +103,7 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     public PhonebookEntry save(String hallCalling, PhonebookEntry entry) {
         ChangeNameStoredProcedure procedure = new ChangeNameStoredProcedure(jdbcTemplate);
         String name = procedure.execute(entry.getNumber(), entry.getName(), hallCalling);
-        return new PhonebookEntry(entry.getNumber(), name);
+        return new PhonebookEntry(entry.getNumber(), name, entry.getCallType());
     }
     
 }

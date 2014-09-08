@@ -9,10 +9,12 @@ public class PhonebookEntry {
 
     private String number;
     private String name;
+    private CallType callType;
 
-    public PhonebookEntry(String number, String name) {
+    public PhonebookEntry(String number, String name, CallType callType) {
         this.number = number;
         this.name = name;
+        this.callType = callType;
     }
 
     public String getNumber() {
@@ -23,6 +25,10 @@ public class PhonebookEntry {
         return name;
     }
 
+    public CallType getCallType() {
+        return callType;
+    }
+    
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

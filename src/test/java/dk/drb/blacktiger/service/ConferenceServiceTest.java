@@ -143,7 +143,7 @@ public class ConferenceServiceTest {
         Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_ADMIN"));
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("H45-0000-1", "doe", auths));
         
-        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
+        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe", CallType.Sip));
         List<Participant> participants = service.listParticipants("H45-0000-1");
         assertEquals(1, participants.size());
         assertEquals("Jane Doe", participants.get(0).getName());
@@ -163,7 +163,8 @@ public class ConferenceServiceTest {
             }
         });
         
-        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe"));
+        Mockito.when(roomInfoRepository.findById(Mockito.anyString())).thenReturn(rooms.get(0));
+        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "Jane Doe", CallType.Sip));
         
         conferenceEventListener.onParticipantEvent(new ParticipantJoinEvent("H45-0000-1", participants.get(0)));
         

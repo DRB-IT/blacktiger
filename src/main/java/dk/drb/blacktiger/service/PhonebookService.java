@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.service;
 
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,9 @@ public class PhonebookService {
         
         PhonebookEntry entry = repository.findByCallerId(hall, phoneNumber);
         if(entry != null) {
-            entry = new PhonebookEntry(entry.getNumber(), name);
+            entry = new PhonebookEntry(entry.getNumber(), name, entry.getCallType());
         } else {
-            entry = new PhonebookEntry(phoneNumber, name);
+            entry = new PhonebookEntry(phoneNumber, name, CallType.Sip);
         }
         repository.save(hall, entry);
     }

@@ -227,6 +227,7 @@ public class ConferenceService {
         if(entry != null) {
             participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());
+            participant.setType(entry.getCallType());
         }
         return participant;
     }

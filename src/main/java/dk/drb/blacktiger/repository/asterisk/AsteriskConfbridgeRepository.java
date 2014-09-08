@@ -444,11 +444,8 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
         String phoneNumber = callerIdNum;
         String name = null;
 
-        if (PhoneNumber.isPhoneNumber(phoneNumber, "DK")) {
-            if(normalizePhoneNumbers) {
-                phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
-            }
-            callType = CallType.Phone;
+        if (PhoneNumber.isPhoneNumber(phoneNumber, "DK") && normalizePhoneNumbers) {
+            phoneNumber = PhoneNumber.normalize(phoneNumber, "DK");
         }
 
         return new Participant(normalizeChannelName(channel), callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
