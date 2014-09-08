@@ -54,15 +54,13 @@ public class ConferenceService {
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
                 Participant p = decorateWithPhonebookInformation(joinEvent.getRoomNo(), joinEvent.getParticipant());
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
-                callInformationRepository.logAction(p.getPhoneNumber(), joinEvent.getRoomNo(), "call");
+                doActionLog(p, joinEvent.getRoomNo(), "call");
             }
             if(event instanceof ParticipantLeaveEvent) {
                 ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
                 String room = event.getRoomNo();
                 Participant p = decorateWithPhonebookInformation(room, leaveEvent.getParticipant());
-                if(p != null) {
-                    callInformationRepository.logAction(p.getPhoneNumber(), room, "hangup");
-                }
+                doActionLog(p, room, "hangup");
             }
             
             if(event instanceof ConferenceStartEvent) {
@@ -84,6 +82,13 @@ public class ConferenceService {
         Assert.notNull(callInformationRepository, "CallInformationRepository must be specified. Was null.");
     }
 
+    private void doActionLog(Participant p, String roomNo, String action) {
+        if(p != null) {
+            Room room = roomInfoRepository.findById(roomNo);
+            callInformationRepository.logAction(p.getPhoneNumber(), room.getPhoneNumber(), action);
+        }
+    }
+    
     @Autowired
     public void setPhonebookRepository(PhonebookRepository phonebookRepository) {
         this.phonebookRepository = phonebookRepository;
