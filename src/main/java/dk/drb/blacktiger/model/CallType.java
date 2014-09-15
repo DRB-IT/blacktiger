@@ -5,7 +5,7 @@ package dk.drb.blacktiger.model;
  * @author michael
  */
 public enum CallType {
-    Sip, Phone, Hall;
+    Sip, Phone, Hall, Unknown;
     
     public static CallType fromCode(String code) {
         //H=hall, P=phone, C=computer,
@@ -17,9 +17,8 @@ public enum CallType {
             case "C":
                 return CallType.Sip;
             default:
-                return null;
+                return CallType.Unknown;
         }
-        
         
     }
 }

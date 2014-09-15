@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.service;
 
+import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.model.ConferenceEventListener;
@@ -228,6 +229,8 @@ public class ConferenceService {
             participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());
             participant.setType(entry.getCallType());
+        } else {
+            participant.setType(CallType.Unknown);
         }
         return participant;
     }

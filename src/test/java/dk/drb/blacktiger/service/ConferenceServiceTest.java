@@ -173,4 +173,26 @@ public class ConferenceServiceTest {
         assertEquals("+4512345678", p.getPhoneNumber());
         
     }
+    
+    @Test
+    public void ifJoinEventsAreDecoratedAsUnknownOnMissingInfo() {
+        final ConferenceEvent[] eventArray = new ConferenceEvent[1];
+        
+        service.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                eventArray[0] = event;
+            }
+        });
+        
+        Mockito.when(roomInfoRepository.findById(Mockito.anyString())).thenReturn(rooms.get(0));
+        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(null);
+        
+        conferenceEventListener.onParticipantEvent(new ParticipantJoinEvent("H45-0000-1", participants.get(0)));
+        
+        Participant p = ((ParticipantJoinEvent) eventArray[0]).getParticipant();
+        assertEquals(CallType.Unknown, p.getType());
+        
+    }
 }
