@@ -16,6 +16,7 @@ import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -192,7 +193,10 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
             }
 
             if (toRemove != null) {
+                LOG.debug("Removing participant. [participant={}]", toRemove);
                 list.remove(toRemove);
+            } else {
+                LOG.error("A particpant was expected to be removed but was not found in the list. [channel={}]", p.getChannel());
             }
 
             //channelCallerIdMap.remove(event.getChannel());
@@ -218,6 +222,7 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
 
     private void onConfbridgeEnd(ConfbridgeEndEvent e) {
         LOG.debug("Handling ConfbridgeEndEvent by removing from roomMap. [currentRooms={}, event={}]", roomMap.values().size(), e);
+        participantMap.remove(e.getConference());
         roomMap.remove(e.getConference());
 
         LOG.debug("Room removed from roomMap. [currentRooms={}]", roomMap.values().size());
@@ -352,7 +357,11 @@ public class AsteriskConfbridgeRepository extends AbstractAsteriskConferenceRepo
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
         LOG.debug("Listing participants. [room={}]", roomNo);
-        return getParticipantListSynced(roomNo);
+        if(!isRoomExist(roomNo)) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return getParticipantListSynced(roomNo);
+        }
     }
 
     @Override

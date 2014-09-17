@@ -2,6 +2,7 @@ package dk.drb.blacktiger.model;
 
 import java.util.Date;
 import java.util.Objects;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -113,29 +114,10 @@ public class Participant {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if(!(obj instanceof Participant)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Participant other = (Participant) obj;
-        if (!Objects.equals(this.callerId, other.callerId)) {
-            return false;
-        }
-        if (this.muted != other.muted) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (this.type != other.type) {
-            return false;
-        }
-        if (this.host != other.host) {
-            return false;
-        }
-        return true;
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
     
     

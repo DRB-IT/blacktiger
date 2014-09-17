@@ -160,6 +160,7 @@ public class AsteriskConfbridgeRepositoryTest {
         listener.onManagerEvent(e);
         repo.handleEventQueue();
         assertEquals(0, repo.findAll().size());
+        assertEquals(0, repo.findByRoomNo("H45-0000").size());
     }
     
     @Test
