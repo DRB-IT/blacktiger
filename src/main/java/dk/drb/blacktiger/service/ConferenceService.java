@@ -86,7 +86,7 @@ public class ConferenceService {
     private void doActionLog(Participant p, String roomNo, String action) {
         if(p != null) {
             Room room = roomInfoRepository.findById(roomNo);
-            callInformationRepository.logAction(p.getPhoneNumber(), room.getPhoneNumber(), action);
+            callInformationRepository.logAction(p.getCallerId(), room.getPhoneNumber(), action);
         }
     }
     

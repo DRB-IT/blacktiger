@@ -42,18 +42,34 @@ public class Participant {
         return dateJoined;
     }
 
+    /**
+     * The id of the caller as retrieved from Asterisk.
+     * @return The callerId, fx. SIP id, phonenumber etc..
+     */
     public String getCallerId() {
         return this.callerId;
     }
 
+    /**
+     * The channel of the caller as retrieved from Asterisk.
+     * @return The channel.
+     */
     public String getChannel() {
         return channel;
     }
     
+    /**
+     * Whether the participant is muted.
+     * @return True/False
+     */
     public boolean isMuted() {
         return this.muted;
     }
 
+    /**
+     * The type of call.
+     * @return Sip/Phone/Hall/Unknown
+     */
     public CallType getType() {
         return type;
     }
@@ -62,6 +78,10 @@ public class Participant {
         this.type = type;
     }
 
+    /**
+     * Whether the participant is host of the meeting.
+     * @return True/False
+     */
     public boolean isHost() {
         return host;
     }
@@ -70,10 +90,19 @@ public class Participant {
         this.host = host;
     }
 
+    /**
+     * The phonenumber of the participant.
+     * This may be decorated compared to what was originally retrieved from Asterisk depending on whether information about the participant was found in the phonebook. 
+     * @return The phone number.
+     */
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
+    /**
+     * Name of participant as found in the phonebook.
+     * @return The name or null.
+     */
     public String getName() {
         return name;
     }
