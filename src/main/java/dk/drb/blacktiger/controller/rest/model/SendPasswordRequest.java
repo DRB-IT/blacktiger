@@ -8,6 +8,9 @@ public class SendPasswordRequest {
     private String email;
     private String cityOfHall;
     private String phoneNumberOfHall;
+    private String emailSubject;
+    private String emailTextManager;
+    private String emailTextUser;
 
     public String getName() {
         return name;
@@ -43,6 +46,30 @@ public class SendPasswordRequest {
 
     public String getPhoneNumberOfHall() {
         return phoneNumberOfHall;
+    }
+
+    public String getEmailSubject() {
+        return emailSubject;
+    }
+
+    public void setEmailSubject(String emailSubject) {
+        this.emailSubject = emailSubject;
+    }
+
+    public String getEmailTextManager() {
+        return emailTextManager;
+    }
+
+    public void setEmailTextManager(String emailTextManager) {
+        this.emailTextManager = emailTextManager;
+    }
+
+    public String getEmailTextUser() {
+        return emailTextUser;
+    }
+
+    public void setEmailTextUser(String emailTextUser) {
+        this.emailTextUser = emailTextUser;
     }
 
     public void setPhoneNumberOfHall(String phoneNumberOfHall) {

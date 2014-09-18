@@ -1,6 +1,7 @@
 package dk.drb.blacktiger.service;
 
 import com.sun.management.OperatingSystemMXBean;
+import dk.drb.blacktiger.controller.rest.model.SendPasswordRequest;
 import dk.drb.blacktiger.repository.SipAccountRepository;
 import java.io.File;
 import java.lang.management.ManagementFactory;
@@ -55,14 +56,22 @@ public class SystemService {
     }
     
         
-    public boolean sendPasswordEmail(String name, String phoneNumber, String email,  String cityOfHall, String phoneNumberOfHall) {
-        String emailSubject = "Telesal i {%1}", 
-                            // EN: "Telesal in {%1}"
-                emailTextManager = "{%1} har aktiveret 'glemt kodeord' for salen med nummer {%4}, som du er teknisk ansvarlig for. Hans mobilnummer er {%2} og hans e-mail er {%3}. Af sikkerhedshensyn er kodeordet kun sendt til dig, ikke til ham. Du skal kontakte ham for at finde ud af om han skal have udleveret kodeordet af dig.\\n\\nDet glemte kodeord er: {%5}\\n", 
-                            // EN: "{%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. He has mobile phone number is {%2} and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\\n\\nThe password is: {%5}\\n"
-                emailTextUser = "Du har aktiveret 'glemt kodeord' for salen med nummer {%1}. Koden er nu sendt til {%5}, som er den e-mailadresse der tidligere er oplyst for den teknisk ansvarlige for denne sal. Han hedder {%3} og har telefon {%4}.\\n\\nBrugernavnet der skal bruges sammen med koden er {%2}.";
-                            // EN: "You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\\n\\nThe user ID which must be used together with the password is {%2}."
-        return sipAccountRepository.sendPasswordEmail(name, phoneNumber, email, cityOfHall, phoneNumberOfHall, emailSubject, emailTextManager, emailTextUser);
+    public boolean sendPasswordEmail(SendPasswordRequest request) {
+        //The following 3 if's is a fallback from when the client originally did'nt deliver the texts.
+        if(request.getEmailSubject() == null) {
+            request.setEmailSubject("Telesal in {%1}");
+        }
+        
+        if(request.getEmailTextManager() == null) {
+            request.setEmailTextManager("{%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. He has mobile phone number is {%2} and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\\n\\nThe password is: {%5}\\n");
+        }
+        
+        if(request.getEmailTextUser() == null) {
+            request.setEmailTextUser("You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\\n\\nThe user ID which must be used together with the password is {%2}.");
+        }
+
+        return sipAccountRepository.sendPasswordEmail(request.getName(), request.getPhoneNumber(), request.getEmail(), request.getCityOfHall(), 
+                request.getPhoneNumberOfHall(), request.getEmailSubject(), request.getEmailTextManager(), request.getEmailTextUser());
 
     }
 }

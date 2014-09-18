@@ -60,7 +60,7 @@ public class SystemController {
     @RequestMapping(value = "/system/passwordRequests", produces = "application/json", method = RequestMethod.POST)
     @ResponseBody
     public void requstPassword(@RequestBody SendPasswordRequest request) {
-        boolean ok = service.sendPasswordEmail(request.getName(), request.getPhoneNumber(), request.getEmail(), request.getCityOfHall(), request.getPhoneNumberOfHall());
+        boolean ok = service.sendPasswordEmail(request);
         if(!ok) {
             throw new ResourceNotFoundException("No hall found using the specified input.");
         }
