@@ -18,3 +18,6 @@ To stop the virtual machine again:
 ```
 vagrant halt
 ```
+
+
+Mvh Michael Krog
