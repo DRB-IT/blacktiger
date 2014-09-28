@@ -6,7 +6,7 @@ def key = "enckey";
 //Create halls
 for (i in 0..999) {
     def id = i.toString().padLeft(4, "0");
-    def data = ["45", id,"Test City " + id,"","+450000" + id,"Test Admin","admin@test.dk","+451000" + id,"User Comment","Admin Comment","Admin",key];
+    def data = ["45", id,"Test City " + id,"","+452200" + id,"Test Admin","admin@test.dk","+451000" + id,"User Comment","Admin Comment","Admin",key];
     println "Create hall: " + data;
     sql.call("{call create_hall(?,?,?,?,?,?,?,?,?,?,?,?)}", data);
     

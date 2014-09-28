@@ -1,11 +1,11 @@
 use telesal;
 
 # Create halls in DB
-call create_hall('45', '0000','Andeby','1','+4500000000','Test Admin','admin@test.dk','+4510000000','User Comment','Admin Comment','Admin','enckey');
-call create_hall('45', '0001','Andeby','2','+4500000001','Test Admin','admin@test.dk','+4510000000','User Comment','Admin Comment','Admin','enckey');
-call create_hall('45', '0002','Gåserup','','+4500000002','Test Admin','admin@test.dk','+4510000000','User Comment','Admin Comment','Admin','enckey');
-call create_hall('45', '0003','Langbortistan','1','+4500000003','Test Admin','admin@test.dk','+4510000000','User Comment','Admin Comment','Admin','enckey');
-call create_hall('45', '0004','Langbortistan','2','+4500000004','Test Admin','admin@test.dk','+4510000000','User Comment','Admin Comment','Admin','enckey');
+call create_hall('45', '0000','Andeby','1','+4522000000','Test Admin','admin@test.dk','+4530000000','User Comment','Admin Comment','Admin','enckey');
+call create_hall('45', '0001','Andeby','2','+4522000001','Test Admin','admin@test.dk','+4530000000','User Comment','Admin Comment','Admin','enckey');
+call create_hall('45', '0002','Gåserup','','+4522000002','Test Admin','admin@test.dk','+4530000000','User Comment','Admin Comment','Admin','enckey');
+call create_hall('45', '0003','Langbortistan','1','+4522000003','Test Admin','admin@test.dk','+4530000000','User Comment','Admin Comment','Admin','enckey');
+call create_hall('45', '0004','Langbortistan','2','+4522000004','Test Admin','admin@test.dk','+4530000000','User Comment','Admin Comment','Admin','enckey');
 
 # Create computer caller in DB
 
