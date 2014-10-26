@@ -1,11 +1,10 @@
 package dk.drb.blacktiger.controller.rest;
 
-import dk.drb.blacktiger.controller.rest.model.ResourceNotFoundException;
 import java.util.List;
 
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.service.ConferenceService;
-import groovy.util.ResourceException;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RoomController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoomController.class);
+    private static final String MODE_FULL = "full";
     private final ConferenceService service;
     
     
@@ -40,9 +40,18 @@ public class RoomController {
     @RequestMapping("/rooms")
     @ResponseBody
     @Secured("ROLE_USER")
-    public List<Room> getRooms() {
-        LOG.debug("Got request for all rooms.");
-        return service.listRooms();
+    public List getRooms(String mode) {
+        LOG.debug("Got request for all available rooms.");
+        
+        if(MODE_FULL.equalsIgnoreCase(mode)) {
+            List<RoomWithParticipants> rooms = new ArrayList<>();
+            for(Room room : service.listRooms()) {
+                rooms.add(new RoomWithParticipants(room, service.listParticipants(room.getId())));
+            }
+            return rooms;
+        } else {
+            return service.listRooms();
+        }
     }
     
     @RequestMapping(value = "/rooms/{roomNo}", headers = "Accept=application/json")

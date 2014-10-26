@@ -22,6 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 import static dk.drb.blacktiger.fixture.rest.RoomRestDataFixture.*;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 
 /**
  *
@@ -54,6 +56,31 @@ public class RoomControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(standardListOfRoomsAsJson(ids)));
+    }
+    
+    @Test
+    public void thatRoomsCanBeRetrievedWithParticipants() throws Exception {
+        String[] ids = {"1", "2"};
+        when(service.listRooms()).thenReturn(standardListOfRooms(ids));
+
+        this.mockMvc.perform(get("/rooms?mode=full")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(new BaseMatcher<String>() {
+
+                    @Override
+                    public boolean matches(Object item) {
+                        String text = (String) item;
+                        return text.contains("participants");
+                    }
+
+                    @Override
+                    public void describeTo(Description description) {
+                        description.appendText("Contains participants.");
+                    }
+                    
+                }));
     }
     
     @Test

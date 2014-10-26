@@ -1,15 +1,12 @@
 package dk.drb.blacktiger.controller.rest;
 
 import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.service.ConferenceService;
-import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,18 +32,6 @@ public class ParticipantController {
     @Autowired
     public ParticipantController(ConferenceService service) {
         this.service = service;
-    }
-
-    @RequestMapping(value = "/participants", method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseBody
-    @Secured("ROLE_ADMIN")
-    public List<RoomWithParticipants> listParticipants() {
-        LOG.debug("Got request for all participants currently in system..");
-        List<RoomWithParticipants> rooms = new ArrayList<>();
-        for(Room room : service.listRooms()) {
-            rooms.add(new RoomWithParticipants(room, service.listParticipants(room.getId())));
-        }
-        return rooms;
     }
     
     @RequestMapping(value = "/rooms/{roomNo}/participants", method = RequestMethod.GET, headers = "Accept=application/json")
