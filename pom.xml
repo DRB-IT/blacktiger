@@ -204,6 +204,7 @@
             <version>0.5-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+        
         <dependency>
             <groupId>javax.sip</groupId>
             <artifactId>jain-sip-api</artifactId>

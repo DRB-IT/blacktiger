@@ -55,7 +55,7 @@ public class ParticipantController {
         service.kickParticipant(roomNo, channel);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{channel}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{channel}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     @ResponseStatus(value = HttpStatus.OK)
     public void patchParticipant(@PathVariable final String roomNo, @PathVariable final String channel, @RequestBody Participant participant) {
         LOG.debug("Persisting participant in room [room={};participant={}].", roomNo, channel);
