@@ -1,17 +1,9 @@
 package dk.drb.blacktiger.controller.rest;
 
-import dk.drb.blacktiger.controller.rest.ParticipantController;
 import static dk.drb.blacktiger.fixture.rest.ParticipantRestDataFixture.*;
-import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.service.ConferenceService;
-import dk.drb.blacktiger.service.PhonebookService;
-import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
@@ -21,7 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -90,7 +82,7 @@ public class ParticipantControllerTest {
         String id = "1";
         when(service.getParticipant(eq("H45-0000"), eq(id))).thenReturn(standardParticipant(id));
         
-        this.mockMvc.perform(put("/rooms/H45-0000/participants/" + id)
+        this.mockMvc.perform(patch("/rooms/H45-0000/participants/" + id)
                 .contentType(MediaType.APPLICATION_JSON).content("{\"muted\":true}"))
                 .andDo(print())
                 .andExpect(status().isOk());

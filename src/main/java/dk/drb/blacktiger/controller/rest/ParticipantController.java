@@ -55,9 +55,9 @@ public class ParticipantController {
         service.kickParticipant(roomNo, channel);
     }
 
-    @RequestMapping(value = "/rooms/{roomNo}/participants/{channel}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/rooms/{roomNo}/participants/{channel}", method = RequestMethod.PATCH)
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveParticipant(@PathVariable final String roomNo, @PathVariable final String channel, @RequestBody Participant participant) {
+    public void patchParticipant(@PathVariable final String roomNo, @PathVariable final String channel, @RequestBody Participant participant) {
         LOG.debug("Persisting participant in room [room={};participant={}].", roomNo, channel);
         if(participant.isMuted()) {
             service.muteParticipant(roomNo, channel);
