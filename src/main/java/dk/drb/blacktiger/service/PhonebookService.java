@@ -12,13 +12,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class PhonebookService {
 
+    
     private PhonebookRepository repository;
-
+    
     @Autowired
     public void setRepository(PhonebookRepository repository) {
         this.repository = repository;
     }
-    
+
     
     /**
      * Retrieves an name from the phonebook.
@@ -53,6 +54,7 @@ public class PhonebookService {
             entry = new PhonebookEntry(phoneNumber, name, CallType.Sip);
         }
         repository.save(hall, entry);
+
     }
     
 }

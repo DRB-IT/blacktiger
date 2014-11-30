@@ -4,8 +4,10 @@ import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.ParticipantChangeEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
+import dk.drb.blacktiger.model.PhonebookUpdateEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
@@ -41,6 +43,7 @@ public class ConferenceServiceTest {
     private ContactRepository contactRepository;
     private RoomInfoRepository roomInfoRepository;
     private ConferenceEventListener conferenceEventListener;
+    private PhonebookRepository.PhonebookEventListener phonebookListener;
     private CallInformationRepository callInformationRepository;
     private List<Participant> participants = Arrays.asList(new Participant[]{
         new Participant("SIP/#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date())
@@ -84,6 +87,16 @@ public class ConferenceServiceTest {
         };
     }
     
+    private Answer<Void> answerAddPhoneBookListener() {
+        return new Answer<Void>() {
+
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                phonebookListener = (PhonebookRepository.PhonebookEventListener) invocation.getArguments()[0];
+                return null;
+            }
+        };
+    }
     @Before
     public void init() {
         rooms = new ArrayList<>();
@@ -99,6 +112,7 @@ public class ConferenceServiceTest {
         Mockito.doAnswer(answerAddConfListener()).when(conferenceRoomRepository).addEventListener(Mockito.any(ConferenceEventListener.class));
         
         phonebookRepository = Mockito.mock(PhonebookRepository.class);
+        Mockito.doAnswer(answerAddPhoneBookListener()).when(phonebookRepository).addEventListener(Mockito.any(PhonebookRepository.PhonebookEventListener.class));
         
         contactRepository = Mockito.mock(ContactRepository.class);
         
@@ -193,6 +207,32 @@ public class ConferenceServiceTest {
         
         Participant p = ((ParticipantJoinEvent) eventArray[0]).getParticipant();
         assertEquals(CallType.Unknown, p.getType());
+        
+    }
+    
+    @Test
+    public void ifPhonebookUpdatesResolvesInChangeEvents() {
+        final ConferenceEvent[] eventArray = new ConferenceEvent[1];
+        
+        service.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                eventArray[0] = event;
+            }
+        });
+        
+        Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_HOST"));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("H45-0000-1", "doe", auths));
+        Mockito.when(roomInfoRepository.findById(Mockito.anyString())).thenReturn(rooms.get(0));
+        Mockito.when(conferenceRoomRepository.findOne(Mockito.anyString())).thenReturn(rooms.get(0));
+        Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "John Doe", CallType.Sip));
+        
+        phonebookListener.onUpdate(new PhonebookUpdateEvent("+4512345678", "John Doe"));
+        
+        Participant p = ((ParticipantChangeEvent) eventArray[0]).getParticipant();
+        assertEquals("John Doe", p.getName());
+        assertEquals("+4512345678", p.getPhoneNumber());
         
     }
 }

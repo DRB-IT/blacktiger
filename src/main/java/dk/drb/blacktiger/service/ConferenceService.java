@@ -7,16 +7,20 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.Participant;
+import dk.drb.blacktiger.model.ParticipantChangeEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
+import dk.drb.blacktiger.model.PhonebookUpdateEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
+import dk.drb.blacktiger.repository.PhonebookRepository.PhonebookEventListener;
 import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -39,6 +43,8 @@ public class ConferenceService {
     private RoomInfoRepository roomInfoRepository;
     private CallInformationRepository callInformationRepository;
     private Map<ConferenceEventListener, ConferenceEventListenerWrapper> listenerMap = new WeakHashMap<>();
+    private List<String> unmutedChannelsList = new ArrayList<>();
+    private boolean handleMuteness;
     
     private class ConferenceEventListenerWrapper implements ConferenceEventListener {
 
@@ -53,14 +59,14 @@ public class ConferenceService {
             if(event instanceof ParticipantJoinEvent) {
                 LOG.debug("Decorating event with phonebook information.");
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
-                Participant p = decorateWithPhonebookInformation(joinEvent.getRoomNo(), joinEvent.getParticipant());
+                Participant p = decorateParticipant(joinEvent.getRoomNo(), joinEvent.getParticipant());
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
                 doActionLog(p, joinEvent.getRoomNo(), "call");
             }
             if(event instanceof ParticipantLeaveEvent) {
                 ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
                 String room = event.getRoomNo();
-                Participant p = decorateWithPhonebookInformation(room, leaveEvent.getParticipant());
+                Participant p = decorateParticipant(room, leaveEvent.getParticipant());
                 doActionLog(p, room, "hangup");
             }
             
@@ -74,6 +80,24 @@ public class ConferenceService {
         
     }
     
+    private class PhonebookUpdateHandler implements PhonebookEventListener {
+
+        @Override
+        public void onUpdate(PhonebookUpdateEvent event) {
+            String roomNo = SecurityContextHolder.getContext().getAuthentication().getName();
+            Room room = roomRepository.findOne(roomNo);
+            if(room != null) {
+                List<Participant> participants = decorateParticipants(roomNo, roomRepository.findByRoomNo(roomNo));
+                for(Participant p : participants) {
+                    if(event.getPhoneNumber().equals(p.getPhoneNumber())) {
+                        fireEvent(new ParticipantChangeEvent(roomNo, p));
+                    }
+                }
+            }
+        }
+        
+    }
+    
     @PostConstruct
     protected void init() {
         Assert.notNull(phonebookRepository, "PhonebookRepository must be specified. Was null.");
@@ -81,12 +105,20 @@ public class ConferenceService {
         Assert.notNull(roomRepository, "RoomRepository must be specified. Was null.");
         Assert.notNull(roomInfoRepository, "RoomInfoRepository must be specified. Was null.");
         Assert.notNull(callInformationRepository, "CallInformationRepository must be specified. Was null.");
+        
+        phonebookRepository.addEventListener(new PhonebookUpdateHandler());
     }
 
     private void doActionLog(Participant p, String roomNo, String action) {
         if(p != null) {
             Room room = roomInfoRepository.findById(roomNo);
             callInformationRepository.logAction(p.getCallerId(), room.getPhoneNumber(), action);
+        }
+    }
+    
+    private void fireEvent(ConferenceEvent event) {
+        for(ConferenceEventListener listener : listenerMap.values()) {
+            listener.onParticipantEvent(event);
         }
     }
     
@@ -115,6 +147,10 @@ public class ConferenceService {
         this.callInformationRepository = callInformationRepository;
     }
 
+    public void setHandleMuteness(boolean handleMuteness) {
+        this.handleMuteness = handleMuteness;
+    }
+    
     public List<Room> listRooms() {
         List<Room> rooms;
         if(Access.hasRole("ADMIN")) {
@@ -155,7 +191,7 @@ public class ConferenceService {
         LOG.debug("Listing participants. [room={}]", roomNo);
         Access.checkRoomAccess(roomNo);
         String hall = SecurityContextHolder.getContext().getAuthentication().getName();
-        return decorateWithPhonebookInformation(hall, roomRepository.findByRoomNo(roomNo));
+        return decorateParticipants(hall, roomRepository.findByRoomNo(roomNo));
     }
 
     /**
@@ -169,7 +205,7 @@ public class ConferenceService {
         LOG.debug("Retrieving participant. [room={};participant={}]", roomNo, channel);
         Access.checkRoomAccess(roomNo);
         String hall = SecurityContextHolder.getContext().getAuthentication().getName();
-        return decorateWithPhonebookInformation(hall, roomRepository.findByRoomNoAndChannel(roomNo, channel));
+        return decorateParticipant(hall, roomRepository.findByRoomNoAndChannel(roomNo, channel));
     }
 
     /**
@@ -190,6 +226,10 @@ public class ConferenceService {
     public void muteParticipant(String roomNo, String channel) {
         Access.checkRoomAccess(roomNo);
         roomRepository.muteParticipant(roomNo, channel);
+        
+        if(handleMuteness) {
+            unmutedChannelsList.remove(channel);
+        }
     }
 
     /**
@@ -200,6 +240,10 @@ public class ConferenceService {
     public void unmuteParticipant(String roomNo, String channel) {
         Access.checkRoomAccess(roomNo);
         roomRepository.unmuteParticipant(roomNo, channel);
+        
+        if(handleMuteness) {
+            unmutedChannelsList.add(channel);
+        }
     }
 
     public void addEventListener(ConferenceEventListener listener) {
@@ -216,22 +260,27 @@ public class ConferenceService {
         }
     }
     
-    private List<Participant> decorateWithPhonebookInformation(String hall, List<Participant> participants) {
+    private List<Participant> decorateParticipants(String hall, List<Participant> participants) {
         for(Participant p : participants) {
-            decorateWithPhonebookInformation(hall, p);
+            decorateParticipant(hall, p);
         }
         return participants;
     }
     
-    private Participant decorateWithPhonebookInformation(String hall, Participant participant) {
-        PhonebookEntry entry = phonebookRepository.findByCallerId(hall, participant.getCallerId());
+    private Participant decorateParticipant(String roomNo, Participant participant) {
+        PhonebookEntry entry = phonebookRepository.findByCallerId(roomNo, participant.getCallerId());
         if(entry != null) {
             participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());
             participant.setType(entry.getCallType());
+            
+            if(handleMuteness) {
+                participant.setMuted(!unmutedChannelsList.contains(participant.getChannel()));
+            }
         } else {
             participant.setType(CallType.Unknown);
         }
+        
         return participant;
     }
     

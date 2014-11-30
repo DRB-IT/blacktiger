@@ -23,7 +23,9 @@ public class ServiceConfig {
 
     @Bean
     public ConferenceService conferenceService() {
-        return new ConferenceService();
+        ConferenceService service = new ConferenceService();
+        service.setHandleMuteness(true);
+        return service;
     }
 
     @Bean

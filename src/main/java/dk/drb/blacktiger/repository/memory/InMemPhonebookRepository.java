@@ -19,5 +19,15 @@ public class InMemPhonebookRepository implements PhonebookRepository {
         phonebook.put(entity.getNumber(), entity);
         return entity;
     }
+
+    @Override
+    public void addEventListener(PhonebookEventListener eventListener) {
+    }
+
+    @Override
+    public void removeEventListener(PhonebookEventListener eventListener) {
+    }
+    
+    
     
 }

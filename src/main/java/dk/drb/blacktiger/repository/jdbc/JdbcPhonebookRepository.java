@@ -2,9 +2,12 @@ package dk.drb.blacktiger.repository.jdbc;
 
 import dk.drb.blacktiger.model.CallType;
 import dk.drb.blacktiger.model.PhonebookEntry;
+import dk.drb.blacktiger.model.PhonebookUpdateEvent;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -71,6 +74,26 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
         }
     }
 
+    
+    
+    private final List<PhonebookEventListener> eventListeners = new ArrayList<>();
+    
+    private void fireUpdate(String number, String newName) {
+        for(PhonebookEventListener l : eventListeners) {
+            l.onUpdate(new PhonebookUpdateEvent(number, newName));
+        }
+    }
+    
+    @Override
+    public void addEventListener(PhonebookEventListener eventListener) {
+        eventListeners.add(eventListener);
+    }
+    
+    @Override
+    public void removeEventListener(PhonebookEventListener eventListener) {
+        eventListeners.remove(eventListener);
+    }
+    
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -103,6 +126,7 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     public PhonebookEntry save(String hallCalling, PhonebookEntry entry) {
         ChangeNameStoredProcedure procedure = new ChangeNameStoredProcedure(jdbcTemplate);
         String name = procedure.execute(entry.getNumber(), entry.getName(), hallCalling);
+        fireUpdate(entry.getNumber(), entry.getName());
         return new PhonebookEntry(entry.getNumber(), name, entry.getCallType());
     }
     

@@ -6,7 +6,7 @@ import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository;
 import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.repository.SipAccountRepository;
-import dk.drb.blacktiger.repository.asterisk.AsteriskConfbridgeRepository;
+import dk.drb.blacktiger.repository.asterisk.Asterisk11ConfbridgeRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcPhonebookRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcCallInformationRepository;
 import dk.drb.blacktiger.repository.jdbc.JdbcContactRepository;
@@ -96,10 +96,9 @@ public class RepositoryConfig {
             LOG.info("** USING InMemConferenceRoomRepository FOR TEST **");
             return new InMemConferenceRoomRepository();
         } else {
-            AsteriskConfbridgeRepository repo = new AsteriskConfbridgeRepository();
+            Asterisk11ConfbridgeRepository repo = new Asterisk11ConfbridgeRepository();
             asteriskServer.initialize();
             repo.setAsteriskServer(asteriskServer);
-            repo.setNormalizePhoneNumbers(env.getProperty("asterisk.normalizePhoneNumbers").equalsIgnoreCase("true"));
             return repo;
         }
     }

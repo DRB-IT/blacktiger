@@ -23,7 +23,7 @@ public class AsteriskConfbridgeRepositoryIT {
     public void setUp() {
         asteriskServer = new DefaultAsteriskServer("192.168.50.2", "vagrant", "vagrant");
         asteriskServer.initialize();
-        repository = new AsteriskConfbridgeRepository();
+        repository = new Asterisk11ConfbridgeRepository();
         repository.setAsteriskServer(asteriskServer);
     }
     
@@ -32,7 +32,7 @@ public class AsteriskConfbridgeRepositoryIT {
         asteriskServer.shutdown();
     }
     private AsteriskServer asteriskServer;
-    private AsteriskConfbridgeRepository repository;
+    private Asterisk11ConfbridgeRepository repository;
     
     @Test
     public void testListRooms() throws Exception {
