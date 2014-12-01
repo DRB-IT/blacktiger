@@ -6,6 +6,6 @@ mysql --user=root --password=root < /vagrant/src/test/sql/provision_db.sql
 
 /etc/init.d/tomcat stop
 rm -rf /opt/apache-tomcat-7.0.52/webapps/ROOT
-unzip /vagrant/target/blacktiger-2.0.8.war -d /opt/apache-tomcat-7.0.52/webapps/ROOT
+unzip /vagrant/target/blacktiger-2.0.9.war -d /opt/apache-tomcat-7.0.52/webapps/ROOT
 cp /vagrant/src/test/config/blacktiger.properties /opt/apache-tomcat-7.0.52
 /etc/init.d/tomcat start
