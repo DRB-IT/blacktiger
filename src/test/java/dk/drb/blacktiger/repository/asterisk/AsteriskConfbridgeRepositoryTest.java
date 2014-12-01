@@ -7,6 +7,8 @@ import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestCancelEvent;
 import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
+import dk.drb.blacktiger.model.ParticipantMuteEvent;
+import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -222,28 +224,28 @@ public class AsteriskConfbridgeRepositoryTest {
         assertEquals("SIP___#00000000", ((ParticipantLeaveEvent)lastConfEvent).getParticipant().getChannel());
     }
     
-    /*@Test
-    public void ifUserCanHaveMutenessChanged() {
+    @Test
+    public void ifSettingMutenessEmitsEvents() {
+        final List<ConferenceEvent> conferenceEvents = new ArrayList<>();
+        
+        repo.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                conferenceEvents.add(event);
+            }
+        });
+        
         String roomId = "H45-0000";
         String channel = "SIP___#00000000";
         
-        // They are initially muted
-        assertEquals(true, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
-        
-        // So when we mute them they should stay muted
-        repo.muteParticipant(roomId, channel);
-        assertEquals(true, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
-        
-        // But we should also be able to unmute them
         repo.unmuteParticipant(roomId, channel);
-        assertEquals(false, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
+        assertEquals(channel, ((ParticipantUnmuteEvent)conferenceEvents.get(conferenceEvents.size()-1)).getChannel());
         
-        // and re-mute them
         repo.muteParticipant(roomId, channel);
-        assertEquals(true, repo.findByRoomNoAndChannel(roomId, channel).isMuted());
+        assertEquals(channel, ((ParticipantMuteEvent)conferenceEvents.get(conferenceEvents.size()-1)).getChannel());
         
-        
-    }*/
+    }
     
     
     @Test

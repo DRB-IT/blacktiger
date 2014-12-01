@@ -13,10 +13,8 @@ import dk.drb.blacktiger.model.ParticipantMuteEvent;
 import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.ConferenceRoomRepository;
-import dk.drb.blacktiger.util.PhoneNumber;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -178,6 +176,16 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         Asterisk11ConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(e.getConference()));
     }
     
+    private void onMuted(String conference, String channel) {
+        LOG.debug("Handling onMuted. [room={};channel={}]", conference, channel);
+        Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantMuteEvent(conference, channel));
+    }
+
+    private void onUnmuted(String conference, String channel) {
+        LOG.debug("Handling onUnmuted. [room={};channel={}]", conference, channel);
+        Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantUnmuteEvent(conference, channel));
+    }
+    
     @Override
     public void setAsteriskServer(AsteriskServer asteriskServer) {
         super.setAsteriskServer(asteriskServer);
@@ -303,19 +311,18 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     public void muteParticipant(String roomNo, String channel) {
         LOG.debug("Muting participant [room={};channel={}]", roomNo, channel);
         setMutenessOfParticipant(roomNo, channel, true);
+        onMuted(roomNo, channel);
     }
 
     @Override
     public void unmuteParticipant(String roomNo, String channel) {
         LOG.debug("Unmuting participant [room={};channel={}]", roomNo, channel);
         setMutenessOfParticipant(roomNo, channel, false);
+        onUnmuted(roomNo, channel);
     }
 
 
     private void setMutenessOfParticipant(String roomId, String channel, boolean value) {
-        // Because Asterisk 11 does not send events when muteness changes and also does not carry any information whether a channel is muted or not,
-        // we have to keep that info here ourselves. That also means that we have no idea if other parties mutes a user.
-        
         String denormChannel = denormalizeChannelName(channel);
         
         LOG.debug("Setting muteness for channel. [room={};channel={},value={}]", new Object[]{roomId, channel, value});

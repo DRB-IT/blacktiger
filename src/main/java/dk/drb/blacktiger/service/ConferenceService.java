@@ -20,6 +20,7 @@ import dk.drb.blacktiger.repository.PhonebookRepository.PhonebookEventListener;
 import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,7 +192,12 @@ public class ConferenceService {
         LOG.debug("Listing participants. [room={}]", roomNo);
         Access.checkRoomAccess(roomNo);
         String hall = SecurityContextHolder.getContext().getAuthentication().getName();
-        return decorateParticipants(hall, roomRepository.findByRoomNo(roomNo));
+        List<Participant> list = roomRepository.findByRoomNo(roomNo);
+        if(list == null) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return decorateParticipants(hall, list);
+        }
     }
 
     /**
@@ -261,6 +267,7 @@ public class ConferenceService {
     }
     
     private List<Participant> decorateParticipants(String hall, List<Participant> participants) {
+        
         for(Participant p : participants) {
             decorateParticipant(hall, p);
         }
@@ -273,12 +280,12 @@ public class ConferenceService {
             participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());
             participant.setType(entry.getCallType());
-            
-            if(handleMuteness) {
-                participant.setMuted(!unmutedChannelsList.contains(participant.getChannel()));
-            }
         } else {
             participant.setType(CallType.Unknown);
+        }
+        
+        if(handleMuteness) {
+            participant.setMuted(!unmutedChannelsList.contains(participant.getChannel()));
         }
         
         return participant;

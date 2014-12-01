@@ -6,6 +6,8 @@ import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantChangeEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
+import dk.drb.blacktiger.model.ParticipantMuteEvent;
+import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
 import dk.drb.blacktiger.model.PhonebookUpdateEvent;
 import dk.drb.blacktiger.model.Room;
@@ -46,7 +48,7 @@ public class ConferenceServiceTest {
     private PhonebookRepository.PhonebookEventListener phonebookListener;
     private CallInformationRepository callInformationRepository;
     private List<Participant> participants = Arrays.asList(new Participant[]{
-        new Participant("SIP/#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date())
+        new Participant("SIP___#000000001", "#00000001", "name", "+4512345678", true, false, CallType.Phone, new Date())
     });
     
     private Answer<List<Room>> answerSubselectedRooms() {
@@ -126,6 +128,7 @@ public class ConferenceServiceTest {
         service.setContactRepository(contactRepository);
         service.setRoomInfoRepository(roomInfoRepository);
         service.setCallInformationRepository(callInformationRepository);
+        service.setHandleMuteness(true);
         
         service.init();
     }
@@ -233,6 +236,44 @@ public class ConferenceServiceTest {
         Participant p = ((ParticipantChangeEvent) eventArray[0]).getParticipant();
         assertEquals("John Doe", p.getName());
         assertEquals("+4512345678", p.getPhoneNumber());
+        
+    }
+    
+    @Test
+    public void ifMutenessIsDecoratedCorrectly() {
+        final ConferenceEvent[] eventArray = new ConferenceEvent[1];
+        
+        service.addEventListener(new ConferenceEventListener() {
+
+            @Override
+            public void onParticipantEvent(ConferenceEvent event) {
+                eventArray[0] = event;
+            }
+        });
+        
+        Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_ADMIN"));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("H45-0000-1", "doe", auths));
+        //Mockito.when(roomInfoRepository.findById(Mockito.anyString())).thenReturn(rooms.get(0));
+        Mockito.when(conferenceRoomRepository.findByRoomNoAndChannel(Mockito.anyString(), Mockito.anyString())).thenReturn(participants.get(0));
+        //Mockito.when(phonebookRepository.findByCallerId(Mockito.eq("H45-0000-1"), Mockito.eq("#00000001"))).thenReturn(new PhonebookEntry("+4512345678", "John Doe", CallType.Sip));
+        
+        service.unmuteParticipant("H45-0000-1", "SIP___#000000001");
+        conferenceEventListener.onParticipantEvent(new ParticipantUnmuteEvent("H45-0000-1", "SIP___#000000001"));
+        
+        ParticipantUnmuteEvent unmuteEvent = (ParticipantUnmuteEvent) eventArray[0];
+        assertEquals("SIP___#000000001", unmuteEvent.getChannel());
+        
+        Participant p = service.getParticipant("H45-0000-1", "SIP___#000000001");
+        assertFalse(p.isMuted());
+        
+        service.muteParticipant("H45-0000-1", "SIP___#000000001");
+        conferenceEventListener.onParticipantEvent(new ParticipantMuteEvent("H45-0000-1", "SIP___#000000001"));
+        
+        ParticipantMuteEvent muteEvent = (ParticipantMuteEvent) eventArray[0];
+        assertEquals("SIP___#000000001", muteEvent.getChannel());
+        
+        p = service.getParticipant("H45-0000-1", "SIP___#000000001");
+        assertTrue(p.isMuted());
         
     }
 }
