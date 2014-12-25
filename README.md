@@ -3,21 +3,21 @@ blacktiger
 
 Server implementation for blacktiger.
 
-## Build project
+# Build project
 
-__Preresequites__
+## Preresequites
 * Java
 * Maven
+* 
+In order to build and run blacktiger locally you need to follow these few steps.
 
-Start by cloning the project:
+## 1: Prepare asterisk-java
+Unfortunately the asterisk-java project is not available in Maven Central. Therefore it is required to build this project locally as well. See [https://github.com/srt/asterisk-java](https://github.com/srt/asterisk-java) for more information.
+
+## 2: Then clone and build blacktiger:
 ```
 git clone https://github.com/DRB-IT/blacktiger.git
-```
-
-> Somethin about astarisk-java
-
-Then build it with maven:
-```
+cd blacktiger
 mvn package
 ```
 
