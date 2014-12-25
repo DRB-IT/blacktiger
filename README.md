@@ -14,6 +14,8 @@ In order to build and run blacktiger locally you need to follow these few steps.
 ## 1: Prepare asterisk-java
 Unfortunately the asterisk-java project is not available in Maven Central. Therefore it is required to build this project locally as well. See [https://github.com/srt/asterisk-java](https://github.com/srt/asterisk-java) for more information.
 
+> What about peers?
+
 ## 2: Then clone and build blacktiger:
 ```
 git clone https://github.com/DRB-IT/blacktiger.git
