@@ -8,7 +8,7 @@ Server implementation for blacktiger.
 ## Preresequites
 * Java
 * Maven
-* 
+
 In order to build and run blacktiger locally you need to follow these few steps.
 
 ## 1: Prepare asterisk-java
