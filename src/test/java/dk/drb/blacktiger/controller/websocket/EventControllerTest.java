@@ -81,9 +81,11 @@ public class EventControllerTest {
 		headers.setSubscriptionId("0");
 		headers.setDestination("/queue/events/H45-1234");
 		headers.setSessionId("0");
-		Message<byte[]> message = MessageBuilder.withPayload("\"\"".getBytes()).setHeaders(headers).build();
+		//Message<byte[]> message = MessageBuilder.withPayload("\"\"".getBytes()).setHeaders(headers).build();
+                Message<byte[]> message = MessageBuilder.createMessage(new byte[0], headers.getMessageHeaders());
 
-		this.clientOutboundChannelInterceptor.startRecording();
+                this.clientOutboundChannelInterceptor.setIncludedDestinations("/queue/events/H45-1234");
+                this.clientOutboundChannelInterceptor.startRecording();
                 this.clientInboundChannel.send(message);
 
                 final List<Message> replies = new ArrayList<>();

@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class InMemCallInformationRepository implements CallInformationRepository, ConferenceEventListener {
 
+    private static final Logger LOG = LoggerFactory.getLogger(InMemCallInformationRepository.class);
     private ConferenceRoomRepository roomRepository;
     private Map<String, List<CallInformation>> callMap = new HashMap<>();
     private Map<String, Participant> participantMap = new HashMap<>();
@@ -89,7 +92,7 @@ public class InMemCallInformationRepository implements CallInformationRepository
 
     @Override
     public void logAction(String caller, String callee, String action) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LOG.info("Caller={};callee={};action={}", new Object[]{caller, callee, action});
     }
     
     

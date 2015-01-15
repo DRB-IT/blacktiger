@@ -9,6 +9,7 @@ import dk.drb.blacktiger.service.ConferenceService;
 import dk.drb.blacktiger.util.Access;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public class EventController {
             messagingTemplate.convertAndSend("/queue/events/" + event.getRoomNo(), event);
         }
     }
-
+    
     @Autowired
     public void setService(ConferenceService service) {
         Assert.notNull(service, "service cannot be null.");

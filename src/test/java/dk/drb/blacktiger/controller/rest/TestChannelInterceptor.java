@@ -20,8 +20,11 @@ import org.springframework.util.PathMatcher;
 public class TestChannelInterceptor extends ChannelInterceptorAdapter {
 
     private final BlockingQueue<Message<?>> messages = new ArrayBlockingQueue<>(100);
+
     private final List<String> destinationPatterns = new ArrayList<>();
+
     private final PathMatcher matcher = new AntPathMatcher();
+
     private volatile boolean isRecording;
 
     /**

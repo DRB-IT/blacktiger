@@ -26,7 +26,6 @@ public class WebsocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry r) {
         r.addEndpoint("/socket").withSockJS(); // WebSocket URL prefix
-        r.addEndpoint("/websocket");
     }
 
     @Override
