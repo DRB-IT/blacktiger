@@ -21,6 +21,7 @@ import dk.drb.blacktiger.repository.RoomInfoRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class ConferenceService {
     private CallInformationRepository callInformationRepository;
     private Map<ConferenceEventListener, ConferenceEventListenerWrapper> listenerMap = new WeakHashMap<>();
     private List<String> unmutedChannelsList = new ArrayList<>();
+    private Map<String, Long> channelTimestampMap = new HashMap<>();
     private boolean handleMuteness;
     
     private class ConferenceEventListenerWrapper implements ConferenceEventListener {
@@ -60,12 +62,14 @@ public class ConferenceService {
             if(event instanceof ParticipantJoinEvent) {
                 LOG.debug("Decorating event with phonebook information.");
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
+                channelTimestampMap.put(joinEvent.getParticipant().getChannel(), System.currentTimeMillis());
                 Participant p = decorateParticipant(joinEvent.getRoomNo(), joinEvent.getParticipant());
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
                 doActionLog(p, joinEvent.getRoomNo(), "call");
             }
             if(event instanceof ParticipantLeaveEvent) {
                 ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
+                channelTimestampMap.remove(leaveEvent.getParticipant().getChannel());
                 String room = event.getRoomNo();
                 Participant p = decorateParticipant(room, leaveEvent.getParticipant());
                 doActionLog(p, room, "hangup");
@@ -286,6 +290,11 @@ public class ConferenceService {
         
         if(handleMuteness) {
             participant.setMuted(!unmutedChannelsList.contains(participant.getChannel()));
+        }
+        
+        Long joinTimestamp = channelTimestampMap.get(participant.getChannel());
+        if(joinTimestamp != null) {
+            participant.setDateJoined(new Date(joinTimestamp));
         }
         
         return participant;

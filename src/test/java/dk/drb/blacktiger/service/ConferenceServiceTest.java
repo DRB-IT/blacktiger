@@ -168,6 +168,19 @@ public class ConferenceServiceTest {
         SecurityContextHolder.getContext().setAuthentication(null);
     }
     
+   /*     @Test
+    public void ifParticipantsAreDecoratedWithJoinDates() {
+        Collection<? extends GrantedAuthority> auths = Arrays.asList((GrantedAuthority)new SimpleGrantedAuthority("ROLE_ADMIN"));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("H45-0000-1", "doe", auths));
+        
+        Date now = new Date();
+        List<Participant> participants = service.listParticipants("H45-0000-1");
+        assertEquals(1, participants.size());
+        assertEquals("Jane Doe", participants.get(0).getName());
+        assertTrue(participants.get(0).getDateJoined().getTime() < now.getTime());
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }*/
+    
     @Test
     public void ifJoinEventsAreDecorated() {
         final ConferenceEvent[] eventArray = new ConferenceEvent[1];
