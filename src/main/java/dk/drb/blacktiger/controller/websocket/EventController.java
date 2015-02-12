@@ -2,25 +2,13 @@ package dk.drb.blacktiger.controller.websocket;
 
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.model.ConferenceEventListener;
-import dk.drb.blacktiger.model.Participant;
-import dk.drb.blacktiger.model.ParticipantJoinEvent;
-import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.service.ConferenceService;
-import dk.drb.blacktiger.util.Access;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.core.MessageSendingOperations;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 
