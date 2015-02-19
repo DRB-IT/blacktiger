@@ -131,6 +131,9 @@ public class EventControllerTest {
         
         String json = new String((byte[]) reply.getPayload(), Charset.forName("UTF-8"));
         ISO8601DateFormat df = new ISO8601DateFormat();
-        assertEquals("{\"roomNo\":\"H45-1234\",\"participant\":{\"callerId\":\"123\",\"channel\":null,\"muted\":false,\"phoneNumber\":null,\"dateJoined\":\"" + df.format(now) + "\",\"name\":null,\"type\":null,\"host\":false},\"type\":\"Leave\"}", json);
+        
+        // millisSinceJoin is dynamic - we need to control it
+        json = json.replaceAll("millisSinceJoin\\\":[0-9]{1}", "millisSinceJoin\":0");
+        assertEquals("{\"roomNo\":\"H45-1234\",\"participant\":{\"callerId\":\"123\",\"channel\":null,\"muted\":false,\"phoneNumber\":null,\"dateJoined\":\"" + df.format(now) + "\",\"millisSinceJoin\":0,\"name\":null,\"type\":null,\"host\":false},\"type\":\"Leave\"}", json);
     }
 }
