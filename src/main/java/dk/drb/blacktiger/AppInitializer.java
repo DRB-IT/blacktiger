@@ -1,29 +1,21 @@
 package dk.drb.blacktiger;
 
-import dk.drb.blacktiger.filter.AjaxCacheControlFilter;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import dk.drb.blacktiger.config.AppConfig;
+import dk.drb.blacktiger.config.ControllerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class AppInitializer implements WebApplicationInitializer {
+public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     private static final Logger LOG = LoggerFactory.getLogger(AppInitializer.class);
     
-    @Override
+    /*@Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         WebApplicationContext appContext = getContext();
         servletContext.addListener(new ContextLoaderListener(appContext));
-        applyDispatcherServlet(servletContext, appContext);
         applyCorsFilter(servletContext);
+        applyDispatcherServlet(servletContext, appContext);
         applyAjaxCacheFilter(servletContext);
         applySecurityFilter(servletContext);
     }
@@ -65,6 +57,25 @@ public class AppInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.setConfigLocation("dk.drb.blacktiger.config");
         return context;
+    }*/
+
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        LOG.info("Returning root config classes.");
+        return new Class<?>[]{AppConfig.class};
+    }
+    
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        
+        LOG.info("Returning servlet config classes.");
+        return new Class<?>[]{ControllerConfig.class};
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        LOG.info("Returning serlvet mappings.");
+        return new String[]{"/*", "/*"};
     }
     
 }

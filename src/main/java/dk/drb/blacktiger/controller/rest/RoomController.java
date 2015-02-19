@@ -39,7 +39,6 @@ public class RoomController {
 
     @RequestMapping("/rooms")
     @ResponseBody
-    @Secured("ROLE_USER")
     public List getRooms(String mode) {
         LOG.debug("Got request for all available rooms.");
         

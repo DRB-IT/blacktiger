@@ -1,6 +1,5 @@
 package dk.drb.blacktiger.controller.rest;
 
-import dk.drb.blacktiger.controller.rest.model.ResourceNotFoundException;
 import dk.drb.blacktiger.service.PhonebookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

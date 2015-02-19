@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @ComponentScan("dk.drb.blacktiger.controller.rest") 
 @EnableWebMvc
-@EnableWebMvcSecurity
 public class ControllerConfig extends WebMvcConfigurerAdapter {
 
     @Override
