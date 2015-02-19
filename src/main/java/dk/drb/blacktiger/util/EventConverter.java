@@ -60,12 +60,14 @@ public class EventConverter extends MappingJackson2MessageConverter {
         public void serialize(Participant value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
             String dateJoined = value.getDateJoined() == null ? null : df.format(value.getDateJoined());
             String type = value.getType() == null ? null : value.getType().name();
+            
             jgen.writeStartObject();
             jgen.writeStringField("callerId", value.getCallerId());
             jgen.writeStringField("channel", value.getChannel());
             jgen.writeBooleanField("muted", value.isMuted());
             jgen.writeStringField("phoneNumber", value.getPhoneNumber());
             jgen.writeStringField("dateJoined", dateJoined);
+            jgen.writeNumberField("millisSinceJoin", value.getMillisSinceJoin());
             jgen.writeStringField("name", value.getName());
             jgen.writeStringField("type", type);
             jgen.writeBooleanField("host", value.isHost());

@@ -41,6 +41,10 @@ public class Participant {
     public Date getDateJoined() {
         return dateJoined;
     }
+    
+    public long getMillisSinceJoin() {
+        return dateJoined == null ? 0 : System.currentTimeMillis() - dateJoined.getTime();
+    }
 
     /**
      * The id of the caller as retrieved from Asterisk.
