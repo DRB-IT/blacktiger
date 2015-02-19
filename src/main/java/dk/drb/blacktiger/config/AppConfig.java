@@ -19,6 +19,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -71,12 +72,23 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
         spap.setDataSource(asteriskDataSource);
         spap.setEncryptionKey(env.getProperty(PROPERTY_ENCRYPTION_KEY));
         
-        String adminUser = "admin"; //env.getProperty(PROPERTY_NAME_ADMIN_USER);
-        String adminPass = "123"; //env.getProperty(PROPERTY_NAME_ADMIN_PASSWORD);
-
-        auth.inMemoryAuthentication()
-                .withUser(adminUser).password(adminPass).roles("ADMIN").and().
-                and().authenticationProvider(spap);
+        String adminCredentialString = env.getProperty("admin.credentials");
+        if(adminCredentialString != null && !"".equals(adminCredentialString)) {
+            String[] credentials = adminCredentialString.split(",");
+        
+            InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> configurer = auth.inMemoryAuthentication();
+            for(String credential : credentials) {
+                String[] credentialData = credential.split(":");
+                if(credentialData.length == 2) {
+                    configurer.withUser(credentialData[0]).password(credentialData[1]).roles("ADMIN");
+                }
+            }
+            
+            configurer.and().authenticationProvider(spap);
+            
+        }
+        
+        
     }
     
     private CORSFilter getCorsFilter() throws ServletException {
