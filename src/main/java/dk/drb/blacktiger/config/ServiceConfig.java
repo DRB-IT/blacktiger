@@ -4,6 +4,7 @@ import dk.drb.blacktiger.service.CallInformationService;
 import dk.drb.blacktiger.service.ConferenceService;
 import dk.drb.blacktiger.service.PhonebookService;
 import dk.drb.blacktiger.service.SipAccountService;
+import dk.drb.blacktiger.service.SummaryService;
 import dk.drb.blacktiger.service.SystemService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,10 @@ public class ServiceConfig {
 
     @Bean SipAccountService sipAccountService() {
         return new SipAccountService();
+    }
+    
+    @Bean SummaryService summaryService() {
+        return new SummaryService();
     }
     
     @Bean SystemService systemService() {

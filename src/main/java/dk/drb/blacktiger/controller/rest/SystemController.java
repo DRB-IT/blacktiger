@@ -3,6 +3,7 @@ package dk.drb.blacktiger.controller.rest;
 import dk.drb.blacktiger.controller.rest.model.ResourceNotFoundException;
 import dk.drb.blacktiger.controller.rest.model.SendPasswordRequest;
 import dk.drb.blacktiger.controller.rest.model.UserPresentation;
+import dk.drb.blacktiger.service.SummaryService;
 import dk.drb.blacktiger.service.SystemService;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SystemController {
     
-        private static final Logger LOG = LoggerFactory.getLogger(PhonebookController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SystemController.class);
     
     @Autowired
     private SystemService service;
+    
+    @Autowired
+    private SummaryService summaryService;
     
     @RequestMapping(value = "/system/information", headers = "Accept=application/json")
     @ResponseBody
@@ -49,6 +53,13 @@ public class SystemController {
        averageCpuLoadMap.put("tenMinutes", 0.0);
        
        return map;
+    }
+    
+    @RequestMapping(value = "/system/summary", headers = "Accept=application/json")
+    @ResponseBody
+    public Map getSummary() {
+        LOG.debug("Got request for summary.");
+       return summaryService.getSummary();
     }
     
     @RequestMapping(value = "/system/authenticate", produces = "application/json")
