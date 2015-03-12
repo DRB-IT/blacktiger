@@ -26,7 +26,7 @@ public class SummaryService {
     public static final String GLOBAL_IDENTIFIER = "all";
 
     private static final Logger LOG = LoggerFactory.getLogger(SummaryService.class);
-    private static final Pattern roomPattern = Pattern.compile("H([0-9]{1,3})-.*");
+    private static final Pattern roomPattern = Pattern.compile("([a-zA-Z0-9]+)-.*");
     private final Map<String, Summary> summaryMap = new HashMap<>();
     private Summary globalSummary;
 
