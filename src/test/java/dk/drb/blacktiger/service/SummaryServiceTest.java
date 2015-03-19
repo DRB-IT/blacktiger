@@ -69,31 +69,31 @@ public class SummaryServiceTest {
         
         Map<String, Summary> map = summaryService.getSummary();
         
-        assertNull(map.get("45"));
-        assertNull(map.get("298"));
-        assertNull(map.get("1"));
+        assertNull(map.get("H45"));
+        assertNull(map.get("H298"));
+        assertNull(map.get("H1"));
         assertNotNull(map.get(SummaryService.GLOBAL_IDENTIFIER));
         
         eventListener.onParticipantEvent(new ConferenceStartEvent(roomDK));
         eventListener.onParticipantEvent(new ConferenceStartEvent(roomFO));
         eventListener.onParticipantEvent(new ConferenceStartEvent(roomUS));
         map = summaryService.getSummary();
-        assertEquals(1, map.get("45").getHalls());
-        assertEquals(1, map.get("298").getHalls());
-        assertEquals(1, map.get("1").getHalls());
+        assertEquals(1, map.get("H45").getHalls());
+        assertEquals(1, map.get("H298").getHalls());
+        assertEquals(1, map.get("H1").getHalls());
         assertEquals(3, map.get(SummaryService.GLOBAL_IDENTIFIER).getHalls());
         
         eventListener.onParticipantEvent(new ParticipantJoinEvent(roomDK.getId(), participantDK));
         eventListener.onParticipantEvent(new ParticipantUnmuteEvent(roomDK.getId(), participantDK.getChannel()));
         map = summaryService.getSummary();
-        assertEquals(1, map.get("45").getParticipants());
-        assertEquals(1, map.get("45").getParticipantsViaSip());
-        assertEquals(0, map.get("45").getParticipantsViaPhone());
-        assertEquals(1, map.get("45").getOpenMicrophones());
-        assertEquals(0, map.get("298").getParticipants());
-        assertEquals(0, map.get("298").getOpenMicrophones());
-        assertEquals(0, map.get("1").getParticipants());
-        assertEquals(0, map.get("1").getOpenMicrophones());
+        assertEquals(1, map.get("H45").getParticipants());
+        assertEquals(1, map.get("H45").getParticipantsViaSip());
+        assertEquals(0, map.get("H45").getParticipantsViaPhone());
+        assertEquals(1, map.get("H45").getOpenMicrophones());
+        assertEquals(0, map.get("H298").getParticipants());
+        assertEquals(0, map.get("H298").getOpenMicrophones());
+        assertEquals(0, map.get("H1").getParticipants());
+        assertEquals(0, map.get("H1").getOpenMicrophones());
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipants());
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipantsViaSip());
         assertEquals(0, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipantsViaPhone());
@@ -101,16 +101,16 @@ public class SummaryServiceTest {
         
         eventListener.onParticipantEvent(new ParticipantJoinEvent(roomFO.getId(), participantFO));
         map = summaryService.getSummary();
-        assertEquals(1, map.get("45").getParticipants());
-        assertEquals(1, map.get("45").getParticipantsViaSip());
-        assertEquals(0, map.get("45").getParticipantsViaPhone());
-        assertEquals(1, map.get("45").getOpenMicrophones());
-        assertEquals(1, map.get("298").getParticipants());
-        assertEquals(0, map.get("298").getParticipantsViaSip());
-        assertEquals(1, map.get("298").getParticipantsViaPhone());
-        assertEquals(0, map.get("298").getOpenMicrophones());
-        assertEquals(0, map.get("1").getParticipants());
-        assertEquals(0, map.get("1").getOpenMicrophones());
+        assertEquals(1, map.get("H45").getParticipants());
+        assertEquals(1, map.get("H45").getParticipantsViaSip());
+        assertEquals(0, map.get("H45").getParticipantsViaPhone());
+        assertEquals(1, map.get("H45").getOpenMicrophones());
+        assertEquals(1, map.get("H298").getParticipants());
+        assertEquals(0, map.get("H298").getParticipantsViaSip());
+        assertEquals(1, map.get("H298").getParticipantsViaPhone());
+        assertEquals(0, map.get("H298").getOpenMicrophones());
+        assertEquals(0, map.get("H1").getParticipants());
+        assertEquals(0, map.get("H1").getOpenMicrophones());
         assertEquals(2, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipants());
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipantsViaSip());
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipantsViaPhone());
@@ -123,9 +123,9 @@ public class SummaryServiceTest {
         eventListener.onParticipantEvent(new ConferenceEndEvent(roomFO.getId()));
         eventListener.onParticipantEvent(new ConferenceEndEvent(roomUS.getId()));
         map = summaryService.getSummary();
-        assertNull(map.get("45"));
-        assertNull(map.get("298"));
-        assertNull(map.get("1"));
+        assertNull(map.get("H45"));
+        assertNull(map.get("H298"));
+        assertNull(map.get("H1"));
         assertNotNull(map.get(SummaryService.GLOBAL_IDENTIFIER));
         assertEquals(0, map.get(SummaryService.GLOBAL_IDENTIFIER).getHalls());
         assertEquals(0, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipants());
