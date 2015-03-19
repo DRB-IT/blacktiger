@@ -56,8 +56,9 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
         LOG.info("Configuring HTTPSecurity");
         http.addFilterBefore(getCorsFilter(), ChannelProcessingFilter.class)
                 .authorizeRequests().antMatchers("/system/passwordRequests").permitAll()
+                .and().authorizeRequests().antMatchers("/system/authenticate").authenticated()
                 .and().authorizeRequests().antMatchers("/rooms/**").authenticated()
-                .and().authorizeRequests().antMatchers("/system/**").authenticated()
+                .and().authorizeRequests().antMatchers("/system/**").access("hasRole('ROLE_ADMIN')")
                 .and().authorizeRequests().antMatchers("/phonebook/**").authenticated()
                 .and().authorizeRequests().antMatchers("/reports/**").authenticated()
                 .and().httpBasic().authenticationEntryPoint(new RestAuthenticationEntryPoint())

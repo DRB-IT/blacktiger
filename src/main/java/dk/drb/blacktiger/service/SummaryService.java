@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 public class SummaryService {
 
@@ -159,6 +160,7 @@ public class SummaryService {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     public Map<String, Summary> getSummary() {
         return Collections.unmodifiableMap(summaryMap);
     }
