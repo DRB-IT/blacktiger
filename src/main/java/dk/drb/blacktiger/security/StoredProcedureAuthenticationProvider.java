@@ -60,7 +60,7 @@ public class StoredProcedureAuthenticationProvider implements AuthenticationProv
         String password = (String) token.getCredentials();
         String passwordHash = encryptPassword(password + " " + username);
        
-        LOG.info("Authenticating user [auth={}]", authentication);
+        LOG.debug("Authenticating user [auth={}]", authentication);
         
         try {
             boolean authenticated = this.jdbcTemplate.queryForObject("select verify_hall_login(?,?,?)", Boolean.class, username, passwordHash, 
