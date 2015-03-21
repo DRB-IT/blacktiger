@@ -226,7 +226,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
                 result.add(new Room(roomsEvent.getConference()));
             }
         }
-        LOG.debug("Rooms retunred from server: {}", result.size());
+        LOG.debug("Rooms returned from server: {}", result.size());
         return result;
     }
 
