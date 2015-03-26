@@ -60,7 +60,6 @@ public class ConferenceService {
         @Override
         public void onParticipantEvent(ConferenceEvent event) {
             if(event instanceof ParticipantJoinEvent) {
-                LOG.debug("Decorating event with phonebook information.");
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
                 channelTimestampMap.put(joinEvent.getParticipant().getChannel(), System.currentTimeMillis());
                 Participant p = decorateParticipant(joinEvent.getRoomNo(), joinEvent.getParticipant());
@@ -279,12 +278,14 @@ public class ConferenceService {
     }
     
     private Participant decorateParticipant(String roomNo, Participant participant) {
+        LOG.debug("Decorating event with phonebook information. [room={};participant={}]", roomNo ,participant);
         PhonebookEntry entry = phonebookRepository.findByCallerId(roomNo, participant.getCallerId());
         if(entry != null) {
             participant.setPhoneNumber(entry.getNumber());
             participant.setName(entry.getName());
             participant.setType(entry.getCallType());
         } else {
+            LOG.debug("No PhonebookEntry found [room={};participant={}]", roomNo, participant);
             participant.setType(CallType.Unknown);
         }
         

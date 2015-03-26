@@ -109,6 +109,7 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
     
     @Override
     public PhonebookEntry findByCallerId(String hallCalling, String number) {
+        LOG.debug("Resolving PhonebookEntry [hallCalling={};number={}]", hallCalling, number);
         GetNameStoredProcedure procedure = new GetNameStoredProcedure(jdbcTemplate);
         Map data = procedure.execute(number, hallCalling);
         
