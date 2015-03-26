@@ -384,12 +384,14 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     
     private String normalizeChannelName(String channel) {
         String normalized = channel.replace("/", "___");
+        normalized = normalized.replace(".", "---");
         LOG.debug("Normalizing channel name [from={};to={}]", channel, normalized);
         return normalized;
     }
     
     private String denormalizeChannelName(String channel) {
         String denormalized = channel.replace("___", "/");
+        denormalized = denormalized.replace("---", ".");
         LOG.debug("Denormalizing channel name [from={};to={}]", channel, denormalized);
         return denormalized;
     }
