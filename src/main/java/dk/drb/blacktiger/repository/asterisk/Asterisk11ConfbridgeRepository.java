@@ -55,6 +55,24 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRepository implements ConferenceRoomRepository {
 
+    private class ChannelRoomEntry {
+        private final boolean host;
+        private final String roomId;
+
+        public ChannelRoomEntry(boolean host, String roomId) {
+            this.host = host;
+            this.roomId = roomId;
+        }
+
+        public boolean isHost() {
+            return host;
+        }
+
+        public String getRoomId() {
+            return roomId;
+        }
+        
+    }
     private static final Logger LOG = LoggerFactory.getLogger(Asterisk11ConfbridgeRepository.class);
     private static final String DIGIT_COMMENT_REQUEST = "1";
     private static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
@@ -65,7 +83,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
      * A map between channels and rooms. 
      * This is used for DTMF events which never carries the conference room which the user sending the DTMF event resides in.
      */
-    private final Map<String, String> channelRoomMap = new HashMap<>();
+    private final Map<String, ChannelRoomEntry> channelRoomMap = new HashMap<>();
     
     public Asterisk11ConfbridgeRepository() {
         LOG.debug("Instantiating AsteriskConfbridgeRepository");
@@ -130,17 +148,21 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     private void onDtmfEvent(DtmfEvent event) {
         if (event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
             // A DTMF event has been received. We need to retrieve roomId and callerId. 
-            String roomId = channelRoomMap.get(event.getChannel());
+            ChannelRoomEntry roomEntry = channelRoomMap.get(event.getChannel());
+            if(roomEntry.isHost()) {
+                LOG.debug("DTMF Event from host in {} received. Ignoring it.", roomEntry.getRoomId());
+                return;
+            }
             
             ConferenceEvent ce = null;
             switch (event.getDigit()) {
                 case DIGIT_COMMENT_REQUEST:
                     LOG.debug("Dtmf Event is a Comment Request.");
-                    ce = new ParticipantCommentRequestEvent(roomId, normalizeChannelName(event.getChannel()));
+                    ce = new ParticipantCommentRequestEvent(roomEntry.getRoomId(), normalizeChannelName(event.getChannel()));
                     break;
                 case DIGIT_COMMENT_REQUEST_CANCEL:
                     LOG.debug("Dtmf Event is a Comment Cancel Request.");
-                    ce = new ParticipantCommentRequestCancelEvent(roomId, normalizeChannelName(event.getChannel()));
+                    ce = new ParticipantCommentRequestCancelEvent(roomEntry.getRoomId(), normalizeChannelName(event.getChannel()));
                     break;
             }
 
@@ -151,7 +173,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     private void onConfbridgeJoinEvent(ConfbridgeJoinEvent event) {
         String roomNo = event.getConference();
         Participant p = participantFromEvent(event);
-        channelRoomMap.put(event.getChannel(), event.getConference());
+        channelRoomMap.put(event.getChannel(), new ChannelRoomEntry(p.isHost(), roomNo));
         Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(roomNo, p));
     }
 
@@ -247,7 +269,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
                 ConfbridgeListEvent confbridgeListEvent = (ConfbridgeListEvent) event;
                 Participant p = participantFromEvent(confbridgeListEvent);
                 result.add(p);
-                channelRoomMap.put(confbridgeListEvent.getChannel(), confbridgeListEvent.getConference());
+                channelRoomMap.put(confbridgeListEvent.getChannel(), new ChannelRoomEntry(p.isHost(), roomId));
             }
         }
         LOG.debug("Participants returned from server: {}", result.size());
@@ -365,7 +387,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
 
         return new Participant(normalizeChannelName(channel), callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
     }
-
+    
     private ManagerResponse sendAction(ManagerAction action) {
         LOG.debug("Sending ManagerAction to server [action={}]", action);
         try {
