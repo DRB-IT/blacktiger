@@ -43,8 +43,8 @@ public class SystemController {
        map.put("load", loadMap);
        map.put("averageCpuLoad", averageCpuLoadMap);
        
-       loadMap.put("disk", percentageOf(service.getFreeDiskSpace(), service.getTotalDiskSpace()));
-       loadMap.put("memory", percentageOf(service.getFreePhysicalMemorySize(), service.getTotalPhysicalMemorySize()));
+       loadMap.put("disk", 100.0 - percentageOf(service.getFreeDiskSpace(), service.getTotalDiskSpace()));
+       loadMap.put("memory", 100.0 - percentageOf(service.getFreePhysicalMemorySize(), service.getTotalPhysicalMemorySize()));
        loadMap.put("cpu", service.getSystemLoad());
        loadMap.put("net", 0.0);
        

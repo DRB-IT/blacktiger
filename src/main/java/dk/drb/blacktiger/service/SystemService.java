@@ -31,11 +31,17 @@ public class SystemService {
     }
     
     @Secured("ROLE_ADMIN")
+    /**
+     * Returns the total amount of physical memory in bytes.
+     */
     public long getTotalPhysicalMemorySize() {
         return osmxb.getTotalPhysicalMemorySize();
     }
     
     @Secured("ROLE_ADMIN")
+    /**
+     * Returns the amount of free physical memory in bytes.
+     */
     public long getFreePhysicalMemorySize() {
         return osmxb.getFreePhysicalMemorySize();
     }    
