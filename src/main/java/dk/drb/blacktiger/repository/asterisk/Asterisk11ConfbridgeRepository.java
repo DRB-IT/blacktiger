@@ -235,6 +235,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         ResponseEvents events = sendAction(new ConfbridgeListAction(roomId));
         
         if(events.getResponse() != null && events.getResponse().getResponse().equals("Error")) {
+            LOG.error("Error occured when sending ConfBridgeListAction to Asterisk. [{}]", events.getResponse());
             return null;
         }
         
@@ -242,6 +243,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
 
         for (ResponseEvent event : events.getEvents()) {
             if (event instanceof ConfbridgeListEvent) {
+                LOG.debug("ConfbridgeListEvent received [{}]", event);
                 ConfbridgeListEvent confbridgeListEvent = (ConfbridgeListEvent) event;
                 Participant p = participantFromEvent(confbridgeListEvent);
                 result.add(p);
