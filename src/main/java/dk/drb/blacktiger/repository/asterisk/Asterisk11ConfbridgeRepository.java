@@ -355,7 +355,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         boolean host = false;
         CallType callType = CallType.Sip;
 
-        if (callerIdNum.equals(conference)) {
+        if (callerIdNum != null && callerIdNum.equals(conference)) {
             host = true;
         }
 
