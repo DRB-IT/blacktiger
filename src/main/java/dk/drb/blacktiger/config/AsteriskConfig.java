@@ -1,5 +1,6 @@
 package dk.drb.blacktiger.config;
 
+import dk.drb.blacktiger.repository.asterisk.ConfbridgeListEvent;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
 import org.slf4j.Logger;
@@ -26,6 +27,8 @@ public class AsteriskConfig {
         String user = env.getProperty("asterisk.username");
         String pass = env.getProperty("asterisk.password");
         LOG.info("Creating server connection [host={};user={}]", host, user);
-        return new DefaultAsteriskServer(host, user, pass);
+        DefaultAsteriskServer server = new DefaultAsteriskServer(host, user, pass);
+        server.getManagerConnection().registerUserEventClass(ConfbridgeListEvent.class);
+        return server;
     }
 }
