@@ -11,6 +11,7 @@ import dk.drb.blacktiger.model.ParticipantMuteEvent;
 import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.model.Summary;
+import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import java.util.Date;
 import java.util.Map;
 import org.junit.After;
@@ -45,10 +46,10 @@ public class SummaryServiceTest {
             
     @Before
     public void setUp() {
-        ConferenceService conferenceService = Mockito.mock(ConferenceService.class);
-        Mockito.doAnswer(answerAddEventListener).when(conferenceService).addEventListener(Mockito.isA(ConferenceEventListener.class));
+        ConferenceRoomRepository conferenceRepo = Mockito.mock(ConferenceRoomRepository.class);
+        Mockito.doAnswer(answerAddEventListener).when(conferenceRepo).addEventListener(Mockito.isA(ConferenceEventListener.class));
         
-        summaryService.setConferenceService(conferenceService);
+        summaryService.setConferenceRepository(conferenceRepo);
         summaryService.init();
     }
     

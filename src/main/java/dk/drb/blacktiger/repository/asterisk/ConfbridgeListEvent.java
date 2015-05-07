@@ -13,10 +13,6 @@ public class ConfbridgeListEvent extends org.asteriskjava.manager.event.Confbrid
         this.muted = "Yes".equalsIgnoreCase(value) || "1".equalsIgnoreCase(value) || "True".equalsIgnoreCase(value);
     }
     
-    public void setMuted(boolean muted) {
-        this.muted = muted;
-    }
-
     public boolean isMuted() {
         return muted;
     }

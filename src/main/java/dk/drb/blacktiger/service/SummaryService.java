@@ -5,12 +5,15 @@ import dk.drb.blacktiger.model.ConferenceEndEvent;
 import dk.drb.blacktiger.model.ConferenceEvent;
 import dk.drb.blacktiger.model.ConferenceEventListener;
 import dk.drb.blacktiger.model.ConferenceStartEvent;
+import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.ParticipantMuteEvent;
 import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
+import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.model.Summary;
+import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,18 +37,33 @@ public class SummaryService {
     private final Map<String, Summary> summaryMap = new HashMap<>();
     private Summary globalSummary;
 
-    private ConferenceService conferenceService;
+    private ConferenceRoomRepository conferenceRepository;
 
     @Autowired
-    public void setConferenceService(ConferenceService conferenceService) {
-        this.conferenceService = conferenceService;
+    public void setConferenceRepository(ConferenceRoomRepository conferenceService) {
+        this.conferenceRepository = conferenceService;
     }
 
     @PostConstruct
     protected void init() {
+        LOG.debug("Initializing SummaryService.");
         globalSummary = new Summary();
         summaryMap.put(GLOBAL_IDENTIFIER, globalSummary);
-        conferenceService.addEventListener(new ConferenceEventListener() {
+        
+        LOG.debug("Loading rooms");
+        for(Room room : conferenceRepository.findAll()) {
+            adjustHalls(room.getId(), 1);
+            LOG.debug("Room add [room={}]", room.getId());
+            
+            for(Participant participant : conferenceRepository.findByRoomNo(room.getId())) {
+                if(!participant.isHost()) {
+                    adjustParticipants(room.getId(), 1, participant.getType());
+                    LOG.debug("Participant added [channel={}, type={}]", participant.getChannel(), participant.getType());
+                }
+            }
+        }
+        
+        conferenceRepository.addEventListener(new ConferenceEventListener() {
 
             @Override
             public void onParticipantEvent(ConferenceEvent event) {
