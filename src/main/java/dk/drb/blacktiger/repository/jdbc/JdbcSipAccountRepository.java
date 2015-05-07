@@ -110,7 +110,7 @@ public class JdbcSipAccountRepository implements SipAccountRepository {
         }
 
         public Map execute(String number, String key) {
-            LOG.debug("Executing Stored Procedure [number=;key=]", number, key);
+            LOG.debug("Executing Stored Procedure [number={};key={}]", number, key);
             Map<String, Object> params = new HashMap<>();
             params.put("user_number", number);
             params.put("user_key", key);
