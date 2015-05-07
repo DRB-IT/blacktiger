@@ -115,7 +115,7 @@ public class JdbcPhonebookRepository implements PhonebookRepository {
         
         String name = (String)data.get("name");
         if(name.startsWith("*ERROR*")) {
-            LOG.debug("Stored procedure returned a result specifying an error. Ignoring result. [message={}]", name);
+            LOG.warn("Stored procedure returned a result specifying an error. Ignoring result. [message={}]", name);
             return null;
         } else {
             // Type: H=hall, P=phone, C=computer,
