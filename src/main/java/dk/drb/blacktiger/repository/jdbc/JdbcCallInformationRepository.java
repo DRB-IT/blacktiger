@@ -2,7 +2,6 @@ package dk.drb.blacktiger.repository.jdbc;
 
 import dk.drb.blacktiger.repository.CallInformationRepository;
 import dk.drb.blacktiger.model.CallInformation;
-import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.util.IpPhoneNumber;
 import dk.drb.blacktiger.util.PhoneNumber;
 import java.sql.ResultSet;
@@ -18,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.util.Assert;
@@ -60,6 +58,7 @@ public class JdbcCallInformationRepository implements CallInformationRepository 
         }
 
         public void execute(String caller, String callee, String action) {
+            LOG.debug("Executing ActionLogSP [caller={};callee={};action={}]", new Object[]{caller, callee, action});
             Map<String, Object> params = new HashMap<>();
             params.put("caller", caller);
             params.put("callee", callee);

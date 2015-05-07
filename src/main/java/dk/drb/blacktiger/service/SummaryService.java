@@ -46,21 +46,25 @@ public class SummaryService {
 
             @Override
             public void onParticipantEvent(ConferenceEvent event) {
-
+                LOG.debug("Conference event recieved for summary. [class={}]", event.getClass());
                 if (event instanceof ConferenceStartEvent) {
                     adjustHalls(event.getRoomNo(), 1);
+                    LOG.debug("Conference added to summary.");
                 }
 
                 if (event instanceof ConferenceEndEvent) {
                     adjustHalls(event.getRoomNo(), -1);
+                    LOG.debug("Conference removed from summary.");
                 }
 
                 if (event instanceof ParticipantMuteEvent) {
                     adjustOpenMicrophones(event.getRoomNo(), -1);
+                    LOG.debug("Open microphone removed from summary.");
                 }
 
                 if (event instanceof ParticipantUnmuteEvent) {
                     adjustOpenMicrophones(event.getRoomNo(), 1);
+                    LOG.debug("Open microphone added to summary.");
                 }
 
                 if (event instanceof ParticipantEvent) {
@@ -68,10 +72,12 @@ public class SummaryService {
 
                     if (event instanceof ParticipantJoinEvent) {
                         adjustParticipants(pEvent.getRoomNo(), 1, pEvent.getParticipant().getType());
+                        LOG.debug("Participant added to summary.");
                     }
 
                     if (event instanceof ParticipantLeaveEvent) {
                         adjustParticipants(pEvent.getRoomNo(), -1, pEvent.getParticipant().getType());
+                        LOG.debug("Participant removed from summary.");
                     }
 
                 }
@@ -81,7 +87,6 @@ public class SummaryService {
     }
 
     private String identifierFromRoom(String roomNo) {
-        LOG.debug("Retrieving identifier from roomNo [roomNo={}]", roomNo);
         Matcher matcher = roomPattern.matcher(roomNo);
         if (matcher.matches()) {
             return matcher.group(1);
@@ -163,6 +168,10 @@ public class SummaryService {
     @Secured("ROLE_ADMIN")
     public Map<String, Summary> getSummary() {
         return Collections.unmodifiableMap(summaryMap);
+    }
+    
+    public Summary getGlobalSummary() {
+        return summaryMap.get(GLOBAL_IDENTIFIER);
     }
 
 }

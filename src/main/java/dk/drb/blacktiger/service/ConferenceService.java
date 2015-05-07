@@ -44,21 +44,17 @@ public class ConferenceService {
     private ContactRepository contactRepository;
     private RoomInfoRepository roomInfoRepository;
     private CallInformationRepository callInformationRepository;
-    private Map<ConferenceEventListener, ConferenceEventListenerWrapper> listenerMap = new WeakHashMap<>();
-    private List<String> unmutedChannelsList = new ArrayList<>();
-    private Map<String, Long> channelTimestampMap = new HashMap<>();
+    private final List<ConferenceEventListener> listeners = new ArrayList<>();
+    private final List<String> unmutedChannelsList = new ArrayList<>();
+    private final Map<String, Long> channelTimestampMap = new HashMap<>();
     private boolean handleMuteness;
     
-    private class ConferenceEventListenerWrapper implements ConferenceEventListener {
+    private class ConferenceEventHandler implements ConferenceEventListener {
 
-        private ConferenceEventListener wrapped;
-
-        public ConferenceEventListenerWrapper(ConferenceEventListener wrapped) {
-            this.wrapped = wrapped;
-        }
         
         @Override
         public void onParticipantEvent(ConferenceEvent event) {
+            LOG.debug("ConferenceEvent recieved [event={}]", event);
             if(event instanceof ParticipantJoinEvent) {
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
                 channelTimestampMap.put(joinEvent.getParticipant().getChannel(), System.currentTimeMillis());
@@ -79,7 +75,7 @@ public class ConferenceService {
                 decorateRoom(startEvent.getRoom());
             }
             
-            wrapped.onParticipantEvent(event);
+            ConferenceService.this.fireEvent(event);
         }
         
     }
@@ -111,6 +107,7 @@ public class ConferenceService {
         Assert.notNull(callInformationRepository, "CallInformationRepository must be specified. Was null.");
         
         phonebookRepository.addEventListener(new PhonebookUpdateHandler());
+        roomRepository.addEventListener(new ConferenceEventHandler());
     }
 
     private void doActionLog(Participant p, String roomNo, String action) {
@@ -121,8 +118,12 @@ public class ConferenceService {
     }
     
     private void fireEvent(ConferenceEvent event) {
-        for(ConferenceEventListener listener : listenerMap.values()) {
-            listener.onParticipantEvent(event);
+        for(ConferenceEventListener listener : listeners) {
+            try {
+                listener.onParticipantEvent(event);
+            } catch(Exception ex) {
+                LOG.debug("Eventhandler caused an exception. The exception is ignored in order for allowing following listeners to be notified as well.");
+            }
         }
     }
     
@@ -256,17 +257,11 @@ public class ConferenceService {
     }
 
     public void addEventListener(ConferenceEventListener listener) {
-        ConferenceEventListenerWrapper wrapped = new ConferenceEventListenerWrapper(listener);
-        listenerMap.put(listener, wrapped);
-        roomRepository.addEventListener(wrapped);
+        listeners.add(listener);
     }
 
     public void removeEventListener(ConferenceEventListener listener) {
-        ConferenceEventListenerWrapper wrapped = listenerMap.get(listener);
-        if(wrapped != null) {
-            roomRepository.removeEventListener(listener);
-            listenerMap.remove(listener);
-        }
+        listeners.remove(listener);
     }
     
     private List<Participant> decorateParticipants(String hall, List<Participant> participants) {
