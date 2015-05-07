@@ -13,7 +13,9 @@ import dk.drb.blacktiger.model.ParticipantUnmuteEvent;
 import dk.drb.blacktiger.model.Summary;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -28,6 +30,7 @@ public class SummaryService {
 
     private static final Logger LOG = LoggerFactory.getLogger(SummaryService.class);
     private static final Pattern roomPattern = Pattern.compile("([a-zA-Z0-9]+)-.*");
+    private final Set<String> openMicsChannelSet = new HashSet<>();
     private final Map<String, Summary> summaryMap = new HashMap<>();
     private Summary globalSummary;
 
@@ -58,11 +61,13 @@ public class SummaryService {
                 }
 
                 if (event instanceof ParticipantMuteEvent) {
+                    openMicsChannelSet.remove(((ParticipantMuteEvent)event).getChannel());
                     adjustOpenMicrophones(event.getRoomNo(), -1);
                     LOG.debug("Open microphone removed from summary.");
                 }
 
                 if (event instanceof ParticipantUnmuteEvent) {
+                    openMicsChannelSet.add(((ParticipantUnmuteEvent)event).getChannel());
                     adjustOpenMicrophones(event.getRoomNo(), 1);
                     LOG.debug("Open microphone added to summary.");
                 }
@@ -76,6 +81,9 @@ public class SummaryService {
                     }
 
                     if (event instanceof ParticipantLeaveEvent) {
+                        if(openMicsChannelSet.contains(((ParticipantLeaveEvent)event).getParticipant().getChannel())) {
+                            adjustOpenMicrophones(event.getRoomNo(), -1);
+                        }
                         adjustParticipants(pEvent.getRoomNo(), -1, pEvent.getParticipant().getType());
                         LOG.debug("Participant removed from summary.");
                     }

@@ -65,7 +65,7 @@ public class SummaryServiceTest {
         Room roomFO = new Room("H298-1234", "Faroese", null, null, null, null);
         Room roomUS = new Room("H1-1234", "Nanpa", null, null, null, null);
         Participant participantDK = new Participant("SIP/channel001", "+4512345678", "John Doe", "+4512345678", true, false, CallType.Sip, new Date());
-        Participant participantFO = new Participant("SIP/channel001", "+29812345678", "John Doe", "+29812345678", true, false, CallType.Phone, new Date());
+        Participant participantFO = new Participant("SIP/channel002", "+29812345678", "John Doe", "+29812345678", true, false, CallType.Phone, new Date());
         
         Map<String, Summary> map = summaryService.getSummary();
         
@@ -100,6 +100,7 @@ public class SummaryServiceTest {
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getOpenMicrophones());
         
         eventListener.onParticipantEvent(new ParticipantJoinEvent(roomFO.getId(), participantFO));
+        eventListener.onParticipantEvent(new ParticipantUnmuteEvent(roomFO.getId(), participantFO.getChannel()));
         map = summaryService.getSummary();
         assertEquals(1, map.get("H45").getParticipants());
         assertEquals(1, map.get("H45").getParticipantsViaSip());
@@ -108,13 +109,13 @@ public class SummaryServiceTest {
         assertEquals(1, map.get("H298").getParticipants());
         assertEquals(0, map.get("H298").getParticipantsViaSip());
         assertEquals(1, map.get("H298").getParticipantsViaPhone());
-        assertEquals(0, map.get("H298").getOpenMicrophones());
+        assertEquals(1, map.get("H298").getOpenMicrophones());
         assertEquals(0, map.get("H1").getParticipants());
         assertEquals(0, map.get("H1").getOpenMicrophones());
         assertEquals(2, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipants());
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipantsViaSip());
         assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getParticipantsViaPhone());
-        assertEquals(1, map.get(SummaryService.GLOBAL_IDENTIFIER).getOpenMicrophones());
+        assertEquals(2, map.get(SummaryService.GLOBAL_IDENTIFIER).getOpenMicrophones());
         
         eventListener.onParticipantEvent(new ParticipantMuteEvent(roomDK.getId(), participantDK.getChannel()));
         eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomDK.getId(), participantDK));
