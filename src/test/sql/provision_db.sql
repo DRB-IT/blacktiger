@@ -19,11 +19,11 @@ call create_computer_listener('+4599999904','John Doe','john@doe.dk','H45-0004-2
 # We don't have the methods needed for proper integration tests so we need to adjust the data manually. #
 
 # Adjust sip-id's for test purposes
-update callers set sip_id=AES_ENCRYPT('L00000000', UNHEX(SHA('enckey'))) where updater='H45-0000-1';
-update callers set sip_id=AES_ENCRYPT('L00000001', UNHEX(SHA('enckey'))) where updater='H45-0001-2';
-update callers set sip_id=AES_ENCRYPT('L00000002', UNHEX(SHA('enckey'))) where updater='H45-0002';
-update callers set sip_id=AES_ENCRYPT('L00000003', UNHEX(SHA('enckey'))) where updater='H45-0003-1';
-update callers set sip_id=AES_ENCRYPT('L00000004', UNHEX(SHA('enckey'))) where updater='H45-0004-2';
+update callers set sip_id=AES_ENCRYPT('L000000000', UNHEX(SHA('enckey'))) where updater='H45-0000-1';
+update callers set sip_id=AES_ENCRYPT('L000000001', UNHEX(SHA('enckey'))) where updater='H45-0001-2';
+update callers set sip_id=AES_ENCRYPT('L000000002', UNHEX(SHA('enckey'))) where updater='H45-0002';
+update callers set sip_id=AES_ENCRYPT('L000000003', UNHEX(SHA('enckey'))) where updater='H45-0003-1';
+update callers set sip_id=AES_ENCRYPT('L000000004', UNHEX(SHA('enckey'))) where updater='H45-0004-2';
 
 # Reset passwords for test purposes
 update callers set sip_pw=AES_ENCRYPT('12345', UNHEX(SHA('enckey')))

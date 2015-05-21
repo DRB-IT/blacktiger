@@ -31,7 +31,7 @@ public class JdbcPhonebookRepositoryIT {
     public void testFindByCallerId() {
         System.out.println("findByCallerId");
         
-        PhonebookEntry result = repo.findByCallerId("H45-0000-1", "L00000000");
+        PhonebookEntry result = repo.findByCallerId("H45-0000-1", "L000000000");
         assertNotNull("Entry was not found", result);
         
         assertEquals("John Doe", result.getName());
