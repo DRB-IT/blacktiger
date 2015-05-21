@@ -13,4 +13,5 @@ public interface CallInformationRepository  {
     List<CallInformation> findByRoomNoAndPeriodAndDurationAndNumbers(String roomNo, Date start, Date end, int minimumDuration, String[] numbers);
     
     void logAction(String caller, String callee, String action);
+    void logEvent(String hall, String caller, String activity);
 }

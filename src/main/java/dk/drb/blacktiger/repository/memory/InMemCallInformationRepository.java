@@ -94,6 +94,11 @@ public class InMemCallInformationRepository implements CallInformationRepository
     public void logAction(String caller, String callee, String action) {
         LOG.info("Caller={};callee={};action={}", new Object[]{caller, callee, action});
     }
+
+    @Override
+    public void logEvent(String hall, String caller, String activity) {
+        LOG.info("Hall={};caller={};activity={}", new Object[]{hall, caller, activity});
+    }
     
     
     

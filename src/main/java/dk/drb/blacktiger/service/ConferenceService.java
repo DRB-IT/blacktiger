@@ -8,6 +8,8 @@ import dk.drb.blacktiger.model.ConferenceStartEvent;
 import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.Participant;
 import dk.drb.blacktiger.model.ParticipantChangeEvent;
+import dk.drb.blacktiger.model.ParticipantCommentRequestCancelEvent;
+import dk.drb.blacktiger.model.ParticipantCommentRequestEvent;
 import dk.drb.blacktiger.model.ParticipantJoinEvent;
 import dk.drb.blacktiger.model.ParticipantLeaveEvent;
 import dk.drb.blacktiger.model.PhonebookEntry;
@@ -18,6 +20,7 @@ import dk.drb.blacktiger.repository.ConferenceRoomRepository;
 import dk.drb.blacktiger.repository.ContactRepository;
 import dk.drb.blacktiger.repository.PhonebookRepository.PhonebookEventListener;
 import dk.drb.blacktiger.repository.RoomInfoRepository;
+import dk.drb.blacktiger.repository.asterisk.Asterisk11ConfbridgeRepository;
 import dk.drb.blacktiger.util.Access;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +28,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +77,16 @@ public class ConferenceService {
                 decorateRoom(startEvent.getRoom());
             }
             
+            if(event instanceof ParticipantCommentRequestEvent) {
+                ParticipantCommentRequestEvent commentRequestEvent = (ParticipantCommentRequestEvent) event;
+                doEventLog("unknown", commentRequestEvent.getRoomNo(), "Keypress " + Asterisk11ConfbridgeRepository.DIGIT_COMMENT_REQUEST);
+            }
+            
+            if(event instanceof ParticipantCommentRequestCancelEvent) {
+                ParticipantCommentRequestCancelEvent commentRequestEvent = (ParticipantCommentRequestCancelEvent) event;
+                doEventLog("unknown", commentRequestEvent.getRoomNo(), "Keypress " + Asterisk11ConfbridgeRepository.DIGIT_COMMENT_REQUEST_CANCEL);
+            }
+            
             ConferenceService.this.fireEvent(event);
         }
         
@@ -115,6 +127,10 @@ public class ConferenceService {
             Room room = roomInfoRepository.findById(roomNo);
             callInformationRepository.logAction(p.getCallerId(), room.getPhoneNumber(), action);
         }
+    }
+    
+    private void doEventLog(String caller, String roomNo, String activity) {
+        callInformationRepository.logEvent(roomNo, caller, activity);
     }
     
     private void fireEvent(ConferenceEvent event) {
@@ -239,6 +255,7 @@ public class ConferenceService {
         
         if(handleMuteness) {
             unmutedChannelsList.remove(channel);
+            doEventLog("unknown", roomNo, "Mute");
         }
     }
 
@@ -253,6 +270,7 @@ public class ConferenceService {
         
         if(handleMuteness) {
             unmutedChannelsList.add(channel);
+            doEventLog("unknown", roomNo, "Unmute");
         }
     }
 

@@ -67,6 +67,29 @@ public class JdbcCallInformationRepository implements CallInformationRepository 
             execute(params);
         }
     }
+    
+    private class EventLogSP extends StoredProcedure {
+        
+        public EventLogSP(JdbcTemplate jdbcTemplate) {
+            super(jdbcTemplate, "WRITE_CALLER_EVENTS_LOG");
+        
+            declareParameter(new SqlParameter("hall", Types.VARCHAR));
+            declareParameter(new SqlParameter("caller", Types.VARCHAR));
+            declareParameter(new SqlParameter("activity", Types.VARCHAR));
+            declareParameter(new SqlParameter("key", Types.VARCHAR));
+            compile();
+        }
+
+        public void execute(String hall, String caller, String activity) {
+            LOG.debug("Executing ActionLogSP [hall={};caller={};activity={}]", new Object[]{hall, caller, activity});
+            Map<String, Object> params = new HashMap<>();
+            params.put("hall", hall);
+            params.put("caller", caller);
+            params.put("activity", activity);
+            params.put("key", encryptionKey);
+            execute(params);
+        }
+    }
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -104,7 +127,15 @@ public class JdbcCallInformationRepository implements CallInformationRepository 
         }
     }
     
-    
+    @Override
+    public void logEvent(String hall, String caller, String activity) {
+        EventLogSP sp = new EventLogSP(jdbcTemplate);
+        try {
+            sp.execute(hall, caller, activity);
+        } catch(Exception ex) {
+            LOG.error("Error while logging action.", ex);
+        }
+    }
     
     
     

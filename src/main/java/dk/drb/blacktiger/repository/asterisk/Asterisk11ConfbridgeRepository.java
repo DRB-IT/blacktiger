@@ -74,8 +74,8 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         
     }
     private static final Logger LOG = LoggerFactory.getLogger(Asterisk11ConfbridgeRepository.class);
-    private static final String DIGIT_COMMENT_REQUEST = "1";
-    private static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
+    public static final String DIGIT_COMMENT_REQUEST = "1";
+    public static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
 
     private final Queue<ManagerEvent> managerEvents = new LinkedList<>();
     
