@@ -81,7 +81,7 @@ public class JdbcCallInformationRepository implements CallInformationRepository 
         }
 
         public void execute(String hall, String caller, String activity) {
-            LOG.debug("Executing ActionLogSP [hall={};caller={};activity={}]", new Object[]{hall, caller, activity});
+            LOG.debug("Executing EventLogSP [hall={};caller={};activity={}]", new Object[]{hall, caller, activity});
             Map<String, Object> params = new HashMap<>();
             params.put("hall", hall);
             params.put("caller", caller);
