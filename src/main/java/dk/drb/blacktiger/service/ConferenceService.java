@@ -48,8 +48,27 @@ public class ConferenceService {
     private CallInformationRepository callInformationRepository;
     private final List<ConferenceEventListener> listeners = new ArrayList<>();
     private final List<String> unmutedChannelsList = new ArrayList<>();
-    private final Map<String, Long> channelTimestampMap = new HashMap<>();
+    private final Map<String, ChannelInfo> channelInfoMap = new HashMap<>();
     private boolean handleMuteness;
+    
+    private class ChannelInfo {
+        private final long timestamp;
+        private final String callerId;
+
+        public ChannelInfo(long timestamp, String callerId) {
+            this.timestamp = timestamp;
+            this.callerId = callerId;
+        }
+
+        public String getCallerId() {
+            return callerId;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+        
+    }
     
     private class ConferenceEventHandler implements ConferenceEventListener {
 
@@ -59,14 +78,14 @@ public class ConferenceService {
             LOG.debug("ConferenceEvent recieved [event={}]", event);
             if(event instanceof ParticipantJoinEvent) {
                 ParticipantJoinEvent joinEvent = (ParticipantJoinEvent) event;
-                channelTimestampMap.put(joinEvent.getParticipant().getChannel(), System.currentTimeMillis());
                 Participant p = decorateParticipant(joinEvent.getRoomNo(), joinEvent.getParticipant());
+                channelInfoMap.put(joinEvent.getParticipant().getChannel(), new ChannelInfo(System.currentTimeMillis(), joinEvent.getParticipant().getCallerId()));
                 event = new ParticipantJoinEvent(joinEvent.getRoomNo(), p);
                 doActionLog(p, joinEvent.getRoomNo(), "call");
             }
             if(event instanceof ParticipantLeaveEvent) {
                 ParticipantLeaveEvent leaveEvent = (ParticipantLeaveEvent) event;
-                channelTimestampMap.remove(leaveEvent.getParticipant().getChannel());
+                channelInfoMap.remove(leaveEvent.getParticipant().getChannel());
                 String room = event.getRoomNo();
                 Participant p = decorateParticipant(room, leaveEvent.getParticipant());
                 doActionLog(p, room, "hangup");
@@ -79,12 +98,12 @@ public class ConferenceService {
             
             if(event instanceof ParticipantCommentRequestEvent) {
                 ParticipantCommentRequestEvent commentRequestEvent = (ParticipantCommentRequestEvent) event;
-                doEventLog("unknown", commentRequestEvent.getRoomNo(), "Keypress " + Asterisk11ConfbridgeRepository.DIGIT_COMMENT_REQUEST);
+                doEventLog(channelIdToCallerId(commentRequestEvent.getChannel()), commentRequestEvent.getRoomNo(), "Keypress " + Asterisk11ConfbridgeRepository.DIGIT_COMMENT_REQUEST);
             }
             
             if(event instanceof ParticipantCommentRequestCancelEvent) {
                 ParticipantCommentRequestCancelEvent commentRequestEvent = (ParticipantCommentRequestCancelEvent) event;
-                doEventLog("unknown", commentRequestEvent.getRoomNo(), "Keypress " + Asterisk11ConfbridgeRepository.DIGIT_COMMENT_REQUEST_CANCEL);
+                doEventLog(channelIdToCallerId(commentRequestEvent.getChannel()), commentRequestEvent.getRoomNo(), "Keypress " + Asterisk11ConfbridgeRepository.DIGIT_COMMENT_REQUEST_CANCEL);
             }
             
             ConferenceService.this.fireEvent(event);
@@ -255,7 +274,7 @@ public class ConferenceService {
         
         if(handleMuteness) {
             unmutedChannelsList.remove(channel);
-            doEventLog("unknown", roomNo, "Mute");
+            doEventLog(channelIdToCallerId(channel), roomNo, "Mute");
         }
     }
 
@@ -270,7 +289,7 @@ public class ConferenceService {
         
         if(handleMuteness) {
             unmutedChannelsList.add(channel);
-            doEventLog("unknown", roomNo, "Unmute");
+            doEventLog(channelIdToCallerId(channel), roomNo, "Unmute");
         }
     }
 
@@ -306,9 +325,9 @@ public class ConferenceService {
             participant.setMuted(!unmutedChannelsList.contains(participant.getChannel()));
         }
         
-        Long joinTimestamp = channelTimestampMap.get(participant.getChannel());
-        if(joinTimestamp != null) {
-            participant.setDateJoined(new Date(joinTimestamp));
+        ChannelInfo channelInfo = channelInfoMap.get(participant.getChannel());
+        if(channelInfo != null) {
+            participant.setDateJoined(new Date(channelInfo.getTimestamp()));
         }
         
         return participant;
@@ -334,6 +353,15 @@ public class ConferenceService {
             room.mergeIn(roomInfo);
         }
         return room;
+    }
+    
+    private String channelIdToCallerId(String channelId) {
+        ChannelInfo info = channelInfoMap.get(channelId);
+        if(info != null) {
+            return info.getCallerId();
+        } else {
+            return null;
+        }
     }
     
 }
