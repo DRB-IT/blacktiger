@@ -11,7 +11,7 @@ public class LotsOfCalls {
         List<Caller> callers = new ArrayList<>();
         
         for(int i=0;i<10;i++) {
-            Caller caller = new Caller("L00000000", "12345", "sip:+4500000000@192.168.50.2");
+            Caller caller = new Caller("L000000000", "12345", "sip:+4522000000@192.168.50.2");
             caller.register();
             caller.call();
             callers.add(caller);
