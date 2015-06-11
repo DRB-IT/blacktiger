@@ -65,6 +65,9 @@ public class SummaryServiceTest {
         Room roomDK = new Room("H45-1234", "Danish", null, null, null, null);
         Room roomFO = new Room("H298-1234", "Faroese", null, null, null, null);
         Room roomUS = new Room("H1-1234", "Nanpa", null, null, null, null);
+        Participant hostDK = new Participant("SIP/channel101", "+4512345678", "Host DK", "+4512345678", false, true, CallType.Sip, new Date());
+        Participant hostFO = new Participant("SIP/channel102", "+4512345678", "Host DK", "+4512345678", false, true, CallType.Sip, new Date());
+        Participant hostUS = new Participant("SIP/channel103", "+4512345678", "Host DK", "+4512345678", false, true, CallType.Sip, new Date());
         Participant participantDK = new Participant("SIP/channel001", "+4512345678", "John Doe", "+4512345678", true, false, CallType.Sip, new Date());
         Participant participantFO = new Participant("SIP/channel002", "+29812345678", "John Doe", "+29812345678", true, false, CallType.Phone, new Date());
         
@@ -78,6 +81,10 @@ public class SummaryServiceTest {
         eventListener.onParticipantEvent(new ConferenceStartEvent(roomDK));
         eventListener.onParticipantEvent(new ConferenceStartEvent(roomFO));
         eventListener.onParticipantEvent(new ConferenceStartEvent(roomUS));
+        eventListener.onParticipantEvent(new ParticipantJoinEvent(roomDK.getId(), hostDK));
+        eventListener.onParticipantEvent(new ParticipantJoinEvent(roomFO.getId(), hostFO));
+        eventListener.onParticipantEvent(new ParticipantJoinEvent(roomUS.getId(), hostUS));
+        
         map = summaryService.getSummary();
         assertEquals(1, map.get("H45").getHalls());
         assertEquals(1, map.get("H298").getHalls());
@@ -121,6 +128,9 @@ public class SummaryServiceTest {
         eventListener.onParticipantEvent(new ParticipantMuteEvent(roomDK.getId(), participantDK.getChannel()));
         eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomDK.getId(), participantDK));
         eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomFO.getId(), participantFO));
+        eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomDK.getId(), hostDK));
+        eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomFO.getId(), hostFO));
+        eventListener.onParticipantEvent(new ParticipantLeaveEvent(roomUS.getId(), hostUS));
         eventListener.onParticipantEvent(new ConferenceEndEvent(roomDK.getId()));
         eventListener.onParticipantEvent(new ConferenceEndEvent(roomFO.getId()));
         eventListener.onParticipantEvent(new ConferenceEndEvent(roomUS.getId()));

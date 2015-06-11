@@ -68,7 +68,7 @@ public class SummaryService {
             @Override
             public void onParticipantEvent(ConferenceEvent event) {
                 LOG.debug("Conference event recieved for summary. [class={}]", event.getClass());
-                if (event instanceof ConferenceStartEvent) {
+                /*if (event instanceof ConferenceStartEvent) {
                     adjustHalls(event.getRoomNo(), 1);
                     LOG.debug("Conference added to summary.");
                 }
@@ -76,7 +76,7 @@ public class SummaryService {
                 if (event instanceof ConferenceEndEvent) {
                     adjustHalls(event.getRoomNo(), -1);
                     LOG.debug("Conference removed from summary.");
-                }
+                }*/
 
                 if (event instanceof ParticipantMuteEvent) {
                     openMicsChannelSet.remove(((ParticipantMuteEvent)event).getChannel());
@@ -94,16 +94,27 @@ public class SummaryService {
                     ParticipantEvent pEvent = (ParticipantEvent) event;
 
                     if (event instanceof ParticipantJoinEvent) {
-                        adjustParticipants(pEvent.getRoomNo(), 1, pEvent.getParticipant().getType());
-                        LOG.debug("Participant added to summary.");
+                        if(pEvent.getParticipant().isHost()) {
+                            adjustHalls(pEvent.getRoomNo(), 1);
+                            LOG.debug("Conference added to summary.");
+                        } else {
+                            adjustParticipants(pEvent.getRoomNo(), 1, pEvent.getParticipant().getType());
+                            LOG.debug("Participant added to summary.");
+                        }
                     }
 
                     if (event instanceof ParticipantLeaveEvent) {
-                        if(openMicsChannelSet.contains(((ParticipantLeaveEvent)event).getParticipant().getChannel())) {
-                            adjustOpenMicrophones(event.getRoomNo(), -1);
+                        
+                        if(pEvent.getParticipant().isHost()) {
+                            adjustHalls(pEvent.getRoomNo(), -1);
+                            LOG.debug("Conference added to summary.");
+                        } else {
+                            if(openMicsChannelSet.contains(((ParticipantLeaveEvent)event).getParticipant().getChannel())) {
+                                adjustOpenMicrophones(event.getRoomNo(), -1);
+                            }
+                            adjustParticipants(pEvent.getRoomNo(), -1, pEvent.getParticipant().getType());
+                            LOG.debug("Participant removed from summary.");
                         }
-                        adjustParticipants(pEvent.getRoomNo(), -1, pEvent.getParticipant().getType());
-                        LOG.debug("Participant removed from summary.");
                     }
 
                 }
