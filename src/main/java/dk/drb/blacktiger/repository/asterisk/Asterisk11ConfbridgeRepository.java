@@ -105,31 +105,35 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     protected void handleEventQueue() {
         ManagerEvent event = null;
         while ((event = managerEvents.poll()) != null) {
-            LOG.debug("Handling event from queue. [event={}]", event);
-            if (event instanceof ConfbridgeJoinEvent) {
-                onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
-            }
-            if (event instanceof ConfbridgeLeaveEvent) {
-                onConfbridgeLeaveEvent((ConfbridgeLeaveEvent) event);
-            }
-            if (event instanceof ConfbridgeStartEvent) {
-                onConfbridgeStart((ConfbridgeStartEvent) event);
-            }
+            try {
+                LOG.debug("Handling event from queue. [event={}]", event);
+                if (event instanceof ConfbridgeJoinEvent) {
+                    onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
+                }
+                if (event instanceof ConfbridgeLeaveEvent) {
+                    onConfbridgeLeaveEvent((ConfbridgeLeaveEvent) event);
+                }
+                if (event instanceof ConfbridgeStartEvent) {
+                    onConfbridgeStart((ConfbridgeStartEvent) event);
+                }
 
-            if (event instanceof ConfbridgeEndEvent) {
-                onConfbridgeEnd((ConfbridgeEndEvent) event);
-            }
+                if (event instanceof ConfbridgeEndEvent) {
+                    onConfbridgeEnd((ConfbridgeEndEvent) event);
+                }
 
-            if (event instanceof DtmfEvent) {
-                onDtmfEvent((DtmfEvent) event);
-            }
-            
-            if(event instanceof DisconnectEvent) {
-                onDisconnectEvent((DisconnectEvent) event);
-            }
-            
-            if(event instanceof ConnectEvent) {
-                reload();
+                if (event instanceof DtmfEvent) {
+                    onDtmfEvent((DtmfEvent) event);
+                }
+
+                if(event instanceof DisconnectEvent) {
+                    onDisconnectEvent((DisconnectEvent) event);
+                }
+
+                if(event instanceof ConnectEvent) {
+                    reload();
+                }
+            } catch(Exception e) {
+                LOG.error("Unexpected error occured when handling manager event.", e);
             }
         }
     }
