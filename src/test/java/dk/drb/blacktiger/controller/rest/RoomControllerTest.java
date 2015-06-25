@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import static dk.drb.blacktiger.fixture.rest.RoomRestDataFixture.*;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.mockito.Mockito;
 
 /**
  *
@@ -50,6 +51,7 @@ public class RoomControllerTest {
     public void thatRoomsCanBeRetrieved() throws Exception {
         String[] ids = {"1", "2"};
         when(service.listRooms()).thenReturn(standardListOfRooms(ids));
+        when(service.listRooms(Mockito.anyString())).thenReturn(standardListOfRooms(ids));
 
         this.mockMvc.perform(get("/rooms")
                 .accept(MediaType.APPLICATION_JSON))
@@ -62,6 +64,7 @@ public class RoomControllerTest {
     public void thatRoomsCanBeRetrievedWithParticipants() throws Exception {
         String[] ids = {"1", "2"};
         when(service.listRooms()).thenReturn(standardListOfRooms(ids));
+        when(service.listRooms(Mockito.anyString())).thenReturn(standardListOfRooms(ids));
 
         this.mockMvc.perform(get("/rooms?mode=full")
                 .accept(MediaType.APPLICATION_JSON))

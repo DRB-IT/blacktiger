@@ -39,17 +39,17 @@ public class RoomController {
 
     @RequestMapping("/rooms")
     @ResponseBody
-    public List getRooms(String mode) {
+    public List getRooms(String mode, String search) {
         LOG.debug("Got request for all available rooms.");
         
         if(MODE_FULL.equalsIgnoreCase(mode)) {
             List<RoomWithParticipants> rooms = new ArrayList<>();
-            for(Room room : service.listRooms()) {
+            for(Room room : service.listRooms(search)) {
                 rooms.add(new RoomWithParticipants(room, service.listParticipants(room.getId())));
             }
             return rooms;
         } else {
-            return service.listRooms();
+            return service.listRooms(search);
         }
     }
     

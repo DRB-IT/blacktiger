@@ -3,6 +3,7 @@ package dk.drb.blacktiger.repository.jdbc;
 import dk.drb.blacktiger.model.Contact;
 import dk.drb.blacktiger.model.Room;
 import dk.drb.blacktiger.repository.RoomInfoRepository;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -31,6 +32,11 @@ public class JdbcRoomInfoRepository implements RoomInfoRepository {
     @PostConstruct
     protected void init() {
         Assert.notNull(encryptionKey, "Encryption key not set.");
+    }
+    
+    public List<Room> findAllBySearchString(String search) {
+        SearchHallInfoSP sp = new SearchHallInfoSP(jdbcTemplate);
+        return sp.execute(search, encryptionKey);
     }
     
     public Room findById(String id) {

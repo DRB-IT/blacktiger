@@ -192,9 +192,19 @@ public class ConferenceService {
     }
     
     public List<Room> listRooms() {
+        return listRooms(null);
+    }
+    
+    public List<Room> listRooms(String search) {
         List<Room> rooms;
         if(Access.hasRole("ADMIN")) {
-            rooms = roomRepository.findAll();
+            if(search == null) {
+                rooms = roomRepository.findAll();
+            } else {
+                rooms = roomInfoRepository.findAllBySearchString(search);
+            }
+        } else if(search != null) {
+            throw new IllegalArgumentException("Only admins are allowed to search rooms.");
         } else {
             rooms = new ArrayList<>();
             for(String roomId:Access.getAccessibleRooms()) {
