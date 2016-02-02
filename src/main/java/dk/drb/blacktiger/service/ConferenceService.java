@@ -216,11 +216,18 @@ public class ConferenceService {
     }
     
     public Room getRoom(String roomId) {
-        Access.checkRoomAccess(roomId);
-        Room room = roomRepository.findOne(roomId);
+        Room room = null;
+        if(Access.hasRole("ADMIN")) { 
+            room = roomInfoRepository.findById(roomId);
+        } else {
+            Access.checkRoomAccess(roomId);
+            room = roomRepository.findOne(roomId);
+        }
+        
         if(room != null) {
             decorateRoom(room);
         }
+        
         return room;
     }
     
