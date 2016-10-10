@@ -160,8 +160,6 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeStartEvent e = new ConfbridgeStartEvent(this);
         e.setConference("H45-0001");
         listener.onManagerEvent(e);
-        repo.handleEventQueue();
-        
         assertEquals("H45-0001", ((ConferenceStartEvent)lastConfEvent).getRoom().getId());
     }
     
@@ -170,7 +168,6 @@ public class AsteriskConfbridgeRepositoryTest {
         ConfbridgeEndEvent e = new ConfbridgeEndEvent(this);
         e.setConference("H45-0000");
         listener.onManagerEvent(e);
-        repo.handleEventQueue();
         assertEquals("H45-0000", ((ConferenceEndEvent)lastConfEvent).getRoomNo());
     }
     
@@ -178,7 +175,6 @@ public class AsteriskConfbridgeRepositoryTest {
     public void ifDisconnectEventsWillResetData() {
         DisconnectEvent e = new DisconnectEvent(this);
         listener.onManagerEvent(e);
-        repo.handleEventQueue();
         assertEquals("H45-0000", ((ConferenceEndEvent)lastConfEvent).getRoomNo());
     }
     
@@ -186,11 +182,9 @@ public class AsteriskConfbridgeRepositoryTest {
     public void ifConnectEventsWillReloadData() {
         DisconnectEvent e = new DisconnectEvent(this);
         listener.onManagerEvent(e);
-        repo.handleEventQueue();
         
         ConnectEvent e2 = new ConnectEvent(this);
         listener.onManagerEvent(e2);
-        repo.handleEventQueue();
         
         assertEquals(1, repo.findAll().size());
     }
@@ -208,7 +202,6 @@ public class AsteriskConfbridgeRepositoryTest {
     @Test
     public void ifUserCanBeKickedAndEmitsLeaveEvent() {
         repo.kickParticipant("H45-0000", "SIP___#00000000");
-        repo.handleEventQueue();
         assertEquals("SIP___#00000000", ((ParticipantLeaveEvent)lastConfEvent).getParticipant().getChannel());
     }
     
@@ -220,7 +213,6 @@ public class AsteriskConfbridgeRepositoryTest {
         e.setChannel("SIP___#00000000");
         e.setConference("H45-0000");
         listener.onManagerEvent(e);
-        repo.handleEventQueue();
         assertEquals("SIP___#00000000", ((ParticipantLeaveEvent)lastConfEvent).getParticipant().getChannel());
     }
     
@@ -266,7 +258,6 @@ public class AsteriskConfbridgeRepositoryTest {
         event.setDigit("1");
         event.setChannel("SIP___#00000000");
         listener.onManagerEvent(event);
-        repo.handleEventQueue();
         
         ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
         assertTrue(lastEvent instanceof ParticipantCommentRequestEvent);
@@ -295,7 +286,6 @@ public class AsteriskConfbridgeRepositoryTest {
         event.setDigit("0");
         event.setChannel("SIP___#00000000");
         listener.onManagerEvent(event);
-        repo.handleEventQueue();
         
         ConferenceEvent lastEvent = conferenceEvents.get(conferenceEvents.size()-1);
         assertTrue(lastEvent instanceof ParticipantCommentRequestCancelEvent);

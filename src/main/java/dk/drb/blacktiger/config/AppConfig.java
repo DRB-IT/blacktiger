@@ -29,7 +29,7 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
  * Configuration Entry Point for the application.
  */
 @Configuration
-@PropertySource({"classpath:blacktiger.properties","file:${user.home}/blacktiger.properties"})
+@PropertySource(ignoreResourceNotFound = true, value = {"classpath:blacktiger.properties","file:${user.home}/blacktiger.properties"})
 @Import({ServiceConfig.class, WebsocketConfig.class, ControllerConfig.class})
 //@ImportResource("classpath:springsecurity.xml")
 @EnableWebSecurity
