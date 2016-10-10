@@ -56,6 +56,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRepository implements ConferenceRoomRepository {
 
     private class ChannelRoomEntry {
+
         private final boolean host;
         private final String roomId;
 
@@ -71,20 +72,18 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         public String getRoomId() {
             return roomId;
         }
-        
+
     }
     private static final Logger LOG = LoggerFactory.getLogger(Asterisk11ConfbridgeRepository.class);
     public static final String DIGIT_COMMENT_REQUEST = "1";
     public static final String DIGIT_COMMENT_REQUEST_CANCEL = "0";
 
-    private final Queue<ManagerEvent> managerEvents = new LinkedList<>();
-    
     /**
-     * A map between channels and rooms. 
-     * This is used for DTMF events which never carries the conference room which the user sending the DTMF event resides in.
+     * A map between channels and rooms. This is used for DTMF events which never carries the conference room which the user sending the DTMF
+     * event resides in.
      */
     private final Map<String, ChannelRoomEntry> channelRoomMap = new HashMap<>();
-    
+
     public Asterisk11ConfbridgeRepository() {
         LOG.debug("Instantiating AsteriskConfbridgeRepository");
         setManagerEventListener(this);
@@ -92,72 +91,59 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
 
     @Override
     public void onManagerEvent(final ManagerEvent event) {
-        LOG.debug("Manager event recieved and being added to queue. [event={}]", event);
         try {
-            managerEvents.add(event);
-        } catch (IllegalStateException ex) {
-            LOG.error("Unable to add event to queue.", ex);
-        }
-
-    }
-
-    @Scheduled(fixedDelay = 50)
-    protected void handleEventQueue() {
-        ManagerEvent event = null;
-        while ((event = managerEvents.poll()) != null) {
-            try {
-                LOG.debug("Handling event from queue. [event={}]", event);
-                if (event instanceof ConfbridgeJoinEvent) {
-                    onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
-                }
-                if (event instanceof ConfbridgeLeaveEvent) {
-                    onConfbridgeLeaveEvent((ConfbridgeLeaveEvent) event);
-                }
-                if (event instanceof ConfbridgeStartEvent) {
-                    onConfbridgeStart((ConfbridgeStartEvent) event);
-                }
-
-                if (event instanceof ConfbridgeEndEvent) {
-                    onConfbridgeEnd((ConfbridgeEndEvent) event);
-                }
-
-                if (event instanceof DtmfEvent) {
-                    onDtmfEvent((DtmfEvent) event);
-                }
-
-                if(event instanceof DisconnectEvent) {
-                    onDisconnectEvent((DisconnectEvent) event);
-                }
-
-                if(event instanceof ConnectEvent) {
-                    reload();
-                }
-            } catch(Exception e) {
-                LOG.error("Unexpected error occured when handling manager event.", e);
+            LOG.debug("Handling event from queue. [event={}]", event);
+            if (event instanceof ConfbridgeJoinEvent) {
+                onConfbridgeJoinEvent((ConfbridgeJoinEvent) event);
             }
+            if (event instanceof ConfbridgeLeaveEvent) {
+                onConfbridgeLeaveEvent((ConfbridgeLeaveEvent) event);
+            }
+            if (event instanceof ConfbridgeStartEvent) {
+                onConfbridgeStart((ConfbridgeStartEvent) event);
+            }
+
+            if (event instanceof ConfbridgeEndEvent) {
+                onConfbridgeEnd((ConfbridgeEndEvent) event);
+            }
+
+            if (event instanceof DtmfEvent) {
+                onDtmfEvent((DtmfEvent) event);
+            }
+
+            if (event instanceof DisconnectEvent) {
+                onDisconnectEvent((DisconnectEvent) event);
+            }
+
+            if (event instanceof ConnectEvent) {
+                reload();
+            }
+        } catch (Exception e) {
+            LOG.error("Unexpected error occured when handling manager event.", e);
         }
+
     }
 
     private void onDisconnectEvent(DisconnectEvent event) {
         LOG.info("Disconnect event recieved. Informing all partakers thats participants have left and Conference rooms have ended.");
-        for(Room room : findAll()) {
-            for(Participant participant : findByRoomNo(room.getId())) {
+        for (Room room : findAll()) {
+            for (Participant participant : findByRoomNo(room.getId())) {
                 Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(room.getId(), participant));
             }
             Asterisk11ConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(room.getId()));
         }
         reset();
     }
-    
+
     private void onDtmfEvent(DtmfEvent event) {
         if (event.isEnd() && (event.getDigit().equals(DIGIT_COMMENT_REQUEST) || event.getDigit().equals(DIGIT_COMMENT_REQUEST_CANCEL))) {
             // A DTMF event has been received. We need to retrieve roomId and callerId. 
             ChannelRoomEntry roomEntry = channelRoomMap.get(event.getChannel());
-            if(roomEntry.isHost()) {
+            if (roomEntry.isHost()) {
                 LOG.debug("DTMF Event from host in {} received. Ignoring it.", roomEntry.getRoomId());
                 return;
             }
-            
+
             ConferenceEvent ce = null;
             switch (event.getDigit()) {
                 case DIGIT_COMMENT_REQUEST:
@@ -183,12 +169,12 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
 
     private void onConfbridgeLeaveEvent(ConfbridgeLeaveEvent event) {
         String roomNo = event.getConference();
-        
+
         Participant p = participantFromEvent(event);
         channelRoomMap.remove(event.getChannel());
 
         Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantLeaveEvent(roomNo, p));
-        
+
     }
 
     private void onConfbridgeStart(ConfbridgeStartEvent e) {
@@ -201,7 +187,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         LOG.debug("Handling ConfbridgeEndEvent [event={}]", e);
         Asterisk11ConfbridgeRepository.this.fireEvent(new ConferenceEndEvent(e.getConference()));
     }
-    
+
     private void onMuted(String conference, String channel) {
         LOG.debug("Handling onMuted. [room={};channel={}]", conference, channel);
         Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantMuteEvent(conference, channel));
@@ -211,7 +197,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         LOG.debug("Handling onUnmuted. [room={};channel={}]", conference, channel);
         Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantUnmuteEvent(conference, channel));
     }
-    
+
     @Override
     public void setAsteriskServer(AsteriskServer asteriskServer) {
         super.setAsteriskServer(asteriskServer);
@@ -221,22 +207,21 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         reload();
     }
 
-    
     private void reset() {
         this.channelRoomMap.clear();
     }
-    
+
     private void reload() {
         reset();
-        
-        for(Room room : readRoomsFromServer()) {
+
+        for (Room room : readRoomsFromServer()) {
             Asterisk11ConfbridgeRepository.this.fireEvent(new ConferenceStartEvent(room));
-            for(Participant participant : findByRoomNo(room.getId())) {
+            for (Participant participant : findByRoomNo(room.getId())) {
                 Asterisk11ConfbridgeRepository.this.fireEvent(new ParticipantJoinEvent(room.getId(), participant));
             }
         }
     }
-    
+
     /**
      * Reads rooms directly from the asterisk server.
      */
@@ -259,12 +244,12 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     private List<Participant> readParticipantsFromServer(String roomId) {
         LOG.debug("Reading participants from server. [room={}]", roomId);
         ResponseEvents events = sendAction(new ConfbridgeListAction(roomId));
-        
-        if(events.getResponse() != null && events.getResponse().getResponse().equals("Error")) {
+
+        if (events.getResponse() != null && events.getResponse().getResponse().equals("Error")) {
             LOG.error("Error occured when sending ConfBridgeListAction to Asterisk. [{}]", events.getResponse());
             return null;
         }
-        
+
         List<Participant> result = new ArrayList<>();
 
         for (ResponseEvent event : events.getEvents()) {
@@ -284,7 +269,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     public Room findOne(String id) {
         LOG.debug("Retrieving room [id={}]", id);
         List<Participant> participants = readParticipantsFromServer(id);
-        if(participants == null) {
+        if (participants == null) {
             return null;
         } else {
             return new Room(id);
@@ -301,15 +286,13 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
     public List<Room> findAllByIds(List<String> ids) {
         List<Room> subSelection = new ArrayList<>();
         List<Room> rooms = findAll();
-        for(Room room : rooms) {
-            if(ids.contains(room.getId())) {
+        for (Room room : rooms) {
+            if (ids.contains(room.getId())) {
                 subSelection.add(room);
             }
         }
         return subSelection;
     }
-    
-    
 
     @Override
     public List<Participant> findByRoomNo(String roomNo) {
@@ -349,19 +332,18 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
         onUnmuted(roomNo, channel);
     }
 
-
     private void setMutenessOfParticipant(String roomId, String channel, boolean value) {
         String denormChannel = denormalizeChannelName(channel);
-        
+
         LOG.debug("Setting muteness for channel. [room={};channel={},value={}]", new Object[]{roomId, channel, value});
         AbstractManagerAction a = value == true ? new ConfbridgeMuteAction(roomId, denormChannel) : new ConfbridgeUnmuteAction(roomId, denormChannel);
         ManagerResponse response = sendAction(a);
-        
-        if("Error".equals(response.getResponse())) {
+
+        if ("Error".equals(response.getResponse())) {
             LOG.error("Unable to mute participant. Asterisk responded: " + response.getMessage());
             throw new InvalidDataAccessResourceUsageException(response.getMessage());
         }
-        
+
     }
 
     private Participant participantFromEvent(ConfbridgeListEvent event) {
@@ -391,7 +373,7 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
 
         return new Participant(normalizeChannelName(channel), callerIdNum, name, phoneNumber, muted, host, callType, dateReceived);
     }
-    
+
     private ManagerResponse sendAction(ManagerAction action) {
         LOG.debug("Sending ManagerAction to server [action={}]", action);
         try {
@@ -409,14 +391,14 @@ public class Asterisk11ConfbridgeRepository extends AbstractAsteriskConferenceRe
             throw new RuntimeException(ex);
         }
     }
-    
+
     private String normalizeChannelName(String channel) {
         String normalized = channel.replace("/", "___");
         normalized = normalized.replace(".", "---");
         LOG.debug("Normalizing channel name [from={};to={}]", channel, normalized);
         return normalized;
     }
-    
+
     private String denormalizeChannelName(String channel) {
         String denormalized = channel.replace("___", "/");
         denormalized = denormalized.replace("---", ".");
